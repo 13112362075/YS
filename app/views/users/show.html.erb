@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>用户名:</strong>
+  <%= @user.account %>
+</p>
+
+<p>
+  <strong>密码:</strong>
+  <%= @user.password %>
+</p>
+
+<p>
+  <strong>姓名:</strong>
+  <%= @user.name %>
+</p>
+
+<p>
+  <strong>地址:</strong>
+  <%= @user.address %>
+</p>
+
+<p>
+  <strong>邮箱:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>电话:</strong>
+  <%= @user.telephone %>
+</p>
+
+<p>
+  <strong>性别:</strong>
+  <%= @user.sex %>
+</p>
+
+<p>
+  <strong>角色:</strong>
+  <%= @user.role %>
+</p>
+
+<p>
+  <strong>所属部门:</strong>
+  <%= @user.department_id  %>
+</p>
+
+<p>
+  <strong>所属组织:</strong>
+  <%= @user.orgainize_id %>
+</p>
+
+<%= link_to '修改用户信息', edit_user_path(@user) %> |
+<%= link_to '返回用户表', users_path %>

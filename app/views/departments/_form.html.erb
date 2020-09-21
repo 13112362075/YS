@@ -1,0 +1,43 @@
+<%= form_with(model: department, local: true) do |form| %>
+  <% if department.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(department.errors.count, "error") %> prohibited this department from being saved:</h2>
+
+      <ul>
+        <% department.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :部门编码 %>
+    <%= form.text_field :departmentcode %>
+  </div>
+
+  <div class="field">
+    <%= form.label :部门名称 %>
+    <%= form.text_field :departmentname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :所属组织 %>
+    <%= form.text_field :organize_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :描述 %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit  '保存' %>
+  </div>
+   
+
+<% end %>
+
+
+
+

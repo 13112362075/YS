@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>部门编码:</strong>
+  <%= @department.departmentcode %>
+</p>
+
+<p>
+  <strong>部门名称:</strong>
+  <%= @department.departmentname %>
+</p>
+
+<p>
+  <strong>所属组织:</strong>
+  <%= @department.organize_id %>
+</p>
+
+<p>
+  <strong>描述:</strong>
+  <%= @department.description %>
+</p>
+
+<%= link_to '编辑', edit_department_path(@department) %> |
+<%= link_to '返回部门表', departments_path %>

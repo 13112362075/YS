@@ -1,0 +1,72 @@
+<%= form_with(model: user, local: true) do |form| %>
+  <% if user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+      <ul>
+        <% user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :用户名 %>
+    <%= form.text_field :account %>
+  </div>
+
+  <div class="field">
+    <%= form.label :密码%>
+    <%= form.text_field :password %>
+  </div>
+
+  <div class="field">
+    <%= form.label :姓名 %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :地址 %>
+    <%= form.text_field :address %>
+  </div>
+
+  <div class="field">
+    <%= form.label :邮箱 %>
+    <%= form.text_field :email %>
+  </div>
+
+  <div class="field">
+    <%= form.label :电话%>
+    <%= form.text_field :telephone %>
+  </div>
+
+  <div class="field">
+    <%= form.label :性别 %>
+    <!--%= form.text_field :Fsex %-->
+<%= form.select :sex, [['男'], ['女']] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :角色 %>
+    <!--%= form.text_field :Frole %-->
+ 	<%= form.select :role, [['普通用户', 0], ['管理员', 1]] %>
+  </div>
+
+  <div class="field">
+    <%= form.label :所属部门%>
+    <!--%= form.text_field :department_id  %--> 
+     <%= form.collection_select(:department_id, @department.all, :id, :departmentname) %>
+  </div>
+
+
+  <div class="field">
+    <%= form.label :所属组织 %>
+    <%= form.text_field :orgainize_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit  "保存"  %>
+  </div>
+<% end %>
+

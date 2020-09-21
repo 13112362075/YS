@@ -1,0 +1,2 @@
+class Assetstatus < ApplicationRecord
+end

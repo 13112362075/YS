@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  departmentcode: MyString
+  departmentname: MyString
+  organize_id: 
+  description: MyString
+
+two:
+  departmentcode: MyString
+  departmentname: MyString
+  organize_id: 
+  description: MyString

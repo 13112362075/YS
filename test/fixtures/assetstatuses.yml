@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Assetstatuscode: MyString
+  Name: MyString
+  Orgainize_id: 
+  description: MyString
+
+two:
+  Assetstatuscode: MyString
+  Name: MyString
+  Orgainize_id: 
+  description: MyString

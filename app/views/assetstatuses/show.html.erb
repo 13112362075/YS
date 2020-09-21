@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Assetstatuscode:</strong>
+  <%= @assetstatus.Assetstatuscode %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @assetstatus.Name %>
+</p>
+
+<p>
+  <strong>Orgainize:</strong>
+  <%= @assetstatus.Orgainize_id %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @assetstatus.description %>
+</p>
+
+<%= link_to 'Edit', edit_assetstatus_path(@assetstatus) %> |
+<%= link_to 'Back', assetstatuses_path %>

@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Assettypecode:</strong>
+  <%= @assettype.Assettypecode %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @assettype.Name %>
+</p>
+
+<p>
+  <strong>Orgainize:</strong>
+  <%= @assettype.Orgainize_id %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @assettype.description %>
+</p>
+
+<%= link_to 'Edit', edit_assettype_path(@assettype) %> |
+<%= link_to 'Back', assettypes_path %>

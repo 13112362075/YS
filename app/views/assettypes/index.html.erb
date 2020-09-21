@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Assettypes</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Assettypecode</th>
+      <th>Name</th>
+      <th>Orgainize</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assettypes.each do |assettype| %>
+      <tr>
+        <td><%= assettype.Assettypecode %></td>
+        <td><%= assettype.Name %></td>
+        <td><%= assettype.Orgainize_id %></td>
+        <td><%= assettype.description %></td>
+        <td><%= link_to 'Show', assettype %></td>
+        <td><%= link_to 'Edit', edit_assettype_path(assettype) %></td>
+        <td><%= link_to 'Destroy', assettype, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Assettype', new_assettype_path %>

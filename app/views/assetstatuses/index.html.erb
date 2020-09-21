@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Assetstatuses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Assetstatuscode</th>
+      <th>Name</th>
+      <th>Orgainize</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assetstatuses.each do |assetstatus| %>
+      <tr>
+        <td><%= assetstatus.Assetstatuscode %></td>
+        <td><%= assetstatus.Name %></td>
+        <td><%= assetstatus.Orgainize_id %></td>
+        <td><%= assetstatus.description %></td>
+        <td><%= link_to 'Show', assetstatus %></td>
+        <td><%= link_to 'Edit', edit_assetstatus_path(assetstatus) %></td>
+        <td><%= link_to 'Destroy', assetstatus, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Assetstatus', new_assetstatus_path %>
