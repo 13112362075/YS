@@ -1,47 +1,337 @@
-<p id="notice"><%= notice %></p>
+<p id="notice"><%= notice%></p>
 
-<h1>用户表</h1>
+ 
 
-<table  border="1">
-  <thead>
-    <tr>
-      <th>用户名</th>
-      <th>密码</th>
-      <th>姓名</th>
-      <th>地址</th>
-      <th>邮箱</th>
-      <th>电话</th>
-      <th>性别</th>
-      <th>角色</th>
-      <th>所属部门</th>
-      <th>所属组织</th>
-      <th colspan="3"></th>
-    </tr>
+
+<h1 style="text-align:center;">用户表</h1>
+
+<div class="layui-btn-group " style="margin:10px;0px;">
+  <a rel="nofollow" data-method="get" href="/users/new"><button type="button" class="layui-btn">新增</button></a>
+   <a id="a_update"  rel="nofollow"    ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+   <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
+   <a id="a_delete"   rel="nofollow"  ><button   onclick="model_delete('  <%=destroy_multiple_path%>')"   type="button" class="layui-btn">删除</button></a>
+   <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a>
+ 
+   <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a>
+
+
+
+</div> 
+ 
+ 
+ 
+
+ <table  style="text-align:left;margin:10px;0px; " > 
+<%= search_form_for @q do |f| %>
+<td>
+<label class="layui-form-label" >搜索框</label>
+ <select    class="layui-input "  name="q[search_cont]">
+          <option value="account">用户名</option>
+          <option value="password">密码</option>
+          <option value="name">姓名</option>
+          <option value="address">地址</option>
+          <option value="email">邮箱</option>
+          <option value="telephone">电话</option>
+          <option value="sex">性别</option>
+          <option value="role">角色</option>
+          <option value="departmentname">所属部门</option>
+          <option value="orgainize_id">所属组织</option>
+          </select>
+</td>
+<td><div class="layui-input-block"> <input     class="layui-input "    type="search" name="q[name_cont]" id="q_name_cont"  ></div> </td>
+
+  <td><button  class="layui-btn" type="submit" name="commit"  data-disable-with="查询"> 查询 </button></td>
+<% end %>
+</table>
+
+
+<table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; " >
+  <colgroup>
+    <col width="150"> 
+    <col>
+  </colgroup>
+  <thead > 
+    <tr >  
+      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center">用户名</th>
+      <th style="text-align:center">密码</th>
+      <th style="text-align:center">姓名</th>
+      <th style="text-align:center">地址</th>
+      <th style="text-align:center">邮箱</th>
+      <th style="text-align:center">电话</th>
+      <th style="text-align:center">性别</th>
+      <th style="text-align:center">角色</th>
+      <th style="text-align:center">所属部门</th>
+      <th style="text-align:center">所属组织</th> 
+    </tr>  
   </thead>
-
-  <tbody>
+   <tbody>
     <% @users.each do |user| %>
-      <tr>
-        <td><%= user.account %></td>
-        <td><%= user.password %></td>
-        <td><%= user.name %></td>
-        <td><%= user.address %></td>
-        <td><%= user.email %></td>
-        <td><%= user.telephone %></td>
-        <td><%= user.sex %></td>
-        <td><%= user.role %></td>
-        <td><%= user.department_id  %></td>
-        <td><%= user.orgainize_id %></td>
-        <td><%= link_to '查看', user  , data: { confirm: 'Are you sure?' }  %></td>
+      <tr   id=<%= user.id %>  ondblclick="show(this)">
+        <td><input class='awsui-checkbox' id='user.ids[]' name='user.ids[]' value=<%= user.id %> type='checkbox'/></td> 
+        <td class="account" ><%= user.account %></td>
+        <td class="password"><%= user.password %></td>
+        <td class="name"><%= user.name %></td>
+        <td  class="address"><%= user.address %></td>
+        <td  class="email"><%= user.email %></td>
+        <td  class="telephone"><%= user.telephone %></td>
+        <td  class="sex"><%= user.sex %></td>  
+        <td  class="role"><%= user.role %></td>   
+        <td  class="departmentname"><%= user.departmentname  %></td> 
+        <td  class="orgainize_id"><%= user.orgainize_id %></td>
+        <!--td><%= link_to '查看', user  %></td>
         <td><%= link_to '编辑', edit_user_path(user) %></td>
-        <td><%= link_to '删除', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '删除', user, method: :delete, data: { confirm: '你确定要删除吗？' } %></td-->
       </tr>
     <% end %>
   </tbody>
-</table>
+</table>  
 
-<br>
+<br> 
 
-<%= link_to '新增用户', new_user_path %>
-<%= link_to "首页",root_url  %>
-<%= link_to "退出登陆",logout_path,method: "delete" %>
+
+ 
+<!--button onclick="addrow()">新增行</button>
+<button onclick="delrow()">删除行</button-->
+<!--form id="test" ,action="/save_multiple">
+<table    id="testid"  class="layui-table" style="text-align:center;margin:10px;0px; " >
+  <colgroup>
+    <col width="150"> 
+    <col>
+  </colgroup>
+  <thead > 
+    <tr >  
+      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center">用户名</th>
+      <th style="text-align:center">密码</th> 
+    </tr>  
+  </thead>
+   <tbody>
+    <% @users.each do |user| %>
+      <tr class="trr"  onclick =>
+        <td><input class='awsui-checkbox' id='user.ids[]' name='user.ids[]' value=<%= user.id %> type='checkbox'/></td> 
+        <td class="tdd1" contenteditable="true"    > </td>
+        <td class="tdd1" contenteditable="true"    ></td>  
+      </tr>
+    <% end %>
+  </tbody>
+</table>  
+</form!--> 
+
+
+ 
+<script crossorigin="anonymous" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" src="https://lib.baomitu.com/jquery/3.5.1/jquery.js"></script>
+
+<script type="text/javascript">
+
+
+function show (element)
+{ 
+  var  path=  "/users/"+element.id ;   
+  window.location =path ;
+}
+
+
+
+
+			function test1() { 
+var array1 = new Array();
+var tb = document.getElementById('tab');    // table 的 id
+var rows = tb.rows;                           // 获取表格所有行
+var t=0;
+for(var i = 1; i<rows.length; i++ ){
+
+var array2 = new Array();
+   for(var j = 1; j<rows[i].cells.length; j++ ){    // 遍历该行的 td     
+       array2[j-1]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
+   }
+   array1[i-1]=array2;
+}
+ console.log(array1)
+ 
+$.ajax({
+   type:"post", 
+   url :"/save_multiple",
+   data:{ 
+      "userid": array1
+     }, 
+   success: function(){
+     alert("删除成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("删除失败！")
+        } 
+ });
+
+
+
+
+
+}
+
+
+ 
+
+
+
+function addrow(){
+   var c=document.getElementById('testid');//获得表格的信息 
+   
+   if( c.rows.length==1)//如果是向一个空表增加一行
+   {
+     var x=c.insertRow(1);//向空表插入一行 
+     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行  
+     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
+     {
+       var y=x.insertCell(i); 
+     }
+   }
+   else
+   {
+    
+     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行 
+     var x=c.insertRow(c.rows.length);
+     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
+     { 
+       
+       var y=x.insertCell(i);  
+       if(i==0)
+       { 
+              y.innerHTML="<input class='awsui-checkbox' id='user.ids[]' name='user.ids[]'  type='checkbox'/>";
+       }
+       else
+       {
+         y.setAttribute("contenteditable","true");
+       }
+     }
+   }
+}
+
+
+
+
+
+
+
+function delrow(){
+var x=document.getElementById("testid");
+if(x.rows.length==2)
+{
+  alert("数据数据行至少为1行，不允许删除！");
+  return false;
+}
+x.deleteRow(x.rows.length-1);//删除一行
+}
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+
+
+
+
+	<script type="text/javascript">
+
+
+			// 获取选中的复选框项，保存为一个数组
+			function getCheckedCheckbox(checkboxClassName) {
+				var array = new Array();
+				var j = 0;
+				var selectedItems = document.getElementsByClassName(checkboxClassName);
+				for (var i = 1; i < selectedItems.length; i++) {
+					if (selectedItems[i].checked == true) {
+						array[j] = selectedItems[i].value;
+						j++;
+					}
+				}
+				return array;
+			}
+
+        function getCheckedCheckbox_update(){	
+              // 输出选中
+              var items = getCheckedCheckbox("awsui-checkbox"); 
+              if(items.length>1)
+              {
+                    alert("选择了多行数据，请选择1行！");
+                    document.getElementById("a_update").href ="";
+                    return false;
+              } 
+              var  user_id=  "/users/"+ items[0]+"/edit";   
+              document.getElementById("a_update").href =user_id;
+        }
+ 
+
+   function selectAll(obj){ 
+        //创建数组
+        var arr=new Array();
+        //获取所有id为“cb1”的复选框
+        var items=document.getElementsByName("user.ids[]");
+
+        //判断复选框是否选中
+        if(obj.checked)
+        {
+        //循环将所有name为"category"的复选框设置为选中状态
+              for(var i=0;i<items.length;i++){
+              //alert(items[i]);
+              items[i].checked=true;
+              }
+        }
+        else
+        {
+              //循环将所有name为"category"的复选框设置为非选中状态
+              for(var i=0;i<items.length;i++)
+              {
+              //alert(items[i]);
+              items[i].checked=false;
+              }
+        }
+    }      
+ 
+</script> 
+
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>  
+function model_delete(path){
+   if (!confirm('你确定要删除吗？'))
+   { 
+      return false
+   } 
+var items = new Array();
+items = getCheckedCheckbox("awsui-checkbox");     
+ var resturl = path; 
+ $.ajax({
+   type:"post", 
+   url:resturl, 
+   data:{ 
+      "userid": items
+     }, 
+   success: function(){
+     alert("删除成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("删除失败！")
+        } 
+ });
+}
+  
+function Refresh(){
+  location.reload([true])
+  }   
+ 
+
+
+</script> 
+
+<!--%= link_to '新增用户', new_user_path %--> 

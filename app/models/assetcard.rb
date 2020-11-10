@@ -1,0 +1,2 @@
+class Assetcard < ApplicationRecord
+end

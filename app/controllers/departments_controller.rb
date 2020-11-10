@@ -1,14 +1,42 @@
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
 
+
+
+
+
+
+
+  def destroy_multiple    
+    params["department_id"].each do |i| 
+      Department.destroy(i)
+  end
+    respond_to do |format|
+      format.html { redirect_to departments_url notice: '部门删除成功！.'  }
+      format.json { head :no_content }
+    end
+  end
+
+
+
+
   # GET /departments
   # GET /departments.json
-  def index
-    if logon? 
-    else
-      redirect_to  new_sessions_path  
-    end 
-    @departments = Department.all
+  def index 
+    
+
+    @q = Department.search(params[:q])      
+
+    if  params[:q].nil?
+      @departments = Department.all 
+    else 
+      if  params[:q]["name_cont"].lstrip.rstrip==""
+        @departments = Department.all
+      else
+        search = params[:q]["search_cont"]
+        @departments  = Department.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+      end
+    end   
   end
 
   # GET /departments/1
@@ -27,17 +55,7 @@ class DepartmentsController < ApplicationController
   end
 
   # GET /departments/new
-  def new 
-    if logon? 
-      if Frole?
-      else 
-        log_out if logon?
-        redirect_to  new_sessions_path  
-      end
-    else 
-      log_out if logon?
-     redirect_to  new_sessions_path  
-    end 
+  def new  
     @department = Department.new
   end
 
@@ -62,7 +80,7 @@ class DepartmentsController < ApplicationController
 
     respond_to do |format|
       if @department.save
-        format.html { redirect_to @department, notice: 'Department was successfully created.' }
+        format.html { redirect_to @department, notice: '部门创建成功.' }
         format.json { render :show, status: :created, location: @department }
       else
         format.html { render :new }
@@ -76,7 +94,7 @@ class DepartmentsController < ApplicationController
   def update
     respond_to do |format|
       if @department.update(department_params)
-        format.html { redirect_to @department, notice: 'Department was successfully updated.' }
+        format.html { redirect_to @department, notice: '部门修改成功！.' }
         format.json { render :show, status: :ok, location: @department }
       else
         format.html { render :edit }

@@ -1,0 +1,2 @@
+class Assetseate < ApplicationRecord
+end

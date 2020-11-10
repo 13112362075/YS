@@ -11,26 +11,31 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :部门编码 %>
-    <%= form.text_field :departmentcode %>
-  </div>
 
-  <div class="field">
-    <%= form.label :部门名称 %>
-    <%= form.text_field :departmentname %>
-  </div>
+   
+  <div class="field" >
+    <label class="layui-form-label"   for="department_部门编码">部门编码</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入部门编码"    type="text" name="department[departmentcode]" id="department_departmentcode"   value=<%= @department.departmentcode%>  ></div>
+  </div> 
 
-  <div class="field">
-    <%= form.label :所属组织 %>
-    <%= form.text_field :organize_id %>
-  </div>
+    
+  <div class="field" >
+    <label class="layui-form-label"   for="department_部门名称">部门名称</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入部门名称"    type="text" name="department[departmentname]" id="department_departmentname"   value=<%= @department.departmentname%>  ></div>
+  </div> 
 
-  <div class="field">
-    <%= form.label :描述 %>
-    <%= form.text_field :description %>
-  </div>
+    
+  <div class="field" >
+    <label class="layui-form-label"   for="department_部门编码">所属组织</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入所属组织"    type="text" name="department[organize_id]" id="department_organize_id"   value=<%= @department.organize_id%>  ></div>
+  </div> 
 
+    
+  <div class="field" >
+    <label class="layui-form-label"   for="department_描述">描述</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入描述"    type="text" name="department[description]" id="department_description"   value=<%= @department.description%>  ></div>
+  </div> 
+  
   <div class="actions">
     <%= form.submit  '保存' %>
   </div>

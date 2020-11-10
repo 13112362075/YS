@@ -1,0 +1,51 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  assetCode: MyString
+  assetname: MyString
+  Assettype_id: 1
+  Unit_id: 1
+  Amount: 1
+  Assetstatus_id: 1
+  Addtype_id: 1
+  BuyDate: 2020-11-05
+  Usestate_id: 1
+  description: MyString
+  Orgainize_id: 1
+  Entrydate: 2020-11-05
+  Price: 9.99
+  Lastprice: 9.99
+  Expectedperiod: 1
+  CNOSP: 1
+  barcode: MyString
+  Mould: MyString
+  Assetseat_id: 1
+  Client: MyString
+  Supplier: MyString
+  department_id: 1
+  Employeeld: 1
+
+two:
+  assetCode: MyString
+  assetname: MyString
+  Assettype_id: 1
+  Unit_id: 1
+  Amount: 1
+  Assetstatus_id: 1
+  Addtype_id: 1
+  BuyDate: 2020-11-05
+  Usestate_id: 1
+  description: MyString
+  Orgainize_id: 1
+  Entrydate: 2020-11-05
+  Price: 9.99
+  Lastprice: 9.99
+  Expectedperiod: 1
+  CNOSP: 1
+  barcode: MyString
+  Mould: MyString
+  Assetseat_id: 1
+  Client: MyString
+  Supplier: MyString
+  department_id: 1
+  Employeeld: 1

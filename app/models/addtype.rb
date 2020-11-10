@@ -1,0 +1,2 @@
+class Addtype < ApplicationRecord
+end

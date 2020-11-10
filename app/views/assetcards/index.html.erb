@@ -1,0 +1,197 @@
+<p id="notice"><%= notice %></p>
+
+
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<h1 style="text-align:center;">资产卡片</h1>
+<div class="layui-btn-group " style="margin:10px;0px;">
+  <a rel="nofollow" data-method="get" href="/assetcards/new"><button type="button" class="layui-btn">新增</button></a>
+   <a id="a_update"  rel="nofollow"    ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+   <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
+   <a id="a_delete"   rel="nofollow"  ><button   onclick="model_delete('  <%=assetcards_destroy_multiple_path%>')"   type="button" class="layui-btn">删除</button></a>
+   <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a>
+  
+
+ 
+
+
+ <table  style="text-align:left;margin:10px;0px; " > 
+<%= search_form_for @q do |f| %>
+<td>
+<label class="layui-form-label" >搜索框</label>
+ <select    class="layui-input "  name="q[search_cont]">
+          <option value="assetCode">资产卡片编码</option>
+          <option value="assetname">资产卡片名称</option>
+          <option value="Assettype_id">资产类别</option>
+          <option value="Unit_id">计量单位</option>
+          <option value="Amount">数量</option>
+          <option value="Assetstatus_id">资产状态</option>
+          <option value="Addtype_id">变动方式</option>
+          <option value="BuyDate">购买日期</option>
+          <option value="Usestate_id">资产使用状态</option>
+          <option value="description">备注</option>
+          <option value="orgainize_id">所属组织</option>
+ 
+          </select>
+</td>
+<td><div class="layui-input-block"> <input     class="layui-input "    type="search" name="q[name_cont]" id="q_name_cont"  ></div> </td>
+
+  <td><button  class="layui-btn" type="submit" name="commit"  data-disable-with="查询"> 查询 </button></td>
+<% end %>
+</table>
+
+
+
+
+<table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; " >
+  <colgroup>
+    <col width="1000"> 
+    <col>
+  </colgroup>
+  <thead > 
+    <tr >  
+      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center">资产卡片编码</th>
+      <th style="text-align:center">资产卡片名称</th>
+      <th style="text-align:center">资产类别</th>
+      <th style="text-align:center">计量单位</th>
+      <th style="text-align:center">数量</th>
+      <th style="text-align:center">资产状态</th>
+      <th style="text-align:center">变动方式</th>
+      <th style="text-align:center">购买日期</th>
+      <th style="text-align:center">资产使用状态</th>
+      <th style="text-align:center">备注</th> 
+          <th style="text-align:center">所属组织</th> 
+    </tr>  
+  </thead>
+   <tbody>
+    <% @assetcards.each do |assetcard| %>
+      <tr  id=<%= assetcard.id %>  ondblclick="show(this)"> 
+        <td><input class='awsui-checkbox' id='assetcard.ids[]' name='assetcard.ids[]' value=<%= assetcard.id %> type='checkbox'/></td> 
+        <td class="assetCode" ><%= assetcard.assetCode %></td>
+        <td class="assetname"><%= assetcard.assetname %></td>
+        <td class="Assettype_id"><%= assetcard.Assettype_id %></td>
+        <td  class="Unit_id"><%= assetcard.Unit_id %></td>
+        <td  class="Amount"><%= assetcard.Amount %></td>
+        <td  class="Assetstatus_id"><%= assetcard.Assetstatus_id %></td>
+        <td  class="Addtype_id"><%= assetcard.Addtype_id %></td>
+        <td  class="BuyDate"><%= assetcard.BuyDate %></td>  
+        <td  class="Usestate_id"><%= assetcard.Usestate_id %></td>   
+        <td  class="description"><%= assetcard.description  %></td> 
+        <td  class="Orgainize_id"><%= assetcard.Orgainize_id %></td> 
+      </tr>
+    <% end %>
+  </tbody>
+</table>  
+
+<br> 
+
+
+
+
+
+
+
+
+
+
+	<script type="text/javascript">
+
+function show (element)
+{ 
+  var  path=  "/assetcards/"+element.id ;   
+  window.location =path ;
+}
+
+
+
+			// 获取选中的复选框项，保存为一个数组
+			function getCheckedCheckbox(checkboxClassName) {
+				var array = new Array();
+				var j = 0;
+				var selectedItems = document.getElementsByClassName(checkboxClassName);
+				for (var i = 1; i < selectedItems.length; i++) {
+					if (selectedItems[i].checked == true) {
+						array[j] = selectedItems[i].value;
+						j++;
+					}
+				}
+				return array;
+			}
+
+        function getCheckedCheckbox_update(){	
+              // 输出选中
+              var items = getCheckedCheckbox("awsui-checkbox"); 
+              if(items.length>1)
+              {
+                    alert("选择了多行数据，请选择1行！");
+                    document.getElementById("a_update").href ="";
+                    return false;
+              } 
+              var  user_id=  "/assetcards/"+ items[0]+"/edit";   
+              document.getElementById("a_update").href =user_id;
+        }
+ 
+
+   function selectAll(obj){ 
+        //创建数组
+        var arr=new Array();
+        //获取所有id为“cb1”的复选框
+        var items=document.getElementsByName("assetcard.ids[]");
+
+        //判断复选框是否选中
+        if(obj.checked)
+        {
+        //循环将所有name为"category"的复选框设置为选中状态
+              for(var i=0;i<items.length;i++){
+              //alert(items[i]);
+              items[i].checked=true;
+              }
+        }
+        else
+        {
+              //循环将所有name为"category"的复选框设置为非选中状态
+              for(var i=0;i<items.length;i++)
+              {
+              //alert(items[i]);
+              items[i].checked=false;
+              }
+        }
+    }      
+ 
+</script> 
+
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>  
+function model_delete(path){
+   if (!confirm('你确定要删除吗？'))
+   { 
+      return false
+   } 
+var items = new Array();
+items = getCheckedCheckbox("awsui-checkbox");     
+ var resturl = path; 
+ $.ajax({
+   type:"post", 
+   url:resturl, 
+   data:{ 
+      "userid": items
+     }, 
+   success: function(){
+     alert("删除成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("删除失败！")
+        } 
+ });
+}
+  
+function Refresh(){
+  location.reload([true])
+  }   
+ 
+
+
+</script> 
+
+

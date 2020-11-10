@@ -11,27 +11,32 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :Assetstatuscode %>
-    <%= form.text_field :Assetstatuscode %>
-  </div>
 
-  <div class="field">
-    <%= form.label :Name %>
-    <%= form.text_field :Name %>
-  </div>
 
-  <div class="field">
-    <%= form.label :Orgainize_id %>
-    <%= form.text_field :Orgainize_id %>
-  </div>
+   
+  <div class="field" >
+    <label class="layui-form-label"   for="assetstatus_部门编码">资产状态编码</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产状态编码"    type="text" name="assetstatus[Assetstatuscode]" id="assetstatus_Assetstatuscode"   value=<%= @assetstatus.Assetstatuscode%>  ></div>
+  </div> 
+ 
+ <div class="field" >
+    <label class="layui-form-label"   for="assetstatus_资产状态名称">资产状态名称</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产状态名称"    type="text" name="assetstatus[Name]" id="assetstatus_AssetstatusName"   value=<%= @assetstatus.Name%>  ></div>
+  </div> 
+  
+  <div class="field" >
+    <label class="layui-form-label"   for="assetstatus_所属组织">所属组织</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入所属组织"    type="text" name="assetstatus[Orgainize_id]" id="assetstatus_Orgainize_id"   value=<%= @assetstatus.Orgainize_id%>  ></div>
+  </div> 
 
-  <div class="field">
-    <%= form.label :description %>
-    <%= form.text_field :description %>
-  </div>
+  <div class="field" >
+    <label class="layui-form-label"   for="assetstatus_描述">描述</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入描述"    type="text" name="assetstatus[description]" id="assetstatus_description"   value=<%= @assetstatus.description%>  ></div>
+  </div> 
+ 
+   
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit :保存 %>
   </div>
 <% end %>

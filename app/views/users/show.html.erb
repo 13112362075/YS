@@ -1,54 +1,27 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>用户名:</strong>
-  <%= @user.account %>
-</p>
-
-<p>
-  <strong>密码:</strong>
-  <%= @user.password %>
-</p>
-
-<p>
-  <strong>姓名:</strong>
-  <%= @user.name %>
-</p>
-
-<p>
-  <strong>地址:</strong>
-  <%= @user.address %>
-</p>
-
-<p>
-  <strong>邮箱:</strong>
-  <%= @user.email %>
-</p>
-
-<p>
-  <strong>电话:</strong>
-  <%= @user.telephone %>
-</p>
-
-<p>
-  <strong>性别:</strong>
-  <%= @user.sex %>
-</p>
-
-<p>
-  <strong>角色:</strong>
-  <%= @user.role %>
-</p>
-
-<p>
-  <strong>所属部门:</strong>
-  <%= @user.department_id  %>
-</p>
-
-<p>
-  <strong>所属组织:</strong>
-  <%= @user.orgainize_id %>
-</p>
+<h1>查看用户</h1>
+<br>
+<br>
+<%= render 'form', user: @user %>
 
 <%= link_to '修改用户信息', edit_user_path(@user) %> |
 <%= link_to '返回用户表', users_path %>
+
+
+
+ <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+ $("input").prop('disabled','disabled');
+ $("select").prop('disabled','disabled'); 
+ $("input").css('background-color','#F5F5F5');
+ $("select").css('background-color','#F5F5F5'); 
+ $("input[type=submit]").hide(); 
+ $("#notice").hide(); 
+ if($("#notice").text()!='')
+ {
+  alert( $("#notice").text());
+ }
+});
+</script>

@@ -1,5 +1,6 @@
 class HomesController < ApplicationController
-  def index
+  def index 
+ 
     @session=session[:name]
   end
 end

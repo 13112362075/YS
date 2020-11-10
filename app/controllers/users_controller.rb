@@ -1,67 +1,81 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
-  def index
-    if logon? 
-    else
-      redirect_to  new_sessions_path  
+  before_action :set_user, only: [:show, :edit, :update, :destroy] 
+
+ 
+  
+  def save_multiple  
+    params["userid"].each do |i| 
+      puts i[1].length    
+      user = User.create!(account: i[1][2],password: i[1][1],name: i[1][2],address: i[1][3],email: i[1][4], telephone: i[1][5],sex: i[1][6],role: i[1][7],departmentname: i[1][8],orgainize_id: i[1][9])
     end
-    @users = User.all
   end
 
-  # GET /users/1
-  # GET /users/1.json
-  def show
-    if logon? 
-      if Frole?
-      else
-        log_out if logon?
-        redirect_to  new_sessions_path  
-      end
-    else
-      log_out if logon?
-      redirect_to  new_sessions_path  
+ 
+
+  def destroy_multiple    
+    params["userid"].each do |i| 
+      User.destroy(i)
+  end
+    respond_to do |format|
+      format.html { redirect_to users_url notice: '用户删除成功！.'  }
+      format.json { head :no_content }
     end
   end
  
 
-  # GET /users/new
-  def new
-    if logon? 
-      if Frole?
-      else 
-        log_out if logon?
-        redirect_to  new_sessions_path  
-      end
+ 
+  def index  
+
+    @q = User.search(params[:q])      
+
+    if  params[:q].nil?
+      @users = User.all 
     else 
-      log_out if logon?
-     redirect_to  new_sessions_path  
-    end
+      if  params[:q]["name_cont"].lstrip.rstrip==""
+        @users = User.all
+      else
+        search = params[:q]["search_cont"]
+        @users  = User.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+      end
+    end 
+    @department= Department.all 
+  end
+
+ 
+
+  # GET /users/1
+  # GET /users/1.json
+  def show
+    @department = Department.all   
+  end
+  # GET /users/new
+
+
+  def new
     @user = User.new 
+    @department = Department.all   
+  end
+
+
+  
+
+  # GET /users/1/edit
+  # GET /users/1/edit
+  def edit
     @department = Department.all
   end
 
-  # GET /users/1/edit
-  def edit
-    if logon? 
-      if Frole?  
-      else 
-        log_out if logon?
-        redirect_to  new_sessions_path  
-      end
-    else 
-      log_out if logon?
-      redirect_to  new_sessions_path  
-    end
-    @department = Department.all
-  end
+
+  
   # POST /users
   # POST /users.json
   def create
     @user = User.new(user_params)
-
-    respond_to do |format|
+    @department = Department.all  
+    puts    @department.length
+     respond_to do |format|
       if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
+        format.html { redirect_to @user, notice: '用户创建成功！' }
         format.json { render :show, status: :created, location: @user }
       else
         format.html { render :new }
@@ -74,8 +88,10 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1.json
   def update
     respond_to do |format|
+
+    @department = Department.all  
       if @user.update(user_params)
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
+        format.html { redirect_to @user, notice:'用户修改成功！'}
         format.json { render :show, status: :ok, location: @user }
       else
         format.html { render :edit }
@@ -89,12 +105,12 @@ class UsersController < ApplicationController
   def destroy
     @user.destroy
     respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
+      format.html { redirect_to users_url, notice: '用户删除成功！.' }
       format.json { head :no_content }
     end
   end
 
-  private
+   
     # Use callbacks to share common setup or constraints between actions.
     def set_user
       @user = User.find(params[:id])
@@ -102,6 +118,6 @@ class UsersController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def user_params
-      params.require(:user).permit(:account, :password, :name, :address, :email, :telephone, :sex, :role, :department_id, :orgainize_id)
+      params.require(:user).permit(:account, :password, :name, :address, :email, :telephone, :sex, :role, :departmentname, :orgainize_id)
     end
 end

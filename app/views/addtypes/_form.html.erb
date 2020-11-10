@@ -1,0 +1,42 @@
+<%= form_with(model: addtype, local: true) do |form| %>
+  <% if addtype.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(addtype.errors.count, "error") %> prohibited this addtype from being saved:</h2>
+
+      <ul>
+        <% addtype.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+
+   
+  <div class="field" >
+    <label class="layui-form-label"   for="addtype_变动方式编码">变动方式编码</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入变动方式编码"    type="text" name="addtype[Addtypecode]" id="addtype_Addtypecode"   value=<%= @addtype.Addtypecode%>  ></div>
+  </div> 
+ 
+<div class="field" >
+    <label class="layui-form-label"   for="addtype_变动方式名称">变动方式名称</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入变动方式名称"    type="text" name="addtype[Name]" id="addtype_Name"   value=<%= @addtype.Name%>  ></div>
+  </div> 
+
+  <div class="field" >
+    <label class="layui-form-label"   for="addtype_所属组织">所属组织</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入所属组织"    type="text" name="addtype[Orgainize_id]" id="addtype_Orgainize_id"   value=<%= @addtype.Orgainize_id%>  ></div>
+  </div> 
+
+  <div class="field" >
+    <label class="layui-form-label"   for="addtype_描述">描述</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入描述"    type="text" name="addtype[Description]" id="addtype_Description"   value=<%= @addtype.Description%>  ></div>
+  </div> 
+ 
+
+  <div class="actions">
+    <%= form.submit :保存 %>
+  </div>
+<% end %>

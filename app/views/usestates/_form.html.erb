@@ -1,0 +1,46 @@
+<%= form_with(model: usestate, local: true) do |form| %>
+  <% if usestate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(usestate.errors.count, "error") %> prohibited this usestate from being saved:</h2>
+
+      <ul>
+        <% usestate.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+ 
+     
+  <div class="field" >
+    <label  style="width:120px" class="layui-form-label"   for="usestate_资产使用状态编码">资产使用状态编码</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产使用状态编码"    type="text" name="usestate[Usestatecode]" id="usestate_Usestatecode"   value=<%= @usestate.Usestatecode%>  ></div>
+  </div> 
+
+   <div class="field" >
+    <label   style="width:120px"  class="layui-form-label"   for="usestate_使用状态名称">使用状态名称</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产使用状态名称"    type="text" name="usestate[Name]" id="usestate_Name"   value=<%= @usestate.Name%>  ></div>
+  </div>
+
+  <div class="field" >
+    <label   style="width:120px" class="layui-form-label"   for="usestate_所属组织">所属组织</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入所属组织"    type="text" name="usestate[Orgainize_id]" id="usestate_Orgainize_id"   value=<%= @usestate.Orgainize_id%>  ></div>
+  </div>
+
+  <div class="field" >
+    <label  style="width:120px" class="layui-form-label"   for="usestate_描述">描述</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入描述"    type="text" name="usestate[Description]" id="usestate_Description"   value=<%= @usestate.Description%>  ></div>
+  </div>
+
+ 
+  
+
+  <div class="actions">
+    <%= form.submit :保存 %>
+  </div>
+<% end %>
+
+
+  

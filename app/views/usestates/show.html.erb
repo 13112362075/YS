@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+<h1>查看资产使用状态</h1>
+<br>
+<br>
+<%= render 'form', usestate: @usestate %> 
+ 
+
+<%= link_to '编辑', edit_usestate_path(@usestate) %> |
+<%= link_to '返回资产使用状态表', usestates_path %>
+
+ <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+ $("input").prop('disabled','disabled');
+ $("select").prop('disabled','disabled'); 
+ $("input").css('background-color','#F5F5F5');
+ $("select").css('background-color','#F5F5F5'); 
+ $("input[type=submit]").hide(); 
+ $("#notice").hide(); 
+ if($("#notice").text()!='')
+ {
+  alert( $("#notice").text());
+ }
+});
+</script>

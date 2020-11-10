@@ -1,0 +1,279 @@
+  <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+
+<%= form_with(model: assetcard, local: true) do |form| %>
+  <% if assetcard.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(assetcard.errors.count, "error") %> prohibited this assetcard  from being saved:</h2>
+
+      <ul>
+        <% assetcard.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+卡片基本信息
+<hr> 
+
+    <div style="display:flex;">
+
+
+     <div class="field" >
+    <label class="layui-form-label"      for="assetcard_资产卡片编码">资产卡片编码</label>
+    <div  class="layui-input-block"> <input     class="layui-input "    placeholder="请输入资产卡片编码"    type="text" name="assetcard[assetCode]" id="assetcard_assetCode"
+       value=<%= @assetcard.assetCode%>  ></div>
+  </div> 
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_资产卡片名称">资产卡片名称</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产卡片名称"    type="text" name="assetcard[assetname]" id="assetcard_assetname" 
+      value=<%= @assetcard.assetname%>  ></div>
+  </div> 
+ 
+
+  <div class="layui-form-item">
+      <label class="layui-form-label" for="assetcard_资产类别">资产类别</label> 
+       <div class="layui-input-block">
+          <select   class="layui-input "  name="assetcard[Assettype_id]" id="assetcard_Assettype_id"  <%= form.collection_select(:Assettype_id, @assettype.all, :Name, :Name) %>
+          </select>
+       </div> 
+    </div>  
+ 
+  <div class="layui-form-item">
+      <label class="layui-form-label" for="assetcard_计量单位">计量单位</label> 
+       <div class="layui-input-block">
+          <select   class="layui-input "  name="assetcard[Unit_id]" id="assetcard_Unit_id"  <%= form.collection_select(:Unit_id, @unit.all, :name, :name) %>
+          </select>
+       </div> 
+    </div>  
+
+ 
+   
+</div>
+  
+
+
+    <div style="display:flex;">
+
+
+     <div class="field" >
+    <label class="layui-form-label"      for="assetcard_数量">数量</label>
+    <div class="layui-input-block"> <input     class="layui-input "    placeholder="请输入数量"    type="text" name="assetcard[Amount]" id="assetcard_Amount"
+       value=<%= @assetcard.Amount%>  ></div>
+  </div> 
+
+  <div class="layui-form-item">
+      <label class="layui-form-label" for="assetcard_资产状态">资产状态</label> 
+       <div class="layui-input-block">
+          <select   class="layui-input "  name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id"  <%= form.collection_select(:Assetstatus_id, @assetstatus.all, :Name, :Name) %>
+          </select>
+       </div> 
+    </div>  
+
+
+  <div class="layui-form-item">
+      <label class="layui-form-label" for="assetcard_变动方式">变动方式</label> 
+       <div class="layui-input-block">
+          <select   class="layui-input "  name="assetcard[Addtype_id]" id="assetcard_Addtype_id"  <%= form.collection_select(:Addtype_id, @addtype.all, :Name, :Name) %>
+          </select>
+       </div> 
+    </div>  
+
+ 
+ 
+
+        <div class="field" >
+    <label class="layui-form-label"      for="assetcard_购买日期">购买日期</label>
+    <div class="layui-inline"> <input     class="layui-input "    placeholder="请输入购买日期"    type="text" name="assetcard[BuyDate]" id="assetcard_BuyDate"
+       value=<%= @assetcard.BuyDate%>  ></div>
+  </div>  
+
+</div> 
+
+
+    <div style="display:flex;">
+
+
+
+  <div class="layui-form-item">
+      <label class="layui-form-label" for="assetcard_资产使用状态">资产使用状态</label> 
+       <div class="layui-input-block">
+          <select   class="layui-input "  name="assetcard[Usestate_id]" id="assetcard_Usestate_id"  <%= form.collection_select(:Usestate_id, @usestate.all, :Name, :Name) %>
+          </select>
+       </div> 
+    </div>  
+  
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_备注">备注</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入备注"    type="text" name="assetcard[description]" id="assetcard_description" 
+      value=<%= @assetcard.description%>  ></div>
+  </div> 
+ 
+      <div class="field" >
+    <label class="layui-form-label"      for="assetcard_所属组织">所属组织</label>
+    <div class="layui-input-block"> <input     class="layui-input "    placeholder="请输入所属组织"    type="text" name="assetcard[Orgainize_id]" id="assetcard_Orgainize_id"
+       value=<%= @assetcard.Orgainize_id%>  ></div>
+  </div>  
+   
+</div> 
+
+<br>
+卡片财务信息
+<hr> 
+
+
+
+    <div style="display:flex;">
+
+
+     <div class="field" >
+    <label class="layui-form-label"      for="assetcard_入账日期">入账日期</label>
+    <div class="layui-input-block"> <input     class="layui-input "    placeholder="请输入入账日期"    type="text" name="assetcard[Entrydate]" id="assetcard_Entrydate"
+       value=<%= @assetcard.Entrydate%>  ></div>
+  </div> 
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_购进价格">购进价格</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入购进价格"    type="text" name="assetcard[Price]" id="assetcard_Price" 
+      value=<%= @assetcard.Price%>  ></div>
+  </div> 
+ 
+      <div class="field" >
+    <label class="layui-form-label"      for="assetcard_资产净值（现价）">资产净值（现价）</label>
+    <div class="layui-input-block"> <input     class="layui-input "    placeholder="请输入资产净值（现价）"    type="text" name="assetcard[Lastprice]" id="assetcard_Lastprice"
+       value=<%= @assetcard.Lastprice%>  ></div>
+  </div>   
+
+  </div>   
+
+
+
+    <div style="display:flex;">
+
+
+     <div class="field" >
+    <label class="layui-form-label"      for="assetcard_预计使用期间">预计使用期间</label>
+    <div class="layui-input-block"> <input     class="layui-input "    placeholder="请输入预计使用期间"    type="text" name="assetcard[Expectedperiod]" id="assetcard_Expectedperiod"
+       value=<%= @assetcard.Expectedperiod%>  ></div>
+  </div> 
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_累计使用期间数">累计使用期间数</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入累计使用期间数"    type="text" name="assetcard[CNOSP]" id="assetcard_CNOSP" 
+      value=<%= @assetcard.CNOSP%>  ></div>
+  </div> 
+  
+  
+  </div>   
+
+
+<br>
+卡片实物信息
+<hr> 
+
+
+
+
+
+    <div style="display:flex;">
+
+
+     <div class="field" >
+    <label class="layui-form-label"      for="assetcard_条形码">条形码</label>
+    <div class="layui-input-block"> <input     class="layui-input "    placeholder="请输入条形码"    type="text" name="assetcard[barcode]" id="assetcard_barcode"
+       value=<%= @assetcard.barcode%>  ></div>
+  </div> 
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_规格型号">规格型号</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入规格型号"    type="text" name="assetcard[Mould]" id="assetcard_Mould" 
+      value=<%= @assetcard.Mould %>  ></div>
+  </div> 
+
+
+
+  <div class="layui-form-item">
+      <label class="layui-form-label" for="assetcard_资产位置">资产位置</label> 
+       <div class="layui-input-block">
+          <select   class="layui-input "  name="assetcard[Assetseat_id]" id="assetcard_Assetseat_id"  <%= form.collection_select(:Assetseat_id, @assetseate.all, :Name, :Name) %>
+          </select>
+       </div> 
+    </div>  
+   
+
+  </div>   
+
+
+
+    <div style="display:flex;">
+
+
+     <div class="field" >
+    <label class="layui-form-label"      for="assetcard_产地（厂家）">产地（厂家）</label>
+    <div class="layui-input-block"> <input     class="layui-input "    placeholder="请输入产地（厂家）"    type="text" name="assetcard[Client]" id="assetcard_Client"
+       value=<%= @assetcard.Client%>  ></div>
+  </div> 
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_供应商">供应商</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入供应商"    type="text" name="assetcard[Supplier]" id="assetcard_Supplier" 
+      value=<%= @assetcard.Supplier%>  ></div>
+  </div> 
+  
+  
+  </div>   
+
+<br>
+使用分配
+<hr> 
+
+ 
+
+    <div style="display:flex;">
+
+
+
+
+  <div class="layui-form-item">
+      <label class="layui-form-label" for="assetcard_使用部门">使用部门</label> 
+       <div class="layui-input-block">
+          <select   class="layui-input "  name="assetcard[department_id]" id="assetcard_department_id"  <%= form.collection_select(:department_id, @department.all, :departmentname, :departmentname) %>
+          </select>
+       </div> 
+    </div>  
+
+ 
+ 
+
+  <div class="layui-form-item">
+      <label class="layui-form-label" for="assetcard_使用人">使用人</label> 
+       <div class="layui-input-block">
+          <select   class="layui-input "  name="assetcard[Employeeld]" id="assetcard_Employeeld"  <%= form.collection_select(:Employeeld, @user.all, :name, :name) %>
+          </select>
+       </div> 
+    </div> 
+  
+  
+  </div>   
+  <div class="actions layui-form-label">
+    <input type="submit" name="commit" value="保存" data-disable-with="保存">
+  </div>
+ 
+<% end %> 
+
+
+ 
+<script> 
+$(document).ready(function(){
+ $('select').comboSelect();
+});  
+</script>
+
+
+
+
+
+
+<!--%=image_tag("timg.jpg")%-->    

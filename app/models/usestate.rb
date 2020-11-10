@@ -1,0 +1,2 @@
+class Usestate < ApplicationRecord
+end

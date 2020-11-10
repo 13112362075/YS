@@ -1,0 +1,46 @@
+<%= form_with(model: unit, local: true) do |form| %>
+  <% if unit.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(unit.errors.count, "error") %> prohibited this unit from being saved:</h2>
+
+      <ul>
+        <% unit.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+   
+  <div class="field" >
+    <label class="layui-form-label"   for="unit_单位编码">单位编码</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入单位编码"    type="text" name="unit[Unitcode]" id="unit_Unitcode"   value=<%= @unit.Unitcode%>  ></div>
+  </div>
+
+   <div class="field" >
+    <label class="layui-form-label"   for="unit_名称">名称</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入名称"    type="text" name="unit[name]" id="unit_name"   value=<%= @unit.name%>  ></div>
+  </div>
+
+   <div class="field" >
+    <label class="layui-form-label"   for="unit_单位编码">精度</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入精度"    type="text" name="unit[Unitaccuracy]" id="unit_Unitaccuracy"   value=<%= @unit.Unitaccuracy%>  ></div>
+  </div>
+ 
+ 
+   <div class="layui-form-item">
+      <label class="layui-form-label" for="unit_舍入类型">舍入类型</label> 
+       <div class="layui-input-block">
+          <select   class="layui-input "   id="unit_Roundingtype"  <%= form.select :Roundingtype, [['四舍五入'], ['舍位'],['进位']] %>
+          </select>
+       </div> 
+    </div> 
+
+ 
+
+  <div class="actions">
+    <%= form.submit  :保存%>
+  </div>
+<% end %>

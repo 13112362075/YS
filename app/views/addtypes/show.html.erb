@@ -1,0 +1,26 @@
+<p id="notice"><%= notice %></p>
+<h1>查看变动方式</h1>
+<br>
+<br>
+<%= render 'form', addtype: @addtype %>
+<p> 
+
+<%= link_to '编辑', edit_addtype_path(@addtype) %> |
+<%= link_to '返回变动方式表', addtypes_path %> 
+
+ <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+ $("input").prop('disabled','disabled');
+ $("select").prop('disabled','disabled'); 
+ $("input").css('background-color','#F5F5F5');
+ $("select").css('background-color','#F5F5F5'); 
+ $("input[type=submit]").hide(); 
+ $("#notice").hide(); 
+ if($("#notice").text()!='')
+ {
+  alert( $("#notice").text());
+ }
+});
+</script>

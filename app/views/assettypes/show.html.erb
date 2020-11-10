@@ -1,24 +1,25 @@
 <p id="notice"><%= notice %></p>
+<h1>查看资产类别</h1>
+<br>
+<br>
+<%= render 'form', assettype: @assettype %> 
 
-<p>
-  <strong>Assettypecode:</strong>
-  <%= @assettype.Assettypecode %>
-</p>
+<%= link_to '编辑', edit_assettype_path(@assettype) %> |
+<%= link_to '返回资产类别表', assettypes_path %> 
 
-<p>
-  <strong>Name:</strong>
-  <%= @assettype.Name %>
-</p>
+ <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
 
-<p>
-  <strong>Orgainize:</strong>
-  <%= @assettype.Orgainize_id %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @assettype.description %>
-</p>
-
-<%= link_to 'Edit', edit_assettype_path(@assettype) %> |
-<%= link_to 'Back', assettypes_path %>
+ $("input").prop('disabled','disabled');
+ $("select").prop('disabled','disabled'); 
+ $("input").css('background-color','#F5F5F5');
+ $("select").css('background-color','#F5F5F5'); 
+ $("input[type=submit]").hide(); 
+ $("#notice").hide(); 
+ if($("#notice").text()!='')
+ {
+  alert( $("#notice").text());
+ }
+});
+</script>

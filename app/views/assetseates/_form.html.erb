@@ -1,0 +1,43 @@
+<%= form_with(model: assetseate, local: true) do |form| %>
+  <% if assetseate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(assetseate.errors.count, "error") %> prohibited this assetseate from being saved:</h2>
+
+      <ul>
+        <% assetseate.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+
+   
+  <div class="field" >
+    <label class="layui-form-label"   for="assetseate_资产位置编码">资产位置编码</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产位置编码"    type="text" name="assetseate[Assetseatecode]" id="assetseate_Assetseatecode"   value=<%= @assetseate.Assetseatecode%>  ></div>
+  </div> 
+  
+   
+  <div class="field" >
+    <label class="layui-form-label"   for="assetseate_地址">地址</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入地址"    type="text" name="assetseate[Name]" id="assetseate_Name"   value=<%= @assetseate.Name%>  ></div>
+  </div> 
+  
+    
+  <div class="field" >
+    <label class="layui-form-label"   for="assetseate_所属组织">所属组织</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入所属组织"    type="text" name="assetseate[Orgainize_id]" id="assetseate_Orgainize_id"   value=<%= @assetseate.Orgainize_id%>  ></div>
+  </div> 
+  
+    
+  <div class="field" >
+    <label class="layui-form-label"   for="assetseate_描述">描述</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入描述"    type="text" name="assetseate[Description]" id="assetseate_Description"   value=<%= @assetseate.Description%>  ></div>
+  </div> 
+   
+
+  <div class="actions">
+    <%= form.submit  :保存%>
+  </div>
+<% end %>

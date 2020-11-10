@@ -1,24 +1,24 @@
 <p id="notice"><%= notice %></p>
-
-<p>
-  <strong>部门编码:</strong>
-  <%= @department.departmentcode %>
-</p>
-
-<p>
-  <strong>部门名称:</strong>
-  <%= @department.departmentname %>
-</p>
-
-<p>
-  <strong>所属组织:</strong>
-  <%= @department.organize_id %>
-</p>
-
-<p>
-  <strong>描述:</strong>
-  <%= @department.description %>
-</p>
-
+<h1 >部门查看</h1>
+<br>
+<br>
+<%= render 'form', department: @department %>
 <%= link_to '编辑', edit_department_path(@department) %> |
 <%= link_to '返回部门表', departments_path %>
+
+ <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+ $("input").prop('disabled','disabled');
+ $("select").prop('disabled','disabled'); 
+ $("input").css('background-color','#F5F5F5');
+ $("select").css('background-color','#F5F5F5'); 
+ $("input[type=submit]").hide(); 
+ $("#notice").hide(); 
+ if($("#notice").text()!='')
+ {
+  alert( $("#notice").text());
+ }
+});
+</script>

@@ -1,10 +1,38 @@
 class AssetstatusesController < ApplicationController
   before_action :set_assetstatus, only: [:show, :edit, :update, :destroy]
 
+
+
+  def destroy_multiple    
+    params["assetstatuse_id"].each do |i| 
+      Assetstatus.destroy(i)
+  end
+    respond_to do |format|
+      format.html { redirect_to assetstatuses_url notice: '删除成功！.'  }
+      format.json { head :no_content }
+    end
+  end
+ 
+
   # GET /assetstatuses
   # GET /assetstatuses.json
-  def index
-    @assetstatuses = Assetstatus.all
+  def index 
+
+    @q = Assetstatus.search(params[:q])      
+
+    if  params[:q].nil?
+      @assetstatuses = Assetstatus.all 
+    else 
+      if  params[:q]["name_cont"].lstrip.rstrip==""
+        @assetstatuses = Assetstatus.all
+      else
+        search = params[:q]["search_cont"]
+        @assetstatuses  = Assetstatus.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+      end
+    end  
+
+
+
   end
 
   # GET /assetstatuses/1
@@ -28,7 +56,7 @@ class AssetstatusesController < ApplicationController
 
     respond_to do |format|
       if @assetstatus.save
-        format.html { redirect_to @assetstatus, notice: 'Assetstatus was successfully created.' }
+        format.html { redirect_to @assetstatus, notice: '创建成功！' }
         format.json { render :show, status: :created, location: @assetstatus }
       else
         format.html { render :new }
@@ -42,7 +70,7 @@ class AssetstatusesController < ApplicationController
   def update
     respond_to do |format|
       if @assetstatus.update(assetstatus_params)
-        format.html { redirect_to @assetstatus, notice: 'Assetstatus was successfully updated.' }
+        format.html { redirect_to @assetstatus, notice: '修改成功！.' }
         format.json { render :show, status: :ok, location: @assetstatus }
       else
         format.html { render :edit }
@@ -56,7 +84,7 @@ class AssetstatusesController < ApplicationController
   def destroy
     @assetstatus.destroy
     respond_to do |format|
-      format.html { redirect_to assetstatuses_url, notice: 'Assetstatus was successfully destroyed.' }
+      format.html { redirect_to assetstatuses_url, notice: '删除成功！' }
       format.json { head :no_content }
     end
   end

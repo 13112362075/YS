@@ -1,33 +1,161 @@
 <p id="notice"><%= notice %></p>
+<h1 style="text-align:center;">资产状态表</h1> 
 
-<h1>Assetstatuses</h1>
+<div class="layui-btn-group " style="margin:10px;0px;">
+  <a rel="nofollow" data-method="get" href="/assetstatuses/new"><button type="button" class="layui-btn">新增</button></a>
+   <a id="a_update"  rel="nofollow"    ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+   <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
+   <a id="a_delete"   rel="nofollow"  ><button   onclick="Delete()"   type="button" class="layui-btn">删除</button></a>
+   <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a>
 
-<table>
-  <thead>
-    <tr>
-      <th>Assetstatuscode</th>
-      <th>Name</th>
-      <th>Orgainize</th>
-      <th>Description</th>
-      <th colspan="3"></th>
-    </tr>
+
+
+</div> 
+
+<table  style="text-align:left;margin:10px;0px; " > 
+<%= search_form_for @q do |f| %>
+
+<td><label class="layui-form-label" >搜索框</label>
+ <select    class="layui-input "  name="q[search_cont]">
+          <option value="Assetstatuscode">资产状态编码</option>
+          <option value="Name">资产状态名称</option>
+          <option value="Orgainize_id">所属组织</option>
+          <option value="description">描述</option> 
+          </select>
+</td>
+<td><div class="layui-input-block"> <input     class="layui-input "    type="search" name="q[name_cont]" id="q_name_cont"  ></div> </td>
+
+  <td><button  class="layui-btn" type="submit" name="commit"  data-disable-with="查询"> 查询 </button></td>
+<% end %>
+</table>
+
+<table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; " >
+  <colgroup>
+    <col width="150"> 
+    <col>
+  </colgroup>
+  <thead > 
+    <tr >   
+      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center">资产状态编码</th>
+      <th style="text-align:center">资产状态名称</th>
+      <th style="text-align:center">所属组织</th>
+      <th style="text-align:center">描述</th> 
+    </tr>  
   </thead>
-
-  <tbody>
-    <% @assetstatuses.each do |assetstatus| %>
-      <tr>
-        <td><%= assetstatus.Assetstatuscode %></td>
-        <td><%= assetstatus.Name %></td>
-        <td><%= assetstatus.Orgainize_id %></td>
-        <td><%= assetstatus.description %></td>
-        <td><%= link_to 'Show', assetstatus %></td>
-        <td><%= link_to 'Edit', edit_assetstatus_path(assetstatus) %></td>
-        <td><%= link_to 'Destroy', assetstatus, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+   <tbody>
+        <% @assetstatuses.each do |assetstatuse| %>
+      <tr   id=<%= assetstatuse.id %> ondblclick="show(this)">
+        <td><input class='awsui-checkbox' id='assetstatuse.ids[]' name='assetstatuse.ids[]' value=<%= assetstatuse.id %> type='checkbox'/></td> 
+        <td class="Assetstatuscode" ><%= assetstatuse.Assetstatuscode %></td>
+        <td class="Name"><%= assetstatuse.Name %></td>
+        <td class="Orgainize_id"><%= assetstatuse.Orgainize_id %></td>
+        <td  class="description"><%= assetstatuse.description %></td>  
       </tr>
     <% end %>
   </tbody>
-</table>
+</table>  
 
-<br>
+<br> 
 
-<%= link_to 'New Assetstatus', new_assetstatus_path %>
+
+ 
+
+	<script type="text/javascript">
+
+function show (element)
+{ 
+  var  path=  "/assetstatuses/"+element.id ;   
+  window.location =path ;
+}
+			// 获取选中的复选框项，保存为一个数组
+			function getCheckedCheckbox(checkboxClassName) {
+				var array = new Array();
+				var j = 0;
+				var selectedItems = document.getElementsByClassName(checkboxClassName);
+				for (var i = 0; i < selectedItems.length; i++) {
+					if (selectedItems[i].checked == true) {
+						array[j] = selectedItems[i].value;
+						j++;
+					}
+				}
+				return array;
+			}
+
+
+
+        function getCheckedCheckbox_update(){	
+              // 输出选中
+              var items = getCheckedCheckbox("awsui-checkbox"); 
+              if(items.length>1)
+              {
+                    alert("选择了多行数据，请选择1行！");
+                    document.getElementById("a_update").href ="";
+                    return false;
+              } 
+              var  user_id=  "/assetstatuses/"+ items[0]+"/edit";   
+              document.getElementById("a_update").href =user_id;
+        }
+ 
+function Refresh(){
+  location.reload([true])
+  }    
+
+
+   function selectAll(obj){ 
+        //创建数组
+        var arr=new Array();
+        //获取所有id为“cb1”的复选框
+        var items=document.getElementsByName("assetstatuses.ids[]");
+
+        //判断复选框是否选中
+        if(obj.checked)
+        {
+        //循环将所有name为"category"的复选框设置为选中状态
+              for(var i=0;i<items.length;i++){
+              //alert(items[i]);
+              items[i].checked=true;
+              }
+        }
+        else
+        {
+              //循环将所有name为"category"的复选框设置为非选中状态
+              for(var i=0;i<items.length;i++)
+              {
+              //alert(items[i]);
+              items[i].checked=false;
+              }
+        }
+    }      
+ 
+</script> 
+
+
+
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>  
+function Delete(){ 
+   if (!confirm('你确定要删除吗？'))
+   { 
+      return false
+   } 
+var items = new Array();
+items = getCheckedCheckbox("awsui-checkbox");     
+ var resturl = "/assetstatuses_destroy_multiple"; 
+ $.ajax({
+   type:"post", 
+   url:resturl, 
+   data:{ 
+      "assetstatuse_id": items
+     }, 
+   success: function(){
+     alert("删除成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("删除失败！")
+        } 
+ });
+}
+  </script>
+ 

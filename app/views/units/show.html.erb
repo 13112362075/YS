@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+<h1>查看计量单位</h1>
+<br>
+<br>
+<%= render 'form', unit: @unit %> 
+ 
+<%= link_to '编辑', edit_unit_path(@unit) %> |
+<%= link_to '返回计量单位表', units_path %>
+
+ <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+
+ $("input").prop('disabled','disabled');
+ $("select").prop('disabled','disabled'); 
+ $("input").css('background-color','#F5F5F5');
+ $("select").css('background-color','#F5F5F5'); 
+ $("input[type=submit]").hide(); 
+ $("#notice").hide(); 
+ if($("#notice").text()!='')
+ {
+  alert( $("#notice").text());
+ }
+});
+</script>

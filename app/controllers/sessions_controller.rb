@@ -1,35 +1,38 @@
 class SessionsController < ApplicationController
-  def new
-  end
-
     def new
       @user=User.new
+
     end
     
-    def create
-      @user= User.find_by(account:  params[:session][:account ].downcase) 
-      if  @user   &&   @user.password == (params[:session][:password]) 
-        store_location
-        log_in @user   
-        if logon? 
-            redirect_back_or root_path
-       # redirect_to   root_url
-       else
-        render 'new' 
-      end
+
+    def get_user
+      @userfirst=User.first
+      render 'new'  
+    end 
+
+
+
+
+
+    def create 
+      @user= User.find_by(account:  params[:session][:account ].downcase)  
+      respond_to do |format|
+      if  @user   &&   @user.password == (params[:session][:password])  
+            store_location
+            log_in @user   
+            if logon?     
+                  format.html {redirect_to root_path}  
+                else 
+                    render 'new'  
+            end  
+        else
+                  format.html {redirect_to login_path , notice: '用户密码错误!!!' }  
     end
   end
+  end
 
-    def destroy 
-      log_out if logon?
+    def destroy   
+      log_out if logon? 
       redirect_to   root_url
-    end
-
-
-
-
-
-
-
-
+      end
   end   
