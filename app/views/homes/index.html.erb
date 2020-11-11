@@ -5,20 +5,8 @@
 
 <!--%=image_tag("timg.jpg")%-->  
   <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-
-<script>
-$(document).ready(function(){
-  $("#Btn_basicData").click(function(){
-    $("#BasicData").fadeToggle(300); 
-  });
-
- $("#TEST1").click(function(){
-    $("p").fadeToggle(300); 
-  });
-
-});
-</script>
-</head>
+ 
+ 
  
 
 
@@ -98,24 +86,27 @@ $(document).ready(function(){
   </div>
 </div>
 
+<p id="IsRresh"><%= session[:IsRresh]%></p>
+
+
+<script src="/packs/js/layui-bcce263ec7e72cb496f9.js"></script>
+<script src="/packs/js/element-29eda1820c948640d37c.js"></script>
 
 
 
- <%=javascript_pack_tag  'layui'%> 
- <%=javascript_pack_tag  'element'%> 
-
-
-
-<script>
-//注意：导航 依赖 element 模块，否则无法进行功能性操作
-    layui.use('element', function(){
-      var element = layui.element; 
-    });
-    </script>
+ 
 
 <script>
+$(document).ready(function(){ 
+ $("#IsRresh").hide();  
+  if($("#IsRresh").text()=='True')
+  { 
+      location.reload([true]);
+  }
+
+
     //JavaScript代码区域
- layui.use('element', function(){
+    layui.use('element', function(){
         var element = layui.element;
         var $ = layui.jquery;
         //触发事件
@@ -148,12 +139,7 @@ $(document).ready(function(){
 
 
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
- $('.site-demo-active').on('click', function() {
-            if(!$("#login").length)
-            {
-              alert("您还没有登录系统！请登录");
-              return false;
-            }  
+ $('.site-demo-active').on('click', function() { 
             var dataid = $(this); 
             //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
  if ($(".layui-tab-title li[lay-id]").length <= 0) {
@@ -178,4 +164,5 @@ $(document).ready(function(){
  active.tabChange(dataid.attr("data-id"));
         });
     });
+ });
 </script>

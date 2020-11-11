@@ -6,13 +6,13 @@ Rails.application.routes.draw do
   resources :units
   resources :assetstatuses
   resources :assettypes
- root 'homes#index'
+ root 'sessions#new'
   resources :departments
  
 
   resources :users  
  
-
+  get 'homes'  ,:to => 'homes#index'  , :as => 'homes'
   post 'save_multiple'  ,:to => 'users#save_multiple'  
   post 'destroy_multiple'  ,:to => 'users#destroy_multiple'  
   post 'departments_destroy_multiple'  ,:to => 'departments#destroy_multiple'  

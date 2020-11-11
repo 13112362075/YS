@@ -1,7 +1,6 @@
 class SessionsController < ApplicationController
     def new
       @user=User.new
-
     end
     
 
@@ -20,9 +19,9 @@ class SessionsController < ApplicationController
       if  @user   &&   @user.password == (params[:session][:password])  
             store_location
             log_in @user   
-            if logon?     
-                  format.html {redirect_to root_path}  
-                else 
+            if logon?        
+                  format.html {redirect_to homes_path}  
+                else  
                     render 'new'  
             end  
         else

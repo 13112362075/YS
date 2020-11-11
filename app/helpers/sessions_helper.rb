@@ -4,6 +4,11 @@ module SessionsHelper
         @user=User.find_by(account:  params[:session][:account].downcase)
         session[:role]=@user.role
         session[:name]=@user.name
+
+
+        session[:IsRresh] ="True";
+        session[:IsFirst] ="True";
+
         #@curreny_user= User.find_by(email:  user.email.downcase)
     end
 
