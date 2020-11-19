@@ -89,21 +89,17 @@
 <p id="IsRresh"><%= session[:IsRresh]%></p>
 
 
-<script src="/packs/js/layui-bcce263ec7e72cb496f9.js"></script>
-<script src="/packs/js/element-29eda1820c948640d37c.js"></script>
-
-
+<script src="/packs/js/layui-bcce263ec7e72cb496f9.js" data-turbolinks-track= "reload"></script>
+<script src="/packs/js/element-29eda1820c948640d37c.js"data-turbolinks-track= "reload"></script>
 
  
-
-<script>
+<script> 
 $(document).ready(function(){ 
  $("#IsRresh").hide();  
   if($("#IsRresh").text()=='True')
   { 
       location.reload([true]);
-  }
-
+  } 
 
     //JavaScript代码区域
     layui.use('element', function(){

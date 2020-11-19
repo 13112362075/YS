@@ -55,3 +55,8 @@ gem 'jquery-rails'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'ransack'
+
+group :development do
+  # ...[略]...
+  gem 'foreman', '~> 0.86.0'
+end

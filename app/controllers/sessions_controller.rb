@@ -1,6 +1,9 @@
 class SessionsController < ApplicationController
     def new
       @user=User.new
+      if logon?        
+         redirect_to homes_path
+      end
     end
     
 
