@@ -1,0 +1,35 @@
+ 
+var  User_datas = new Array();
+var  Userdatas_head = new Array();
+ Userdatas_head[0]='用户名'; 
+    Userdatas_head[1]='密码'; 
+    Userdatas_head[2]='姓名'; 
+    Userdatas_head[3]='地址'; 
+    Userdatas_head[4]='邮箱'; 
+    Userdatas_head[5]='电话'; 
+    Userdatas_head[6]='性别'; 
+    Userdatas_head[7]='角色'; 
+    Userdatas_head[8]='所属部门'; 
+    Userdatas_head[9]='所属组织';  
+    User_datas[0]=Userdatas_head;
+var index=1;
+    <%@user_all.each do |i|%> 
+    var  Userdatas = new Array();
+    Userdatas[0]='<%=i.account%>'; 
+    Userdatas[1]='<%=i.password%>'; 
+    Userdatas[2]='<%=i.name%>'; 
+    Userdatas[3]='<%=i.address%>'; 
+    Userdatas[4]='<%=i.email%>'; 
+    Userdatas[5]='<%=i.telephone%>'; 
+    Userdatas[6]='<%=i.sex%>'; 
+    Userdatas[7]='<%=i.role%>'; 
+    Userdatas[8]='<%=i.departmentname%>'; 
+    Userdatas[9]='<%=i.orgainize_id%>'; 
+    User_datas[index]=Userdatas;
+    index++;
+    <%end%> 
+   	var sheet = XLSX.utils.aoa_to_sheet(User_datas);
+		 
+
+		openDownloadDialog(sheet2blob(sheet), '用户表.xlsx');
+         alert("导出成功！");

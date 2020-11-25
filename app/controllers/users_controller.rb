@@ -2,6 +2,11 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy] 
 
  
+  def export_all
+    @user_all =User.all; 
+  end
+
+
   
   def save_multiple  
     params["userid"].each do |i| 
@@ -27,15 +32,19 @@ class UsersController < ApplicationController
   def index  
 
     @q = User.search(params[:q])      
-
     if  params[:q].nil?
-      @users = User.all 
+    #  @users = User.all 
+      @users=User.order(:id).page(params[:page]).per(10)
+      puts   @users;
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
-        @users = User.all
+        #  @users = User.all
+        @users=User.order(:id).page(params[:page]).per(10)
+     
       else
         search = params[:q]["search_cont"]
-        @users  = User.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+        @users  = User.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(10)
+       
       end
     end 
     @department= Department.all 
@@ -89,6 +98,7 @@ class UsersController < ApplicationController
   def update
     respond_to do |format|
 
+      console.log(User_datas);
     @department = Department.all  
       if @user.update(user_params)
         format.html { redirect_to @user, notice:'用户修改成功！'}

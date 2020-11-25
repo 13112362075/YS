@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   post 'usestates_destroy_multiple'  ,:to => 'usestates#destroy_multiple'  
   post 'units_destroy_multiple'  ,:to => 'units#destroy_multiple'
   post 'assetcards_destroy_multiple'  ,:to => 'assetcards#destroy_multiple'
-
+  get 'users_export_all'  ,:to => 'users#export_all'
 
   get 'login'  ,:to => 'sessions#new'  , :as => 'new_sessions'
   post 'login' ,:to   => 'sessions#create'

@@ -60,3 +60,6 @@ group :development do
   # ...[略]...
   gem 'foreman', '~> 0.86.0'
 end
+
+gem 'kaminari'
+gem 'bootstrap-kaminari-views'

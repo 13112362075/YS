@@ -1,6 +1,6 @@
   <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 
- 
+
 
 <p id="notice"><%= notice%></p>
 
@@ -54,9 +54,11 @@
 <div class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true">
   <div     class="layui-progress-bar" lay-percent="0%"></div>
 </div>
- 
+  
+    
 
-<table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; " >
+
+<table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; "  lay-filter="demo">
   <colgroup>
     <col width="150"> 
     <col>
@@ -94,12 +96,14 @@
         <td><%= link_to '编辑', edit_user_path(user) %></td>
         <td><%= link_to '删除', user, method: :delete, data: { confirm: '你确定要删除吗？' } %></td-->
       </tr>
-    <% end %>
+    <% end %> 
+    <tr> 
+    <td td colspan="11"> <%= paginate @users %>   </td> 
+    </tr>
   </tbody>
-</table>  
-
+</table>   
 <br> 
-
+ 
 
  
 <!--button onclick="addrow()">新增行</button>
@@ -135,7 +139,38 @@
     <script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script> 
 
 <%=javascript_pack_tag 'layui' %>
-<%=javascript_pack_tag 'element' %>
+<%=javascript_pack_tag 'element' %>  
+ 
+  
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+function setPercent(Rate){
+layui.use('element', function(){
+  var $ = layui.jquery ,
+  element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块 
+  element.progress('demo', Rate+'%')
+})};
+</script>  
+
+
+
+
 <script type="text/javascript">
  // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
 	function sheet2blob(sheet, sheetName) {
@@ -187,18 +222,27 @@
 	}
 
 function exportSpecialExcel() { 
-  var aoa = [
-			['主要信息', null, null, '其它信息'], // 特别注意合并的地方后面预留2个null
-			['姓名', '性别', '年龄', '注册时间'],
-			['张三', '男', 18, new Date()],
-			['李四', '女', 22, new Date()]
-		];
-		var sheet = XLSX.utils.aoa_to_sheet(aoa);
-		sheet['!merges'] = [
-			// 设置A1-C1的单元格合并
-			{s: {r: 0, c: 0}, e: {r: 0, c: 2}}
-		];
-		openDownloadDialog(sheet2blob(sheet), '单元格合并示例.xlsx');
+
+
+$.ajax({
+   type:"get", 
+   url :"/users_export_all",
+   data:{  
+     }, 
+   success: function(){
+    
+     location.reload();
+     },
+			error :function(){
+       
+        } 
+ });
+
+ 
+return;
+
+ 
+	
 	}  
 
 	function selectFile() {
@@ -292,14 +336,6 @@ $.ajax({
 
 
 
-<script>
-function setPercent(Rate){
-layui.use('element', function(){
-  var $ = layui.jquery ,
-  element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块 
-  element.progress('demo', Rate+'%')
-})};
-</script>  
 
 <script crossorigin="anonymous" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" src="https://lib.baomitu.com/jquery/3.5.1/jquery.js"></script>
 

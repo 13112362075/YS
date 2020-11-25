@@ -11,22 +11,20 @@
          background:url("/assets/背景图-92b8c2610394290845b276525b07832ed62672d02843fd68d1b24f0228a215a9.jpg");
          background-size: 100% 100%; 
          background-repeat:no-repeat; 
-         height:750px;
+         height:495px;
       }  
       .red-text { 
          font-size: 40px;
          /* font-family: <STKaiti,"楷体",Kaiti !improtant;> */
          font-family:  楷体;
-         left: 1230px; 
+         left: 830px; 
          position: absolute; 
-         top: 240px; 
+         top: 150px; 
          }
          .row
          {  
-         font-family: STKaiti; 
-         left: 1250px; 
-         position: absolute; 
-         top: 300px; 
+         font-family: STKaiti;  
+         position: absolute;  
          }
          .label
          {
@@ -36,26 +34,31 @@
     
 </style>
 <script>
-$(document).ready(function(){  
+$(document).ready(function(){    
+ 
+          var obj = document.getElementById("row");
+           obj.style.cssText = "top:"+screen.availHeight*0.3+"px;left:"+screen.availWidth*0.667+"px";
+           var obj = document.getElementById("red-text");
+           obj.style.cssText = "top:"+screen.availHeight*0.225+"px;left:"+screen.availWidth*0.65+"px";
+           document.body.style.height=screen.availHeight;
+           document.body.style.height=screen.availHeight; 
+         var obj = document.getElementById(".red-text"); 
           var  x=$("#notice").text();
           if (x!='')
           {
              alert (x); 
           } 
 });
-</script> 
-
-
-
+</script>  
  <p id="notice"><%= notice%></p>  
 <% if   !@userfirst.nil?%>
   <p id="user"><%= @userfirst.name%></p>   
 <% end %> 
-<p class="red-text "   >固定资产管理系统</p>
-            <div class="row">
+<p id="red-text" class="red-text "   >固定资产管理系统</p>
+            <div  id="row" class="row">
                  <div  class="col-md-6 col-md-offset-3">
                        <%=  form_for(:session,url: login_path, :remote => true )  do |f| %> 
-                      <label class="label" for="session_用户名">用户名</label>
+                      <label id="userid" class="label" for="session_用户名">用户名</label>
                       <br>
                        <input   class="layui-input "   type="text" name="session[account]" id="session_account">
                           <br>
