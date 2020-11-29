@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Code: MyString
+  name: MyString
+  Asset_type: MyString
+  Unit: MyString
+  Requisition_Amount: MyString
+  Amount_returned: 1
+  Amount_Returnable: 1
+  Asset_status: MyString
+  Requisition_Department: MyString
+  Requisition_Employeeld: MyString
+  Requisition_use: MyString
+
+two:
+  Code: MyString
+  name: MyString
+  Asset_type: MyString
+  Unit: MyString
+  Requisition_Amount: MyString
+  Amount_returned: 1
+  Amount_Returnable: 1
+  Asset_status: MyString
+  Requisition_Department: MyString
+  Requisition_Employeeld: MyString
+  Requisition_use: MyString

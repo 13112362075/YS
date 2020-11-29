@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Document_number: MyString
+  Pull_up_to_id: MyString
+  Bring_in_to_id: MyString
+  Pull_up_date: 2020-11-28
+  Allocate_reason: MyString
+  Bring_in_Number: MyString
+  Bring_in_Confirm: MyString
+
+two:
+  Document_number: MyString
+  Pull_up_to_id: MyString
+  Bring_in_to_id: MyString
+  Pull_up_date: 2020-11-28
+  Allocate_reason: MyString
+  Bring_in_Number: MyString
+  Bring_in_Confirm: MyString

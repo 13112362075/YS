@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Recovery Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Asset type</th>
+      <th>Unit</th>
+      <th>Requisition amount</th>
+      <th>Amount returned</th>
+      <th>Amount returnable</th>
+      <th>Asset status</th>
+      <th>Requisition department</th>
+      <th>Requisition employeeld</th>
+      <th>Requisition use</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_recovery_entries.each do |asset_recovery_entry| %>
+      <tr>
+        <td><%= asset_recovery_entry.Code %></td>
+        <td><%= asset_recovery_entry.name %></td>
+        <td><%= asset_recovery_entry.Asset_type %></td>
+        <td><%= asset_recovery_entry.Unit %></td>
+        <td><%= asset_recovery_entry.Requisition_Amount %></td>
+        <td><%= asset_recovery_entry.Amount_returned %></td>
+        <td><%= asset_recovery_entry.Amount_Returnable %></td>
+        <td><%= asset_recovery_entry.Asset_status %></td>
+        <td><%= asset_recovery_entry.Requisition_Department %></td>
+        <td><%= asset_recovery_entry.Requisition_Employeeld %></td>
+        <td><%= asset_recovery_entry.Requisition_use %></td>
+        <td><%= link_to 'Show', asset_recovery_entry %></td>
+        <td><%= link_to 'Edit', edit_asset_recovery_entry_path(asset_recovery_entry) %></td>
+        <td><%= link_to 'Destroy', asset_recovery_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Recovery Entry', new_asset_recovery_entry_path %>

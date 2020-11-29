@@ -1,0 +1,41 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Allocate Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Unit</th>
+      <th>Amount</th>
+      <th>Transfer</th>
+      <th>Out</th>
+      <th>Quantity</th>
+      <th>Asset seat</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_allocate_entries.each do |asset_allocate_entry| %>
+      <tr>
+        <td><%= asset_allocate_entry.Code %></td>
+        <td><%= asset_allocate_entry.name %></td>
+        <td><%= asset_allocate_entry.Unit %></td>
+        <td><%= asset_allocate_entry.Amount %></td>
+        <td><%= asset_allocate_entry.Transfer %></td>
+        <td><%= asset_allocate_entry.out %></td>
+        <td><%= asset_allocate_entry.quantity %></td>
+        <td><%= asset_allocate_entry.Asset_seat %></td>
+        <td><%= link_to 'Show', asset_allocate_entry %></td>
+        <td><%= link_to 'Edit', edit_asset_allocate_entry_path(asset_allocate_entry) %></td>
+        <td><%= link_to 'Destroy', asset_allocate_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Allocate Entry', new_asset_allocate_entry_path %>

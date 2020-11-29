@@ -7,7 +7,9 @@
    <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
    <a id="a_delete"   rel="nofollow"  ><button   onclick="Delete()"   type="button" class="layui-btn">删除</button></a>
    <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a> 
-
+<input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+   <a rel="nofollow"  ><button type="button"   onclick="selectFile()"  class="layui-btn">导入</button></a> 
+   <a rel="nofollow"  ><button type="button"   onclick="exportSpecialExcel()"  class="layui-btn">导出</button></a>
 </div> 
  
 
@@ -27,6 +29,12 @@
   <td><button  class="layui-btn" type="submit" name="commit"  data-disable-with="查询"> 查询 </button></td>
 <% end %>
 </table>
+
+
+<div class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true">
+  <div     class="layui-progress-bar" lay-percent="0%"></div>
+</div>
+
 <table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; " >
   <colgroup>
     <col width="150"> 
@@ -51,11 +59,176 @@
         <td  class="Roundingtype"><%= unit.Roundingtype %></td>  
       </tr>
     <% end %>
+       <tr> 
+      <td td colspan="5"> <%= paginate @units %>   </td> 
+    </tr>
   </tbody>
 </table>  
 
  
 
+
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script> 
+
+<%=javascript_pack_tag 'layui' %>
+<%=javascript_pack_tag 'element' %>  
+
+
+
+<script>
+function setPercent(Rate){
+layui.use('element', function(){
+  var $ = layui.jquery ,
+  element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块 
+  element.progress('demo', Rate+'%')
+})};
+</script>  
+
+
+
+
+ 
+<script>
+function exportSpecialExcel(){
+  $.ajax({
+   type:"get", 
+   url :"/units_export_all", 
+   success: function(){
+      location.reload();
+      }, 
+			error :function(){
+      }  
+ });  
+}  
+function openDownloadDialog(url, saveName)
+	{ 
+		if(typeof url == 'object' && url instanceof Blob)
+		{
+			url = URL.createObjectURL(url); // 创建blob地址
+		}
+		var aLink = document.createElement('a');
+		aLink.href = url;
+		aLink.download = saveName || ''; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+		var event;
+		if(window.MouseEvent) event = new MouseEvent('click');
+		else
+		{
+			event = document.createEvent('MouseEvents');
+			event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+		}
+		aLink.dispatchEvent(event);
+	}
+  function sheet2blob(sheet, sheetName) {
+		sheetName = sheetName || 'sheet1';
+		var workbook = {
+			SheetNames: [sheetName],
+			Sheets: {}
+		};
+		workbook.Sheets[sheetName] = sheet;
+		// 生成excel的配置项
+		var wopts = {
+			bookType: 'xlsx', // 要生成的文件类型
+			bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
+			type: 'binary'
+		};
+		var wbout = XLSX.write(workbook, wopts);
+		var blob = new Blob([s2ab(wbout)], {type:"application/octet-stream"});
+		// 字符串转ArrayBuffer
+		function s2ab(s) {
+			var buf = new ArrayBuffer(s.length);
+			var view = new Uint8Array(buf);
+			for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+			return buf;
+		}
+		return blob;
+	}
+</script>
+ 
+
+
+
+
+<script>
+function selectFile() {
+		document.getElementById('file').click(); 
+	} 
+  	$(function() {
+		document.getElementById('file').addEventListener('change', function(e) {
+			var files = e.target.files;
+			if(files.length == 0) return;
+			var f = files[0];
+			if(!/\.xlsx$/g.test(f.name)) {
+				alert('仅支持读取xlsx格式！');
+				return;
+			}   
+      setPercent('20');
+			readWorkbookFromLocalFile(f, function(workbook) {
+				readWorkbook(workbook);
+			});
+		}); 
+	});
+  // 读取本地excel文件
+	function readWorkbookFromLocalFile(file, callback) {
+		var reader = new FileReader();
+    setPercent('40');
+		reader.onload = function(e) {
+			var data = e.target.result;
+			var workbook = XLSX.read(data, {type: 'binary'});
+ 
+			if(callback) callback(workbook);
+		};
+		reader.readAsBinaryString(file);
+	}
+
+
+function readWorkbook(workbook) {
+		var sheetNames = workbook.SheetNames; // 工作表名称集合
+		var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet 
+		var csv = XLSX.utils.sheet_to_csv(worksheet);
+    
+    var datas = getdatas(csv);   
+   setPercent('80');
+    SaveByAjax(datas);
+    setPercent('100');
+	}
+
+
+
+	function getdatas(csv)
+	{ 
+    var datas = new Array();
+    var rows = csv.split('\n');
+    var index=0; 
+    rows.pop(); // 最后一行没用的
+    rows.shift();//删掉列头
+		rows.forEach(function(row, idx) {
+      var columns = row.split(',');
+      datas[index]=columns;
+      index++;
+    }); 
+		return datas;
+	}
+
+function  SaveByAjax(datas)
+{
+
+$.ajax({
+   type:"post", 
+   url :"/units_save_multiple",
+   data:{ 
+      "unitid": datas
+     }, 
+   success: function(){
+     alert("导入成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("导入成功")
+        } 
+ });
+}
+</script>
 
 
 

@@ -4,6 +4,18 @@ class DepartmentsController < ApplicationController
 
 
 
+  def export_all
+    @department_all =Department.all; 
+  end
+
+
+  
+  def save_multiple  
+    params["departmentid"].each do |i| 
+      puts i[1].length    
+      department= Department.create!(departmentcode: i[1][0],departmentname: i[1][1],organize_id: i[1][2],description: i[1][3])
+    end
+  end
 
 
 
@@ -27,14 +39,14 @@ class DepartmentsController < ApplicationController
 
     @q = Department.search(params[:q])      
 
-    if  params[:q].nil?
-      @departments = Department.all 
+    if  params[:q].nil? 
+      @departments=Department.order(:id).page(params[:page]).per(10)
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
-        @departments = Department.all
+        @departments=Department.order(:id).page(params[:page]).per(10)
       else
         search = params[:q]["search_cont"]
-        @departments  = Department.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+        @departments  = Department.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(10)
       end
     end   
   end

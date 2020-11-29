@@ -1,0 +1,249 @@
+  <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
+<%= form_with(model: asset_allocate, local: true) do |form| %>
+  <% if asset_allocate.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_allocate.errors.count, "error") %> prohibited this asset_allocate from being saved:</h2>
+
+      <ul>
+        <% asset_allocate.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+
+    <div style="display:flex;"> 
+     <div class="field" >
+    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_allocate_单据编号">单据编号</label>
+    <div  class="layui-input-block"> <input     class="layui-input "    placeholder="请输入单据编号"    type="text" name="asset_allocate[Document_number]" id="asset_allocate_Document_number"
+       value=<%= @asset_allocate.Document_number%>  ></div>
+  </div> 
+
+ 
+     <div class="field" >
+    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_allocate_调出资产组织">调出资产组织</label>
+    <div  class="layui-input-block"> <input     class="layui-input"    placeholder="请输入调出资产组织"    type="text" name="asset_allocate[Pull_up_to_id]" id="asset_allocate_Pull_up_to_id"
+       value=<%= @asset_allocate.Pull_up_to_id%> ></div>
+  </div>  
+
+
+     <div class="field" >
+    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_allocate_调入资产组织">调入资产组织</label>
+    <div  class="layui-input-block"> <input     class="layui-input  fdate"    placeholder="请输入调入资产组织"    type="text" name="asset_allocate[Bring_in_to_id]" id="asset_allocate_Bring_in_to_id"
+       value=<%= @asset_allocate.Bring_in_to_id%>  ></div>
+  </div>   
+</div>
+     
+  
+
+
+
+    <div style="display:flex;"> 
+     <div class="field" >
+    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_allocate_调出日期">调出日期</label>
+    <div  class="layui-input-block"> <input     class="layui-input "    placeholder="请输入调出日期"    type="text" name="asset_allocate[Pull_up_date]" id="asset_allocate_Pull_up_date"
+       value=<%= @asset_allocate.Pull_up_date%>  ></div>
+  </div> 
+
+ 
+     <div class="field" >
+    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_allocate_调拨原因">调拨原因</label>
+    <div  class="layui-input-block"> <input     class="layui-input"    placeholder="请输入调拨原因"    type="text" name="asset_allocate[Allocate_reason]" id="asset_allocate_Allocate_reason"
+       value=<%= @asset_allocate.Allocate_reason%>  ></div>
+  </div>  
+
+
+     <div class="field" >
+    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_allocate_调入单号">调入单号</label>
+    <div  class="layui-input-block"> <input     class="layui-input  fdate"    placeholder="请输入调入单号"    type="text" name="asset_allocate[Bring_in_Number]" id="asset_allocate_Bring_in_Number"
+       value=<%= @asset_allocate.Bring_in_Number%>  ></div>
+  </div>   
+</div>
+     
+  
+ 
+
+
+    <div style="display:flex;"> 
+     <div class="field" >
+    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_allocate_调入确认">调入确认</label>
+    <div  class="layui-input-block"> <input     class="layui-input "    placeholder="请输入调入确认"    type="text" name="asset_allocate[Bring_in_Confirm]" id="asset_allocate_Bring_in_Confirm"
+       value=<%= @asset_allocate.Bring_in_Confirm%>  ></div>
+  </div> 
+ 
+</div>
+     
+  
+ 
+
+
+ 
+
+   <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a>
+  <div class="actions layui-form-label">
+    <input type="submit" name="commit" value="保存" data-disable-with="保存">
+  </div>
+<% end %>
+
+<br><br>
+ 
+<button onclick="addrow()">新增行</button>
+<button onclick="delrow()">删除行</button>
+<form id="Entry" ,action="/save_multiple">
+<table    id="testid"  class="layui-table" style="text-align:center;margin:10px;0px; " >
+  <colgroup>
+    <col width="150"> 
+    <col>
+  </colgroup>
+  <thead > 
+    <tr >  
+      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center">资产编码</th>
+      <th style="text-align:center">资产名称</th> 
+      <th style="text-align:center">资产类别</th> 
+      <th style="text-align:center">计量单位</th>
+      <th style="text-align:center">领用数量</th> 
+      <th style="text-align:center">退回数量</th>
+      <th style="text-align:center">可退回数量</th> 
+      <th style="text-align:center">资产状态</th>
+      <th style="text-align:center">领用部门</th> 
+      <th style="text-align:center">领用人</th> 
+      <th style="text-align:center">领用用途</th> 
+    </tr>  
+  </thead>
+   <tbody> 
+      <tr class="trr"  onclick =>
+        <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'/></td> 
+          <td class="tdd1" contenteditable="true"> </td>
+            <td class="tdd1" contenteditable="true"> </td>
+        <td class="tdd1" contenteditable="true"> </td>
+        <td class="tdd1" contenteditable="true"></td>
+        <td class="tdd1" contenteditable="true"> </td>
+        <td class="tdd1" contenteditable="true" ></td>
+        <td class="tdd1" contenteditable="true" > </td>
+        <td class="tdd1" contenteditable="true" ></td>
+        <td class="tdd1" contenteditable="true" > </td>
+        <td class="tdd1" contenteditable="true"> </td>
+        <td class="tdd1" contenteditable="true"> </td>
+      </tr> 
+  </tbody>
+</table>  
+</form> 
+
+
+
+
+
+
+
+<%= javascript_pack_tag 'layui'%>
+<%= javascript_pack_tag 'laydate'%>
+<%= stylesheet_pack_tag 'laydate'%> 
+
+ <script>
+layui.use('laydate', function(){
+  var laydate = layui.laydate;
+    $('.fdate').each(function(){
+    laydate.render({
+			elem: this     
+	});
+  }) 
+});   
+</script>
+ 
+
+ <script>
+//新增行
+function addrow(){
+   var c=document.getElementById('testid');//获得表格的信息 
+   console.log(c);
+   if( c.length==1)//如果是向一个空表增加一行
+   {
+     var x=c.insertRow(1);//向空表插入一行 
+     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行  
+     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
+     {
+       var y=x.insertCell(i); 
+     }
+   }
+   else
+   { 
+     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行 
+     var x=c.insertRow(c.rows.length);
+     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
+     { 
+       
+       var y=x.insertCell(i);  
+       if(i==0)
+       { 
+              y.innerHTML="<input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]'  type='checkbox'/>";
+       }
+       else
+       {
+         y.setAttribute("contenteditable","true");
+       }
+     }
+   }
+}
+ //删除行
+function delrow(){
+var x=document.getElementById("testid");
+if(x.rows.length==2)
+{
+  alert("数据数据行至少为1行，不允许删除！");
+  return false;
+}
+x.deleteRow(x.rows.length-1);//删除一行
+}
+//全选
+   function selectAll(obj){ 
+        //创建数组
+        var arr=new Array();
+        //获取所有id为“cb1”的复选框
+        var items=document.getElementsByName("entry.ids[]");
+
+        //判断复选框是否选中
+        if(obj.checked)
+        {
+        //循环将所有name为"category"的复选框设置为选中状态
+              for(var i=0;i<items.length;i++){
+              //alert(items[i]);
+              items[i].checked=true;
+              }
+        }
+        else
+        {
+              //循环将所有name为"category"的复选框设置为非选中状态
+              for(var i=0;i<items.length;i++)
+              {
+              //alert(items[i]);
+              items[i].checked=false;
+              }
+        }
+    }      
+ </script>
+
+<script>
+
+			function test1() { 
+var  Document_number=document.getElementById("asset_turnover_detail_Document_number").value;
+var  Borrowing_date=document.getElementById("asset_turnover_detail_Borrowing_date").value;
+var  Borrowing_Department=document.getElementById("asset_turnover_detail_Borrowing_Department").value;
+var  Borrowed_To_id=document.getElementById("asset_turnover_detail_Borrowed_To_id").value;
+var  Loaner=document.getElementById("asset_turnover_detail_Loaner").value; 
+var array1 = new Array();
+var tb = document.getElementById('testid');    // table 的 id
+var rows = tb.rows;                           // 获取表格所有行
+var t=0;
+for(var i = 1; i<rows.length; i++ ){
+
+var array2 = new Array();
+   for(var j = 1; j<rows[i].cells.length; j++ ){    // 遍历该行的 td     
+       array2[j-1]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
+   }
+   array1[i-1]=array2;
+} 
+  }
+ </script>

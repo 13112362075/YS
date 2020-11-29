@@ -1,0 +1,1 @@
+json.partial! "asset_turnover_detail_entries/asset_turnover_detail_entry", asset_turnover_detail_entry: @asset_turnover_detail_entry

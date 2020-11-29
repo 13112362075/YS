@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @asset_recovery_entry.Code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @asset_recovery_entry.name %>
+</p>
+
+<p>
+  <strong>Asset type:</strong>
+  <%= @asset_recovery_entry.Asset_type %>
+</p>
+
+<p>
+  <strong>Unit:</strong>
+  <%= @asset_recovery_entry.Unit %>
+</p>
+
+<p>
+  <strong>Requisition amount:</strong>
+  <%= @asset_recovery_entry.Requisition_Amount %>
+</p>
+
+<p>
+  <strong>Amount returned:</strong>
+  <%= @asset_recovery_entry.Amount_returned %>
+</p>
+
+<p>
+  <strong>Amount returnable:</strong>
+  <%= @asset_recovery_entry.Amount_Returnable %>
+</p>
+
+<p>
+  <strong>Asset status:</strong>
+  <%= @asset_recovery_entry.Asset_status %>
+</p>
+
+<p>
+  <strong>Requisition department:</strong>
+  <%= @asset_recovery_entry.Requisition_Department %>
+</p>
+
+<p>
+  <strong>Requisition employeeld:</strong>
+  <%= @asset_recovery_entry.Requisition_Employeeld %>
+</p>
+
+<p>
+  <strong>Requisition use:</strong>
+  <%= @asset_recovery_entry.Requisition_use %>
+</p>
+
+<%= link_to 'Edit', edit_asset_recovery_entry_path(@asset_recovery_entry) %> |
+<%= link_to 'Back', asset_recovery_entries_path %>

@@ -1,0 +1,2 @@
+module AssetAllocatesHelper
+end

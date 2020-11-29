@@ -1,0 +1,64 @@
+ 
+var  assetcard_datas = new Array();
+var  assetcarddatas_head = new Array();
+ assetcarddatas_head[0]='资产卡片编码';
+ assetcarddatas_head[1]='资产卡片名称'; 
+assetcarddatas_head[2]='资产类别'; 
+assetcarddatas_head[3]='计量单位';  
+ assetcarddatas_head[4]='数量';
+ assetcarddatas_head[5]='资产状态'; 
+assetcarddatas_head[6]='变动方式'; 
+assetcarddatas_head[7]='购买日期';  
+ assetcarddatas_head[8]='资产使用状态';
+ assetcarddatas_head[9]='备注'; 
+assetcarddatas_head[10]='所属组织'; 
+assetcarddatas_head[11]='入账日期';  
+ assetcarddatas_head[12]='购进价格';
+ assetcarddatas_head[13]='资产净值(现价)'; 
+assetcarddatas_head[14]='预计使用期间'; 
+assetcarddatas_head[15]='累计使用期间数';  
+ assetcarddatas_head[16]='条形码';
+ assetcarddatas_head[17]='规格型号'; 
+assetcarddatas_head[18]='资产位置'; 
+assetcarddatas_head[19]='产地(厂家)';
+ assetcarddatas_head[20]='供应商';
+ assetcarddatas_head[21]='使用部门'; 
+assetcarddatas_head[22]='使用人';  
+
+assetcard_datas[0]=assetcarddatas_head;
+var index=1;
+    <%@assetcard_all.each do |i|%> 
+    var  assetcarddatas = new Array();     
+assetcarddatas[0]='<%=i.assetCode%>';
+ assetcarddatas[1]='<%=i.assetname%>'; 
+assetcarddatas[2]='<%=i.Assettype_id%>'; 
+assetcarddatas[3]='<%=i.Unit_id%>';  
+ assetcarddatas[4]='<%=i.Amount%>';
+ assetcarddatas[5]='<%=i.Assetstatus_id%>'; 
+assetcarddatas[6]='<%=i.Addtype_id%>'; 
+assetcarddatas[7]='<%=i.BuyDate%>';  
+ assetcarddatas[8]='<%=i.Usestate_id%>';
+ assetcarddatas[9]='<%=i.description%>'; 
+assetcarddatas[10]='<%=i.Orgainize_id%>'; 
+assetcarddatas[11]='<%=i.Entrydate%>';  
+ assetcarddatas[12]='<%=i.Price%>';
+ assetcarddatas[13]='<%=i.Lastprice%>'; 
+ assetcarddatas[14]='<%=i.Expectedperiod%>';    
+assetcarddatas[15]='<%=i.CNOSP%>'; 
+assetcarddatas[16]='<%=i.barcode%>';  
+ assetcarddatas[17]='<%=i.Mould%>';
+ assetcarddatas[18]='<%=i.Assetseat_id%>'; 
+assetcarddatas[19]='<%=i.Client%>'; 
+assetcarddatas[20]='<%=i.Supplier%>';
+ assetcarddatas[21]='<%=i.department_id%>';
+ assetcarddatas[22]='<%=i.Employeeld%>'; 
+assetcarddatas[23]='<%=i.Expectedperiod%>';    
+
+    assetcard_datas[index]=assetcarddatas;
+    index++;
+    <%end%> 
+   	var sheet = XLSX.utils.aoa_to_sheet(assetcard_datas);
+		 
+
+		openDownloadDialog(sheet2blob(sheet), '资产卡片表.xlsx');
+         alert("导出成功！");

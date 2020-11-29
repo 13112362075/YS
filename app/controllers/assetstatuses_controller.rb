@@ -3,6 +3,22 @@ class AssetstatusesController < ApplicationController
 
 
 
+  def export_all
+    @assetstatus_all =Assetstatus.all; 
+  end
+
+
+  
+  def save_multiple  
+    puts "1"
+    params["assetstatuseid"].each do |i| 
+      puts i[1].length    
+      assetstatus = Assetstatus.create!(Assetstatuscode: i[1][0],Name: i[1][1],Orgainize_id: i[1][2],description: i[1][3])
+ 
+    end
+  end
+
+
   def destroy_multiple    
     params["assetstatuse_id"].each do |i| 
       Assetstatus.destroy(i)
@@ -20,14 +36,14 @@ class AssetstatusesController < ApplicationController
 
     @q = Assetstatus.search(params[:q])      
 
-    if  params[:q].nil?
-      @assetstatuses = Assetstatus.all 
+    if  params[:q].nil? 
+      @assetstatuses=Assetstatus.order(:id).page(params[:page]).per(10)
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
-        @assetstatuses = Assetstatus.all
+        @assetstatuses=Assetstatus.order(:id).page(params[:page]).per(10)
       else
         search = params[:q]["search_cont"]
-        @assetstatuses  = Assetstatus.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+        @assetstatuses  = Assetstatus.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ).page(params[:page]).per(10)
       end
     end  
 

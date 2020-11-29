@@ -1,0 +1,42 @@
+<%= form_with(model: asset_turnover_detail, local: true) do |form| %>
+  <% if asset_turnover_detail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_turnover_detail.errors.count, "error") %> prohibited this asset_turnover_detail from being saved:</h2>
+
+      <ul>
+        <% asset_turnover_detail.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Document_number %>
+    <%= form.text_field :Document_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Borrowing_date %>
+    <%= form.date_select :Borrowing_date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Borrowing_Department %>
+    <%= form.text_field :Borrowing_Department %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Borrowed_To_id %>
+    <%= form.text_field :Borrowed_To_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Loaner %>
+    <%= form.text_field :Loaner %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

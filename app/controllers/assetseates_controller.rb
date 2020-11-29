@@ -2,6 +2,21 @@ class AssetseatesController < ApplicationController
   before_action :set_assetseate, only: [:show, :edit, :update, :destroy]
 
 
+
+  def export_all
+    @assetseate_all =Assetseate.all; 
+  end
+
+
+  
+  def save_multiple  
+    params["assetseateid"].each do |i| 
+      puts i[1].length    
+      assetseate = Assetseate.create!(Assetseatecode: i[1][0],Name: i[1][1],Orgainize_id: i[1][2],Description: i[1][3])
+    
+    end
+  end
+
   def destroy_multiple    
     params["assetseate_id"].each do |i| 
       Assetseate.destroy(i)
@@ -18,14 +33,14 @@ end
   def index  
     @q = Assetseate.search(params[:q])      
 
-    if  params[:q].nil?
-      @assetseate = Assetseate.all 
+    if  params[:q].nil? 
+      @assetseate=Assetseate.order(:id).page(params[:page]).per(10)
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
-        @assetseate = Assetseate.all
+        @assetseate=Assetseate.order(:id).page(params[:page]).per(10)
       else
         search = params[:q]["search_cont"]
-        @assetseate  = Assetseate.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+        @assetseate  = Assetseate.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(10)
       end
     end   
   end

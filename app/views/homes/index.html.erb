@@ -59,10 +59,10 @@
         </li>
       <li class="layui-nav-item">
           <a href="javascript:;">单据 </a>
-          <dl class="layui-nav-child">
-            <dd><a href="javascript:;">单据1</a></dd>
-            <dd><a href="javascript:;">单据2</a></dd>
-            <dd><a href="javascript:;">单据3</a></dd>
+         <dl class="layui-nav-child">
+            <dd><a data-url= <%=asset_recoveries_path%> data-id="asset_recoveries_path" data-title="资产领用单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产领用单</a></dd>
+            <dd><a data-url= <%=asset_turnover_details_path%> data-id="asset_turnover_details_path" data-title="资产借用/归还单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产借用/归还单</a></dd>
+                <dd><a data-url= <%=asset_allocates_path%> data-id="asset_allocates_path" data-title="资产调拨单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产调拨单</a></dd>
           </dl>
         </li> 
       </ul>

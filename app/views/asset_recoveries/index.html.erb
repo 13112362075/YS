@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Recoveries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Documentnumber</th>
+      <th>Type of business</th>
+      <th>Requisition date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_recoveries.each do |asset_recovery| %>
+      <tr>
+        <td><%= asset_recovery.Documentnumber %></td>
+        <td><%= asset_recovery.Type_of_business %></td>
+        <td><%= asset_recovery.Requisition_Date %></td>
+        <td><%= link_to 'Show', asset_recovery %></td>
+        <td><%= link_to 'Edit', edit_asset_recovery_path(asset_recovery) %></td>
+        <td><%= link_to 'Destroy', asset_recovery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Recovery', new_asset_recovery_path %>

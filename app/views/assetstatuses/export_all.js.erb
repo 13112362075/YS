@@ -1,0 +1,24 @@
+ 
+var  assetstatus_datas = new Array();
+var  assetstatusdatas_head = new Array();
+ assetstatusdatas_head[0]='资产状态编码'; 
+    assetstatusdatas_head[1]='资产状态名称'; 
+    assetstatusdatas_head[2]='所属组织'; 
+    assetstatusdatas_head[3]='描述';  
+    assetstatus_datas[0]=assetstatusdatas_head;
+var index=1;
+    <%@assetstatus_all.each do |i|%> 
+    var  assetstatusdatas = new Array();
+    assetstatusdatas[0]='<%=i.Assetstatuscode%>'; 
+    assetstatusdatas[1]='<%=i.Name%>'; 
+    assetstatusdatas[2]='<%=i.Orgainize_id%>'; 
+    assetstatusdatas[3]='<%=i.description%>';  
+ 
+    assetstatus_datas[index]=assetstatusdatas;
+    index++;
+    <%end%> 
+   	var sheet = XLSX.utils.aoa_to_sheet(assetstatus_datas);
+		 
+
+		openDownloadDialog(sheet2blob(sheet), '资产状态表.xlsx');
+         alert("导出成功！");

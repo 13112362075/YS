@@ -2,6 +2,21 @@ class UsestatesController < ApplicationController
   before_action :set_usestate, only: [:show, :edit, :update, :destroy]
 
 
+
+  def export_all
+    puts "1";
+    @Usestate_all =Usestate.all; 
+  end
+
+
+  
+  def save_multiple  
+    params["usestateid"].each do |i| 
+      puts i[1].length    
+      usestate = Usestate.create!(Usestatecode: i[1][0],Name: i[1][1],Orgainize_id: i[1][2],Description: i[1][3])
+    end
+  end
+
   def destroy_multiple    
     params["usestate_id"].each do |i| 
       Usestate.destroy(i)
@@ -22,13 +37,13 @@ class UsestatesController < ApplicationController
 
 
     if  params[:q].nil?
-      @usestates = Usestate.all 
+      @usestates=Usestate.order(:id).page(params[:page]).per(10)
     else 
-      if  params[:q]["name_cont"].lstrip.rstrip==""
-        @usestates = Usestate.all
+      if  params[:q]["name_cont"].lstrip.rstrip=="" 
+        @usestates=Usestate.order(:id).page(params[:page]).per(10)
       else
         search = params[:q]["search_cont"]
-        @usestates  = Usestate.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+        @usestates  = Usestate.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(10)
       end
     end   
   end

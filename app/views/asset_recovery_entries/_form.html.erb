@@ -1,0 +1,72 @@
+<%= form_with(model: asset_recovery_entry, local: true) do |form| %>
+  <% if asset_recovery_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_recovery_entry.errors.count, "error") %> prohibited this asset_recovery_entry from being saved:</h2>
+
+      <ul>
+        <% asset_recovery_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Code %>
+    <%= form.text_field :Code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_type %>
+    <%= form.text_field :Asset_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Unit %>
+    <%= form.text_field :Unit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Requisition_Amount %>
+    <%= form.text_field :Requisition_Amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Amount_returned %>
+    <%= form.number_field :Amount_returned %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Amount_Returnable %>
+    <%= form.number_field :Amount_Returnable %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_status %>
+    <%= form.text_field :Asset_status %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Requisition_Department %>
+    <%= form.text_field :Requisition_Department %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Requisition_Employeeld %>
+    <%= form.text_field :Requisition_Employeeld %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Requisition_use %>
+    <%= form.text_field :Requisition_use %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

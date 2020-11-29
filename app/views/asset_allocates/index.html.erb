@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Allocates</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document number</th>
+      <th>Pull up to</th>
+      <th>Bring in to</th>
+      <th>Pull up date</th>
+      <th>Allocate reason</th>
+      <th>Bring in number</th>
+      <th>Bring in confirm</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_allocates.each do |asset_allocate| %>
+      <tr>
+        <td><%= asset_allocate.Document_number %></td>
+        <td><%= asset_allocate.Pull_up_to_id %></td>
+        <td><%= asset_allocate.Bring_in_to_id %></td>
+        <td><%= asset_allocate.Pull_up_date %></td>
+        <td><%= asset_allocate.Allocate_reason %></td>
+        <td><%= asset_allocate.Bring_in_Number %></td>
+        <td><%= asset_allocate.Bring_in_Confirm %></td>
+        <td><%= link_to 'Show', asset_allocate %></td>
+        <td><%= link_to 'Edit', edit_asset_allocate_path(asset_allocate) %></td>
+        <td><%= link_to 'Destroy', asset_allocate, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Allocate', new_asset_allocate_path %>

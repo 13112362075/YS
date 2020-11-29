@@ -2,6 +2,20 @@ class UnitsController < ApplicationController
   before_action :set_unit, only: [:show, :edit, :update, :destroy]
 
 
+  def export_all
+    @unit_all =Unit.all; 
+  end
+
+
+  
+  def save_multiple  
+    params["unitid"].each do |i| 
+      puts i[1].length    
+      unit = Unit.create!(Unitcode: i[1][0],name: i[1][1],Unitaccuracy: i[1][2],Roundingtype: i[1][3])
+ 
+    end
+  end
+
   def destroy_multiple    
     params["unit_id"].each do |i| 
       Unit.destroy(i)
@@ -18,14 +32,14 @@ class UnitsController < ApplicationController
   def index 
     @q = Unit.search(params[:q])      
 
-    if  params[:q].nil?
-      @units = Unit.all 
+    if  params[:q].nil? 
+      @units=Unit.order(:id).page(params[:page]).per(10)
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
-        @units = Unit.all
+        @units=Unit.order(:id).page(params[:page]).per(10)
       else
         search = params[:q]["search_cont"]
-        @units  = Unit.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+        @units  = Unit.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(10)
       end
   end
 end

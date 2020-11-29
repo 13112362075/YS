@@ -2,6 +2,21 @@ class AssetcardsController < ApplicationController
   before_action :set_assetcard, only: [:show, :edit, :update, :destroy]
 
 
+  def export_all
+    puts "1";
+    @assetcard_all =Assetcard.all; 
+  end
+
+
+  
+  def save_multiple  
+    params["assetcardid"].each do |i| 
+      puts i[1].length    
+      assetcard = Assetcard.create!(assetCode: i[1][0],assetname: i[1][1],Assettype_id: i[1][2],Unit_id: i[1][3],Amount: i[1][4], Assetstatus_id: i[1][5],Addtype_id: i[1][6],BuyDate: i[1][7],Usestate_id: i[1][8],description: i[1][9],Orgainize_id: i[1][10],Entrydate: i[1][11],Price: i[1][12],Lastprice: i[1][13],Expectedperiod: i[1][14], CNOSP: i[1][15],barcode: i[1][16],Mould: i[1][17],Assetseat_id: i[1][18],Client: i[1][19], Supplier: i[1][20],department_id: i[1][21],Employeeld: i[1][22])
+ 
+    end
+  end
+
  
 
   def destroy_multiple    
@@ -21,14 +36,14 @@ class AssetcardsController < ApplicationController
     
     @q = Assetcard.search(params[:q])      
 
-    if  params[:q].nil?
-      @assetcards = Assetcard.all
+    if  params[:q].nil? 
+      @assetcards=Assetcard.order(:id).page(params[:page]).per(10)
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
-        @assetcards = Assetcard.all
+        @assetcards=Assetcard.order(:id).page(params[:page]).per(10)
       else
         search = params[:q]["search_cont"]
-        @assetcards  = Assetcard.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+        @assetcards  = Assetcard.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(10)
       end
   end
 end

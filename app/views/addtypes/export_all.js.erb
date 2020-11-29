@@ -1,0 +1,24 @@
+ 
+var  addtype_datas = new Array();
+var  addtypedatas_head = new Array();
+ addtypedatas_head[0]='变动方式编码'; 
+    addtypedatas_head[1]='变动方式名称'; 
+    addtypedatas_head[2]='所属组织'; 
+    addtypedatas_head[3]='描述';  
+    addtype_datas[0]=addtypedatas_head;
+var index=1;
+    <%@addtype_all.each do |i|%> 
+    var  addtypedatas = new Array();
+    addtypedatas[0]='<%=i.Addtypecode%>'; 
+    addtypedatas[1]='<%=i.Name%>'; 
+    addtypedatas[2]='<%=i.Orgainize_id%>'; 
+    addtypedatas[3]='<%=i.Description%>';  
+ 
+    addtype_datas[index]=addtypedatas;
+    index++;
+    <%end%> 
+   	var sheet = XLSX.utils.aoa_to_sheet(addtype_datas);
+		 
+
+		openDownloadDialog(sheet2blob(sheet), '变动方式表.xlsx');
+         alert("导出成功！");

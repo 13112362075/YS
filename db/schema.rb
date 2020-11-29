@@ -10,13 +10,91 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_06_084218) do
+ActiveRecord::Schema.define(version: 2020_11_28_101825) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
     t.string "Name"
     t.integer "Orgainize_id"
     t.string "Description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_allocate_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Code"
+    t.string "name"
+    t.string "Unit"
+    t.integer "Amount"
+    t.string "Transfer"
+    t.string "out"
+    t.integer "quantity"
+    t.string "Asset_seat"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_allocates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Document_number"
+    t.string "Pull_up_to_id"
+    t.string "Bring_in_to_id"
+    t.date "Pull_up_date"
+    t.string "Allocate_reason"
+    t.string "Bring_in_Number"
+    t.string "Bring_in_Confirm"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_recoveries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Documentnumber"
+    t.string "Type_of_business"
+    t.date "Requisition_Date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_recovery_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Code"
+    t.string "name"
+    t.string "Asset_type"
+    t.string "Unit"
+    t.string "Requisition_Amount"
+    t.integer "Amount_returned"
+    t.integer "Amount_Returnable"
+    t.string "Asset_status"
+    t.string "Requisition_Department"
+    t.string "Requisition_Employeeld"
+    t.string "Requisition_use"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_turnover_detail_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "assetcards_Code"
+    t.string "assetcards_name"
+    t.string "Unit"
+    t.decimal "Amount", precision: 10
+    t.string "Reasons_for"
+    t.string "_borrowing"
+    t.date "givebackPlanDate"
+    t.string "Has_Been_returned"
+    t.date "givebackDate"
+    t.string "Deptment"
+    t.string "Employeeld"
+    t.string "Asset_seat"
+    t.string "Last_seat"
+    t.integer "AssetTurnoverDetail_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_turnover_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Document_number"
+    t.date "Borrowing_date"
+    t.string "Borrowing_Department"
+    t.string "Borrowed_To_id"
+    t.string "Loaner"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

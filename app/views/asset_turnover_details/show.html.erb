@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Document number:</strong>
+  <%= @asset_turnover_detail.Document_number %>
+</p>
+
+<p>
+  <strong>Borrowing date:</strong>
+  <%= @asset_turnover_detail.Borrowing_date %>
+</p>
+
+<p>
+  <strong>Borrowing department:</strong>
+  <%= @asset_turnover_detail.Borrowing_Department %>
+</p>
+
+<p>
+  <strong>Borrowed to:</strong>
+  <%= @asset_turnover_detail.Borrowed_To_id %>
+</p>
+
+<p>
+  <strong>Loaner:</strong>
+  <%= @asset_turnover_detail.Loaner %>
+</p>
+
+<%= link_to 'Edit', edit_asset_turnover_detail_path(@asset_turnover_detail) %> |
+<%= link_to 'Back', asset_turnover_details_path %>

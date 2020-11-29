@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Turnover Detail Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Assetcards code</th>
+      <th>Assetcards name</th>
+      <th>Unit</th>
+      <th>Amount</th>
+      <th>Reasons for</th>
+      <th>Borrowing</th>
+      <th>Givebackplandate</th>
+      <th>Has been returned</th>
+      <th>Givebackdate</th>
+      <th>Deptment</th>
+      <th>Employeeld</th>
+      <th>Asset seat</th>
+      <th>Last seat</th>
+      <th>Assetturnoverdetail</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_turnover_detail_entries.each do |asset_turnover_detail_entry| %>
+      <tr>
+        <td><%= asset_turnover_detail_entry.assetcards_Code %></td>
+        <td><%= asset_turnover_detail_entry.assetcards_name %></td>
+        <td><%= asset_turnover_detail_entry.Unit %></td>
+        <td><%= asset_turnover_detail_entry.Amount %></td>
+        <td><%= asset_turnover_detail_entry.Reasons_for %></td>
+        <td><%= asset_turnover_detail_entry._borrowing %></td>
+        <td><%= asset_turnover_detail_entry.givebackPlanDate %></td>
+        <td><%= asset_turnover_detail_entry.Has_Been_returned %></td>
+        <td><%= asset_turnover_detail_entry.givebackDate %></td>
+        <td><%= asset_turnover_detail_entry.Deptment %></td>
+        <td><%= asset_turnover_detail_entry.Employeeld %></td>
+        <td><%= asset_turnover_detail_entry.Asset_seat %></td>
+        <td><%= asset_turnover_detail_entry.Last_seat %></td>
+        <td><%= asset_turnover_detail_entry.AssetTurnoverDetail_id %></td>
+        <td><%= link_to 'Show', asset_turnover_detail_entry %></td>
+        <td><%= link_to 'Edit', edit_asset_turnover_detail_entry_path(asset_turnover_detail_entry) %></td>
+        <td><%= link_to 'Destroy', asset_turnover_detail_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Turnover Detail Entry', new_asset_turnover_detail_entry_path %>

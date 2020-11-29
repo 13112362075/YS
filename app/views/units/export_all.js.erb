@@ -1,0 +1,24 @@
+ 
+var  unit_datas = new Array();
+var  unitdatas_head = new Array();
+ unitdatas_head[0]='单位编码'; 
+    unitdatas_head[1]='名称'; 
+    unitdatas_head[2]='精度'; 
+    unitdatas_head[3]='舍入类型';  
+    unit_datas[0]=unitdatas_head;
+var index=1;
+    <%@unit_all.each do |i|%> 
+    var  unitdatas = new Array();
+    unitdatas[0]='<%=i.Unitcode%>'; 
+    unitdatas[1]='<%=i.name%>'; 
+    unitdatas[2]='<%=i.Unitaccuracy%>'; 
+    unitdatas[3]='<%=i.Roundingtype%>';  
+ 
+    unit_datas[index]=unitdatas;
+    index++;
+    <%end%> 
+   	var sheet = XLSX.utils.aoa_to_sheet(unit_datas);
+		 
+
+		openDownloadDialog(sheet2blob(sheet), '计量单位表.xlsx');
+         alert("导出成功！");

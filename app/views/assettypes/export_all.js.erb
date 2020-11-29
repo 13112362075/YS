@@ -1,0 +1,24 @@
+ 
+var  assettype_datas = new Array();
+var  assettypedatas_head = new Array();
+ assettypedatas_head[0]='资产类型编码'; 
+    assettypedatas_head[1]='资产类型名称'; 
+    assettypedatas_head[2]='所属组织'; 
+    assettypedatas_head[3]='描述';  
+    assettype_datas[0]=assettypedatas_head;
+var index=1;
+    <%@assettype_all.each do |i|%> 
+    var  assettypedatas = new Array();
+    assettypedatas[0]='<%=i.Assettypecode%>'; 
+    assettypedatas[1]='<%=i.Name%>'; 
+    assettypedatas[2]='<%=i.Orgainize_id%>'; 
+    assettypedatas[3]='<%=i.Description%>';  
+ 
+    assettype_datas[index]=assettypedatas;
+    index++;
+    <%end%> 
+   	var sheet = XLSX.utils.aoa_to_sheet(assettype_datas);
+		 
+
+		openDownloadDialog(sheet2blob(sheet), '资产类型表.xlsx');
+         alert("导出成功！");

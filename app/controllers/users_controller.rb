@@ -11,7 +11,7 @@ class UsersController < ApplicationController
   def save_multiple  
     params["userid"].each do |i| 
       puts i[1].length    
-      user = User.create!(account: i[1][2],password: i[1][1],name: i[1][2],address: i[1][3],email: i[1][4], telephone: i[1][5],sex: i[1][6],role: i[1][7],departmentname: i[1][8],orgainize_id: i[1][9])
+      user = User.create!(account: i[1][0],password: i[1][1],name: i[1][2],address: i[1][3],email: i[1][4], telephone: i[1][5],sex: i[1][6],role: i[1][7],departmentname: i[1][8],orgainize_id: i[1][9])
     end
   end
 

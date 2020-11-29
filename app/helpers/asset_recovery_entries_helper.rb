@@ -1,0 +1,2 @@
+module AssetRecoveryEntriesHelper
+end

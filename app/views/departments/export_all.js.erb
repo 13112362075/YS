@@ -1,0 +1,24 @@
+ 
+var  department_datas = new Array();
+var  departmentdatas_head = new Array();
+ departmentdatas_head[0]='部门编码'; 
+    departmentdatas_head[1]='部门名称'; 
+    departmentdatas_head[2]='所属组织'; 
+    departmentdatas_head[3]='描述';  
+    department_datas[0]=departmentdatas_head;
+var index=1;
+    <%@department_all.each do |i|%> 
+    var  departmentdatas = new Array();
+    departmentdatas[0]='<%=i.departmentcode%>'; 
+    departmentdatas[1]='<%=i.departmentname%>'; 
+    departmentdatas[2]='<%=i.organize_id%>'; 
+    departmentdatas[3]='<%=i.description%>';  
+ 
+    department_datas[index]=departmentdatas;
+    index++;
+    <%end%> 
+   	var sheet = XLSX.utils.aoa_to_sheet(department_datas);
+		 
+
+		openDownloadDialog(sheet2blob(sheet), '部门表.xlsx');
+         alert("导出成功！");

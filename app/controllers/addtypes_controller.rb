@@ -2,6 +2,25 @@ class AddtypesController < ApplicationController
   before_action :set_addtype, only: [:show, :edit, :update, :destroy]
 
 
+
+
+  def export_all
+    @addtype_all =Addtype.all; 
+  end
+
+
+  
+  def save_multiple  
+    params["addtypeid"].each do |i| 
+      puts i[1].length    
+      addtype = Addtype.create!(Addtypecode: i[1][0],Name: i[1][1],Orgainize_id: i[1][2],Description: i[1][3])
+    end
+  end
+
+
+
+
+
   def destroy_multiple    
     params["addtype_id"].each do |i| 
       Addtype.destroy(i)
@@ -19,14 +38,14 @@ class AddtypesController < ApplicationController
   def index 
     @q = Addtype.search(params[:q])      
 
-    if  params[:q].nil?
-      @addtypes = Addtype.all 
+    if  params[:q].nil? 
+      @addtypes=Addtype.order(:id).page(params[:page]).per(10)
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
-        @addtypes = Addtype.all
+        @addtypes=Addtype.order(:id).page(params[:page]).per(10)
       else
         search = params[:q]["search_cont"]
-        @addtypes  = Addtype.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) 
+        @addtypes  = Addtype.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ).page(params[:page]).per(10)
       end
     end   
   end

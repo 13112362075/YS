@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @asset_allocate_entry.Code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @asset_allocate_entry.name %>
+</p>
+
+<p>
+  <strong>Unit:</strong>
+  <%= @asset_allocate_entry.Unit %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @asset_allocate_entry.Amount %>
+</p>
+
+<p>
+  <strong>Transfer:</strong>
+  <%= @asset_allocate_entry.Transfer %>
+</p>
+
+<p>
+  <strong>Out:</strong>
+  <%= @asset_allocate_entry.out %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @asset_allocate_entry.quantity %>
+</p>
+
+<p>
+  <strong>Asset seat:</strong>
+  <%= @asset_allocate_entry.Asset_seat %>
+</p>
+
+<%= link_to 'Edit', edit_asset_allocate_entry_path(@asset_allocate_entry) %> |
+<%= link_to 'Back', asset_allocate_entries_path %>

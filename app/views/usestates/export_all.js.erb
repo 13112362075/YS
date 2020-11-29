@@ -1,0 +1,24 @@
+ 
+var  usestate_datas = new Array();
+var  usestatedatas_head = new Array();
+ usestatedatas_head[0]='资产使用状态编码'; 
+    usestatedatas_head[1]='资产使用状态名称'; 
+    usestatedatas_head[2]='所属组织'; 
+    usestatedatas_head[3]='描述';  
+    usestate_datas[0]=usestatedatas_head;
+var index=1;
+    <%@Usestate_all.each do |i|%> 
+    var  usestatedatas = new Array();
+    usestatedatas[0]='<%=i.Usestatecode%>'; 
+    usestatedatas[1]='<%=i.Name%>'; 
+    usestatedatas[2]='<%=i.Orgainize_id%>'; 
+    usestatedatas[3]='<%=i.Description%>';  
+ 
+    usestate_datas[index]=usestatedatas;
+    index++;
+    <%end%> 
+   	var sheet = XLSX.utils.aoa_to_sheet(usestate_datas);
+		 
+
+		openDownloadDialog(sheet2blob(sheet), '资产使用状态表.xlsx');
+         alert("导出成功！");

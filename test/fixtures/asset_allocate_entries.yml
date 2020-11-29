@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Code: MyString
+  name: MyString
+  Unit: MyString
+  Amount: 1
+  Transfer: MyString
+  out: MyString
+  quantity: 1
+  Asset_seat: MyString
+
+two:
+  Code: MyString
+  name: MyString
+  Unit: MyString
+  Amount: 1
+  Transfer: MyString
+  out: MyString
+  quantity: 1
+  Asset_seat: MyString

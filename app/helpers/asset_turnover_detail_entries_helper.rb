@@ -1,0 +1,2 @@
+module AssetTurnoverDetailEntriesHelper
+end

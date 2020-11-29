@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Documentnumber:</strong>
+  <%= @asset_recovery.Documentnumber %>
+</p>
+
+<p>
+  <strong>Type of business:</strong>
+  <%= @asset_recovery.Type_of_business %>
+</p>
+
+<p>
+  <strong>Requisition date:</strong>
+  <%= @asset_recovery.Requisition_Date %>
+</p>
+
+<%= link_to 'Edit', edit_asset_recovery_path(@asset_recovery) %> |
+<%= link_to 'Back', asset_recoveries_path %>

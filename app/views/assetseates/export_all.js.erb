@@ -1,0 +1,24 @@
+ 
+var  assetseate_datas = new Array();
+var  assetseatedatas_head = new Array();
+ assetseatedatas_head[0]='资产位置编码'; 
+    assetseatedatas_head[1]='地址'; 
+    assetseatedatas_head[2]='所属组织'; 
+    assetseatedatas_head[3]='描述';  
+    assetseate_datas[0]=assetseatedatas_head;
+var index=1;
+    <%@assetseate_all.each do |i|%> 
+    var  assetseatedatas = new Array();
+    assetseatedatas[0]='<%=i.Assetseatecode%>'; 
+    assetseatedatas[1]='<%=i.Name%>'; 
+    assetseatedatas[2]='<%=i.Orgainize_id%>'; 
+    assetseatedatas[3]='<%=i.Description%>';  
+ 
+    assetseate_datas[index]=assetseatedatas;
+    index++;
+    <%end%> 
+   	var sheet = XLSX.utils.aoa_to_sheet(assetseate_datas);
+		 
+
+		openDownloadDialog(sheet2blob(sheet), '资产位置表.xlsx');
+         alert("导出成功！");

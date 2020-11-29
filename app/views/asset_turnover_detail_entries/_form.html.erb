@@ -1,0 +1,87 @@
+<%= form_with(model: asset_turnover_detail_entry, local: true) do |form| %>
+  <% if asset_turnover_detail_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_turnover_detail_entry.errors.count, "error") %> prohibited this asset_turnover_detail_entry from being saved:</h2>
+
+      <ul>
+        <% asset_turnover_detail_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :assetcards_Code %>
+    <%= form.text_field :assetcards_Code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :assetcards_name %>
+    <%= form.text_field :assetcards_name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Unit %>
+    <%= form.text_field :Unit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Amount %>
+    <%= form.text_field :Amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Reasons_for %>
+    <%= form.text_field :Reasons_for %>
+  </div>
+
+  <div class="field">
+    <%= form.label :_borrowing %>
+    <%= form.text_field :_borrowing %>
+  </div>
+
+  <div class="field">
+    <%= form.label :givebackPlanDate %>
+    <%= form.date_select :givebackPlanDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Has_Been_returned %>
+    <%= form.text_field :Has_Been_returned %>
+  </div>
+
+  <div class="field">
+    <%= form.label :givebackDate %>
+    <%= form.date_select :givebackDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Deptment %>
+    <%= form.text_field :Deptment %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Employeeld %>
+    <%= form.text_field :Employeeld %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_seat %>
+    <%= form.text_field :Asset_seat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Last_seat %>
+    <%= form.text_field :Last_seat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :AssetTurnoverDetail_id %>
+    <%= form.number_field :AssetTurnoverDetail_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
