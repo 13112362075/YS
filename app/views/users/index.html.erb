@@ -15,13 +15,10 @@
    <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
    <a id="a_delete"   rel="nofollow"  ><button   onclick="model_delete('  <%=destroy_multiple_path%>')"   type="button" class="layui-btn">删除</button></a>
    <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a>
- 
    <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a>
-
    	<input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
    <a rel="nofollow"  ><button type="button"   onclick="selectFile()"  class="layui-btn">导入</button></a> 
    <a rel="nofollow"  ><button type="button"   onclick="exportSpecialExcel()"  class="layui-btn">导出</button></a>
-
 </div> 
  
  
@@ -48,16 +45,10 @@
 
   <td><button  class="layui-btn" type="submit" name="commit"  data-disable-with="查询"> 查询 </button></td>
 <% end %>
-</table>
-
-
+</table> 
 <div class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true">
   <div     class="layui-progress-bar" lay-percent="0%"></div>
-</div>
-  
-    
-
-
+</div> 
 <table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; "  lay-filter="demo">
   <colgroup>
     <col width="150"> 
@@ -141,24 +132,6 @@
 <%=javascript_pack_tag 'layui' %>
 <%=javascript_pack_tag 'element' %>  
  
-  
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <script>
 function setPercent(Rate){
 layui.use('element', function(){
@@ -324,7 +297,6 @@ $.ajax({
         } 
  });
 }
-
 </script>
 
  

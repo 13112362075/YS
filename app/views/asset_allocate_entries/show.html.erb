@@ -21,23 +21,18 @@
 </p>
 
 <p>
-  <strong>Transfer:</strong>
-  <%= @asset_allocate_entry.Transfer %>
-</p>
-
-<p>
-  <strong>Out:</strong>
-  <%= @asset_allocate_entry.out %>
-</p>
-
-<p>
-  <strong>Quantity:</strong>
-  <%= @asset_allocate_entry.quantity %>
+  <strong>Transfer out quantity:</strong>
+  <%= @asset_allocate_entry.Transfer_out_quantity %>
 </p>
 
 <p>
   <strong>Asset seat:</strong>
   <%= @asset_allocate_entry.Asset_seat %>
+</p>
+
+<p>
+  <strong>Asset allocate:</strong>
+  <%= @asset_allocate_entry.Asset_allocate_id %>
 </p>
 
 <%= link_to 'Edit', edit_asset_allocate_entry_path(@asset_allocate_entry) %> |

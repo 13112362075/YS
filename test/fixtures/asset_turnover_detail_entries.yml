@@ -5,11 +5,10 @@ one:
   assetcards_name: MyString
   Unit: MyString
   Amount: 9.99
-  Reasons_for: MyString
-  _borrowing: MyString
-  givebackPlanDate: 2020-11-28
+  Reasons_for_borrowing: MyString
+  givebackPlanDate: 2020-12-01
   Has_Been_returned: MyString
-  givebackDate: 2020-11-28
+  givebackDate: 2020-12-01
   Deptment: MyString
   Employeeld: MyString
   Asset_seat: MyString
@@ -21,11 +20,10 @@ two:
   assetcards_name: MyString
   Unit: MyString
   Amount: 9.99
-  Reasons_for: MyString
-  _borrowing: MyString
-  givebackPlanDate: 2020-11-28
+  Reasons_for_borrowing: MyString
+  givebackPlanDate: 2020-12-01
   Has_Been_returned: MyString
-  givebackDate: 2020-11-28
+  givebackDate: 2020-12-01
   Deptment: MyString
   Employeeld: MyString
   Asset_seat: MyString

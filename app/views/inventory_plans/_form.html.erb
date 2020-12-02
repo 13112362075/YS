@@ -1,0 +1,37 @@
+<%= form_with(model: inventory_plan, local: true) do |form| %>
+  <% if inventory_plan.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(inventory_plan.errors.count, "error") %> prohibited this inventory_plan from being saved:</h2>
+
+      <ul>
+        <% inventory_plan.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Document_number %>
+    <%= form.text_field :Document_number %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Name %>
+    <%= form.text_field :Name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :To_id %>
+    <%= form.text_field :To_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :description %>
+    <%= form.text_field :description %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

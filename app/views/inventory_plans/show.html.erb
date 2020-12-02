@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Document number:</strong>
+  <%= @inventory_plan.Document_number %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @inventory_plan.Name %>
+</p>
+
+<p>
+  <strong>To:</strong>
+  <%= @inventory_plan.To_id %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @inventory_plan.description %>
+</p>
+
+<%= link_to 'Edit', edit_inventory_plan_path(@inventory_plan) %> |
+<%= link_to 'Back', inventory_plans_path %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_28_101825) do
+ActiveRecord::Schema.define(version: 2020_12_02_022635) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -26,10 +26,9 @@ ActiveRecord::Schema.define(version: 2020_11_28_101825) do
     t.string "name"
     t.string "Unit"
     t.integer "Amount"
-    t.string "Transfer"
-    t.string "out"
-    t.integer "quantity"
+    t.integer "Transfer_out_quantity"
     t.string "Asset_seat"
+    t.integer "Asset_allocate_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -66,6 +65,28 @@ ActiveRecord::Schema.define(version: 2020_11_28_101825) do
     t.string "Requisition_Department"
     t.string "Requisition_Employeeld"
     t.string "Requisition_use"
+    t.integer "Asset_recovery_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_scrapping_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Code"
+    t.string "Name"
+    t.string "Unit"
+    t.integer "Amount"
+    t.integer "Scrapping_Amount"
+    t.string "Asset_seat"
+    t.integer "Asset_Scrapping_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_scrappings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Document_number"
+    t.date "Date"
+    t.string "Addtype"
+    t.string "Addtype_Reason"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -75,8 +96,7 @@ ActiveRecord::Schema.define(version: 2020_11_28_101825) do
     t.string "assetcards_name"
     t.string "Unit"
     t.decimal "Amount", precision: 10
-    t.string "Reasons_for"
-    t.string "_borrowing"
+    t.string "Reasons_for_borrowing"
     t.date "givebackPlanDate"
     t.string "Has_Been_returned"
     t.date "givebackDate"
@@ -158,6 +178,15 @@ ActiveRecord::Schema.define(version: 2020_11_28_101825) do
     t.string "departmentcode"
     t.string "departmentname"
     t.integer "organize_id"
+    t.string "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "inventory_plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Document_number"
+    t.string "Name"
+    t.string "To_id"
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

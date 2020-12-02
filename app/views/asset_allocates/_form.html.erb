@@ -12,8 +12,10 @@
     </div>
   <% end %>
 
+<p  id="id"><%= @asset_allocate.id%></p>
 
-
+   <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a>
+ 
     <div style="display:flex;"> 
      <div class="field" >
     <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_allocate_单据编号">单据编号</label>
@@ -73,21 +75,9 @@
        value=<%= @asset_allocate.Bring_in_Confirm%>  ></div>
   </div> 
  
-</div>
-     
-  
- 
+</div> 
 
-
- 
-
-   <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a>
-  <div class="actions layui-form-label">
-    <input type="submit" name="commit" value="保存" data-disable-with="保存">
-  </div>
-<% end %>
-
-<br><br>
+<% end %> 
  
 <button onclick="addrow()">新增行</button>
 <button onclick="delrow()">删除行</button>
@@ -101,33 +91,38 @@
     <tr >  
       <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
       <th style="text-align:center">资产编码</th>
-      <th style="text-align:center">资产名称</th> 
-      <th style="text-align:center">资产类别</th> 
+      <th style="text-align:center">资产名称</th>  
       <th style="text-align:center">计量单位</th>
-      <th style="text-align:center">领用数量</th> 
-      <th style="text-align:center">退回数量</th>
-      <th style="text-align:center">可退回数量</th> 
-      <th style="text-align:center">资产状态</th>
-      <th style="text-align:center">领用部门</th> 
-      <th style="text-align:center">领用人</th> 
-      <th style="text-align:center">领用用途</th> 
+      <th style="text-align:center">资产数量</th> 
+      <th style="text-align:center">调出数量</th>
+      <th style="text-align:center">资产位置</th>  
     </tr>  
   </thead>
    <tbody> 
-      <tr class="trr"  onclick =>
+     <% if @assetAllocateEntry.nil?%>
+      <tr class="trr"   > 
         <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'/></td> 
           <td class="tdd1" contenteditable="true"> </td>
-            <td class="tdd1" contenteditable="true"> </td>
+          <td class="tdd1" contenteditable="true"> </td>
         <td class="tdd1" contenteditable="true"> </td>
         <td class="tdd1" contenteditable="true"></td>
         <td class="tdd1" contenteditable="true"> </td>
-        <td class="tdd1" contenteditable="true" ></td>
-        <td class="tdd1" contenteditable="true" > </td>
-        <td class="tdd1" contenteditable="true" ></td>
-        <td class="tdd1" contenteditable="true" > </td>
-        <td class="tdd1" contenteditable="true"> </td>
-        <td class="tdd1" contenteditable="true"> </td>
+        <td class="tdd1" contenteditable="true" ></td> 
       </tr> 
+      <%else%>
+          <% @assetAllocateEntry.each do |assetAllocateEntry| %>
+              <tr class="trr"   id=<%=assetAllocateEntry.id%>>
+                <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'/></td>
+                <td class="tdd1" contenteditable="true"><%= assetAllocateEntry.Code %></td>
+                <td class="tdd1" contenteditable="true"><%= assetAllocateEntry.name %></td>
+                <td class="tdd1" contenteditable="true"><%= assetAllocateEntry.Unit %></td>
+                   <td class="tdd1" contenteditable="true"><%= assetAllocateEntry.Amount %></td>
+                <td class="tdd1" contenteditable="true"><%= assetAllocateEntry.Transfer_out_quantity %></td> 
+                <td class="tdd1" contenteditable="true" ><%= assetAllocateEntry.Asset_seat %></td> 
+ 
+              </tr>
+          <%end%>
+      <%end%>
   </tbody>
 </table>  
 </form> 
@@ -172,6 +167,7 @@ function addrow(){
    { 
      var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行 
      var x=c.insertRow(c.rows.length);
+          x.id=0;
      for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
      { 
        
@@ -227,23 +223,54 @@ x.deleteRow(x.rows.length-1);//删除一行
 
 <script>
 
-			function test1() { 
-var  Document_number=document.getElementById("asset_turnover_detail_Document_number").value;
-var  Borrowing_date=document.getElementById("asset_turnover_detail_Borrowing_date").value;
-var  Borrowing_Department=document.getElementById("asset_turnover_detail_Borrowing_Department").value;
-var  Borrowed_To_id=document.getElementById("asset_turnover_detail_Borrowed_To_id").value;
-var  Loaner=document.getElementById("asset_turnover_detail_Loaner").value; 
+function test1(){
+var  id=document.getElementById("id").innerText; 
+var  Document_number=document.getElementById("asset_allocate_Document_number").value;
+var  Pull_up_to_id=document.getElementById("asset_allocate_Pull_up_to_id").value; 
+var  Bring_in_to_id=document.getElementById("asset_allocate_Bring_in_to_id").value;
+var  Pull_up_date=document.getElementById("asset_allocate_Pull_up_date").value;
+var  Allocate_reason=document.getElementById("asset_allocate_Allocate_reason").value;
+var  Bring_in_Number=document.getElementById("asset_allocate_Bring_in_Number").value;
+var  Bring_in_Confirm=document.getElementById("asset_allocate_Bring_in_Confirm").value; 
+var  array_id = new Array(); 
 var array1 = new Array();
 var tb = document.getElementById('testid');    // table 的 id
 var rows = tb.rows;                           // 获取表格所有行
 var t=0;
 for(var i = 1; i<rows.length; i++ ){
-
-var array2 = new Array();
-   for(var j = 1; j<rows[i].cells.length; j++ ){    // 遍历该行的 td     
-       array2[j-1]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
-   }
-   array1[i-1]=array2;
-} 
+  array_id[i-1]=rows[i].id;
+  var array2 = new Array();
+  for(var j = 1; j<rows[i].cells.length; j++ ){
+        array2[j-1]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
   }
+  array2[rows[i].cells.length-1]=rows[i].id;
+  array1[i-1]=array2;
+}
+console.log(array1); 
+
+$.ajax({
+  type:"post", 
+   url:"/asset_allocates_save_all", 
+   data:{ 
+     "array_id" :array_id,
+      "datas": array1,
+      "id":id, 
+      "Document_number":Document_number,
+      "Pull_up_to_id":Pull_up_to_id,
+      "Bring_in_to_id":Bring_in_to_id,
+      "Pull_up_date":Pull_up_date,
+      "Allocate_reason":Allocate_reason,
+      "Bring_in_Number":Bring_in_Number,
+      "Bring_in_Confirm":Bring_in_Confirm
+     }, 
+       success: function(){
+      alert("保存成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("保存失败！")
+        } 
+   });
+
+} 
  </script>

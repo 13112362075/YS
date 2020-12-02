@@ -17,7 +17,7 @@ class AssetRecoveryEntriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create asset_recovery_entry" do
     assert_difference('AssetRecoveryEntry.count') do
-      post asset_recovery_entries_url, params: { asset_recovery_entry: { Amount_Returnable: @asset_recovery_entry.Amount_Returnable, Amount_returned: @asset_recovery_entry.Amount_returned, Asset_status: @asset_recovery_entry.Asset_status, Asset_type: @asset_recovery_entry.Asset_type, Code: @asset_recovery_entry.Code, Requisition_Amount: @asset_recovery_entry.Requisition_Amount, Requisition_Department: @asset_recovery_entry.Requisition_Department, Requisition_Employeeld: @asset_recovery_entry.Requisition_Employeeld, Requisition_use: @asset_recovery_entry.Requisition_use, Unit: @asset_recovery_entry.Unit, name: @asset_recovery_entry.name } }
+      post asset_recovery_entries_url, params: { asset_recovery_entry: { Amount_Returnable: @asset_recovery_entry.Amount_Returnable, Amount_returned: @asset_recovery_entry.Amount_returned, Asset_recovery_id: @asset_recovery_entry.Asset_recovery_id, Asset_status: @asset_recovery_entry.Asset_status, Asset_type: @asset_recovery_entry.Asset_type, Code: @asset_recovery_entry.Code, Requisition_Amount: @asset_recovery_entry.Requisition_Amount, Requisition_Department: @asset_recovery_entry.Requisition_Department, Requisition_Employeeld: @asset_recovery_entry.Requisition_Employeeld, Requisition_use: @asset_recovery_entry.Requisition_use, Unit: @asset_recovery_entry.Unit, name: @asset_recovery_entry.name } }
     end
 
     assert_redirected_to asset_recovery_entry_url(AssetRecoveryEntry.last)
@@ -34,7 +34,7 @@ class AssetRecoveryEntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update asset_recovery_entry" do
-    patch asset_recovery_entry_url(@asset_recovery_entry), params: { asset_recovery_entry: { Amount_Returnable: @asset_recovery_entry.Amount_Returnable, Amount_returned: @asset_recovery_entry.Amount_returned, Asset_status: @asset_recovery_entry.Asset_status, Asset_type: @asset_recovery_entry.Asset_type, Code: @asset_recovery_entry.Code, Requisition_Amount: @asset_recovery_entry.Requisition_Amount, Requisition_Department: @asset_recovery_entry.Requisition_Department, Requisition_Employeeld: @asset_recovery_entry.Requisition_Employeeld, Requisition_use: @asset_recovery_entry.Requisition_use, Unit: @asset_recovery_entry.Unit, name: @asset_recovery_entry.name } }
+    patch asset_recovery_entry_url(@asset_recovery_entry), params: { asset_recovery_entry: { Amount_Returnable: @asset_recovery_entry.Amount_Returnable, Amount_returned: @asset_recovery_entry.Amount_returned, Asset_recovery_id: @asset_recovery_entry.Asset_recovery_id, Asset_status: @asset_recovery_entry.Asset_status, Asset_type: @asset_recovery_entry.Asset_type, Code: @asset_recovery_entry.Code, Requisition_Amount: @asset_recovery_entry.Requisition_Amount, Requisition_Department: @asset_recovery_entry.Requisition_Department, Requisition_Employeeld: @asset_recovery_entry.Requisition_Employeeld, Requisition_use: @asset_recovery_entry.Requisition_use, Unit: @asset_recovery_entry.Unit, name: @asset_recovery_entry.name } }
     assert_redirected_to asset_recovery_entry_url(@asset_recovery_entry)
   end
 

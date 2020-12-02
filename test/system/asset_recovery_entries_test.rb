@@ -16,6 +16,7 @@ class AssetRecoveryEntriesTest < ApplicationSystemTestCase
 
     fill_in "Amount returnable", with: @asset_recovery_entry.Amount_Returnable
     fill_in "Amount returned", with: @asset_recovery_entry.Amount_returned
+    fill_in "Asset recovery", with: @asset_recovery_entry.Asset_recovery_id
     fill_in "Asset status", with: @asset_recovery_entry.Asset_status
     fill_in "Asset type", with: @asset_recovery_entry.Asset_type
     fill_in "Code", with: @asset_recovery_entry.Code
@@ -37,6 +38,7 @@ class AssetRecoveryEntriesTest < ApplicationSystemTestCase
 
     fill_in "Amount returnable", with: @asset_recovery_entry.Amount_Returnable
     fill_in "Amount returned", with: @asset_recovery_entry.Amount_returned
+    fill_in "Asset recovery", with: @asset_recovery_entry.Asset_recovery_id
     fill_in "Asset status", with: @asset_recovery_entry.Asset_status
     fill_in "Asset type", with: @asset_recovery_entry.Asset_type
     fill_in "Code", with: @asset_recovery_entry.Code

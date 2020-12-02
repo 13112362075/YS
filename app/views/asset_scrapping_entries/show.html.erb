@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @asset_scrapping_entry.Code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @asset_scrapping_entry.Name %>
+</p>
+
+<p>
+  <strong>Unit:</strong>
+  <%= @asset_scrapping_entry.Unit %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @asset_scrapping_entry.Amount %>
+</p>
+
+<p>
+  <strong>Scrapping amount:</strong>
+  <%= @asset_scrapping_entry.Scrapping_Amount %>
+</p>
+
+<p>
+  <strong>Asset seat:</strong>
+  <%= @asset_scrapping_entry.Asset_seat %>
+</p>
+
+<p>
+  <strong>Asset scrapping:</strong>
+  <%= @asset_scrapping_entry.Asset_Scrapping_id %>
+</p>
+
+<%= link_to 'Edit', edit_asset_scrapping_entry_path(@asset_scrapping_entry) %> |
+<%= link_to 'Back', asset_scrapping_entries_path %>

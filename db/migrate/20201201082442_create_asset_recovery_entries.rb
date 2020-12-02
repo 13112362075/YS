@@ -1,5 +1,6 @@
 class CreateAssetRecoveryEntries < ActiveRecord::Migration[6.0]
   def change
+    drop_table:asset_recovery_entries
     create_table :asset_recovery_entries do |t|
       t.string :Code
       t.string :name
@@ -12,6 +13,7 @@ class CreateAssetRecoveryEntries < ActiveRecord::Migration[6.0]
       t.string :Requisition_Department
       t.string :Requisition_Employeeld
       t.string :Requisition_use
+      t.integer :Asset_recovery_id
 
       t.timestamps
     end

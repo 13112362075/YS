@@ -21,9 +21,8 @@ class AssetTurnoverDetailEntriesTest < ApplicationSystemTestCase
     fill_in "Employeeld", with: @asset_turnover_detail_entry.Employeeld
     fill_in "Has been returned", with: @asset_turnover_detail_entry.Has_Been_returned
     fill_in "Last seat", with: @asset_turnover_detail_entry.Last_seat
-    fill_in "Reasons for", with: @asset_turnover_detail_entry.Reasons_for
+    fill_in "Reasons for borrowing", with: @asset_turnover_detail_entry.Reasons_for_borrowing
     fill_in "Unit", with: @asset_turnover_detail_entry.Unit
-    fill_in "Borrowing", with: @asset_turnover_detail_entry._borrowing
     fill_in "Assetcards code", with: @asset_turnover_detail_entry.assetcards_Code
     fill_in "Assetcards name", with: @asset_turnover_detail_entry.assetcards_name
     fill_in "Givebackdate", with: @asset_turnover_detail_entry.givebackDate
@@ -45,9 +44,8 @@ class AssetTurnoverDetailEntriesTest < ApplicationSystemTestCase
     fill_in "Employeeld", with: @asset_turnover_detail_entry.Employeeld
     fill_in "Has been returned", with: @asset_turnover_detail_entry.Has_Been_returned
     fill_in "Last seat", with: @asset_turnover_detail_entry.Last_seat
-    fill_in "Reasons for", with: @asset_turnover_detail_entry.Reasons_for
+    fill_in "Reasons for borrowing", with: @asset_turnover_detail_entry.Reasons_for_borrowing
     fill_in "Unit", with: @asset_turnover_detail_entry.Unit
-    fill_in "Borrowing", with: @asset_turnover_detail_entry._borrowing
     fill_in "Assetcards code", with: @asset_turnover_detail_entry.assetcards_Code
     fill_in "Assetcards name", with: @asset_turnover_detail_entry.assetcards_name
     fill_in "Givebackdate", with: @asset_turnover_detail_entry.givebackDate

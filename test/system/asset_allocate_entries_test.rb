@@ -15,13 +15,12 @@ class AssetAllocateEntriesTest < ApplicationSystemTestCase
     click_on "New Asset Allocate Entry"
 
     fill_in "Amount", with: @asset_allocate_entry.Amount
+    fill_in "Asset allocate", with: @asset_allocate_entry.Asset_allocate_id
     fill_in "Asset seat", with: @asset_allocate_entry.Asset_seat
     fill_in "Code", with: @asset_allocate_entry.Code
-    fill_in "Transfer", with: @asset_allocate_entry.Transfer
+    fill_in "Transfer out quantity", with: @asset_allocate_entry.Transfer_out_quantity
     fill_in "Unit", with: @asset_allocate_entry.Unit
     fill_in "Name", with: @asset_allocate_entry.name
-    fill_in "Out", with: @asset_allocate_entry.out
-    fill_in "Quantity", with: @asset_allocate_entry.quantity
     click_on "Create Asset allocate entry"
 
     assert_text "Asset allocate entry was successfully created"
@@ -33,13 +32,12 @@ class AssetAllocateEntriesTest < ApplicationSystemTestCase
     click_on "Edit", match: :first
 
     fill_in "Amount", with: @asset_allocate_entry.Amount
+    fill_in "Asset allocate", with: @asset_allocate_entry.Asset_allocate_id
     fill_in "Asset seat", with: @asset_allocate_entry.Asset_seat
     fill_in "Code", with: @asset_allocate_entry.Code
-    fill_in "Transfer", with: @asset_allocate_entry.Transfer
+    fill_in "Transfer out quantity", with: @asset_allocate_entry.Transfer_out_quantity
     fill_in "Unit", with: @asset_allocate_entry.Unit
     fill_in "Name", with: @asset_allocate_entry.name
-    fill_in "Out", with: @asset_allocate_entry.out
-    fill_in "Quantity", with: @asset_allocate_entry.quantity
     click_on "Update Asset allocate entry"
 
     assert_text "Asset allocate entry was successfully updated"

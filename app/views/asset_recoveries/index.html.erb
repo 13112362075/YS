@@ -1,31 +1,366 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Asset Recoveries</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Documentnumber</th>
-      <th>Type of business</th>
-      <th>Requisition date</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @asset_recoveries.each do |asset_recovery| %>
-      <tr>
-        <td><%= asset_recovery.Documentnumber %></td>
-        <td><%= asset_recovery.Type_of_business %></td>
-        <td><%= asset_recovery.Requisition_Date %></td>
-        <td><%= link_to 'Show', asset_recovery %></td>
-        <td><%= link_to 'Edit', edit_asset_recovery_path(asset_recovery) %></td>
-        <td><%= link_to 'Destroy', asset_recovery, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<h1 style="text-align:center;">资产领用单</h1>
 <br>
+<div class="layui-btn-group " style="margin:10px;0px;">
+  <a rel="nofollow" data-method="get" href="/asset_recoveries/new"><button type="button" class="layui-btn">新增</button></a>
+   <a id="a_update"  rel="nofollow"    ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+   <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
+   <a id="a_delete"   rel="nofollow"  ><button   onclick="model_delete('  <%=destroy_multiple_path%>')"   type="button" class="layui-btn">删除</button></a>
+   <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a>
+   
+   	<input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+   <a rel="nofollow"  ><button type="button"   onclick="selectFile()"  class="layui-btn">导入</button></a> 
+   <a rel="nofollow"  ><button type="button"   onclick="exportSpecialExcel()"  class="layui-btn">导出</button></a>
+</div> 
+ 
 
-<%= link_to 'New Asset Recovery', new_asset_recovery_path %>
+
+
+<table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; "  lay-filter="demo">
+  <colgroup>
+    <col width="150"> 
+    <col>
+  </colgroup>
+  <thead > 
+    <tr >  
+      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center">单据编号</th>
+      <th style="text-align:center">业务类型</th>
+      <th style="text-align:center">领用日期</th>  
+    </tr>  
+  </thead>
+   <tbody>
+    <% @asset_recoveries.each do |asset_recovery| %>
+      <tr   id=<%= asset_recovery.id %>  ondblclick="show(this)">
+        <td><input class='awsui-checkbox' id='asset_recovery.ids[]' name='asset_recovery.ids[]' value=<%= asset_recovery.id %> type='checkbox'/></td> 
+        <td class="account" ><%= asset_recovery.Documentnumber %></td>
+        <td class="password"><%= asset_recovery.Type_of_business %></td>
+        <td class="name"><%= asset_recovery.Requisition_Date %></td>   
+      </tr>
+    <% end %> 
+ <tr> 
+    <td td colspan="4"> <%= paginate @asset_recoveries %>   </td> 
+    </tr>
+  </tbody>
+</table>   
+<br> 
+
+ 
+
+  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script> 
+
+<%=javascript_pack_tag 'layui' %>
+<%=javascript_pack_tag 'element' %>  
+ 
+<script>
+function setPercent(Rate){
+layui.use('element', function(){
+  var $ = layui.jquery ,
+  element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块 
+  element.progress('demo', Rate+'%')
+})};
+</script>  
+ 
+
+<script crossorigin="anonymous" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" src="https://lib.baomitu.com/jquery/3.5.1/jquery.js"></script>
+
+<script type="text/javascript"> 
+function show (element)
+{ 
+  var  path=  "/asset_recoveries/"+element.id ;   
+  window.location =path ;
+}
+
+
+
+
+			function test1() { 
+var array1 = new Array();
+var tb = document.getElementById('tab');    // table 的 id
+var rows = tb.rows;                           // 获取表格所有行
+var t=0;
+for(var i = 1; i<rows.length; i++ ){
+
+var array2 = new Array();
+   for(var j = 1; j<rows[i].cells.length; j++ ){    // 遍历该行的 td     
+       array2[j-1]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
+   }
+   array1[i-1]=array2;
+}
+ console.log(array1)
+ 
+$.ajax({
+   type:"post", 
+   url :"/save_multiple",
+   data:{ 
+      "userid": array1
+     }, 
+   success: function(){
+     alert("删除成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("删除失败！")
+        } 
+ });
+} 
+</script>
+
+
+
+
+
+
+
+	<script type="text/javascript">
+
+
+			// 获取选中的复选框项，保存为一个数组
+			function getCheckedCheckbox(checkboxClassName) {
+				var array = new Array();
+				var j = 0;
+				var selectedItems = document.getElementsByClassName(checkboxClassName);
+				for (var i = 1; i < selectedItems.length; i++) {
+					if (selectedItems[i].checked == true) {
+						array[j] = selectedItems[i].value;
+						j++;
+					}
+				}
+				return array;
+			}
+
+        function getCheckedCheckbox_update(){	
+              // 输出选中
+              var items = getCheckedCheckbox("awsui-checkbox"); 
+              if(items.length>1)
+              {
+                    alert("选择了多行数据，请选择1行！");
+                    document.getElementById("a_update").href ="";
+                    return false;
+              } 
+              var  user_id=  "/asset_recoveries/"+ items[0]+"/edit";   
+              document.getElementById("a_update").href =user_id;
+        }
+ 
+
+   function selectAll(obj){ 
+        //创建数组
+        var arr=new Array();
+        //获取所有id为“cb1”的复选框
+        var items=document.getElementsByName("asset_recovery.ids[]");
+
+        //判断复选框是否选中
+        if(obj.checked)
+        {
+        //循环将所有name为"category"的复选框设置为选中状态
+              for(var i=0;i<items.length;i++){
+              //alert(items[i]);
+              items[i].checked=true;
+              }
+        }
+        else
+        {
+              //循环将所有name为"category"的复选框设置为非选中状态
+              for(var i=0;i<items.length;i++)
+              {
+              //alert(items[i]);
+              items[i].checked=false;
+              }
+        }
+    }      
+ 
+</script> 
+
+
+<script>  
+function model_delete(){
+   if (!confirm('你确定要删除吗？'))
+   { 
+      return false
+   } 
+var items = new Array();
+items = getCheckedCheckbox("awsui-checkbox");      
+ $.ajax({
+   type:"post", 
+   url:"/asset_recoveries_destroy_multiple", 
+   data:{ 
+      "AssetRecoveryid": items
+     }, 
+   success: function(){
+     alert("删除成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("删除失败！")
+        } 
+ });
+}
+  
+function Refresh(){
+  location.reload([true])
+  }    
+
+</script>  
+
+
+
+<script type="text/javascript">
+ // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
+	function sheet2blob(sheet, sheetName) {
+		sheetName = sheetName || 'sheet1';
+		var workbook = {
+			SheetNames: [sheetName],
+			Sheets: {}
+		};
+		workbook.Sheets[sheetName] = sheet;
+		// 生成excel的配置项
+		var wopts = {
+			bookType: 'xlsx', // 要生成的文件类型
+			bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
+			type: 'binary'
+		};
+		var wbout = XLSX.write(workbook, wopts);
+		var blob = new Blob([s2ab(wbout)], {type:"application/octet-stream"});
+		// 字符串转ArrayBuffer
+		function s2ab(s) {
+			var buf = new ArrayBuffer(s.length);
+			var view = new Uint8Array(buf);
+			for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+			return buf;
+		}
+		return blob;
+	}
+/**
+	 * 通用的打开下载对话框方法，没有测试过具体兼容性
+	 * @param url 下载地址，也可以是一个blob对象，必选
+	 * @param saveName 保存文件名，可选
+	 */
+	function openDownloadDialog(url, saveName)
+	{ 
+		if(typeof url == 'object' && url instanceof Blob)
+		{
+			url = URL.createObjectURL(url); // 创建blob地址
+		}
+		var aLink = document.createElement('a');
+		aLink.href = url;
+		aLink.download = saveName || ''; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+		var event;
+		if(window.MouseEvent) event = new MouseEvent('click');
+		else
+		{
+			event = document.createEvent('MouseEvents');
+			event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+		}
+		aLink.dispatchEvent(event);
+	}
+
+function exportSpecialExcel() { 
+
+
+$.ajax({
+   type:"get", 
+   url :"/users_export_all",
+   data:{  
+     }, 
+   success: function(){
+    
+     location.reload();
+     },
+			error :function(){
+       
+        } 
+ });
+
+ 
+return;
+
+ 
+	
+	}  
+
+	function selectFile() {
+		document.getElementById('file').click(); 
+	} 
+  	$(function() {
+		document.getElementById('file').addEventListener('change', function(e) {
+			var files = e.target.files;
+			if(files.length == 0) return;
+			var f = files[0];
+			if(!/\.xlsx$/g.test(f.name)) {
+				alert('仅支持读取xlsx格式！');
+				return;
+			}   
+      setPercent('20');
+			readWorkbookFromLocalFile(f, function(workbook) {
+				readWorkbook(workbook);
+			});
+		}); 
+	});
+
+	// 读取本地excel文件
+	function readWorkbookFromLocalFile(file, callback) {
+		var reader = new FileReader();
+    setPercent('40');
+		reader.onload = function(e) {
+			var data = e.target.result;
+			var workbook = XLSX.read(data, {type: 'binary'});
+ 
+			if(callback) callback(workbook);
+		};
+		reader.readAsBinaryString(file);
+	}
+
+
+function readWorkbook(workbook) {
+		var sheetNames = workbook.SheetNames; // 工作表名称集合
+		var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet 
+		var csv = XLSX.utils.sheet_to_csv(worksheet);
+    
+    var datas = getdatas(csv);   
+   setPercent('80');
+    SaveByAjax(datas);
+    setPercent('100');
+	}
+
+
+
+	function getdatas(csv)
+	{ 
+    var datas = new Array();
+    var rows = csv.split('\n');
+    var index=0; 
+    rows.pop(); // 最后一行没用的
+    rows.shift();//删掉列头
+		rows.forEach(function(row, idx) {
+      var columns = row.split(',');
+      datas[index]=columns;
+      index++;
+    }); 
+		return datas;
+	}
+
+function  SaveByAjax(datas)
+{
+
+$.ajax({
+   type:"post", 
+   url :"/save_multiple",
+   data:{ 
+      "userid": datas
+     }, 
+   success: function(){
+     alert("导入成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("导入成功")
+        } 
+ });
+}
+
+</script>
+

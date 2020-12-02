@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Document number:</strong>
+  <%= @asset_scrapping.Document_number %>
+</p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @asset_scrapping.Date %>
+</p>
+
+<p>
+  <strong>Addtype:</strong>
+  <%= @asset_scrapping.Addtype %>
+</p>
+
+<p>
+  <strong>Addtype reason:</strong>
+  <%= @asset_scrapping.Addtype_Reason %>
+</p>
+
+<%= link_to 'Edit', edit_asset_scrapping_path(@asset_scrapping) %> |
+<%= link_to 'Back', asset_scrappings_path %>

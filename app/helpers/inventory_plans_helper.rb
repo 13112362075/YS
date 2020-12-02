@@ -1,0 +1,2 @@
+module InventoryPlansHelper
+end

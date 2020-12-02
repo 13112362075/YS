@@ -1,0 +1,2 @@
+class AssetScrapping < ApplicationRecord
+end

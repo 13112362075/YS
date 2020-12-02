@@ -1,35 +1,265 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Asset Turnover Details</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Document number</th>
-      <th>Borrowing date</th>
-      <th>Borrowing department</th>
-      <th>Borrowed to</th>
-      <th>Loaner</th>
-      <th colspan="3"></th>
-    </tr>
+<h1 style="text-align:center;">资产借用/归还单</h1>
+
+
+<div class="layui-btn-group " style="margin:10px;0px;">
+  <a rel="nofollow" data-method="get" href="/asset_turnover_details/new"><button type="button" class="layui-btn">新增</button></a>
+   <a id="a_update"  rel="nofollow"    ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+   <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
+   <a id="a_delete"   rel="nofollow"  ><button   onclick="model_delete()"   type="button" class="layui-btn">删除</button></a>
+   <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a> 
+   	<input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
+   <a rel="nofollow"  ><button type="button"   onclick="selectFile()"  class="layui-btn">导入</button></a> 
+   <a rel="nofollow"  ><button type="button"   onclick="exportSpecialExcel()"  class="layui-btn">导出</button></a>
+</div> 
+ 
+ 
+
+<div class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true">
+  <div     class="layui-progress-bar" lay-percent="0%"></div>
+</div> 
+<table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; "  lay-filter="demo">
+  <colgroup>
+    <col width="150"> 
+    <col>
+  </colgroup>
+  <thead > 
+    <tr >  
+      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center">单据编号</th>
+      <th style="text-align:center">借出日期</th>
+      <th style="text-align:center">借用部门</th>
+      <th style="text-align:center">借用组织</th>
+      <th style="text-align:center">借用人</th> 
+    </tr>  
   </thead>
-
-  <tbody>
+   <tbody> 
     <% @asset_turnover_details.each do |asset_turnover_detail| %>
-      <tr>
-        <td><%= asset_turnover_detail.Document_number %></td>
-        <td><%= asset_turnover_detail.Borrowing_date %></td>
-        <td><%= asset_turnover_detail.Borrowing_Department %></td>
-        <td><%= asset_turnover_detail.Borrowed_To_id %></td>
-        <td><%= asset_turnover_detail.Loaner %></td>
-        <td><%= link_to 'Show', asset_turnover_detail %></td>
-        <td><%= link_to 'Edit', edit_asset_turnover_detail_path(asset_turnover_detail) %></td>
-        <td><%= link_to 'Destroy', asset_turnover_detail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <tr   id=<%= asset_turnover_detail.id %>  ondblclick="show(this)">
+        <td><input class='awsui-checkbox' id='asset_turnover_detail.ids[]' name='asset_turnover_detail.ids[]' value=<%= asset_turnover_detail.id %> type='checkbox'/></td> 
+        <td class="Document_number" ><%= asset_turnover_detail.Document_number %></td>
+        <td class="Borrowing_date"><%= asset_turnover_detail.Borrowing_date %></td>
+        <td class="Borrowing_Department"><%= asset_turnover_detail.Borrowing_Department %></td>
+        <td  class="Borrowed_To_id"><%= asset_turnover_detail.Borrowed_To_id %></td>
+        <td  class="Loaner"><%= asset_turnover_detail.Loaner %></td>  
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    <% end %> 
+    <tr> 
+    <td td colspan="6"> <%= paginate @asset_turnover_details %>   </td> 
+    </tr>
+  </tbody> 
+</table>   
+<br> 
+ 
 
-<br>
+  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
+    <script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script> 
 
-<%= link_to 'New Asset Turnover Detail', new_asset_turnover_detail_path %>
+<%=javascript_pack_tag 'layui' %>
+<%=javascript_pack_tag 'element' %>  
+ 
+<script>
+function setPercent(Rate){
+layui.use('element', function(){
+  var $ = layui.jquery ,
+  element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块 
+  element.progress('demo', Rate+'%')
+})};
+</script>  
+
+ 
+
+
+
+<script crossorigin="anonymous" integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ==" src="https://lib.baomitu.com/jquery/3.5.1/jquery.js"></script>
+
+<script type="text/javascript"> 
+function show (element)
+{ 
+  var  path=  "/asset_turnover_details/"+element.id ;   
+  window.location =path ;
+}
+
+
+
+
+			function test1() { 
+var array1 = new Array();
+var tb = document.getElementById('tab');    // table 的 id
+var rows = tb.rows;                           // 获取表格所有行
+var t=0;
+for(var i = 1; i<rows.length; i++ ){
+
+var array2 = new Array();
+   for(var j = 1; j<rows[i].cells.length; j++ ){    // 遍历该行的 td     
+       array2[j-1]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
+   }
+   array1[i-1]=array2;
+}
+ console.log(array1)
+ 
+$.ajax({
+   type:"post", 
+   url :"/save_multiple",
+   data:{ 
+      "asset_turnover_detailid": array1
+     }, 
+   success: function(){
+     alert("删除成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("删除失败！")
+        } 
+ });
+}
+
+
+ 
+
+
+
+function addrow(){
+   var c=document.getElementById('testid');//获得表格的信息 
+   
+   if( c.rows.length==1)//如果是向一个空表增加一行
+   {
+     var x=c.insertRow(1);//向空表插入一行 
+     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行  
+     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
+     {
+       var y=x.insertCell(i); 
+     }
+   }
+   else
+   {
+    
+     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行 
+     var x=c.insertRow(c.rows.length);
+     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
+     { 
+       
+       var y=x.insertCell(i);  
+       if(i==0)
+       { 
+              y.innerHTML="<input class='awsui-checkbox' id='asset_turnover_detail.ids[]' name='asset_turnover_detail.ids[]'  type='checkbox'/>";
+       }
+       else
+       {
+         y.setAttribute("contenteditable","true");
+       }
+     }
+   }
+}
+
+
+
+
+
+
+
+function delrow(){
+var x=document.getElementById("testid");
+if(x.rows.length==2)
+{
+  alert("数据数据行至少为1行，不允许删除！");
+  return false;
+}
+x.deleteRow(x.rows.length-1);//删除一行
+}
+ 
+
+
+</script>
+ 
+	<script type="text/javascript">
+
+
+			// 获取选中的复选框项，保存为一个数组
+			function getCheckedCheckbox(checkboxClassName) {
+				var array = new Array();
+				var j = 0;
+				var selectedItems = document.getElementsByClassName(checkboxClassName);
+				for (var i = 1; i < selectedItems.length; i++) {
+					if (selectedItems[i].checked == true) {
+						array[j] = selectedItems[i].value;
+						j++;
+					}
+				}
+				return array;
+			}
+
+        function getCheckedCheckbox_update(){	
+              // 输出选中
+              var items = getCheckedCheckbox("awsui-checkbox"); 
+              if(items.length>1)
+              {
+                    alert("选择了多行数据，请选择1行！");
+                    document.getElementById("a_update").href ="";
+                    return false;
+              } 
+              var  asset_turnover_detail_id=  "/asset_turnover_details/"+ items[0]+"/edit";   
+              document.getElementById("a_update").href =asset_turnover_detail_id;
+        }
+ 
+
+   function selectAll(obj){ 
+        //创建数组
+        var arr=new Array();
+        //获取所有id为“cb1”的复选框
+        var items=document.getElementsByName("asset_turnover_detail.ids[]");
+
+        //判断复选框是否选中
+        if(obj.checked)
+        {
+        //循环将所有name为"category"的复选框设置为选中状态
+              for(var i=0;i<items.length;i++){
+              //alert(items[i]);
+              items[i].checked=true;
+              }
+        }
+        else
+        {
+              //循环将所有name为"category"的复选框设置为非选中状态
+              for(var i=0;i<items.length;i++)
+              {
+              //alert(items[i]);
+              items[i].checked=false;
+              }
+        }
+    }      
+ 
+</script> 
+
+
+<script>  
+function model_delete(){
+   if (!confirm('你确定要删除吗？'))
+   { 
+      return false
+   } 
+var items = new Array();
+items = getCheckedCheckbox("awsui-checkbox");      
+ $.ajax({
+   type:"post", 
+   url:"/asset_turnover_details_destroy_multiple", 
+   data:{ 
+      "asset_turnover_detailid": items
+     }, 
+   success: function(){
+     alert("删除成功！");
+     location.reload();
+     },
+			error :function(){
+        alert("删除失败！")
+        } 
+ });
+}
+  
+function Refresh(){
+  location.reload([true])
+  }    
+
+</script>  

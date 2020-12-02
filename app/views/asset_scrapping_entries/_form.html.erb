@@ -1,0 +1,52 @@
+<%= form_with(model: asset_scrapping_entry, local: true) do |form| %>
+  <% if asset_scrapping_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_scrapping_entry.errors.count, "error") %> prohibited this asset_scrapping_entry from being saved:</h2>
+
+      <ul>
+        <% asset_scrapping_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Code %>
+    <%= form.text_field :Code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Name %>
+    <%= form.text_field :Name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Unit %>
+    <%= form.text_field :Unit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Amount %>
+    <%= form.number_field :Amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Scrapping_Amount %>
+    <%= form.number_field :Scrapping_Amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_seat %>
+    <%= form.text_field :Asset_seat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_Scrapping_id %>
+    <%= form.number_field :Asset_Scrapping_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

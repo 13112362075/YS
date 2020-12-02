@@ -5,17 +5,15 @@ one:
   name: MyString
   Unit: MyString
   Amount: 1
-  Transfer: MyString
-  out: MyString
-  quantity: 1
+  Transfer_out_quantity: 1
   Asset_seat: MyString
+  Asset_allocate_id: 1
 
 two:
   Code: MyString
   name: MyString
   Unit: MyString
   Amount: 1
-  Transfer: MyString
-  out: MyString
-  quantity: 1
+  Transfer_out_quantity: 1
   Asset_seat: MyString
+  Asset_allocate_id: 1

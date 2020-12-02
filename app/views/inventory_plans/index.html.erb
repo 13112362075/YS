@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Inventory Plans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Document number</th>
+      <th>Name</th>
+      <th>To</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @inventory_plans.each do |inventory_plan| %>
+      <tr>
+        <td><%= inventory_plan.Document_number %></td>
+        <td><%= inventory_plan.Name %></td>
+        <td><%= inventory_plan.To_id %></td>
+        <td><%= inventory_plan.description %></td>
+        <td><%= link_to 'Show', inventory_plan %></td>
+        <td><%= link_to 'Edit', edit_inventory_plan_path(inventory_plan) %></td>
+        <td><%= link_to 'Destroy', inventory_plan, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Inventory Plan', new_inventory_plan_path %>

@@ -1,0 +1,2 @@
+class InventoryPlan < ApplicationRecord
+end

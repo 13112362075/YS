@@ -69,6 +69,6 @@ class AssetRecoveryEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def asset_recovery_entry_params
-      params.require(:asset_recovery_entry).permit(:Code, :name, :Asset_type, :Unit, :Requisition_Amount, :Amount_returned, :Amount_Returnable, :Asset_status, :Requisition_Department, :Requisition_Employeeld, :Requisition_use)
+      params.require(:asset_recovery_entry).permit(:Code, :name, :Asset_type, :Unit, :Requisition_Amount, :Amount_returned, :Amount_Returnable, :Asset_status, :Requisition_Department, :Requisition_Employeeld, :Requisition_use, :Asset_recovery_id)
     end
 end

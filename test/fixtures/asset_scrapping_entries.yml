@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Code: MyString
+  Name: MyString
+  Unit: MyString
+  Amount: 1
+  Scrapping_Amount: 1
+  Asset_seat: MyString
+  Asset_Scrapping_id: 1
+
+two:
+  Code: MyString
+  Name: MyString
+  Unit: MyString
+  Amount: 1
+  Scrapping_Amount: 1
+  Asset_seat: MyString
+  Asset_Scrapping_id: 1

@@ -35,18 +35,19 @@
 </style>
 <script>
 $(document).ready(function(){     
+     var  x=$("#notice").text();
+          if (x!='')
+          {
+             alert (x);
+          } 
           var obj = document.getElementById("row");
            obj.style.cssText = "top:"+screen.availHeight*0.3+"px;left:"+screen.availWidth*0.667+"px";
            var obj = document.getElementById("red-text");
            obj.style.cssText = "top:"+screen.availHeight*0.225+"px;left:"+screen.availWidth*0.65+"px";
-           document.body.style.height=screen.availHeight*;
-           document.body.style.height=screen.availHeight; 
-         var obj = document.getElementById(".red-text"); 
-          var  x=$("#notice").text();
-          if (x!='')
-          {
-             alert (x); 
-          } 
+
+
+           document.body.style.height=screen.availHeight*0.752+"px";  
+        
 });
 </script>  
  <p id="notice"><%= notice%></p>  
@@ -59,7 +60,11 @@ $(document).ready(function(){
                        <%=  form_for(:session,url: login_path, :remote => true )  do |f| %> 
                       <label id="userid" class="label" for="session_用户名">用户名</label>
                       <br>
-                       <input   class="layui-input "   type="text" name="session[account]" id="session_account">
+                      <%if session[:account]=="?" %>
+                       <input   class="layui-input "   type="text" name="session[account]" id="session_account"  >
+                      <%else %>
+                       <input   class="layui-input "   type="text" name="session[account]" id="session_account" value =<%=session[:account]%>>
+                      <%end%>
                           <br>
                         <label class="label" for="session_密码">密码</label>
                          <br>
@@ -69,7 +74,6 @@ $(document).ready(function(){
                        <% end %> 
                  </div>
             </div> 
- 
 <!--a rel="nofollow" data-method="get" href="/get_user">  <button>第一个用户</button></a--> 
 
 

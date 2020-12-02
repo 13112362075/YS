@@ -12,6 +12,7 @@ one:
   Requisition_Department: MyString
   Requisition_Employeeld: MyString
   Requisition_use: MyString
+  Asset_recovery_id: 1
 
 two:
   Code: MyString
@@ -25,3 +26,4 @@ two:
   Requisition_Department: MyString
   Requisition_Employeeld: MyString
   Requisition_use: MyString
+  Asset_recovery_id: 1

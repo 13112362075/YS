@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Scrapping Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Unit</th>
+      <th>Amount</th>
+      <th>Scrapping amount</th>
+      <th>Asset seat</th>
+      <th>Asset scrapping</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_scrapping_entries.each do |asset_scrapping_entry| %>
+      <tr>
+        <td><%= asset_scrapping_entry.Code %></td>
+        <td><%= asset_scrapping_entry.Name %></td>
+        <td><%= asset_scrapping_entry.Unit %></td>
+        <td><%= asset_scrapping_entry.Amount %></td>
+        <td><%= asset_scrapping_entry.Scrapping_Amount %></td>
+        <td><%= asset_scrapping_entry.Asset_seat %></td>
+        <td><%= asset_scrapping_entry.Asset_Scrapping_id %></td>
+        <td><%= link_to 'Show', asset_scrapping_entry %></td>
+        <td><%= link_to 'Edit', edit_asset_scrapping_entry_path(asset_scrapping_entry) %></td>
+        <td><%= link_to 'Destroy', asset_scrapping_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Scrapping Entry', new_asset_scrapping_entry_path %>
