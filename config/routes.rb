@@ -83,8 +83,6 @@ post 'asset_allocates_save_all',:to =>'asset_allocates#save_all'
 post 'asset_recoveries_save_all',:to =>'asset_recoveries#save_all'
 post 'asset_scrappings_save_all',:to =>'asset_scrappings#save_all'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-
-get 'getdatas',:to =>'asset_scrappings#save_all'
-
+ 
 
 end

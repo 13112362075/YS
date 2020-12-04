@@ -2,10 +2,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy] 
 
 
-
-  def getdatas 
-    
-  end
+ 
  
   def export_all
     @user_all =User.all; 
