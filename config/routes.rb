@@ -22,7 +22,7 @@ Rails.application.routes.draw do
   resources :users  
  
   get 'homes'  ,:to => 'homes#index'  , :as => 'homes'
-  post 'save_multiple'  ,:to => 'users#save_multiple'  
+
   #批量删除
   post 'destroy_multiple'  ,:to => 'users#destroy_multiple'  
   post 'departments_destroy_multiple'  ,:to => 'departments#destroy_multiple'  
@@ -38,7 +38,37 @@ Rails.application.routes.draw do
   post 'asset_allocates_destroy_multiple'  ,:to => 'asset_allocates#destroy_multiple'
   post 'asset_scrappings_destroy_multiple'  ,:to => 'asset_scrappings#destroy_multiple'
 
+  #导出
   get 'users_export_all'  ,:to => 'users#export_all'
+  get 'departments_export_all'  ,:to => 'departments#export_all'  
+  get 'assettypes_export_all'  ,:to => 'assettypes#export_all'  
+  get 'assetstatuses_export_all'  ,:to => 'assetstatuses#export_all'  
+  get 'addtypes_export_all'  ,:to => 'addtypes#export_all'  
+  get 'assetseates_export_all'  ,:to => 'assetseates#export_all'  
+  get 'usestates_export_all'  ,:to => 'usestates#export_all'  
+  get 'units_export_all'  ,:to => 'units#export_all'
+  get 'assetcards_export_all'  ,:to => 'assetcards#export_all'
+  get 'asset_recoveries_export_all'  ,:to => 'asset_recoveries#export_all'
+  get 'asset_turnover_details_export_all'  ,:to => 'asset_turnover_details#export_all'
+  get 'asset_allocates_export_all'  ,:to => 'asset_allocates#export_all'
+  get 'asset_scrappings_export_all'  ,:to => 'asset_scrappings#export_all'
+
+#导入
+post 'save_multiple'  ,:to => 'users#save_multiple'  
+get 'departments_save_multiple'  ,:to => 'departments#save_multiple'  
+get 'assettypes_save_multiple'  ,:to => 'assettypes#save_multiple'  
+get 'assetstatuses_save_multiple'  ,:to => 'assetstatuses#save_multiple'  
+get 'addtypes_save_multiple'  ,:to => 'addtypes#save_multiple'  
+get 'assetseates_save_multiple'  ,:to => 'assetseates#save_multiple'  
+get 'usestates_save_multiple'  ,:to => 'usestates#save_multiple'  
+get 'units_save_multiple'  ,:to => 'units#save_multiple'
+get 'assetcards_save_multiple'  ,:to => 'assetcards#save_multiple'
+get 'asset_recoveries_save_multiple'  ,:to => 'asset_recoveries#save_multiple'
+get 'asset_turnover_details_save_multiple'  ,:to => 'asset_turnover_details#save_multiple'
+get 'asset_allocates_save_multiple'  ,:to => 'asset_allocates#save_multiple'
+get 'asset_scrappings_save_multiple'  ,:to => 'asset_scrappings#save_multiple'
+
+
 
   get 'login'  ,:to => 'sessions#new'  , :as => 'new_sessions'
   post 'login' ,:to   => 'sessions#create'
@@ -54,7 +84,7 @@ post 'asset_recoveries_save_all',:to =>'asset_recoveries#save_all'
 post 'asset_scrappings_save_all',:to =>'asset_scrappings#save_all'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-get 'getdatas',:to =>'users#getdatas'
+get 'getdatas',:to =>'asset_scrappings#save_all'
 
 
 end
