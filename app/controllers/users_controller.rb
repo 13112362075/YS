@@ -1,6 +1,11 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy] 
 
+
+
+  def getdatas 
+    
+  end
  
   def export_all
     @user_all =User.all; 
@@ -34,17 +39,16 @@ class UsersController < ApplicationController
     @q = User.search(params[:q])      
     if  params[:q].nil?
     #  @users = User.all 
-      @users=User.order(:id).page(params[:page]).per(10)
+      @users=User.order(:id).page(params[:page]).per(5)
       puts   @users;
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
         #  @users = User.all
-        @users=User.order(:id).page(params[:page]).per(10)
+        @users=User.order(:id).page(params[:page]).per(5)
      
       else
         search = params[:q]["search_cont"]
-        @users  = User.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(10)
-       
+        @users  = User.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(5)
       end
     end 
     @department= Department.all 
