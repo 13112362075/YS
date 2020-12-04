@@ -118,6 +118,22 @@ $.ajax({
 
 	<script type="text/javascript">
 
+$('td').click(function(e){ 
+  if(e.currentTarget.className !="")
+  {
+        console.log(e.currentTarget.parentNode.id); 
+        console.log(e.currentTarget.parentNode.firstElementChild.children[0].checked);
+        if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
+        {
+          e.currentTarget.parentNode.firstElementChild.children[0].checked=false;
+        }
+        else
+        {
+          e.currentTarget.parentNode.firstElementChild.children[0].checked=true;
+        }
+  }   
+})
+
 
 			// 获取选中的复选框项，保存为一个数组
 			function getCheckedCheckbox(checkboxClassName) {

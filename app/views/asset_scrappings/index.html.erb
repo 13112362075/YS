@@ -62,6 +62,23 @@
 <%=javascript_pack_tag 'element' %>  
  
 <script>
+
+$('td').click(function(e){ 
+  if(e.currentTarget.className !="")
+  {
+        console.log(e.currentTarget.parentNode.id); 
+        console.log(e.currentTarget.parentNode.firstElementChild.children[0].checked);
+        if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
+        {
+          e.currentTarget.parentNode.firstElementChild.children[0].checked=false;
+        }
+        else
+        {
+          e.currentTarget.parentNode.firstElementChild.children[0].checked=true;
+        }
+  }   
+})
+
 function setPercent(Rate){
 layui.use('element', function(){
   var $ = layui.jquery ,
