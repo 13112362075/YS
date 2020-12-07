@@ -5,6 +5,7 @@ class AssettypesController < ApplicationController
 
 
   def export_all
+    puts ";a;a;aa";
     @assettype_all =Assettype.all; 
   end
 
@@ -18,6 +19,7 @@ class AssettypesController < ApplicationController
   end
 
   def destroy_multiple    
+  
     params["assettype_id"].each do |i| 
       Assettype.destroy(i)
   end

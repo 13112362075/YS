@@ -12,7 +12,7 @@ var index=1;
     assettypedatas[0]='<%=i.Assettypecode%>'; 
     assettypedatas[1]='<%=i.Name%>'; 
     assettypedatas[2]='<%=i.Orgainize_id%>'; 
-    assettypedatas[3]='<%=i.Description%>';  
+    assettypedatas[3]='<%=i.description%>';  
  
     assettype_datas[index]=assettypedatas;
     index++;
@@ -21,4 +21,3 @@ var index=1;
 		 
 
 		openDownloadDialog(sheet2blob(sheet), '资产类型表.xlsx');
-         alert("导出成功！");

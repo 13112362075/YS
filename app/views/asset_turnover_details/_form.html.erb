@@ -1,4 +1,5 @@
   <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
+   <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
 <%= form_with(model: asset_turnover_detail, local: true) do |form| %>
   <% if asset_turnover_detail.errors.any? %>
     <div id="error_explanation">
@@ -11,6 +12,9 @@
       </ul>
     </div>
   <% end %>
+
+
+  <div style="width:200%" ><i  class="layui-icon"  >&#xe615;</i>  </div>
 
 <p  id="id"><%= @asset_turnover_detail.id%></p>
    <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a> 
