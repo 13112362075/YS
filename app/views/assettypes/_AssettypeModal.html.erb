@@ -1,0 +1,76 @@
+ 
+
+<!-- Modal -->
+<div class="modal fade" id="assettypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          
+        <h4 id="assettypeid" class="modal-title"  ></h4> 
+                <h4 id="AssettypeModalid" class="modal-title"  > <%= id%> </h4> 
+      </div>
+      <div class="modal-body"> 
+
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>用户名称</th> 
+          </tr>
+          </thead>
+          <tbody>
+            <% @assettype.each do |assettype| %>
+            <tr class="select" data-assettype_id="<%= assettype.id %>" >
+              <td><%= assettype.id %></td>
+              <td><%= assettype.Name %></td> 
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="chooseassettype" type="button" class="btn btn-default" data-dismiss="modal">选择</button>
+      </div> 
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+ 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+$('tr.select').click(function(e){ 
+    $("tr.select").css("backgroundColor","white");
+    this.style.backgroundColor = "#357ebd"
+    console.log(this.dataset.assettype_id) 
+    $("#assettypeid").text(this.dataset.assettype_id);
+
+}) 
+
+</script>
+
+<script> 
+$('#chooseassettype').click(function(e){     
+$.ajax({
+   type:"post", 
+   url :"/assettypes_choose",
+   data:{ 
+      "assettypeid": $("#assettypeid").text(),
+      "id" :$("#AssettypeModalid").text()
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });  
+}) 
+
+</script>

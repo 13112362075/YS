@@ -1,6 +1,12 @@
 class UsestatesController < ApplicationController
   before_action :set_usestate, only: [:show, :edit, :update, :destroy]
 
+  def choose   
+    usestate = Usestate.find(params[:usestateid]) 
+    @name = usestate.Name
+    @id=   params[:id] 
+    render 'choose/choose.js.erb'
+  end
 
 
   def export_all

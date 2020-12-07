@@ -2,6 +2,12 @@ class AssetstatusesController < ApplicationController
   before_action :set_assetstatus, only: [:show, :edit, :update, :destroy]
 
 
+  def choose   
+    assetstatus = Assetstatus.find(params[:assetstatusid]) 
+    @name = assetstatus.Name
+    @id=   params[:id] 
+    render 'choose/choose.js.erb'
+  end 
 
   def export_all
     @assetstatus_all =Assetstatus.all; 

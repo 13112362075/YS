@@ -2,6 +2,15 @@ class UnitsController < ApplicationController
   before_action :set_unit, only: [:show, :edit, :update, :destroy]
 
 
+
+  def choose   
+    unit = Unit.find(params[:unitid]) 
+    @name = unit.name
+    @id=   params[:id] 
+    render 'choose/choose.js.erb'
+  end
+
+
   def export_all
     @unit_all =Unit.all; 
   end

@@ -1,0 +1,76 @@
+
+
+<!-- Modal -->
+<div class="modal fade" id="usestateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          
+        <h4 id="usestateid" class="modal-title"  ></h4> 
+                <h4 id="UsestateModalid" class="modal-title"  > <%= id%> </h4> 
+      </div>
+      <div class="modal-body"> 
+
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>使用状态</th> 
+          </tr>
+          </thead>
+          <tbody>
+            <% @usestate.each do |usestate| %>
+            <tr class="select" data-usestate_id="<%= usestate.id %>" >
+              <td><%= usestate.id %></td>
+              <td><%= usestate.Name %></td> 
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button id="chooseusestate" type="button" class="btn btn-default" data-dismiss="modal">选择</button>
+      </div> 
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+ 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+$('tr.select').click(function(e){ 
+    $("tr.select").css("backgroundColor","white");
+    this.style.backgroundColor = "#357ebd"
+    console.log(this.dataset.usestate_id) 
+    $("#usestateid").text(this.dataset.usestate_id);
+
+}) 
+
+</script>
+
+<script> 
+$('#chooseusestate').click(function(e){     
+$.ajax({
+   type:"post", 
+   url :"/usestates_choose",
+   data:{ 
+      "usestateid": $("#usestateid").text(),
+      "id" :$("#UsestateModalid").text()
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });  
+}) 
+
+</script>

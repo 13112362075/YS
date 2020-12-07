@@ -1,11 +1,16 @@
 class AssettypesController < ApplicationController
   before_action :set_assettype, only: [:show, :edit, :update, :destroy]
 
+  def choose   
+    assettype = Assettype.find(params[:assettypeid]) 
+    @name = assettype.Name
+    @id=   params[:id] 
+    render 'choose/choose.js.erb'
+  end
 
 
 
-  def export_all
-    puts ";a;a;aa";
+  def export_all 
     @assettype_all =Assettype.all; 
   end
 

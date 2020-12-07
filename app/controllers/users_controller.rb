@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy] 
 
+  def choose   
+    user = User.find(params[:userid]) 
+    @name = user.name
+    @id=   params[:id] 
+    render 'choose/choose.js.erb'
+  end 
 
  
  
@@ -97,9 +103,7 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    respond_to do |format|
-
-      console.log(User_datas);
+    respond_to do |format| 
     @department = Department.all  
       if @user.update(user_params)
         format.html { redirect_to @user, notice:'用户修改成功！'}

@@ -68,6 +68,18 @@ get 'asset_turnover_details_save_multiple'  ,:to => 'asset_turnover_details#save
 get 'asset_allocates_save_multiple'  ,:to => 'asset_allocates#save_multiple'
 get 'asset_scrappings_save_multiple'  ,:to => 'asset_scrappings#save_multiple'
 
+#弹窗
+
+post 'departments_choose'  ,:to => 'departments#choose'  
+post 'users_choose'  ,:to => 'users#choose'  
+post 'units_choose'  ,:to => 'units#choose'  
+post 'usestates_choose'  ,:to => 'usestates#choose'  
+post 'assettypes_choose'  ,:to => 'assettypes#choose'   
+post 'addtypes_choose'  ,:to => 'addtypes#choose'   
+post 'assetseates_choose'  ,:to => 'assetseates#choose'  
+
+post 'assetstatuses_choose'  ,:to => 'assetstatuses#choose'  
+
 
 
   get 'login'  ,:to => 'sessions#new'  , :as => 'new_sessions'

@@ -1,7 +1,12 @@
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
 
-
+  def choose   
+    department = Department.find(params[:departmentid]) 
+    @name = department.departmentname
+    @id=   params[:id] 
+    render 'choose/choose.js.erb'
+  end
 
 
   def export_all

@@ -68,34 +68,32 @@
 
    
 
+ 
   
+
    <div class="layui-form-item">
       <label class="layui-form-label" for="user_所属部门">所属部门</label> 
        <div class="layui-input-block">
-          <select   class="layui-input "  name="user[departmentname]" id="user_departmentname"  <%= form.collection_select(:departmentname, @department.all, :departmentname, :departmentname) %>
-          </select>
+           <div style="display:flex;">
+  <input    class="layui-input "  placeholder="请输入所属部门"    type="text" name="user[departmentname]" id="user_departmentname"  value=<%= @user.departmentname%>></div>
+       <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#departmentModal" %>
        </div> 
-    </div> 
-
-
-
+    </div>  
+</div>
  
   
   <div class="field">
   <label class="layui-form-label"  for="user_所属组织">所属组织</label>
   <div class="layui-input-block"> <input    class="layui-input "  placeholder="请输入所属组织"    type="text" name="user[orgainize_id]" id="user_orgainize_id"  value=<%= @user.orgainize_id%>></div>
-    <!--%= form.text_field :orgainize_id %user[role]-->
   </div>
  
 
  <div class="actions layui-form-label">
     <input type="submit" name="commit" value="保存" data-disable-with="保存">
   </div>
-
-
-
-
- 
-
-
 <% end %> 
+
+
+
+<%= render    'departments/DepartmentModal.html.erb',  id: "user_departmentname"  %>
+

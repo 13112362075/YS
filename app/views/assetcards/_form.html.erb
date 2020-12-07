@@ -35,22 +35,17 @@
   </div> 
  
 
-  <div class="layui-form-item">
-      <label class="layui-form-label" for="assetcard_资产类别">资产类别</label> 
-       <div class="layui-input-block">
-          <select   class="layui-input "  name="assetcard[Assettype_id]" id="assetcard_Assettype_id"  <%= form.collection_select(:Assettype_id, @assettype.all, :Name, :Name) %>
-          </select>
-       </div> 
-    </div>  
- 
-  <div class="layui-form-item">
-      <label class="layui-form-label" for="assetcard_计量单位">计量单位</label> 
-       <div class="layui-input-block">
-          <select   class="layui-input "  name="assetcard[Unit_id]" id="assetcard_Unit_id"  <%= form.collection_select(:Unit_id, @unit.all, :name, :name) %>
-          </select>
-       </div> 
-    </div>  
+   
+   
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_资产类别">资产类别</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产类别"    type="text" name="assetcard[Assettype_id]" id="assetcard_Assettype_id" 
+      value=<%= @assetcard.Assettype_id%>  ></div>
+             
+  </div> 
+  
 
+ <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#assettypeModal" %>
  
    
 </div>
@@ -60,37 +55,29 @@
     <div style="display:flex;">
 
 
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_计量单位">计量单位</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入计量单位"    type="text" name="assetcard[Unit_id]" id="assetcard_Unit_id" 
+      value=<%= @assetcard.Unit_id%>  ></div>
+         
+  </div> 
+      <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#unitModal" %>
+
      <div class="field" >
     <label class="layui-form-label"      for="assetcard_数量">数量</label>
     <div class="layui-input-block"> <input     class="layui-input "    placeholder="请输入数量"    type="text" name="assetcard[Amount]" id="assetcard_Amount"
        value=<%= @assetcard.Amount%>  ></div>
   </div> 
 
-  <div class="layui-form-item">
-      <label class="layui-form-label" for="assetcard_资产状态">资产状态</label> 
-       <div class="layui-input-block">
-          <select   class="layui-input "  name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id"  <%= form.collection_select(:Assetstatus_id, @assetstatus.all, :Name, :Name) %>
-          </select>
-       </div> 
-    </div>  
-
-
-  <div class="layui-form-item">
-      <label class="layui-form-label" for="assetcard_变动方式">变动方式</label> 
-       <div class="layui-input-block">
-          <select   class="layui-input "  name="assetcard[Addtype_id]" id="assetcard_Addtype_id"  <%= form.collection_select(:Addtype_id, @addtype.all, :Name, :Name) %>
-          </select>
-       </div> 
-    </div>  
-
+   
+     <div class="field" >
+    <label class="layui-form-label"   for="assetcard_资产状态">资产状态</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入计量单位"    type="text" name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id" 
+      value=<%= @assetcard.Assetstatus_id%>  ></div> 
+  </div> 
  
- 
-
-        <div class="field" >
-    <label class="layui-form-label"      for="assetcard_购买日期">购买日期</label>
-    <div class="layui-inline"> <input     class="layui-input fdate "    placeholder="请输入购买日期"    type="text" name="assetcard[BuyDate]" id="assetcard_BuyDate"
-       value=<%= @assetcard.BuyDate%>  ></div>
-  </div>  
+    <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#assetstatusModal" %>
 
 </div> 
 
@@ -98,15 +85,33 @@
     <div style="display:flex;">
 
 
+ 
+     <div class="field" >
+    <label class="layui-form-label"   for="assetcard_变动方式">变动方式</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入变动方式"    type="text" name="assetcard[Addtype_id]" id="assetcard_Addtype_id" 
+      value=<%= @assetcard.Addtype_id%>  ></div>
+          
+  </div> 
 
-  <div class="layui-form-item">
-      <label class="layui-form-label" for="assetcard_资产使用状态">资产使用状态</label> 
-       <div class="layui-input-block">
-          <select   class="layui-input "  name="assetcard[Usestate_id]" id="assetcard_Usestate_id"  <%= form.collection_select(:Usestate_id, @usestate.all, :Name, :Name) %>
-          </select>
-       </div> 
-    </div>  
-  
+    <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#addtypeModal" %>
+
+        <div class="field" >
+    <label class="layui-form-label"      for="assetcard_购买日期">购买日期</label>
+    <div class="layui-inline"> <input     class="layui-input fdate "    placeholder="请输入购买日期"    type="text" name="assetcard[BuyDate]" id="assetcard_BuyDate"
+       value=<%= @assetcard.BuyDate%>  ></div>
+  </div>  
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_资产使用状态">资产使用状态</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产使用状态"    type="text" name="assetcard[Usestate_id]" id="assetcard_Usestate_id" 
+      value=<%= @assetcard.Usestate_id%>  ></div>
+          
+  </div> 
+    <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#usestateModal" %>
+</div> 
+
+
+    <div style="display:flex;">
 
        <div class="field" >
     <label class="layui-form-label"   for="assetcard_备注">备注</label>
@@ -119,8 +124,7 @@
     <div class="layui-input-block"> <input     class="layui-input "    placeholder="请输入所属组织"    type="text" name="assetcard[Orgainize_id]" id="assetcard_Orgainize_id"
        value=<%= @assetcard.Orgainize_id%>  ></div>
   </div>  
-   
-</div> 
+</div>
 
 <br>
 卡片财务信息
@@ -189,6 +193,16 @@
        value=<%= @assetcard.barcode%>  ></div>
   </div> 
 
+
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_资产位置">资产位置</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产位置"    type="text" name="assetcard[Assetseat_id]" id="assetcard_Assetseat_id" 
+      value=<%= @assetcard.Assetseat_id%>  ></div>
+       
+  </div> 
+        <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#assetseateModal" %>
+
        <div class="field" >
     <label class="layui-form-label"   for="assetcard_规格型号">规格型号</label>
     <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入规格型号"    type="text" name="assetcard[Mould]" id="assetcard_Mould" 
@@ -196,16 +210,8 @@
   </div> 
 
 
-
-  <div class="layui-form-item">
-      <label class="layui-form-label" for="assetcard_资产位置">资产位置</label> 
-       <div class="layui-input-block">
-          <select   class="layui-input "  name="assetcard[Assetseat_id]" id="assetcard_Assetseat_id"  <%= form.collection_select(:Assetseat_id, @assetseate.all, :Name, :Name) %>
-          </select>
-       </div> 
-    </div>  
-  </div>   
-
+ 
+</div>
 
 
     <div style="display:flex;">
@@ -235,27 +241,26 @@
     <div style="display:flex;">
 
 
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_使用部门">使用部门</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入使用部门"    type="text" name="assetcard[department_id]" id="assetcard_department_id" 
+      value=<%= @assetcard.department_id%>  ></div>
+          
+  </div> 
+     <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#departmentModal" %>
 
-
-  <div class="layui-form-item">
-      <label class="layui-form-label" for="assetcard_使用部门">使用部门</label> 
-       <div class="layui-input-block">
-          <select   class="layui-input "  name="assetcard[department_id]" id="assetcard_department_id"  <%= form.collection_select(:department_id, @department.all, :departmentname, :departmentname) %>
-          </select>
-       </div> 
-    </div>  
-
- 
- 
-
-  <div class="layui-form-item">
-      <label class="layui-form-label" for="assetcard_使用人">使用人</label> 
-       <div class="layui-input-block"> 
-          <select   class="layui-input  "  name="assetcard[Employeeld]" id="assetcard_Employeeld"  <%= form.collection_select(:Employeeld, @user.all, :name, :name) %>
-          </select> 
-       </div> 
-    </div>  
    
+
+       <div class="field" >
+    <label class="layui-form-label"   for="assetcard_使用人">使用人</label>
+    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入使用人"    type="text" name="assetcard[Employeeld]" id="assetcard_Employeeld" 
+      value=<%= @assetcard.Employeeld%>  ></div>
+        
+  </div> 
+       <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#userModal" %>
+ 
+ 
+ 
 
 
   </div>   
@@ -303,3 +308,13 @@ layui.use('laydate', function(){
 </script>
 
 <!--%=image_tag("timg.jpg")%-->    
+
+
+<%= render    'departments/DepartmentModal.html.erb',  id: "assetcard_department_id"  %>
+<%= render    'users/UserModal.html.erb',  id: "assetcard_Employeeld"  %>
+<%= render    'units/UnitModal.html.erb',  id: "assetcard_Unit_id"  %>
+<%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetcard_Assetstatus_id"  %> 
+<%= render    'assettypes/AssettypeModal.html.erb',  id: "assetcard_Assettype_id"  %> 
+<%= render    'addtypes/AddtypesModal.html.erb',  id: "assetcard_Addtype_id"  %> 
+<%= render    'assetseates/AssetseateModal.html.erb',  id: "assetcard_Assetseat_id"  %> 
+<%= render    'usestates/UsestateModal.html.erb',  id: "assetcard_Usestate_id"  %> 

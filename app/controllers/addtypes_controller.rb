@@ -1,7 +1,12 @@
 class AddtypesController < ApplicationController
   before_action :set_addtype, only: [:show, :edit, :update, :destroy]
 
-
+  def choose   
+    addtype = Addtype.find(params[:addtypeid]) 
+    @name = addtype.Name
+    @id=   params[:id] 
+    render 'choose/choose.js.erb'
+  end 
 
 
   def export_all
