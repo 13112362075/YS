@@ -76,10 +76,13 @@ post 'units_choose'  ,:to => 'units#choose'
 post 'usestates_choose'  ,:to => 'usestates#choose'  
 post 'assettypes_choose'  ,:to => 'assettypes#choose'   
 post 'addtypes_choose'  ,:to => 'addtypes#choose'   
-post 'assetseates_choose'  ,:to => 'assetseates#choose'  
+post 'assetseates_choose'  ,:to => 'assetseates#choose'   
+post 'assetstatuses_choose'  ,:to => 'assetstatuses#choose'   
+post 'assetcards_choose'  ,:to => 'assetcards#choose'  
 
-post 'assetstatuses_choose'  ,:to => 'assetstatuses#choose'  
 
+#更新资产卡片状态
+post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'  
 
 
   get 'login'  ,:to => 'sessions#new'  , :as => 'new_sessions'

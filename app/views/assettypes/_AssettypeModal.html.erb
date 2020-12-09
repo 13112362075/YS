@@ -6,9 +6,9 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          
-        <h4 id="assettypeid" class="modal-title"  ></h4> 
-                <h4 id="AssettypeModalid" class="modal-title"  > <%= id%> </h4> 
+          <h4>资产类型表</h4>
+        <h4  hidden="hidden" id="assettypeid" class="modal-title"  ></h4> 
+                <h4  hidden="hidden" id="AssettypeModalid" class="modal-title"  > <%= id%> </h4> 
       </div>
       <div class="modal-body"> 
 
@@ -16,7 +16,7 @@
           <thead>
           <tr>
             <th>ID</th>
-            <th>用户名称</th> 
+            <th>资产类别</th> 
           </tr>
           </thead>
           <tbody>
@@ -31,8 +31,8 @@
       </div>
 
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button id="chooseassettype" type="button" class="btn btn-default" data-dismiss="modal">选择</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button id="chooseassettype" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
       </div> 
     </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->

@@ -1,0 +1,129 @@
+
+
+<!-- Modal -->
+<div class="modal fade" id="assetcardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4>资产卡片表</h4> 
+        <h4 hidden="hidden" id="assetcardid" class="modal-title"  ></h4>  
+      </div>
+      <div class="modal-body"> 
+
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>编号</th>
+            <th>资产卡片名称</th> 
+            <th>单位</th> 
+            <th>数量</th> 
+            <th>使用部门</th> 
+            <th>使用人</th> 
+            <th>资产位置</th> 
+          </tr>
+          </thead>
+          <tbody>
+            <% @assetcard.each do |assetcard| %>
+            <tr class="select" data-assetcard_id="<%= assetcard.id %>" >
+              <td><%= assetcard.assetCode %></td>
+              <td><%= assetcard.assetname %></td> 
+              <td><%= assetcard.Unit_id %></td>
+              <td><%= assetcard.Amount %></td> 
+              <td><%= assetcard.department_id %></td>
+              <td><%= assetcard.Employeeld %></td> 
+              <td><%= assetcard.Employeeld %></td> 
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button id="chooseassetcard" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+      </div> 
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+ 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+$('tr.select').click(function(e){ 
+    $("tr.select").css("backgroundColor","white");
+    this.style.backgroundColor = "#357ebd"
+    console.log(this.dataset.assetcard_id) 
+    $("#assetcardid").text(this.dataset.assetcard_id);
+     
+
+}) 
+
+$('tr.select').dblclick(function(e){  
+
+var rows=document.getElementById('testid').rows;   
+var  isaddrow="true";
+row=rows.length;
+for(var i=1;i<rows.length;i++) 
+{
+  var BH=rows[i].cells[2].innerText; 
+  if(BH.trim()=="")
+  { 
+    isaddrow="false";
+    row = i;
+    break;
+  }
+}
+
+$.ajax({
+   type:"post", 
+   url :"/assetcards_choose",
+   data:{ 
+      "assetcardid": $("#assetcardid").text(),
+      "id" :$("#AssetcardModalid").text(),
+      "row":row,
+      "idlist":["2","3","4","5","10","11","12"],
+      "isaddrow":isaddrow
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });  
+}) 
+
+</script>
+
+<script> 
+$('#chooseassetcard').click(function(e){     
+var rows=document.getElementById('testid').rows;   
+for(var i=1;i<rows.length;i++) 
+{
+  var BH=rows[i].cells[2].innerText; 
+  if(BH.trim()=="")
+  { 
+    row = i;
+  }
+}
+$.ajax({
+   type:"post", 
+   url :"/assetcards_choose",
+   data:{ 
+      "assetcardid": $("#assetcardid").text(),
+      "id" :$("#AssetcardModalid").text(),
+      "row":row,
+      "idlist":["2","3","4","5","10","11","12"]
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });  
+})  
+</script>

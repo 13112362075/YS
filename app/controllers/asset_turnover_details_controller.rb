@@ -37,11 +37,14 @@ end
   def new
     @asset_turnover_detail = AssetTurnoverDetail.new
     @entry = AssetTurnoverDetailEntry.new
+    @assetcard  =  Assetcard.all
   end
 
   # GET /asset_turnover_details/1/edit
   def edit
     @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  "#{params[:id]}" )  
+    @assetcard  =  Assetcard.all
+    @index=0
   end
 
 
@@ -72,6 +75,7 @@ end
            puts i[1][12];
          else
            assetTurnoverDetailEntry_2= AssetTurnoverDetailEntry.find_by(id: i[1][12])
+           puts  i[1][12];
            assetTurnoverDetailEntry_2.update(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11]);
          end 
        end       

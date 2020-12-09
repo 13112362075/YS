@@ -1,3 +1,28 @@
+<style>
+.image_input{  
+         width:243px; 
+         border: 1px solid #e6e6e6;
+         border-left: 1; 
+         border-right: 0; 
+         border-top:1; 
+         border-bottom: 1;   
+         border-top-left-radius: 2px;
+         border-top-right-radius: 0px;
+         border-bottom-right-radius: 0;
+         border-bottom-left-radius: 2px;
+         }
+ .image
+         {
+           border: 1px solid #e6e6e6;
+           border-left: 0; 
+           border-bottom-left-radius: 0;
+           border-top-left-radius: 0;
+           border-bottom-right-radius: 2px;
+           border-top-right-radius: 2px;
+         }
+</style>
+
+
 <%= form_with(model: user, local: true) do |form| %>
   <% if user.errors.any? %>
     <div id="error_explanation">
@@ -67,21 +92,19 @@
 
 
    
-
+ <div class="layui-form-item">
+    <label class="layui-form-label" for="user_所属部门">所属部门</label> 
+     <div class="layui-input-block">
+       <div style="display:flex;">
+         <input   class="layui-input image_input"  placeholder="请输入所属部门"    type="text" name="user[departmentname]" id="user_departmentname"  value=<%= @user.departmentname%>>
+          <div  class ="image",  data-toggle="modal" data-target="#departmentModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div> 
+          </div> 
+     </div>
+ </div>
  
   
-
-   <div class="layui-form-item">
-      <label class="layui-form-label" for="user_所属部门">所属部门</label> 
-       <div class="layui-input-block">
-           <div style="display:flex;">
-  <input    class="layui-input "  placeholder="请输入所属部门"    type="text" name="user[departmentname]" id="user_departmentname"  value=<%= @user.departmentname%>></div>
-       <%= link_to "选择", "#", class: "layui-btn","data-toggle" => "modal", "data-target" => "#departmentModal" %>
-       </div> 
-    </div>  
-</div>
  
-  
+
   <div class="field">
   <label class="layui-form-label"  for="user_所属组织">所属组织</label>
   <div class="layui-input-block"> <input    class="layui-input "  placeholder="请输入所属组织"    type="text" name="user[orgainize_id]" id="user_orgainize_id"  value=<%= @user.orgainize_id%>></div>

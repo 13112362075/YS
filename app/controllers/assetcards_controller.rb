@@ -2,8 +2,34 @@ class AssetcardsController < ApplicationController
   before_action :set_assetcard, only: [:show, :edit, :update, :destroy]
 
 
-  def export_all
-    puts "1";
+
+  def  Update_Status 
+    params[:id_list].each do |i|
+      assetcard=Assetcard.where("assetCode = ?" ,i); 
+      assetcard.update(Usestate_id:   params[:Status]);
+    end 
+  end
+
+
+
+
+  def choose   
+    @assetcard = Assetcard.find(params[:assetcardid]) 
+    @assetname = @assetcard.assetname
+    @assetCode = @assetcard.assetCode
+    @Unit_id = @assetcard.Unit_id
+    @Amount = @assetcard.Amount
+    @department_id = @assetcard.department_id
+    @Employeeld = @assetcard.Employeeld
+    @Assetseat_id = @assetcard.Assetseat_id 
+    @row =params[:row]
+    @id=   params[:idlist] 
+    @isaddrow=params[:isaddrow]  
+    render 'choose/assetcard_choose.js.erb'
+  end 
+
+
+  def export_all 
     @assetcard_all =Assetcard.all; 
   end
 
@@ -13,7 +39,6 @@ class AssetcardsController < ApplicationController
     params["assetcardid"].each do |i| 
       puts i[1].length    
       assetcard = Assetcard.create!(assetCode: i[1][0],assetname: i[1][1],Assettype_id: i[1][2],Unit_id: i[1][3],Amount: i[1][4], Assetstatus_id: i[1][5],Addtype_id: i[1][6],BuyDate: i[1][7],Usestate_id: i[1][8],description: i[1][9],Orgainize_id: i[1][10],Entrydate: i[1][11],Price: i[1][12],Lastprice: i[1][13],Expectedperiod: i[1][14], CNOSP: i[1][15],barcode: i[1][16],Mould: i[1][17],Assetseat_id: i[1][18],Client: i[1][19], Supplier: i[1][20],department_id: i[1][21],Employeeld: i[1][22])
- 
     end
   end
 

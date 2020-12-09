@@ -1,0 +1,18 @@
+var rowss=document.getElementById('testid').rows;   
+ index=<%=@row%>
+console.log("<%= @isaddrow %>")
+ if(<%= @isaddrow %>)
+ {
+    addrow();
+ }
+ console.log(rowss[index].cells[1]); 
+ rowss[index].cells[2].innerText="<%= @assetCode%>"
+ rowss[index].cells[3].innerText="<%= @assetname%>"
+  rowss[index].cells[4].innerText="<%= @Unit_id%>"
+  rowss[index].cells[5].innerText="<%= @Amount%>"
+  rowss[index].cells[10].innerText="<%= @department_id%>"
+  rowss[index].cells[11].innerText="<%= @Employeeld%>"
+  rowss[index].cells[12].innerText="<%= @Assetseat_id%>"
+ $('#assetcardModal').modal('hide');
+ 
+

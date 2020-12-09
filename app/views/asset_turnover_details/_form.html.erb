@@ -13,11 +13,12 @@
     </div>
   <% end %>
 
-
-  <div style="width:200%" ><i  class="layui-icon"  >&#xe615;</i>  </div>
+ 
 
 <p  id="id"><%= @asset_turnover_detail.id%></p>
    <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a> 
+   <a id="a_undit"   rel="nofollow"  ><button   onclick="undit()"   type="button" class="layui-btn">审核</button></a> 
+   <a id="a_Back"   rel="nofollow"  ><button   onclick="back()"   type="button" class="layui-btn">归还</button></a> 
     <div style="display:flex;">
 
 
@@ -69,9 +70,11 @@
 <% end %>
 
 
- 
-<button onclick="addrow()">新增行</button>
-<button onclick="delrow()">删除行</button>
+ <div class="layui-btn-group">
+<button class="layui-btn" onclick="addrow()">新增行</button>
+<button class="layui-btn"  onclick="delrow()">删除行</button>
+<button class="layui-btn"   data-toggle="modal" data-target="#assetcardModal" href="#">选择资产卡片</button>
+</div>
 <form id="Entry" ,action="/save_multiple">
 <table    id="testid"  class="layui-table" style="text-align:center;margin:10px;0px; " >
   <colgroup>
@@ -81,6 +84,7 @@
   <thead > 
     <tr >  
       <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center">序号</th>
       <th style="text-align:center">资产编码</th>
       <th style="text-align:center">资产名称</th> 
       <th style="text-align:center">计量单位</th>
@@ -99,14 +103,15 @@
       <% if @assetTurnoverDetailEntry.nil?%>
        <tr class="trr"  onclick =>
                 <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'/></td>
+                <td class="tdd1" contenteditable="true">1</td>
                 <td class="tdd1" contenteditable="true"></td>
                 <td class="tdd1" contenteditable="true"></td>
                 <td class="tdd1" contenteditable="true"></td>
                 <td class="tdd1" contenteditable="true"></td>
                 <td class="tdd1" contenteditable="true"></td>
                 <td class="tdd1" contenteditable="true" ></td>
-                <td class="tdd1" contenteditable="true" ></td>
-                <td class="tdd1" contenteditable="true" ></td>
+                <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'></td>
+                <td class="tdd1 " contenteditable="true" > <input     class="layui-input  fdate"   type="text" ></td>
                 <td class="tdd1" contenteditable="true" ></td>
                 <td class="tdd1" contenteditable="true"></td>
                 <td class="tdd1" contenteditable="true" ></td>
@@ -114,15 +119,21 @@
               </tr>
       <%else%>
           <% @assetTurnoverDetailEntry.each do |assetTurnoverDetailEntry| %>
+              <% @index=@index+1%>
               <tr class="trr"   id=<%=assetTurnoverDetailEntry.id%>>
                 <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'/></td>
+                <td class="tdd1" contenteditable="true"><%= @index %></td>
                 <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.assetcards_Code %></td>
                 <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.assetcards_name %></td>
                 <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Unit %></td>
                 <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Amount %></td>
                 <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Reasons_for_borrowing %></td>
                 <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.givebackPlanDate %></td>
-                <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.Has_Been_returned %></td>
+                 <% if   assetTurnoverDetailEntry.Has_Been_returned=='true'  %>
+                    <td><input class='awsui-checkbox' type='checkbox'   checked='checked'></td> 
+                 <%else%>
+                    <td><input class='awsui-checkbox' type='checkbox' ></td>
+                 <%end%>
                 <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.givebackDate %></td>
                 <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.Deptment %> </td>
                 <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Employeeld %> </td>
@@ -141,9 +152,70 @@
 
 
 
-<%= javascript_pack_tag 'layui'%>
-<%= javascript_pack_tag 'laydate'%>
-<%= stylesheet_pack_tag 'laydate'%> 
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+
+<script>
+
+function undit(){
+  var tb = document.getElementById('testid');    // table 的 id
+  var rows = tb.rows;                           // 获取表格所有行 
+  var id_list=new Array();
+  for(i=1;i<rows.length;i++)
+  {  
+    id_list[i-1]=rows[i].cells[2].innerHTML; 
+  }    
+ $.ajax({
+   type:"post", 
+   url:"/assetcards_Update_Status", 
+   data:{ 
+     "id_list" :id_list, 
+     "Status":"借出"
+     }, 
+   success: function(){
+      alert("审核成功！"); 
+     },
+			error :function(){
+        alert("审核失败！")
+        } 
+ });
+}
+
+
+function back(){
+  var tb = document.getElementById('testid');    // table 的 id
+  var rows = tb.rows;
+  var id_list=new Array();
+  var index= 0;
+  for (i=1;i<rows.length;i++)
+  {
+    console.log(rows[i].cells[8].children[0].checked); 
+    if(rows[i].cells[8].children[0].checked)
+    {
+      id_list[index]=rows[i].cells[2].innerHTML;
+      index++;
+    }   
+  }  
+  $.ajax({
+   type:"post", 
+   url:"/assetcards_Update_Status", 
+   data:{ 
+     "id_list" :id_list, 
+     "Status":"可用"
+     }, 
+   success: function(){
+      alert("归还成功！"); 
+     },
+			error :function(){
+        alert("归还失败！")
+        } 
+ });
+}
+
+</script>
+
+
+
 
  <script>
 layui.use('laydate', function(){
@@ -157,14 +229,28 @@ layui.use('laydate', function(){
 </script>
  
 
- <script>
+ <script> 
+$('td').click(function(e){  
+  if(e.currentTarget.className !="")
+  {
+        console.log(e.currentTarget.parentNode.id); 
+        console.log(e.currentTarget.parentNode.firstElementChild.children[0].checked);
+        if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
+        {
+          e.currentTarget.parentNode.firstElementChild.children[0].checked=false;
+        }
+        else
+        {
+          e.currentTarget.parentNode.firstElementChild.children[0].checked=true;
+        }
+  }   
+})
 //新增行
 function addrow(){
-   var c=document.getElementById('testid');//获得表格的信息 
-   console.log(c);
+   var c=document.getElementById('testid');//获得表格的信息  
    if( c.length==1)//如果是向一个空表增加一行
    {
-     var x=c.insertRow(1);//向空表插入一行 
+     var x=c.insertRow(1);//向空表插入一行  
      var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行  
      for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
      {
@@ -174,40 +260,64 @@ function addrow(){
    else
    { 
      var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行 
+     var index = c.rows[c.rows.length-1].cells[1].innerHTML*1;
+     var index =c.rows.length *1;
      var x=c.insertRow(c.rows.length);
      x.id=0;
      for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
      { 
-       
        var y=x.insertCell(i);  
        if(i==0)
        { 
               y.innerHTML="<input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]'  type='checkbox'/>";
        }
+       else if(i==1)
+       {
+         y.innerHTML=index;
+       }
+       else if (i==8)
+       {
+         y.innerHTML="       <td><input class='awsui-checkbox' type='checkbox' ></td>";
+       }
        else
        {
          y.setAttribute("contenteditable","true");
        }
-     }
+       y.setAttribute("class","tdd1"); 
+     } 
    }
 }
  //删除行
 function delrow(){
-var x=document.getElementById("testid");
-if(x.rows.length==2)
-{
-  alert("数据数据行至少为1行，不允许删除！");
-  return false;
+var items=document.getElementsByName("entry.ids[]"); 
+ var x=document.getElementById("testid"); 
+var IsCheckCount=0;
+for(var i=items.length-1;i>=0;i--){
+  if(items[i].checked)
+  {  
+      IsCheckCount++; 
+      x=document.getElementById("testid"); 
+      var row = x.rows;    
+      for(j=i+2;j<row.length;j++)
+      {  
+        row[j].cells[1].innerHTML =row[j].cells[1].innerHTML *1 -1
+      }
+      x.deleteRow(i+1);//删除一行 
+   }
 }
-x.deleteRow(x.rows.length-1);//删除一行
+  if(IsCheckCount==0)
+  {
+    alert("请选择删除的数据！"); 
+  } 
 }
+
+
 //全选
    function selectAll(obj){ 
         //创建数组
         var arr=new Array();
         //获取所有id为“cb1”的复选框
         var items=document.getElementsByName("entry.ids[]");
-
         //判断复选框是否选中
         if(obj.checked)
         {
@@ -229,11 +339,12 @@ x.deleteRow(x.rows.length-1);//删除一行
     }      
  </script>
 
+
+
 <script>
 function test1(){  
 
-var  id=document.getElementById("id").innerText;
-console.log(id);
+var  id=document.getElementById("id").innerText; 
 var  Document_number=document.getElementById("asset_turnover_detail_Document_number").value;
 var  Borrowing_date=document.getElementById("asset_turnover_detail_Borrowing_date").value;
 var  Borrowing_Department=document.getElementById("asset_turnover_detail_Borrowing_Department").value;
@@ -242,15 +353,23 @@ var  Loaner=document.getElementById("asset_turnover_detail_Loaner").value;
 var array1 = new Array();
 var  array_id = new Array(); 
 var tb = document.getElementById('testid');    // table 的 id
-var rows = tb.rows;                           // 获取表格所有行
+var rows = tb.rows;                           // 获取表格所有行 
 var t=0;
 for(var i = 1; i<rows.length; i++ ){
   array_id[i-1]=rows[i].id;
-  var array2 = new Array();
-   for(var j = 1; j<rows[i].cells.length; j++ ){    // 遍历该行的 td     
-       array2[j-1]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
+  var array2 = new Array(); 
+   for(var j = 2; j<rows[i].cells.length; j++ ){    // 遍历该行的 td      
+   if(j==8)
+   {  
+       array2[j-2]=rows[i].cells[j].children[0].checked;
+
    }
-   array2[rows[i].cells.length-1]=rows[i].id;
+   else
+   {
+      array2[j-2]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
+   }
+   }
+   array2[rows[i].cells.length-2]=rows[i].id;
    array1[i-1]=array2;
 }
 console.log(array1);  
@@ -280,5 +399,4 @@ console.log(array1);
 } 
  </script>
 
-
-  
+<%= render    'assetcards/AssetcardsModal.html.erb'  %> 
