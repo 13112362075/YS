@@ -1,0 +1,14 @@
+ if(<%= @IsUpdate %>)
+ {
+     
+     alert("<%=@status%>"+"成功！");
+ }
+ else
+ { 
+     var error="";
+     <% @id.each do |id| %> 
+     error=error+"资产编码为："+"<%=id%>"+"已经为"+"<%=@status%>"+"状态\n" 
+     <%end%>
+     error=error+"<%=@status%>"+"失败！"
+       alert(error);
+ }

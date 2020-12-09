@@ -4,11 +4,33 @@ class AssetcardsController < ApplicationController
 
 
   def  Update_Status 
+    @IsUpdate="true";
+    @id=[];
+    @status= params[:Status];
     params[:id_list].each do |i|
-      assetcard=Assetcard.where("assetCode = ?" ,i); 
-      assetcard.update(Usestate_id:   params[:Status]);
-    end 
+   
+      if(params[:Status]=="借出")
+        @assetcard_by_status=Assetcard.where("assetCode = ?   and  Usestate_id = ?" ,i, "借出");  
+        if   @assetcard_by_status.length >0
+          @IsUpdate="false";
+          @id << i; 
+        end
+      else
+        @assetcard_by_status=Assetcard.where("assetCode = ? and  Usestate_id = ? " ,i, "可用"); 
+        if   @assetcard_by_status.length >0
+          @IsUpdate="false";
+          puts i;
+          @id << i; 
+        end
+      end  
+    end  
+  if  (@IsUpdate =="true")
+    params[:id_list].each do |i|
+      @assetcard_by_status=Assetcard.where("assetCode = ? " ,i); 
+      @assetcard_by_status.update(Usestate_id:   params[:Status]);
+    end
   end
+end
 
 
 

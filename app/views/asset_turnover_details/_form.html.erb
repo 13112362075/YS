@@ -1,5 +1,34 @@
-  <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
-   <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<style>
+.image_input{  
+         width:243px; 
+         border: 1px solid #e6e6e6;
+         border-left: 1; 
+         border-right: 0; 
+         border-top:1; 
+         border-bottom: 1;   
+         border-top-left-radius: 2px;
+         border-top-right-radius: 0px;
+         border-bottom-right-radius: 0;
+         border-bottom-left-radius: 2px;
+         }
+ .image
+         {
+           border: 1px solid #e6e6e6;  
+           border-left: 0px; 
+           border-right: 1; 
+           border-top:1; 
+           border-bottom: 1;   
+           border-bottom-left-radius: 0;
+           border-top-left-radius: 0;
+           border-bottom-right-radius: 2px;
+           border-top-right-radius: 2px;
+           height:38px;
+           width:38px;
+         }
+</style>
+
 <%= form_with(model: asset_turnover_detail, local: true) do |form| %>
   <% if asset_turnover_detail.errors.any? %>
     <div id="error_explanation">
@@ -12,7 +41,6 @@
       </ul>
     </div>
   <% end %>
-
  
 
 <p  id="id"><%= @asset_turnover_detail.id%></p>
@@ -24,7 +52,7 @@
 
      <div class="field" >
     <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据编号">单据编号</label>
-    <div  class="layui-input-block"> <input     class="layui-input "    placeholder="请输入单据编号"    type="text" name="asset_turnover_detail[Document_number]" id="asset_turnover_detail_Document_number"
+    <div  class="layui-input-block "> <input     class="layui-input "    placeholder="请输入单据编号"    type="text" name="asset_turnover_detail[Document_number]" id="asset_turnover_detail_Document_number"
        value=<%= @asset_turnover_detail.Document_number%>  ></div>
   </div> 
 
@@ -38,10 +66,10 @@
 
      <div class="field" >
     <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用部门">借用部门</label>
-    <div  class="layui-input-block"> <input     class="layui-input "    placeholder="请输入借用部门"    type="text" name="asset_turnover_detail[Borrowing_Department]" id="asset_turnover_detail_Borrowing_Department"
+    <div  class="layui-input-block"> <input     class="layui-input  image_input "     placeholder="请输入借用部门"    type="text" name="asset_turnover_detail[Borrowing_Department]" id="asset_turnover_detail_Borrowing_Department"
        value=<%= @asset_turnover_detail.Borrowing_Department%>  ></div>
   </div>  
-
+ <div  class ="image",  data-toggle="modal" data-target="#departmentModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>
 </div>
      
  
@@ -58,8 +86,9 @@
  
      <div class="field" >
     <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用人">借用人</label>
-    <div  class="layui-input-block"> <input     class="layui-input "    placeholder="请输入借用人"    type="text" name="asset_turnover_detail[Loaner]" id="asset_turnover_detail_Loaner"
+    <div  class="layui-input-block"> <input    class="layui-input  image_input "    placeholder="请输入借用人"    type="text" name="asset_turnover_detail[Loaner]" id="asset_turnover_detail_Loaner"
        value=<%= @asset_turnover_detail.Loaner%>  ></div>
+        <div  class ="image",  data-toggle="modal" data-target="#userModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>
   </div>  
  
 
@@ -111,7 +140,7 @@
                 <td class="tdd1" contenteditable="true"></td>
                 <td class="tdd1" contenteditable="true" ></td>
                 <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'></td>
-                <td class="tdd1 " contenteditable="true" > <input     class="layui-input  fdate"   type="text" ></td>
+                <td class="tdd1 fdatetd " contenteditable="true" > </td>
                 <td class="tdd1" contenteditable="true" ></td>
                 <td class="tdd1" contenteditable="true"></td>
                 <td class="tdd1" contenteditable="true" ></td>
@@ -134,7 +163,7 @@
                  <%else%>
                     <td><input class='awsui-checkbox' type='checkbox' ></td>
                  <%end%>
-                <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.givebackDate %></td>
+                 <td class="tdd1 fdatetd " contenteditable="true" ><%= assetTurnoverDetailEntry.givebackDate %></td> 
                 <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.Deptment %> </td>
                 <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Employeeld %> </td>
                 <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.Asset_seat %> </td>
@@ -152,8 +181,7 @@
 
 
 
-<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
-<script src="https://www.layuicdn.com/layui/layui.js"></script>
+
 
 <script>
 
@@ -172,17 +200,17 @@ function undit(){
      "id_list" :id_list, 
      "Status":"借出"
      }, 
-   success: function(){
-      alert("审核成功！"); 
+   success: function(){ 
      },
-			error :function(){
-        alert("审核失败！")
+			error :function(){ 
         } 
  });
 }
 
 
 function back(){
+
+  test1()//先保存
   var tb = document.getElementById('testid');    // table 的 id
   var rows = tb.rows;
   var id_list=new Array();
@@ -203,11 +231,9 @@ function back(){
      "id_list" :id_list, 
      "Status":"可用"
      }, 
-   success: function(){
-      alert("归还成功！"); 
+   success: function(){ 
      },
-			error :function(){
-        alert("归还失败！")
+			error :function(){ 
         } 
  });
 }
@@ -217,14 +243,19 @@ function back(){
 
 
 
- <script>
-layui.use('laydate', function(){
+ <script> 
+layui.use('laydate', function(){ 
   var laydate = layui.laydate;
-    $('.fdate').each(function(){
+    $('.fdate').each(function(){ 
     laydate.render({
 			elem: this     
 	});
-  }) 
+  })
+    $('.fdatetd').each(function(){ 
+    laydate.render({
+			elem: this     
+	});
+  })
 });   
 </script>
  
@@ -246,7 +277,7 @@ $('td').click(function(e){
   }   
 })
 //新增行
-function addrow(){
+function addrow(){  
    var c=document.getElementById('testid');//获得表格的信息  
    if( c.length==1)//如果是向一个空表增加一行
    {
@@ -279,6 +310,14 @@ function addrow(){
        {
          y.innerHTML="       <td><input class='awsui-checkbox' type='checkbox' ></td>";
        }
+       else if (i==9)
+      {
+          var laydate = layui.laydate
+          console.log(laydate) 
+          laydate.render({
+              elem: y 
+            })
+      }
        else
        {
          y.setAttribute("contenteditable","true");
@@ -295,11 +334,13 @@ var IsCheckCount=0;
 for(var i=items.length-1;i>=0;i--){
   if(items[i].checked)
   {  
+
       IsCheckCount++; 
       x=document.getElementById("testid"); 
       var row = x.rows;    
+
       for(j=i+2;j<row.length;j++)
-      {  
+      {   
         row[j].cells[1].innerHTML =row[j].cells[1].innerHTML *1 -1
       }
       x.deleteRow(i+1);//删除一行 
@@ -339,11 +380,8 @@ for(var i=items.length-1;i>=0;i--){
     }      
  </script>
 
-
-
 <script>
 function test1(){  
-
 var  id=document.getElementById("id").innerText; 
 var  Document_number=document.getElementById("asset_turnover_detail_Document_number").value;
 var  Borrowing_date=document.getElementById("asset_turnover_detail_Borrowing_date").value;
@@ -356,25 +394,23 @@ var tb = document.getElementById('testid');    // table 的 id
 var rows = tb.rows;                           // 获取表格所有行 
 var t=0;
 for(var i = 1; i<rows.length; i++ ){
+  console.log(rows[i]);
   array_id[i-1]=rows[i].id;
   var array2 = new Array(); 
    for(var j = 2; j<rows[i].cells.length; j++ ){    // 遍历该行的 td      
-   if(j==8)
-   {  
-       array2[j-2]=rows[i].cells[j].children[0].checked;
-
-   }
-   else
-   {
-      array2[j-2]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
-   }
-   }
+    if(j==8)
+    {  
+        array2[j-2]=rows[i].cells[j].children[0].checked; 
+    }
+    else
+    {
+        array2[j-2]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
+    }
+  }
    array2[rows[i].cells.length-2]=rows[i].id;
    array1[i-1]=array2;
 }
-console.log(array1);  
-
-
+console.log(array1);    
  $.ajax({
    type:"post", 
    url:"/asset_turnover_details_save_all", 
@@ -382,8 +418,6 @@ console.log(array1);
      "array_id" :array_id,
       "datas": array1,
       "id":id,
-      "Document_number":Document_number,
-      "Borrowing_date":Borrowing_date,
       "Borrowing_Department":Borrowing_Department,
       "Borrowed_To_id":Borrowed_To_id,
       "Loaner":Loaner
@@ -400,3 +434,5 @@ console.log(array1);
  </script>
 
 <%= render    'assetcards/AssetcardsModal.html.erb'  %> 
+<%= render    'departments/DepartmentModal.html.erb',  id: "asset_turnover_detail_Borrowing_Department"  %>
+<%= render    'users/UserModal.html.erb',  id: "asset_turnover_detail_Loaner"  %>

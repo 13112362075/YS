@@ -37,7 +37,9 @@ end
   def new
     @asset_turnover_detail = AssetTurnoverDetail.new
     @entry = AssetTurnoverDetailEntry.new
-    @assetcard  =  Assetcard.all
+    @assetcard  =  Assetcard.allow
+    @user = User.all   
+    @department = Department.all   
   end
 
   # GET /asset_turnover_details/1/edit
@@ -45,6 +47,8 @@ end
     @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  "#{params[:id]}" )  
     @assetcard  =  Assetcard.all
     @index=0
+    @user = User.all   
+    @department = Department.all   
   end
 
 
