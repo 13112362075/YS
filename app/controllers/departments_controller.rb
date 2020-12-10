@@ -5,6 +5,9 @@ class DepartmentsController < ApplicationController
     department = Department.find(params[:departmentid]) 
     @name = department.departmentname
     @id=   params[:id] 
+    puts @id
+    @type="部门";
+    puts @type;
     render 'choose/choose.js.erb'
   end
 

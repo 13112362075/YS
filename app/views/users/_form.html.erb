@@ -20,6 +20,11 @@
            border-bottom-right-radius: 2px;
            border-top-right-radius: 2px;
          }
+         body
+         {
+           text-align:center;  
+           vertical-align:middle;
+         }
 </style>
 
 
@@ -36,10 +41,9 @@
     </div>
   <% end %>
  
-   
   <div class="field" >
-    <label class="layui-form-label"   for="user_用户名">用户名</label>
-    <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入用户名"    type="text" name="user[account]" id="user_account"   value=<%= @user.account%>  ></div>
+    <label class="layui-form-label   "     for="user_用户名">用户名</label>
+    <div class="layui-input-block"> <input     class="layui-input  "  placeholder="请输入用户名"    type="text" name="user[account]" id="user_account"   value=<%= @user.account%>  ></div>
   </div> 
 
   <div class="field">
@@ -111,12 +115,11 @@
   </div>
  
 
- <div class="actions layui-form-label">
+ <div class="actions layui-form-label body1">
     <input type="submit" name="commit" value="保存" data-disable-with="保存">
   </div>
 <% end %> 
-
-
+ 
 
 <%= render    'departments/DepartmentModal.html.erb',  id: "user_departmentname"  %>
 

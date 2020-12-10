@@ -1,5 +1,23 @@
   
 
-var id =<%= @id%> 
-id.value="<%= @name %>" 
+
+console.log("<%= @id[1]%> ")
+var id =<%= @id[1]%> 
+console.log(id);
+id.value="<%= @name %>"   
+if("<%= @id[0] %>" =="用户")
+{
+    var departmentid =<%=@id[2]  %>
+    if(departmentid.value =="")
+    {
+       departmentid.value="<%=@id[3]  %>" 
+    }
+}
+else if("<%=@id[0]  %>".trim() =="部门")
+{
+    var userid =<%=@id[2]  %>
+    userid.value="" 
+}
+
 $('#myModal').modal('hide');
+ 

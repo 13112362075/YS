@@ -102,15 +102,21 @@ $.ajax({
 
 <script> 
 $('#chooseassetcard').click(function(e){     
+
 var rows=document.getElementById('testid').rows;   
+var  isaddrow="true";
+row=rows.length;
 for(var i=1;i<rows.length;i++) 
 {
   var BH=rows[i].cells[2].innerText; 
   if(BH.trim()=="")
   { 
+    isaddrow="false";
     row = i;
+    break;
   }
 }
+
 $.ajax({
    type:"post", 
    url :"/assetcards_choose",
@@ -118,7 +124,8 @@ $.ajax({
       "assetcardid": $("#assetcardid").text(),
       "id" :$("#AssetcardModalid").text(),
       "row":row,
-      "idlist":["2","3","4","5","10","11","12"]
+      "idlist":["2","3","4","5","10","11","12"],
+      "isaddrow":isaddrow
      }, 
    success: function(){ 
      },

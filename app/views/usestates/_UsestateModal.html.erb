@@ -58,13 +58,16 @@ $('tr.select').click(function(e){
 </script>
 
 <script> 
-$('#chooseusestate').click(function(e){     
+$('#chooseusestate').click(function(e){    
+         var List=new Array();
+  List[0]="资产使用状态";
+  List[1]=   $("#UsestateModalid").text(); 
 $.ajax({
    type:"post", 
    url :"/usestates_choose",
    data:{ 
       "usestateid": $("#usestateid").text(),
-      "id" :$("#UsestateModalid").text()
+      "id" :List
      }, 
    success: function(){ 
      },

@@ -17,7 +17,7 @@
  
  
 
-<div class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true">
+<div hidden="hidden" class="layui-progress layui-progress-big" lay-filter="demo" lay-showPercent="true">
   <div     class="layui-progress-bar" lay-percent="0%"></div>
 </div> 
 <table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; "  lay-filter="demo">
@@ -28,22 +28,22 @@
   <thead > 
     <tr >  
       <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
-      <th style="text-align:center">单据编号</th>
-      <th style="text-align:center">借出日期</th>
-      <th style="text-align:center">借用部门</th>
-      <th style="text-align:center">借用组织</th>
-      <th style="text-align:center">借用人</th> 
+      <th style="text-align:center;font-size:11px;font-weight:bold;">单据编号</th>  
+      <th style="text-align:center;font-size:11px;font-weight:bold;">借出日期</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;">借用部门</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;">借用组织</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;">借用人</th> 
     </tr>  
   </thead>
    <tbody> 
     <% @asset_turnover_details.each do |asset_turnover_detail| %>
       <tr   id=<%= asset_turnover_detail.id %>  ondblclick="show(this)">
         <td><input class='awsui-checkbox' id='asset_turnover_detail.ids[]' name='asset_turnover_detail.ids[]' value=<%= asset_turnover_detail.id %> type='checkbox'/></td> 
-        <td class="Document_number" ><%= asset_turnover_detail.Document_number %></td>
-        <td class="Borrowing_date"><%= asset_turnover_detail.Borrowing_date %></td>
-        <td class="Borrowing_Department"><%= asset_turnover_detail.Borrowing_Department %></td>
-        <td  class="Borrowed_To_id"><%= asset_turnover_detail.Borrowed_To_id %></td>
-        <td  class="Loaner"><%= asset_turnover_detail.Loaner %></td>  
+        <td style="text-align:center;font-size:10px;" class="Document_number" ><%= asset_turnover_detail.Document_number %></td>
+        <td style="text-align:center;font-size:10px;"  class="Borrowing_date"><%= asset_turnover_detail.Borrowing_date %></td>
+        <td style="text-align:center;font-size:10px;"  class="Borrowing_Department"><%= asset_turnover_detail.Borrowing_Department %></td>
+        <td  style="text-align:center;font-size:10px;"  class="Borrowed_To_id"><%= asset_turnover_detail.Borrowed_To_id %></td>
+        <td style="text-align:center;font-size:10px;"    class="Loaner"><%= asset_turnover_detail.Loaner %></td>  
       </tr>
     <% end %> 
     <tr> 

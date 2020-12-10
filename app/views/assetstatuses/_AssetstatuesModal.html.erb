@@ -59,12 +59,15 @@
   
   <script> 
   $('#chooseassetstatus').click(function(e){     
+       var List=new Array();
+  List[0]="资产状态";
+  List[1]=   $("#AssetstatusModalid").text();
   $.ajax({
      type:"post", 
      url :"/assetstatuses_choose",
      data:{ 
         "assetstatusid": $("#assetstatusid").text(),
-        "id" :$("#AssetstatusModalid").text()
+        "id" :List
        }, 
      success: function(){ 
        },

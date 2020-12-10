@@ -8,15 +8,17 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h4>用户表</h4>
         <h4 hidden="hidden" id="userid" class="modal-title"  ></h4> 
-                <h4  hidden="hidden" id="UserModalid" class="modal-title"  > <%= id%> </h4> 
+        <h4  hidden="hidden" id="UserModalid" class="modal-title"  > <%= id%> </h4> 
+        <h4  hidden="hidden" id="departmentModalid" class="modal-title"  > <%= department%> </h4> 
       </div>
       <div class="modal-body"> 
 
-        <table class="table table-bordered">
+        <table id="table_usermodal" class="table table-bordered">
           <thead>
           <tr>
             <th>ID</th>
-            <th>用户名称</th> 
+            <th>用户名称</th>
+            <th>所属部门</th> 
           </tr>
           </thead>
           <tbody>
@@ -24,6 +26,7 @@
             <tr class="select" data-user_id="<%= user.id %>" >
               <td><%= user.id %></td>
               <td><%= user.name %></td> 
+              <td><%= user.departmentname %></td> 
             </tr>
             <% end %>
           </tbody>
@@ -50,27 +53,56 @@
 $('tr.select').click(function(e){ 
     $("tr.select").css("backgroundColor","white");
     this.style.backgroundColor = "#357ebd"
-    console.log(this.dataset.user_id) 
     $("#userid").text(this.dataset.user_id);
-
 }) 
 
 </script>
 
 <script> 
 $('#chooseuser').click(function(e){     
+ var departmentid=$("#departmentModalid").text();  
+// var departmentvalue=$("#"+departmentid.trim())[0].value);
+var  List=new Array();
+List[0]="用户";
+List[1]=$("#UserModalid").text();
+List[2]=$("#departmentModalid").text();
 $.ajax({
    type:"post", 
    url :"/users_choose",
    data:{ 
       "userid": $("#userid").text(),
-      "id" :$("#UserModalid").text()
+      "id" :List
      }, 
    success: function(){ 
      },
 			error :function(){ 
         } 
  });  
-}) 
+})  
+
+$('#userModal').on('show.bs.modal', function () {
+  
+    var departmentid=$("#departmentModalid").text();   
+    var departmentvalue=$("#"+departmentid.trim())[0].value; 
+      var table_usermodal = document.getElementById('table_usermodal');    // table 的 id 
+    var rows = table_usermodal.rows;     
+    for(i=1;i<rows.length;i++)
+    {
+        rows[i].style.display = "";
+    }
+    if(departmentvalue=="")
+    {
+      return;
+    }
+    for(i=1;i<rows.length;i++)
+    {
+      console.log(rows[i].cells[2].innerText);
+      if(rows[i].cells[2].innerText!=departmentvalue)
+      {
+        rows[i].style.display = "none";
+      }
+    }
+})
 
 </script>
+

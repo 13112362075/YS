@@ -58,13 +58,16 @@ $('tr.select').click(function(e){
 </script>
 
 <script> 
-$('#chooseaddtype').click(function(e){     
+$('#chooseaddtype').click(function(e){  
+  var List=new Array();
+  List[0]="变动方式";
+  List[1]=   $("#AddtypeModalid").text();
 $.ajax({
    type:"post", 
    url :"/addtypes_choose",
    data:{ 
-      "assetcardid": $("#assetcardid").text(),
-      "id" :$("#AddtypeModalid").text()
+      "addtypeid": $("#addtypeid").text(),
+      "id" :List
      }, 
    success: function(){ 
      },

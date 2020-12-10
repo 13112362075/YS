@@ -46,7 +46,7 @@ end
     @Assetseat_id = @assetcard.Assetseat_id 
     @row =params[:row]
     @id=   params[:idlist] 
-    @isaddrow=params[:isaddrow]  
+    @isaddrow=params[:isaddrow]   
     render 'choose/assetcard_choose.js.erb'
   end 
 
@@ -118,7 +118,7 @@ end
     @assettype = Assettype.all   
     @unit = Unit.all   
     @user = User.all   
-    @usestate  =  Usestate.all   
+    @usestate  =  Usestate.all    
   end
 
   # GET /assetcards/1/edit

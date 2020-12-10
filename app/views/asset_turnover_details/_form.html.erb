@@ -1,8 +1,10 @@
 <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
 <script src="https://www.layuicdn.com/layui/layui.js"></script>
+
+  <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
 <style>
 .image_input{  
-         width:243px; 
+         width:192px; 
          border: 1px solid #e6e6e6;
          border-left: 1; 
          border-right: 0; 
@@ -27,6 +29,13 @@
            height:38px;
            width:38px;
          }
+         .label1{
+           width:100px;
+           font-size: 12px; 
+         } 
+         .input1{
+           width:230px;
+         }  
 </style>
 
 <%= form_with(model: asset_turnover_detail, local: true) do |form| %>
@@ -43,31 +52,34 @@
   <% end %>
  
 
-<p  id="id"><%= @asset_turnover_detail.id%></p>
+<p  id="id"  hidden='hidden'><%= @asset_turnover_detail.id%></p>
    <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a> 
    <a id="a_undit"   rel="nofollow"  ><button   onclick="undit()"   type="button" class="layui-btn">审核</button></a> 
    <a id="a_Back"   rel="nofollow"  ><button   onclick="back()"   type="button" class="layui-btn">归还</button></a> 
+    <a   href="/asset_turnover_details"   rel="nofollow"  ><button    type="button" class="layui-btn">返回列表</button></a> 
+ <br><br> 
+
     <div style="display:flex;">
 
-
      <div class="field" >
-    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据编号">单据编号</label>
-    <div  class="layui-input-block "> <input     class="layui-input "    placeholder="请输入单据编号"    type="text" name="asset_turnover_detail[Document_number]" id="asset_turnover_detail_Document_number"
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据编号">单据编号</label>
+    <div  class="layui-input-block "> <input     class="layui-input input1  "    placeholder="请输入单据编号"    type="text" name="asset_turnover_detail[Document_number]" id="asset_turnover_detail_Document_number"
        value=<%= @asset_turnover_detail.Document_number%>  ></div>
   </div> 
 
  
      <div class="field" >
-    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_turnover_detail_借出日期">借出日期</label>
-    <div  class="layui-input-block"> <input     class="layui-input  fdate"    placeholder="请输入借出日期"    type="text" name="asset_turnover_detail[Borrowing_date]" id="asset_turnover_detail_Borrowing_date"
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借出日期">借出日期</label>
+    <div  class="layui-input-block"> <input     class="layui-input input1   fdate"    placeholder="请输入借出日期"    type="text" name="asset_turnover_detail[Borrowing_date]" id="asset_turnover_detail_Borrowing_date"
        value=<%= @asset_turnover_detail.Borrowing_date%>  ></div>
+       
   </div>  
 
 
      <div class="field" >
-    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用部门">借用部门</label>
-    <div  class="layui-input-block"> <input     class="layui-input  image_input "     placeholder="请输入借用部门"    type="text" name="asset_turnover_detail[Borrowing_Department]" id="asset_turnover_detail_Borrowing_Department"
-       value=<%= @asset_turnover_detail.Borrowing_Department%>  ></div>
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用部门">借用部门</label>
+    <div  class="layui-input-block"> <input     class="layui-input  image_input    "     placeholder="请输入借用部门"    type="text" name="asset_turnover_detail[Borrowing_Department]" id="asset_turnover_detail_Borrowing_Department"
+       value=<%= @asset_turnover_detail.Borrowing_Department%>  ></div> 
   </div>  
  <div  class ="image",  data-toggle="modal" data-target="#departmentModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>
 </div>
@@ -78,22 +90,23 @@
 
 
      <div class="field" >
-    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用组织">借用组织</label>
-    <div  class="layui-input-block"> <input     class="layui-input "    placeholder="请输入借用组织"    type="text" name="asset_turnover_detail[Borrowed_To_id]" id="asset_turnover_detail_Borrowed_To_id"
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用组织">借用组织</label>
+    <div  class="layui-input-block"> <input     class="layui-input  input1 "    placeholder="请输入借用组织"    type="text" name="asset_turnover_detail[Borrowed_To_id]" id="asset_turnover_detail_Borrowed_To_id"
        value=<%= @asset_turnover_detail.Borrowed_To_id%>  ></div>
   </div> 
 
  
      <div class="field" >
-    <label class="layui-form-label"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用人">借用人</label>
-    <div  class="layui-input-block"> <input    class="layui-input  image_input "    placeholder="请输入借用人"    type="text" name="asset_turnover_detail[Loaner]" id="asset_turnover_detail_Loaner"
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用人">借用人</label>
+    <div  class="layui-input-block"> <input    class="layui-input  image_input   "    placeholder="请输入借用人"    type="text" name="asset_turnover_detail[Loaner]" id="asset_turnover_detail_Loaner"
        value=<%= @asset_turnover_detail.Loaner%>  ></div>
-        <div  class ="image",  data-toggle="modal" data-target="#userModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>
+     
   </div>  
- 
+    <div  class ="image",  data-toggle="modal" data-target="#userModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>
 
 </div>
  
+
 
 
 <% end %>
@@ -105,69 +118,69 @@
 <button class="layui-btn"   data-toggle="modal" data-target="#assetcardModal" href="#">选择资产卡片</button>
 </div>
 <form id="Entry" ,action="/save_multiple">
-<table    id="testid"  class="layui-table" style="text-align:center;margin:10px;0px; " >
+<table    id="testid"  class="layui-table font"   style="text-align:center;margin:10px;0px; " >
   <colgroup>
     <col width="150"> 
     <col>
   </colgroup>
   <thead > 
     <tr >  
-      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
-      <th style="text-align:center">序号</th>
-      <th style="text-align:center">资产编码</th>
-      <th style="text-align:center">资产名称</th> 
-      <th style="text-align:center">计量单位</th>
-      <th style="text-align:center">数量</th> 
-      <th style="text-align:center">借用原因</th>
-      <th style="text-align:center">预计归还时间</th> 
-      <th style="text-align:center">是否已还</th>
-      <th style="text-align:center">归还日期</th> 
-      <th style="text-align:center">原使用部门</th> 
-      <th style="text-align:center">原使用人</th>
-      <th style="text-align:center">原资产位置</th> 
-      <th style="text-align:center">现存放位置</th> 
+      <th style="text-align:center;font-size:10px;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">序号</th>
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产编码</th>
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产名称</th> 
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">计量单位</th>
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">数量</th> 
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">借用原因</th>
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 8%;">预计归还时间</th> 
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">是否已还</th>
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">归还日期</th> 
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 7%;">原使用部门</th> 
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">原使用人</th>
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 7%;">原资产位置</th> 
+      <th style="text-align:center;font-size:10px;font-weight:bold;width: 7%;">现存放位置</th> 
     </tr>  
   </thead>
    <tbody>
       <% if @assetTurnoverDetailEntry.nil?%>
        <tr class="trr"  onclick =>
                 <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'/></td>
-                <td class="tdd1" contenteditable="true">1</td>
-                <td class="tdd1" contenteditable="true"></td>
-                <td class="tdd1" contenteditable="true"></td>
-                <td class="tdd1" contenteditable="true"></td>
-                <td class="tdd1" contenteditable="true"></td>
-                <td class="tdd1" contenteditable="true"></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true">1</td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true"></td>
                 <td class="tdd1" contenteditable="true" ></td>
-                <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'></td>
-                <td class="tdd1 fdatetd " contenteditable="true" > </td>
-                <td class="tdd1" contenteditable="true" ></td>
-                <td class="tdd1" contenteditable="true"></td>
-                <td class="tdd1" contenteditable="true" ></td>
-                <td class="tdd1" contenteditable="true" ></td>  
+                <td><input class='awsui-checkbox'    type='checkbox'></td>
+                <td style="text-align:center;font-size:8px;" class="tdd1 fdatetd " contenteditable="false" > </td>
+                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false" ></td>
+                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false" ></td>
+                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="true" ></td>  
               </tr>
       <%else%>
           <% @assetTurnoverDetailEntry.each do |assetTurnoverDetailEntry| %>
               <% @index=@index+1%>
               <tr class="trr"   id=<%=assetTurnoverDetailEntry.id%>>
                 <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'/></td>
-                <td class="tdd1" contenteditable="true"><%= @index %></td>
-                <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.assetcards_Code %></td>
-                <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.assetcards_name %></td>
-                <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Unit %></td>
-                <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Amount %></td>
-                <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Reasons_for_borrowing %></td>
-                <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.givebackPlanDate %></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true"><%= @index %></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.assetcards_Code %></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.assetcards_name %></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.Unit %></td>
+                <td style="text-align:center;font-size:9px;"  class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.Amount %></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Reasons_for_borrowing %></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.givebackPlanDate %></td>
                  <% if   assetTurnoverDetailEntry.Has_Been_returned=='true'  %>
                     <td><input class='awsui-checkbox' type='checkbox'   checked='checked'></td> 
                  <%else%>
                     <td><input class='awsui-checkbox' type='checkbox' ></td>
                  <%end%>
-                 <td class="tdd1 fdatetd " contenteditable="true" ><%= assetTurnoverDetailEntry.givebackDate %></td> 
-                <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.Deptment %> </td>
-                <td class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Employeeld %> </td>
-                <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.Asset_seat %> </td>
-                <td class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.Last_seat %></td>  
+                 <td style="text-align:center;font-size:8px;"  class="tdd1 fdatetd " contenteditable="false" ><%= assetTurnoverDetailEntry.givebackDate %></td> 
+                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false" ><%= assetTurnoverDetailEntry.Deptment %> </td>
+                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.Employeeld %> </td>
+                <td style="text-align:center;font-size:10px;"  class="tdd1" contenteditable="false" ><%= assetTurnoverDetailEntry.Asset_seat %> </td>
+                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.Last_seat %></td>  
               </tr>
           <%end%>
       <%end%> 
@@ -239,10 +252,7 @@ function back(){
 }
 
 </script>
-
-
-
-
+ 
  <script> 
 layui.use('laydate', function(){ 
   var laydate = layui.laydate;
@@ -260,22 +270,22 @@ layui.use('laydate', function(){
 </script>
  
 
- <script> 
-$('td').click(function(e){  
-  if(e.currentTarget.className !="")
-  {
-        console.log(e.currentTarget.parentNode.id); 
-        console.log(e.currentTarget.parentNode.firstElementChild.children[0].checked);
-        if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
+ <script>  
+      $('td').click(function(e){  
+        if(e.currentTarget.className !="")
         {
-          e.currentTarget.parentNode.firstElementChild.children[0].checked=false;
-        }
-        else
-        {
-          e.currentTarget.parentNode.firstElementChild.children[0].checked=true;
-        }
-  }   
-})
+              console.log(e.currentTarget.parentNode.id); 
+              console.log(e.currentTarget.parentNode.firstElementChild.children[0].checked);
+              if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
+              {
+                e.currentTarget.parentNode.firstElementChild.children[0].checked=false;
+              }
+              else
+              {
+                e.currentTarget.parentNode.firstElementChild.children[0].checked=true;
+              }
+        }   
+      }) 
 //新增行
 function addrow(){  
    var c=document.getElementById('testid');//获得表格的信息  
@@ -305,6 +315,7 @@ function addrow(){
        else if(i==1)
        {
          y.innerHTML=index;
+         y.setAttribute("style","text-align:center;font-size:10px;")
        }
        else if (i==8)
        {
@@ -317,10 +328,17 @@ function addrow(){
           laydate.render({
               elem: y 
             })
+            y.setAttribute("style","text-align:center;font-size:8px;")
+            y.setAttribute("contenteditable","false");
       }
        else
        {
          y.setAttribute("contenteditable","true");
+         y.setAttribute("style","text-align:center;font-size:10px;")
+       }
+       if(i==2||i==3||i==4||i==5||i==10||i==11||i==12)
+       {
+            y.setAttribute("contenteditable","false");
        }
        y.setAttribute("class","tdd1"); 
      } 
@@ -334,7 +352,6 @@ var IsCheckCount=0;
 for(var i=items.length-1;i>=0;i--){
   if(items[i].checked)
   {  
-
       IsCheckCount++; 
       x=document.getElementById("testid"); 
       var row = x.rows;    
@@ -384,10 +401,12 @@ for(var i=items.length-1;i>=0;i--){
 function test1(){  
 var  id=document.getElementById("id").innerText; 
 var  Document_number=document.getElementById("asset_turnover_detail_Document_number").value;
+
 var  Borrowing_date=document.getElementById("asset_turnover_detail_Borrowing_date").value;
 var  Borrowing_Department=document.getElementById("asset_turnover_detail_Borrowing_Department").value;
 var  Borrowed_To_id=document.getElementById("asset_turnover_detail_Borrowed_To_id").value;
 var  Loaner=document.getElementById("asset_turnover_detail_Loaner").value; 
+console.log(Borrowing_date);
 var array1 = new Array();
 var  array_id = new Array(); 
 var tb = document.getElementById('testid');    // table 的 id
@@ -420,7 +439,9 @@ console.log(array1);
       "id":id,
       "Borrowing_Department":Borrowing_Department,
       "Borrowed_To_id":Borrowed_To_id,
-      "Loaner":Loaner
+      "Loaner":Loaner,
+      "Document_number":Document_number,
+      "Borrowing_date":Borrowing_date
      }, 
    success: function(){
       alert("保存成功！");
@@ -434,5 +455,5 @@ console.log(array1);
  </script>
 
 <%= render    'assetcards/AssetcardsModal.html.erb'  %> 
-<%= render    'departments/DepartmentModal.html.erb',  id: "asset_turnover_detail_Borrowing_Department"  %>
-<%= render    'users/UserModal.html.erb',  id: "asset_turnover_detail_Loaner"  %>
+<%= render    'departments/DepartmentModal.html.erb',  id: "asset_turnover_detail_Borrowing_Department" ,userid: "asset_turnover_detail_Loaner"%>
+<%= render    'users/UserModal.html.erb',  id: "asset_turnover_detail_Loaner"  ,department: "asset_turnover_detail_Borrowing_Department" %>

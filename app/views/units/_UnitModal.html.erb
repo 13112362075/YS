@@ -58,12 +58,15 @@ $('tr.select').click(function(e){
 
 <script> 
 $('#chooseunit').click(function(e){     
+       var List=new Array();
+  List[0]="计量单位";
+  List[1]=   $("#UnitModalid").text();
 $.ajax({
    type:"post", 
    url :"/units_choose",
    data:{ 
       "unitid": $("#unitid").text(),
-      "id" :$("#UnitModalid").text()
+      "id" :List
      }, 
    success: function(){ 
      },

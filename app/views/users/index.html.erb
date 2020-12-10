@@ -55,33 +55,33 @@
   </colgroup>
   <thead > 
     <tr >  
-      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
-      <th style="text-align:center">用户名</th>
-      <th style="text-align:center">密码</th>
-      <th style="text-align:center">姓名</th>
-      <th style="text-align:center">地址</th>
-      <th style="text-align:center">邮箱</th>
-      <th style="text-align:center">电话</th>
-      <th style="text-align:center">性别</th>
-      <th style="text-align:center">角色</th>
-      <th style="text-align:center">所属部门</th>
-      <th style="text-align:center">所属组织</th> 
+      <th style="text-align:center;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 5%;">用户名</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 4%;">密码</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 4%;">姓名</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 11%;">地址</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 10%;">邮箱</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 7%;">电话</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 2%;">性别</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 3%;">角色</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 5%;">所属部门</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 5%;">所属组织</th> 
     </tr>  
   </thead>
    <tbody>
     <% @users.each do |user| %>
       <tr   id=<%= user.id %>   ondblclick="show(this)">
         <td><input class='awsui-checkbox' id='user.ids[]' name='user.ids[]' value=<%= user.id %> type='checkbox'/></td>  
-        <td  class="account" ><%= user.account %></td>
-        <td class="password"><%= user.password %></td>
-        <td class="name"><%= user.name %></td>
-        <td  class="address"><%= user.address %></td>
-        <td  class="email"><%= user.email %></td>
-        <td  class="telephone"><%= user.telephone %></td>
-        <td  class="sex"><%= user.sex %></td>  
-        <td  class="role"><%= user.role %></td>   
-        <td  class="departmentname"><%= user.departmentname  %></td> 
-        <td  class="orgainize_id"><%= user.orgainize_id %></td> 
+        <td  style="text-align:center;font-size:10px;" class="account" ><%= user.account %></td>
+        <td style="text-align:center;font-size:10px;" class="password"><%= user.password %></td>
+        <td style="text-align:center;font-size:10px;" class="name"><%= user.name %></td>
+        <td  style="text-align:center;font-size:10px;" class="address"><%= user.address %></td>
+        <td  style="text-align:center;font-size:10px;" class="email"><%= user.email %></td>
+        <td style="text-align:center;font-size:10px;"   class="telephone"><%= user.telephone %></td>
+        <td  style="text-align:center;font-size:10px;" class="sex"><%= user.sex %></td>  
+        <td style="text-align:center;font-size:10px;"   class="role"><%= user.role %></td>   
+        <td  style="text-align:center;font-size:10px;" class="departmentname"><%= user.departmentname  %></td> 
+        <td style="text-align:center;font-size:10px;"  class="orgainize_id"><%= user.orgainize_id %></td> 
         <!--td><%= link_to '查看', user  %></td>
         <td><%= link_to '编辑', edit_user_path(user) %></td>
         <td><%= link_to '删除', user, method: :delete, data: { confirm: '你确定要删除吗？' } %></td-->

@@ -8,7 +8,8 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
          <h4>部门表</h4>
         <h4  hidden="hidden" id="departmentid" class="modal-title"  > </h4>  
-                    <h4  hidden="hidden" id="departmentidModalid" class="modal-title"  > <%= id%> </h4> 
+        <h4  hidden="hidden" id="departmentidModalid" class="modal-title"  > <%= id%> </h4> 
+        <h4  hidden="hidden" id="userModalid" class="modal-title"  > <%= userid%> </h4> 
       </div>
       <div class="modal-body"> 
 
@@ -55,12 +56,16 @@ $('tr.select').click(function(e){
 })
 
 $('#choose').click(function(e){   
+     var List=new Array();
+  List[0]="部门";
+  List[1]=   $("#departmentidModalid").text();
+  List[2]=$("#userModalid").text();
 $.ajax({
    type:"post", 
    url :"/departments_choose",
    data:{ 
       "departmentid": $("#departmentid").text(),
-      "id" :$("#departmentidModalid").text()
+      "id" :List
      }, 
    success: function(){ 
      },

@@ -5,6 +5,10 @@ class AddtypesController < ApplicationController
     addtype = Addtype.find(params[:addtypeid]) 
     @name = addtype.Name
     @id=   params[:id] 
+    @type="变动方式"
+    @departmentid=""
+    @userid=""
+    @departmentname=""
     render 'choose/choose.js.erb'
   end 
 

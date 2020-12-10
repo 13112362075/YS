@@ -59,12 +59,15 @@ $('tr.select').click(function(e){
 
 <script> 
 $('#chooseassetseate').click(function(e){     
+    var List=new Array();
+  List[0]="资产位置";
+  List[1]=   $("#AssetseateModalid").text();
 $.ajax({
    type:"post", 
    url :"/assetseates_choose",
    data:{ 
       "assetseateid": $("#assetseateid").text(),
-      "id" :$("#AssetseateModalid").text()
+      "id" :List
      }, 
    success: function(){ 
      },

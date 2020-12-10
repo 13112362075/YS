@@ -4,7 +4,10 @@ class UsersController < ApplicationController
   def choose   
     user = User.find(params[:userid]) 
     @name = user.name
-    @id=   params[:id] 
+    @departmentname = user.departmentname 
+    @id=   params[:id]  
+    @id[3]=    @departmentname 
+    puts @id;
     render 'choose/choose.js.erb'
   end 
 

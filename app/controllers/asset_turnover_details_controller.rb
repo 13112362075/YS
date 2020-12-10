@@ -37,7 +37,7 @@ end
   def new
     @asset_turnover_detail = AssetTurnoverDetail.new
     @entry = AssetTurnoverDetailEntry.new
-    @assetcard  =  Assetcard.allow
+    @assetcard  =  Assetcard.all
     @user = User.all   
     @department = Department.all   
   end
@@ -61,7 +61,7 @@ end
        @id=@asset_turnover_detail.id
        params["datas"].each do |i| 
          assetTurnoverDetailEntry = AssetTurnoverDetailEntry.create!(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11],AssetTurnoverDetail_id: @id);
-       end
+       end 
      else
        @id=params["id"]; 
        @asset_turnover_detail= AssetTurnoverDetail.find_by(id: @id) 

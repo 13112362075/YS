@@ -87,7 +87,7 @@ post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'
 
   get 'login'  ,:to => 'sessions#new'  , :as => 'new_sessions'
   post 'login' ,:to   => 'sessions#create'
-  delete 'logout', :to  => 'sessions#destroy' 
+  get 'logout', :to  => 'sessions#destroy' 
 
   get 'get_user'  ,:to => 'sessions#get_user'   
 

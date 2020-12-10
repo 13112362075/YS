@@ -59,12 +59,15 @@ $('tr.select').click(function(e){
 
 <script> 
 $('#chooseassettype').click(function(e){     
+   var List=new Array();
+  List[0]="资产类别";
+  List[1]=   $("#AssettypeModalid").text();
 $.ajax({
    type:"post", 
    url :"/assettypes_choose",
    data:{ 
       "assettypeid": $("#assettypeid").text(),
-      "id" :$("#AssettypeModalid").text()
+      "id" :List
      }, 
    success: function(){ 
      },
