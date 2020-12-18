@@ -7,7 +7,6 @@ class UsersController < ApplicationController
     @departmentname = user.departmentname 
     @id=   params[:id]  
     @id[3]=    @departmentname 
-    puts @id;
     render 'choose/choose.js.erb'
   end 
 
@@ -19,29 +18,44 @@ class UsersController < ApplicationController
 
 
   
-  def save_multiple  
-    params["userid"].each do |i| 
-      puts i[1].length    
+  def save_multiple    
+    ActiveRecord::Base.transaction do 
+    params["userid"].each do |i|  
       user = User.create!(account: i[1][0],password: i[1][1],name: i[1][2],address: i[1][3],email: i[1][4], telephone: i[1][5],sex: i[1][6],role: i[1][7],departmentname: i[1][8],orgainize_id: i[1][9])
+ 
     end
-  end
+  end  
+end
 
  
 
   def destroy_multiple    
+    index ="true";
+    sum=0;
+    ActiveRecord::Base.transaction do 
     params["userid"].each do |i| 
-      User.destroy(i)
-  end
-    respond_to do |format|
-      format.html { redirect_to users_url notice: '用户删除成功！.'  }
-      format.json { head :no_content }
+      sum=sum+1;
+      @user=User.find(i) 
+      result=Delete_Check("用户",@user.name); 
+      raise "dasds" if result=="true" 
+      if(result=="false") 
+        User.destroy(i)
+        index="false";
+      end
     end
   end
  
+  
+  if index=="false"
+    render :json => { code: 200,message: '删除成功'  }  
+  else
+    render :json => { :errors => '删除失败！' } , :status => 422
+  end
+end
+ 
 
  
-  def index  
-
+  def index   
     @q = User.search(params[:q])      
     if  params[:q].nil?
     #  @users = User.all 
@@ -80,7 +94,7 @@ class UsersController < ApplicationController
 
   # GET /users/1/edit
   # GET /users/1/edit
-  def edit
+  def edit  
     @department = Department.all
   end
 

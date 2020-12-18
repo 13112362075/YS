@@ -6,6 +6,7 @@
 <style>
 .image_input{  
          width:192px; 
+         font-size: 11px; 
          border: 1px solid #e6e6e6;
          border-left: 1; 
          border-right: 0; 
@@ -37,10 +38,11 @@
          } 
             .input1{
            width:230px;
+           font-size: 11px; 
          }  
          .btn1{
            top:20px;
-         }
+         } 
 </style>
 
 
@@ -60,14 +62,14 @@
 
 
 卡片基本信息
-<hr> 
+<hr class="layui-bg-red"> 
 
     <div style="display:flex;">
 
 
      <div class="field" >
     <label class="layui-form-label  label1 "    style="  font-family: '黑体'"  for="assetcard_资产卡片编码">资产卡片编码</label>
-    <div  class="layui-input-block "> <input     class="layui-input input1"    placeholder="请输入资产卡片编码"    type="text" name="assetcard[assetCode]" id="assetcard_assetCode"
+    <div  class="layui-input-block "> <input     class="layui-input input1 "    placeholder="请输入资产卡片编码"    type="text" name="assetcard[assetCode]" id="assetcard_assetCode"
        value=<%= @assetcard.assetCode%>  ></div>
   </div> 
 
@@ -82,10 +84,10 @@
    
        <div class="field" >
     <label class="layui-form-label  label1"   for="assetcard_资产类别">资产类别</label>
-    <div class="layui-input-block"> <input     class="layui-input  image_input "  placeholder="请输入资产类别"    type="text" name="assetcard[Assettype_id]" id="assetcard_Assettype_id" 
+    <div class="layui-input-block"> <input     class="layui-input  image_input  "  placeholder="请输入资产类别"    type="text" name="assetcard[Assettype_id]" id="assetcard_Assettype_id" 
       value=<%= @assetcard.Assettype_id%>  ></div> 
   </div>   
-         <div  class ="image",  data-toggle="modal" data-target="#assettypeModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>
+         <div  class ="image",  data-toggle="modal" data-target="#assettypeModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
 </div>
   
 
@@ -96,11 +98,11 @@
 
        <div class="field" >
     <label class="layui-form-label  label1"   for="assetcard_计量单位">计量单位</label>
-    <div class="layui-input-block"> <input     class="layui-input image_input "  placeholder="请输入计量单位"    type="text" name="assetcard[Unit_id]" id="assetcard_Unit_id" 
+    <div class="layui-input-block"> <input     class="layui-input image_input  "  placeholder="请输入计量单位"    type="text" name="assetcard[Unit_id]" id="assetcard_Unit_id" 
       value=<%= @assetcard.Unit_id%>  ></div>
          
   </div>  
-   <div  class ="image",  data-toggle="modal" data-target="#unitModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>
+   <div  class ="image",  data-toggle="modal" data-target="#unitModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
 
      <div class="field" >
     <label class="layui-form-label  label1"      for="assetcard_数量">数量</label>
@@ -113,15 +115,15 @@
     <label class="layui-form-label  label1"   for="assetcard_资产状态">资产状态</label>
 
     <%if  @assetcard.Assetstatus_id.nil?%>
-     <div class="layui-input-block"> <input     class="layui-input image_input"  placeholder="请输入资产状态"    type="text" name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id"   value="正常使用">
+     <div class="layui-input-block"> <input     class="layui-input image_input "  placeholder="请输入资产状态"    type="text" name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id"   value="正常使用">
     <%else%>
-     <div class="layui-input-block"> <input     class="layui-input image_input"  placeholder="请输入资产状态"    type="text" name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id"   value=<%= @assetcard.Assetstatus_id%>>
+     <div class="layui-input-block"> <input     class="layui-input image_input "  placeholder="请输入资产状态"    type="text" name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id"   value=<%= @assetcard.Assetstatus_id%>>
     <%end%>
    
       
       </div> 
   </div> 
-    <div  class ="image",  data-toggle="modal" data-target="#assetstatusModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div> 
+    <div  class ="image",  data-toggle="modal" data-target="#assetstatusModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div> 
 </div> 
 
 
@@ -133,7 +135,7 @@
     <label class="layui-form-label  label1"   for="assetcard_变动方式">变动方式</label>
     <div class="layui-input-block"> 
     <% if @assetcard.Addtype_id.nil?%>
-     <input     class="layui-input image_input "  placeholder="请输入变动方式"    type="text" name="assetcard[Addtype_id]" id="assetcard_Addtype_id" value="购入" >
+     <input     class="layui-input image_input  "  placeholder="请输入变动方式"    type="text" name="assetcard[Addtype_id]" id="assetcard_Addtype_id" value="购入" >
     <%else%>
        <input     class="layui-input image_input "  placeholder="请输入变动方式"    type="text" name="assetcard[Addtype_id]" id="assetcard_Addtype_id" value=<%= @assetcard.Addtype_id %> >
     <%end%>
@@ -141,21 +143,21 @@
       </div>
           
   </div> 
-    <div  class ="image",  data-toggle="modal" data-target="#addtypeModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>  
+    <div  class ="image",  data-toggle="modal" data-target="#addtypeModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>  
 
    
 
        <div class="field" >
     <label class="layui-form-label  label1"   for="assetcard_资产使用状态">资产使用状态</label>
     <%if @assetcard.Usestate_id.nil?%>
-    <div class="layui-input-block"> <input     class="layui-input  image_input"  placeholder="请输入资产使用状态"    type="text" name="assetcard[Usestate_id]" id="assetcard_Usestate_id" value="可用">
+    <div class="layui-input-block"> <input     class="layui-input  image_input "  placeholder="请输入资产使用状态"    type="text" name="assetcard[Usestate_id]" id="assetcard_Usestate_id" value="可用">
     <%else%>
-    <div class="layui-input-block"> <input     class="layui-input  image_input"  placeholder="请输入资产使用状态"    type="text" name="assetcard[Usestate_id]" id="assetcard_Usestate_id" value=<%= @assetcard.Usestate_id%>>
+    <div class="layui-input-block"> <input     class="layui-input  image_input "  placeholder="请输入资产使用状态"    type="text" name="assetcard[Usestate_id]" id="assetcard_Usestate_id" value=<%= @assetcard.Usestate_id%>>
     <%end%>
     
       </div> 
   </div> 
-      <div  class ="image",  data-toggle="modal" data-target="#usestateModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>   
+      <div  class ="image",  data-toggle="modal" data-target="#usestateModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>   
  
   <div class="field" >
     <label class="layui-form-label  label1"      for="assetcard_购买日期">购买日期</label>
@@ -253,7 +255,7 @@
     <div class="layui-input-block"> <input     class="layui-input image_input  "  placeholder="请输入资产位置"    type="text" name="assetcard[Assetseat_id]" id="assetcard_Assetseat_id" 
       value=<%= @assetcard.Assetseat_id%>  ></div> 
   </div> 
-        <div  class ="image",  data-toggle="modal" data-target="#assetseateModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>    
+        <div  class ="image",  data-toggle="modal" data-target="#assetseateModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
 
        <div class="field" >
     <label class="layui-form-label  label1"   for="assetcard_规格型号">规格型号</label>
@@ -294,18 +296,18 @@
 
        <div class="field" >
     <label class="layui-form-label  label1"   for="assetcard_使用部门">使用部门</label>
-    <div class="layui-input-block"> <input     class="layui-input image_input"  placeholder="请输入使用部门"    type="text" name="assetcard[department_id]" id="assetcard_department_id" 
+    <div class="layui-input-block"> <input     class="layui-input image_input "  placeholder="请输入使用部门"    type="text" name="assetcard[department_id]" id="assetcard_department_id" 
       value=<%= @assetcard.department_id%>  ></div> 
   </div>  
-        <div  class ="image",  data-toggle="modal" data-target="#departmentModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>    
+        <div  class ="image",  data-toggle="modal" data-target="#departmentModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
    
 
        <div class="field" >
     <label class="layui-form-label  label1"   for="assetcard_使用人">使用人</label>
-    <div class="layui-input-block"> <input     class="layui-input  image_input"  placeholder="请输入使用人"    type="text" name="assetcard[Employeeld]" id="assetcard_Employeeld" 
+    <div class="layui-input-block"> <input     class="layui-input  image_input "  placeholder="请输入使用人"    type="text" name="assetcard[Employeeld]" id="assetcard_Employeeld" 
       value=<%= @assetcard.Employeeld%>  ></div> 
   </div> 
-          <div  class ="image",  data-toggle="modal" data-target="#userModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div>     
+          <div  class ="image",  data-toggle="modal" data-target="#userModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>     
  
    </div>
  
@@ -334,24 +336,7 @@ layui.use('laydate', function(){
 });
 
 </script>
- 
-
-<%= javascript_pack_tag 'searchableSelect.js'%>
-
- 
-<script type="text/javascript">
-    $(function () {
-        $('#assetcard_Employeeld').searchableSelect();
-        $('#assetcard_department_id').searchableSelect()
-        $('#assetcard_Assettype_id').searchableSelect();
-        $('#assetcard_Unit_id').searchableSelect();
-        $('#assetcard_Assetstatus_id').searchableSelect();
-        $('#assetcard_Addtype_id').searchableSelect(); 
-        $('#assetcard_Usestate_id').searchableSelect();
-        $('#assetcard_Assetseat_id').searchableSelect();
-        
-    });
-</script>
+  
 
 <!--%=image_tag("timg.jpg")%-->    
 

@@ -55,18 +55,18 @@ Rails.application.routes.draw do
 
 #导入
 post 'save_multiple'  ,:to => 'users#save_multiple'  
-get 'departments_save_multiple'  ,:to => 'departments#save_multiple'  
-get 'assettypes_save_multiple'  ,:to => 'assettypes#save_multiple'  
-get 'assetstatuses_save_multiple'  ,:to => 'assetstatuses#save_multiple'  
-get 'addtypes_save_multiple'  ,:to => 'addtypes#save_multiple'  
-get 'assetseates_save_multiple'  ,:to => 'assetseates#save_multiple'  
-get 'usestates_save_multiple'  ,:to => 'usestates#save_multiple'  
-get 'units_save_multiple'  ,:to => 'units#save_multiple'
-get 'assetcards_save_multiple'  ,:to => 'assetcards#save_multiple'
-get 'asset_recoveries_save_multiple'  ,:to => 'asset_recoveries#save_multiple'
-get 'asset_turnover_details_save_multiple'  ,:to => 'asset_turnover_details#save_multiple'
-get 'asset_allocates_save_multiple'  ,:to => 'asset_allocates#save_multiple'
-get 'asset_scrappings_save_multiple'  ,:to => 'asset_scrappings#save_multiple'
+post 'departments_save_multiple'  ,:to => 'departments#save_multiple'  
+post 'assettypes_save_multiple'  ,:to => 'assettypes#save_multiple'  
+post 'assetstatuses_save_multiple'  ,:to => 'assetstatuses#save_multiple'  
+post 'addtypes_save_multiple'  ,:to => 'addtypes#save_multiple'  
+post 'assetseates_save_multiple'  ,:to => 'assetseates#save_multiple'  
+post 'usestates_save_multiple'  ,:to => 'usestates#save_multiple'  
+post 'units_save_multiple'  ,:to => 'units#save_multiple'
+post 'assetcards_save_multiple'  ,:to => 'assetcards#save_multiple'
+post 'asset_recoveries_save_multiple'  ,:to => 'asset_recoveries#save_multiple'
+post 'asset_turnover_details_save_multiple'  ,:to => 'asset_turnover_details#save_multiple'
+post 'asset_allocates_save_multiple'  ,:to => 'asset_allocates#save_multiple'
+post 'asset_scrappings_save_multiple'  ,:to => 'asset_scrappings#save_multiple'
 
 #弹窗
 
@@ -87,7 +87,7 @@ post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'
 
   get 'login'  ,:to => 'sessions#new'  , :as => 'new_sessions'
   post 'login' ,:to   => 'sessions#create'
-  get 'logout', :to  => 'sessions#destroy' 
+  delete 'logout', :to  => 'sessions#destroy' 
 
   get 'get_user'  ,:to => 'sessions#get_user'   
 

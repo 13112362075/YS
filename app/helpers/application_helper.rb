@@ -5,9 +5,6 @@ module ApplicationHelper
         msg << (content_tag :div, alert, :class => "alert") if alert
         sanitize msg
       end 
-     
-
-
 
 
 end

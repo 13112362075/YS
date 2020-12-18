@@ -1,28 +1,14 @@
- 
+<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
  <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
-
-
-
-<!--%=image_tag("timg.jpg")%-->  
-  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
  
- 
- 
+ <script src="https://www.layuicdn.com/layui/layui.js"></script> 
 
-
-
- 
-<!--a rel="nofollow" data-method="delete" href="/logout">  <button>退出登陆</button></a-->
-
-  
- 
 <div  class="layui-layout layui-layout-admin ">
   <div   class="layui-header">
     <div class="layui-logo">固定资产管理系统</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->  
 
   <ul class="layui-nav layui-layout-right">
-  
        <li  class="layui-nav-item">
            <% if   !logon?%>
             <%= link_to '登陆', login_path %> 
@@ -90,13 +76,7 @@
   </div>
 </div>
 
-<p id="IsRresh"><%= session[:IsRresh]%></p>
-
-
-<script src="/packs/js/layui-bcce263ec7e72cb496f9.js" data-turbolinks-track= "reload"></script>
-<script src="/packs/js/element-29eda1820c948640d37c.js"data-turbolinks-track= "reload"></script>
-
- 
+<p id="IsRresh"><%= session[:IsRresh]%></p> 
 <script> 
 
 function visible(element)
@@ -135,6 +115,7 @@ $(document).ready(function(){
  var active = {
             //在这里给active绑定几项事件，后面可通过active调用这些事件
  tabAdd: function(url,id,name) {
+   console.log(id)
                 //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
  element.tabAdd('demo', {
@@ -146,6 +127,7 @@ $(document).ready(function(){
 
             },
             tabChange: function(id) {
+              console.log(id)
                 //切换到指定Tab项
  element.tabChange('demo', id); //根据传入的id传入到指定的tab项
  },
@@ -157,33 +139,32 @@ $(document).ready(function(){
                     element.tabDelete("demo", item); //ids是一个数组，里面存放了多个id，调用tabDelete方法分别删除
  })
             }
-        };
-
-
+        }; 
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
  $('.site-demo-active').on('click', function() { 
+             var sum =1; 
             var dataid = $(this); 
             //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
  if ($(".layui-tab-title li[lay-id]").length <= 0) {
                 //如果比零小，则直接打开新的tab项
- active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"),dataid.attr("data-title"));
+ active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id")+sum,dataid.attr("data-title"));
             } else {
-                //否则判断该tab项是否以及存在
-
+                //否则判断该tab项是否以及存在 
  var isData = false; //初始化一个标志，为false说明未打开该tab项 为true则说明已有
  $.each($(".layui-tab-title li[lay-id]"), function () {
                     //如果点击左侧菜单栏所传入的id 在右侧tab项中的lay-id属性可以找到，则说明该tab项已经打开
- if ($(this).attr("lay-id") == dataid.attr("data-id")) {
+ if ($(this).attr("lay-id").indexOf(dataid.attr("data-id"))>=0) {
                         isData = true;
+                        sum++;
                     }
-                })
-                if (isData == false) {
+                }) 
                     //标志为false 新增一个tab项
- active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id"),dataid.attr("data-title"));
-                }
+                    console.log(sum);
+ active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id")+sum,dataid.attr("data-title"));
             }
             //最后不管是否新增tab，最后都转到要打开的选项页面上
- active.tabChange(dataid.attr("data-id"));
+            console.log(sum);
+ active.tabChange(dataid.attr("data-id")+sum);
         });
     });
  });

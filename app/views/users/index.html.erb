@@ -1,5 +1,9 @@
-  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 
+ 
+
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<%=javascript_pack_tag 'tabadd' %>    
+   <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
 
 
 <p id="notice"><%= notice%></p>
@@ -9,8 +13,8 @@
 
 <h1 style="text-align:center;">用户表</h1>
 
-<div class="layui-btn-group " style="margin:10px;0px;">
-  <a rel="nofollow" data-method="get" href="/users/new"><button type="button" class="layui-btn">新增</button></a>
+<div class="layui-btn-group " style="margin:10px;0px;">  
+    <a data-url="/users/new" data-id= "newusers" data-title= "用户新增" class="linkActive"  href= "#"><button type="button" class="layui-btn">新增</button></a> 
    <a id="a_update"  rel="nofollow"    ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
    <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
    <a id="a_delete"   rel="nofollow"  ><button   onclick="model_delete('  <%=destroy_multiple_path%>')"   type="button" class="layui-btn">删除</button></a>
@@ -127,9 +131,7 @@
 
   <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
     <script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script> 
-
-<%=javascript_pack_tag 'layui' %>
-<%=javascript_pack_tag 'element' %>  
+ 
  
 <script>
 
@@ -306,12 +308,13 @@ $.ajax({
    data:{ 
       "userid": datas
      }, 
-   success: function(){
-     alert("导入成功！");
-     location.reload();
+   success: function(res){ 
+       alert('导入成功')
+       location.reload();
      },
 			error :function(){
-        alert("导入成功")
+        alert("导入失败")
+        location.reload();
         } 
  });
 }
@@ -355,9 +358,12 @@ $.ajax({
    data:{ 
       "userid": array1
      }, 
-   success: function(){
-     alert("删除成功！");
-     location.reload();
+   success: function(res){
+     if(res.code == 200)
+     {
+       alert("删除成功！");
+       location.reload();
+     }
      },
 			error :function(){
         alert("删除失败！")

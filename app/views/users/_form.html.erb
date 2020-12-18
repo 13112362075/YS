@@ -1,3 +1,9 @@
+ 
+
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<%=javascript_pack_tag 'tabadd' %>
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
+
 <style>
 .image_input{  
          width:243px; 
@@ -119,7 +125,9 @@
     <input type="submit" name="commit" value="保存" data-disable-with="保存">
   </div>
 <% end %> 
- 
+  
+     <a data-url="/users" data-id= "users" data-title= "用户表" class="linkActive"  href= "#"><button type="button" class="layui-btn">返回用户表</button></a> 
 
-<%= render    'departments/DepartmentModal.html.erb',  id: "user_departmentname"  %>
+<%= render    'departments/DepartmentModal.html.erb',  id: "user_departmentname" ,userid:  "assetcard_Employeeld"   %>
+
 

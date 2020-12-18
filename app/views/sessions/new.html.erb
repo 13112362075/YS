@@ -1,5 +1,5 @@
  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script> 
- <%= stylesheet_link_tag  'main'%>
+ <%# <%= stylesheet_link_tag  'main'%>  
 
 <%# <link rel="stylesheet" type="text/tff" href="/assets/simkai.ttf" /> %>
 
@@ -9,7 +9,8 @@
 @media screen and (max-width: 6000px) { 
   body
       { 
-         background:url("/assets/背景图1-f8f7feaaf8b8e60ea6f629581b9613aeed13c983ff02cd093cd88e5e5e543d93.jpg");
+         /* background:url("/assets/背景图1-f8f7feaaf8b8e60ea6f629581b9613aeed13c983ff02cd093cd88e5e5e543d93.jpg"); */
+         background:url("/assets/登录界面-75aaedb661f67b29b871e5c0938874e3c997338aeae4118bfabfe10d532b0f6b.jpg "); 
          background-size: 100% 100%; 
          background-repeat:no-repeat; 
          height:495px;
@@ -81,14 +82,12 @@ $(document).ready(function(){
            obj.style.cssText = "top:"+screen.availHeight*0.35+"px;left:"+screen.availWidth*0.62+"px";
            var obj = document.getElementById("red-text");
            obj.style.cssText = "top:"+screen.availHeight*0.28+"px;left:"+screen.availWidth*0.615+"px";
-           var obj = document.getElementById("icon-user");
-           obj.style.cssText = "top:"+screen.availHeight*0.28+"px;left:"+screen.availWidth*0.55+"px";
-
+       
            document.body.style.height=screen.availHeight*0.754+"px";  
         
 });
-</script>     
- <p id="notice"><%= notice%></p>  
+</script>      
+ <p hidden="hidden" id="notice"><%= notice%></p>  
 <% if   !@userfirst.nil?%>
   <p id="user"><%= @userfirst.name%></p>   
 <% end %> 
