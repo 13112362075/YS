@@ -60,8 +60,7 @@
   <thead > 
     <tr >  
       <th style="text-align:center;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;width: 5%;">用户名</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;width: 4%;">密码</th>
+      <th style="text-align:center;font-size:11px;font-weight:bold;width: 5%;">用户名</th> 
       <th style="text-align:center;font-size:11px;font-weight:bold;width: 4%;">姓名</th>
       <th style="text-align:center;font-size:11px;font-weight:bold;width: 11%;">地址</th>
       <th style="text-align:center;font-size:11px;font-weight:bold;width: 10%;">邮箱</th>
@@ -77,7 +76,6 @@
       <tr   id=<%= user.id %>   ondblclick="show(this)">
         <td><input class='awsui-checkbox' id='user.ids[]' name='user.ids[]' value=<%= user.id %> type='checkbox'/></td>  
         <td  style="text-align:center;font-size:10px;" class="account" ><%= user.account %></td>
-        <td style="text-align:center;font-size:10px;" class="password"><%= user.password %></td>
         <td style="text-align:center;font-size:10px;" class="name"><%= user.name %></td>
         <td  style="text-align:center;font-size:10px;" class="address"><%= user.address %></td>
         <td  style="text-align:center;font-size:10px;" class="email"><%= user.email %></td>
