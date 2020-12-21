@@ -15,14 +15,14 @@
         <table class="table table-bordered">
           <thead>
           <tr>
-            <th>ID</th>
+            <th>单位编码</th>
             <th>单位名称</th> 
           </tr>
           </thead>
           <tbody>
             <% @unit.each do |unit| %>
             <tr class="select" data-user_id="<%= unit.id %>" >
-              <td><%= unit.id %></td>
+              <td><%= unit.Unitcode %></td>
               <td><%= unit.name %></td> 
             </tr>
             <% end %>

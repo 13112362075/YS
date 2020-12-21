@@ -15,14 +15,14 @@
         <table class="table table-bordered">
           <thead>
           <tr>
-            <th>ID</th>
+            <th>资产类别编码</th>
             <th>资产类别</th> 
           </tr>
           </thead>
           <tbody>
             <% @assettype.each do |assettype| %>
             <tr class="select" data-assettype_id="<%= assettype.id %>" >
-              <td><%= assettype.id %></td>
+              <td><%= assettype.Assettypecode %></td>
               <td><%= assettype.Name %></td> 
             </tr>
             <% end %>

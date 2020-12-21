@@ -15,14 +15,14 @@
         <table class="table table-bordered">
           <thead>
           <tr>
-            <th>ID</th>
+            <th>变动方式编码</th>
             <th>变动方式名称</th> 
           </tr>
           </thead>
           <tbody>
             <% @addtype.each do |addtype| %>
             <tr class="select" data-addtype_id="<%= addtype.id %>" >
-              <td><%= addtype.id %></td>
+              <td><%= addtype.Addtypecode %></td>
               <td><%= addtype.Name %></td> 
             </tr>
             <% end %>

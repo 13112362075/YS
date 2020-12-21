@@ -34,14 +34,24 @@ def destroy_multiple
  # ActiveRecord::Base.transaction do
     params["userid"].each do |i|  
       @user=User.find(i) 
-      result=Delete_Check("用户",@user.name);   
+      if(@user.role=="管理员")
+        error+=1;
+        message=message+"用户名为 ：#{@user.name} 为管理员，不允许删除!\n"
+        next;
+      end 
+      if(@user.name==session[:name] )
+        error+=1;
+        message=message+"用户名为 ：#{@user.name} 为当前登录用户，不允许删除!\n"
+        next;
+      end
+      result=Delete_Check("用户",@user.name);    
       if(result=="false") 
         sussess+=1;
         User.destroy(i) 
          #raise ActiveRecord::RecordNotFound 
       else 
         error+=1;
-        message="用户名为 ：#{@user.name} 已被占用，无法删除!\n"
+        message=message+"用户名为 ：#{@user.name} 已被占用，无法删除!\n"
         #raise ActiveRecord::RecordNotFound  
       end  
     end 
@@ -53,18 +63,18 @@ end
  
  
   def index   
-    @q = User.search(params[:q])      
+    @q = User.search(params[:q]) 
+    puts @q;
     if  params[:q].nil?
     #  @users = User.all 
       @users=User.order(:id).page(params[:page]).per(5) 
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
         #  @users = User.all
-        @users=User.order(:id).page(params[:page]).per(5)
-     
+        @users=User.order(:id).page(params[:page]).per(5) 
       else
-        search = params[:q]["search_cont"]
-        @users  = User.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(5)
+        search = params[:q]["search_cont"] 
+        @users  = User.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"].lstrip.rstrip}%" ) .page(params[:page]).per(5)
       end
     end 
     @department= Department.all 

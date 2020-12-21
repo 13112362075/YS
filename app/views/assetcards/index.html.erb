@@ -321,6 +321,12 @@ function show (element)
                     document.getElementById("a_update").href ="";
                     return false;
               } 
+              else if(items.length==0)
+              {
+                     alert("没有选择数据，请重新选择！");
+                    document.getElementById("a_update").href ="";
+                    return false;
+              }
               var  user_id=  "/assetcards/"+ items[0]+"/edit";   
               document.getElementById("a_update").href =user_id;
         }

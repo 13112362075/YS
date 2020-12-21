@@ -16,14 +16,14 @@
         <table class="table table-bordered">
           <thead>
           <tr>
-            <th>ID</th>
+            <th>部门编码</th>
             <th>部门名称</th> 
           </tr>
           </thead>
           <tbody>
             <% @department.each do |department| %>
             <tr class="select" data-user_id="<%= department.id %>" >
-              <td><%= department.id %></td>
+              <td><%= department.departmentcode %></td>
               <td><%= department.departmentname %></td> 
             </tr>
             <% end %>
@@ -72,5 +72,28 @@ $.ajax({
 			error :function(){ 
         } 
  });
-}) 
+})
+
+
+
+$('tr.select').dblclick(function(e){  
+
+//   var List=new Array();
+//   List[0]="部门";
+//   List[1]=   $("#departmentidModalid").text();
+//   List[2]=$("#userModalid").text();
+//   List[3]="departmentModal";
+// $.ajax({
+//    type:"post", 
+//    url :"/departments_choose",
+//    data:{ 
+//       "departmentid": $("#departmentid").text(),
+//       "id" :List
+//      }, 
+//    success: function(){ 
+//      },
+// 			error :function(){ 
+//         } 
+//  });
+});
 </script>

@@ -15,14 +15,14 @@
         <table class="table table-bordered">
           <thead>
           <tr>
-            <th>ID</th>
+            <th>使用状态编码</th>
             <th>使用状态</th> 
           </tr>
           </thead>
           <tbody>
             <% @usestate.each do |usestate| %>
             <tr class="select" data-usestate_id="<%= usestate.id %>" >
-              <td><%= usestate.id %></td>
+              <td><%= usestate.Usestatecode %></td>
               <td><%= usestate.Name %></td> 
             </tr>
             <% end %>

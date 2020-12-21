@@ -220,6 +220,12 @@ x.deleteRow(x.rows.length-1);//删除一行
                     document.getElementById("a_update").href ="";
                     return false;
               } 
+              else if(items.length==0)
+              {
+                     alert("没有选择数据，请重新选择！");
+                    document.getElementById("a_update").href ="";
+                    return false;
+              }
               var  asset_turnover_detail_id=  "/asset_turnover_details/"+ items[0]+"/edit";   
               document.getElementById("a_update").href =asset_turnover_detail_id;
         }
