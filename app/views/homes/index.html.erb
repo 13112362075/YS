@@ -3,6 +3,7 @@
  
  <script src="https://www.layuicdn.com/layui/layui.js"></script> 
 
+ 
 <div  class="layui-layout layui-layout-admin ">
   <div   class="layui-header">
     <div class="layui-logo">固定资产管理系统</div>
@@ -61,14 +62,31 @@
   <div id="body" class="layui-body">
       <div style="z-index:10; left:2000px;top:200px;" ><i  onclick="visible(this)" class="layui-icon"  >&#xe603;</i>  </div>
     <!-- 内容主体区域 -->  
+ 
+  <div class="layadmin-pagetabs" id="LAY_app_tabs"> 
+ 
+      
+    
+
   <div class="layui-tab layui-tab-brief" lay-filter="demo"lay-allowclose="true">
-            <ul class="layui-tab-title">
-            </ul>
+
+              <ul class="layui-tab-title" id="LAY_app_tabsheader"> 
+          </ul> 
             <div class="layui-tab-content"> 
             </div> 
         </div> 
           
     </div>  
+
+
+
+    <!-- 页面标签 -->
+    
+
+
+
+
+
 
   <div id="footer"  class="layui-footer">
     <!-- 底部固定区域 -->
@@ -106,7 +124,10 @@ $(document).ready(function(){
   { 
       location.reload();
   } 
-
+})
+</script>
+<script>
+$(document).ready(function(){ 
     //JavaScript代码区域
     layui.use('element', function(){
         var element = layui.element;
@@ -129,7 +150,7 @@ $(document).ready(function(){
             tabChange: function(id) {
               console.log(id)
                 //切换到指定Tab项
- element.tabChange('demo', id); //根据传入的id传入到指定的tab项
+ element.tabChange('demo', id); //根据传入的iproc_getFPd传入到指定的tab项
  },
             tabDelete: function (id) {
                 element.tabDelete("demo", id);//删除
@@ -166,6 +187,6 @@ $(document).ready(function(){
             console.log(sum);
  active.tabChange(dataid.attr("data-id")+sum);
         });
-    });
- });
+    }); 
+        }); 
 </script>

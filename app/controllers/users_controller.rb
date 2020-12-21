@@ -22,45 +22,41 @@ class UsersController < ApplicationController
     ActiveRecord::Base.transaction do 
     params["userid"].each do |i|  
       user = User.create!(account: i[1][0],password: i[1][1],name: i[1][2],address: i[1][3],email: i[1][4], telephone: i[1][5],sex: i[1][6],role: i[1][7],departmentname: i[1][8],orgainize_id: i[1][9])
- 
     end
   end  
 end
 
  
-
-  def destroy_multiple    
-    index ="true";
-    sum=0;
-    ActiveRecord::Base.transaction do 
-    params["userid"].each do |i| 
-      sum=sum+1;
+def destroy_multiple
+  sussess=0;
+  error=0;
+  message="";
+ # ActiveRecord::Base.transaction do
+    params["userid"].each do |i|  
       @user=User.find(i) 
-      result=Delete_Check("用户",@user.name); 
-      raise "dasds" if result=="true" 
+      result=Delete_Check("用户",@user.name);   
       if(result=="false") 
-        User.destroy(i)
-        index="false";
-      end
-    end
-  end
+        sussess+=1;
+        User.destroy(i) 
+         #raise ActiveRecord::RecordNotFound 
+      else 
+        error+=1;
+        message="用户名为 ：#{@user.name} 已被占用，无法删除!\n"
+        #raise ActiveRecord::RecordNotFound  
+      end  
+    end 
+ # end
+    #rescue ActiveRecord::RecordNotFound => exception 
+    message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
+    render :json  => {code: 200,message: message }
+end 
  
-  
-  if index=="false"
-    render :json => { code: 200,message: '删除成功'  }  
-  else
-    render :json => { :errors => '删除失败！' } , :status => 422
-  end
-end
- 
-
  
   def index   
     @q = User.search(params[:q])      
     if  params[:q].nil?
     #  @users = User.all 
-      @users=User.order(:id).page(params[:page]).per(5)
-      puts   @users;
+      @users=User.order(:id).page(params[:page]).per(5) 
     else 
       if  params[:q]["name_cont"].lstrip.rstrip==""
         #  @users = User.all

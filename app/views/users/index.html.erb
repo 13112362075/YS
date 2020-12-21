@@ -349,8 +349,7 @@ var array2 = new Array();
        array2[j-1]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
    }
    array1[i-1]=array2;
-}
- console.log(array1)
+} 
  
 $.ajax({
    type:"post", 
@@ -361,6 +360,7 @@ $.ajax({
    success: function(res){
      if(res.code == 200)
      {
+       console.log(res.code)
        alert("删除成功！");
        location.reload();
      }
@@ -522,9 +522,13 @@ items = getCheckedCheckbox("awsui-checkbox");
    data:{ 
       "userid": items
      }, 
-   success: function(){
-     alert("删除成功！");
-     location.reload();
+   success: function(res){
+      if(res.code==200)
+      {
+        console.log(res.message);
+        alert("删除成功！\n"+res.message);
+        location.reload();
+      }
      },
 			error :function(){
         alert("删除失败！")
