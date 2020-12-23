@@ -15,8 +15,7 @@ class AssetstatusesController < ApplicationController
 
 
   
-  def save_multiple  
-    puts "1"
+  def save_multiple   
     params["assetstatuseid"].each do |i| 
       puts i[1].length    
       assetstatus = Assetstatus.create!(Assetstatuscode: i[1][0],Name: i[1][1],Orgainize_id: i[1][2],description: i[1][3])
@@ -26,13 +25,22 @@ class AssetstatusesController < ApplicationController
 
 
   def destroy_multiple    
+    sussess=0;
+    error=0;
+    message="";
     params["assetstatuse_id"].each do |i| 
-      Assetstatus.destroy(i)
+      result=Delete_Check("资产状态",i);    
+      if(result=="")
+        sussess+=1;
+        Assetstatus.destroy(i)
+      else
+        error+=1; 
+        message=message+result  
+      end 
+
   end
-    respond_to do |format|
-      format.html { redirect_to assetstatuses_url notice: '删除成功！.'  }
-      format.json { head :no_content }
-    end
+  message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
+  render :json  => {code: 200,message: message }
   end
  
 

@@ -33,25 +33,15 @@ def destroy_multiple
   message="";
  # ActiveRecord::Base.transaction do
     params["userid"].each do |i|  
-      @user=User.find(i) 
-      if(@user.role=="管理员")
-        error+=1;
-        message=message+"用户名为 ：#{@user.name} 为管理员，不允许删除!\n"
-        next;
-      end 
-      if(@user.name==session[:name] )
-        error+=1;
-        message=message+"用户名为 ：#{@user.name} 为当前登录用户，不允许删除!\n"
-        next;
-      end
-      result=Delete_Check("用户",@user.name);    
-      if(result=="false") 
+      @user=User.find(i)  
+      result=Delete_Check("用户",@user.id);    
+      if(result=="") 
         sussess+=1;
         User.destroy(i) 
          #raise ActiveRecord::RecordNotFound 
       else 
         error+=1;
-        message=message+"用户名为 ：#{@user.name} 已被占用，无法删除!\n"
+        message=message+result  
         #raise ActiveRecord::RecordNotFound  
       end  
     end 

@@ -26,13 +26,21 @@ class UnitsController < ApplicationController
   end
 
   def destroy_multiple    
-    params["unit_id"].each do |i| 
-      Unit.destroy(i)
+    sussess=0;
+    error=0;
+    message="";
+    params["unit_id"].each do |i|  
+      result=Delete_Check("计量单位",i);    
+      if(result=="")
+        sussess+=1;
+        Unit.destroy(i)
+      else
+        error+=1; 
+        message=message+result  
+      end 
   end
-    respond_to do |format|
-      format.html { redirect_to units_url notice: '删除成功！.'  }
-      format.json { head :no_content }
-    end
+  message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
+  render :json  => {code: 200,message: message }
   end
 
 

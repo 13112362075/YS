@@ -24,14 +24,21 @@ class AssettypesController < ApplicationController
   end
 
   def destroy_multiple    
-  
-    params["assettype_id"].each do |i| 
-      Assettype.destroy(i)
+    sussess=0;
+    error=0;
+    message="";
+    params["assettype_id"].each do |i|  
+      result=Delete_Check("资产类型",i);    
+      if(result=="")
+        sussess+=1;
+        Assettype.destroy(i)
+      else
+        error+=1; 
+        message=message+result  
+      end 
   end
-    respond_to do |format|
-      format.html { redirect_to assettypes_url notice: '删除成功!'  }
-      format.json { head :no_content }
-    end
+  message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
+  render :json  => {code: 200,message: message }
   end
  
 

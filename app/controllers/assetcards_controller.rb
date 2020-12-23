@@ -67,13 +67,24 @@ end
  
 
   def destroy_multiple    
-    params["userid"].each do |i| 
-      Assetcard.destroy(i)
-  end
-    respond_to do |format|
-      format.html { redirect_to assetcards_url notice: '资产卡片删除成功！.'  }
-      format.json { head :no_content }
-    end
+
+    sussess=0;
+    error=0;
+    message="";
+    params["assetcardid"].each do |i| 
+      result=Delete_Check("资产卡片",i);    
+      if(result=="") 
+        sussess+=1;
+       Assetcard.destroy(i)
+      else
+        error+=1; 
+        message=message+result  
+ 
+      end 
+  end 
+
+      message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
+      render :json  => {code: 200,message: message }
   end
 
 

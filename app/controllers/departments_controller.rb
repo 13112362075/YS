@@ -28,13 +28,21 @@ class DepartmentsController < ApplicationController
 
 
   def destroy_multiple    
-    params["department_id"].each do |i| 
-      Department.destroy(i)
+    sussess=0;
+    error=0;
+    message="";
+    params["department_id"].each do |i|  
+      result=Delete_Check("部门",i);    
+      if(result=="")
+        sussess+=1;
+        Department.destroy(i)
+      else
+        error+=1; 
+        message=message+result  
+      end 
   end
-    respond_to do |format|
-      format.html { redirect_to departments_url notice: '部门删除成功！.'  }
-      format.json { head :no_content }
-    end
+  message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
+  render :json  => {code: 200,message: message }
   end
 
 

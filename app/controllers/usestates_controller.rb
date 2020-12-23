@@ -9,8 +9,7 @@ class UsestatesController < ApplicationController
   end
 
 
-  def export_all
-    puts "1";
+  def export_all 
     @Usestate_all =Usestate.all; 
   end
 
@@ -24,13 +23,23 @@ class UsestatesController < ApplicationController
   end
 
   def destroy_multiple    
-    params["usestate_id"].each do |i| 
-      Usestate.destroy(i)
+    sussess=0;
+    error=0;
+    message="";
+    
+    params["usestate_id"].each do |i|  
+      result=Delete_Check("使用状态",i);    
+      puts "1"
+      if(result=="")
+        sussess+=1;
+        Usestate.destroy(i)
+      else
+        error+=1; 
+        message=message+result  
+      end 
   end
-    respond_to do |format|
-      format.html { redirect_to usestates_url notice: '删除成功！.'  }
-      format.json { head :no_content }
-    end
+  message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
+  render :json  => {code: 200,message: message }
   end
 
 

@@ -78,13 +78,13 @@ $(document).ready(function(){
           {
              alert (x);
           } 
+          console.log(screen.availHeight);
+          console.log(screen.availWidth);
           var obj = document.getElementById("row");
-           obj.style.cssText = "top:"+screen.availHeight*0.35+"px;left:"+screen.availWidth*0.62+"px";
+           obj.style.cssText = "top:"+screen.availHeight*0.35+"px;left:"+screen.availWidth*0.61+"px";
            var obj = document.getElementById("red-text");
            obj.style.cssText = "top:"+screen.availHeight*0.28+"px;left:"+screen.availWidth*0.615+"px";
-       
            document.body.style.height=screen.availHeight*0.754+"px";  
-        
 });
 </script>      
  <p hidden="hidden" id="notice"><%= notice%></p>  

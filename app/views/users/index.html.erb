@@ -533,9 +533,8 @@ items = getCheckedCheckbox("awsui-checkbox");
      }, 
    success: function(res){
       if(res.code==200)
-      {
-        console.log(res.message);
-        alert("删除成功！\n"+res.message);
+      { 
+        alert(res.message);
         location.reload();
       }
      },

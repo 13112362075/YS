@@ -24,13 +24,21 @@ class AssetseatesController < ApplicationController
   end
 
   def destroy_multiple    
+    sussess=0;
+    error=0;
+    message="";
     params["assetseate_id"].each do |i| 
-      Assetseate.destroy(i)
-  end
-    respond_to do |format|
-      format.html { redirect_to assetseates_url notice: '部门删除成功！.'  }
-      format.json { head :no_content }
-    end 
+      result=Delete_Check("资产位置",i);     
+      if(result=="")
+        sussess+=1;
+        Assetseate.destroy(i)
+      else
+        error+=1;
+        message=message+result  
+      end 
+  end 
+  message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
+  render :json  => {code: 200,message: message }
 end
 
 

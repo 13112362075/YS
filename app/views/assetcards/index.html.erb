@@ -374,11 +374,14 @@ items = getCheckedCheckbox("awsui-checkbox");
    type:"post", 
    url:resturl, 
    data:{ 
-      "userid": items
+      "assetcardid": items
      }, 
-   success: function(){
-     alert("删除成功！");
-     location.reload();
+   success: function(res){
+      if(res.code==200)
+      { 
+        alert(res.message);
+        location.reload();
+      }
      },
 			error :function(){
         alert("删除失败！")
