@@ -87,7 +87,7 @@
     <div class="layui-input-block"> <input     class="layui-input  image_input  "  placeholder="请输入资产类别"    type="text" name="assetcard[Assettype_id]" id="assetcard_Assettype_id" 
       value=<%= @assetcard.Assettype_id%>  ></div> 
   </div>   
-         <div  class ="image",  data-toggle="modal" data-target="#assettypeModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+         <div  class ="image",  onclick="copyText(assettypeModal)"   href="#"><%= image_tag('放大镜', size: "38" )   %></div>
 </div>
   
 
@@ -102,7 +102,7 @@
       value=<%= @assetcard.Unit_id%>  ></div>
          
   </div>  
-   <div  class ="image",  data-toggle="modal" data-target="#unitModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+   <div  class ="image",  onclick="copyText(unitModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>
 
      <div class="field" >
     <label class="layui-form-label  label1"      for="assetcard_数量">数量</label>
@@ -122,9 +122,11 @@
    
       
       </div> 
-  </div> 
-    <div  class ="image",  data-toggle="modal" data-target="#assetstatusModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div> 
+  </div>  
+            <div  class ="image",    onclick="copyText(assetstatusModal)"   href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
 </div> 
+
+  
 
 
     <div style="display:flex;">
@@ -142,9 +144,8 @@
  
       </div>
           
-  </div> 
-    <div  class ="image",  data-toggle="modal" data-target="#addtypeModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>  
-
+  </div>  
+      <div  class ="image",    onclick="copyText(addtypeModal)"   href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
    
 
        <div class="field" >
@@ -157,7 +158,7 @@
     
       </div> 
   </div> 
-      <div  class ="image",  data-toggle="modal" data-target="#usestateModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>   
+      <div  class ="image",  onclick="copyText(usestateModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>   
  
   <div class="field" >
     <label class="layui-form-label  label1"      for="assetcard_购买日期">购买日期</label>
@@ -255,7 +256,7 @@
     <div class="layui-input-block"> <input     class="layui-input image_input  "  placeholder="请输入资产位置"    type="text" name="assetcard[Assetseat_id]" id="assetcard_Assetseat_id" 
       value=<%= @assetcard.Assetseat_id%>  ></div> 
   </div> 
-        <div  class ="image",  data-toggle="modal" data-target="#assetseateModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
+        <div  class ="image",    onclick="copyText(assetseateModal)"   href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
 
        <div class="field" >
     <label class="layui-form-label  label1"   for="assetcard_规格型号">规格型号</label>
@@ -299,7 +300,7 @@
     <div class="layui-input-block"> <input     class="layui-input image_input "  placeholder="请输入使用部门"    type="text" name="assetcard[department_id]" id="assetcard_department_id" 
       value=<%= @assetcard.department_id%>  ></div> 
   </div>  
-        <div  class ="image",  data-toggle="modal" data-target="#departmentModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
+        <div  class ="image",   onclick="copyText(departmentModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
    
 
        <div class="field" >
@@ -307,7 +308,7 @@
     <div class="layui-input-block"> <input     class="layui-input  image_input "  placeholder="请输入使用人"    type="text" name="assetcard[Employeeld]" id="assetcard_Employeeld" 
       value=<%= @assetcard.Employeeld%>  ></div> 
   </div> 
-          <div  class ="image",  data-toggle="modal" data-target="#userModal" href="#"><%= image_tag('放大镜', size: "38" )   %></div>     
+          <div  class ="image",   onclick="copyText(userModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>     
  
    </div>
  
@@ -341,6 +342,16 @@ layui.use('laydate', function(){
 <!--%=image_tag("timg.jpg")%-->    
 
 
+
+ 
+
+  <script type="text/javascript">
+ function copyText(modalid)
+            { 
+              $('#'+modalid.id).modal('show');   
+              }  
+    </script>
+    
 <%= render    'departments/DepartmentModal.html.erb',  id: "assetcard_department_id" ,userid:  "assetcard_Employeeld"%>
 <%= render    'users/UserModal.html.erb',  id: "assetcard_Employeeld",department: "assetcard_department_id"  %>
 <%= render    'units/UnitModal.html.erb',  id: "assetcard_Unit_id"  %>
@@ -349,3 +360,6 @@ layui.use('laydate', function(){
 <%= render    'addtypes/AddtypesModal.html.erb',  id: "assetcard_Addtype_id"  %> 
 <%= render    'assetseates/AssetseateModal.html.erb',  id: "assetcard_Assetseat_id"  %> 
 <%= render    'usestates/UsestateModal.html.erb',  id: "assetcard_Usestate_id"  %> 
+
+
+ 

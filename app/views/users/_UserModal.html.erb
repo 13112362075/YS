@@ -23,7 +23,7 @@
           </thead>
           <tbody>
             <% @user.each do |user| %>
-            <tr class="select" data-user_id="<%= user.id %>" >
+            <tr class="select selectuser" data-user_id="<%= user.id %>" >
               <td><%= user.id %></td>
               <td><%= user.name %></td> 
               <td><%= user.departmentname %></td> 
@@ -50,8 +50,8 @@
 
 
 <script>
-$('tr.select').click(function(e){ 
-    $("tr.select").css("backgroundColor","white");
+$('tr.selectuser').click(function(e){ 
+    $("tr.selectuser").css("backgroundColor","white");
     this.style.backgroundColor = "#357ebd"
     $("#userid").text(this.dataset.user_id);
 }) 
@@ -65,7 +65,8 @@ $('#chooseuser').click(function(e){
 var  List=new Array();
 List[0]="用户";
 List[1]=$("#UserModalid").text();
-List[2]=$("#departmentModalid").text();
+List[2]="userModal";
+List[3]=$("#departmentModalid").text();
 $.ajax({
    type:"post", 
    url :"/users_choose",
@@ -79,6 +80,30 @@ $.ajax({
         } 
  });  
 })  
+
+
+
+$('tr.selectuser').dblclick(function(e){    
+  var departmentid=$("#departmentModalid").text();  
+// var departmentvalue=$("#"+departmentid.trim())[0].value);
+var  List=new Array();
+List[0]="用户";
+List[1]=$("#UserModalid").text();
+List[2]="userModal";
+List[3]=$("#departmentModalid").text();
+$.ajax({
+   type:"post", 
+   url :"/users_choose",
+   data:{ 
+      "userid": $("#userid").text(),
+      "id" :List
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });  
+})
 
 $('#userModal').on('show.bs.modal', function () {
   

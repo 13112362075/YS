@@ -4,8 +4,7 @@ class AddtypesController < ApplicationController
   def choose   
     addtype = Addtype.find(params[:addtypeid]) 
     @name = addtype.Name
-    @id=   params[:id]  
-    puts @id;
+    @id=   params[:id]   
     render 'choose/choose.js.erb'
   end 
 

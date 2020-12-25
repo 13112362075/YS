@@ -12,8 +12,7 @@
          /* background:url("/assets/背景图1-f8f7feaaf8b8e60ea6f629581b9613aeed13c983ff02cd093cd88e5e5e543d93.jpg"); */
          background:url("/assets/登录界面-75aaedb661f67b29b871e5c0938874e3c997338aeae4118bfabfe10d532b0f6b.jpg "); 
          background-size: 100% 100%; 
-         background-repeat:no-repeat; 
-         height:495px;
+         background-repeat:no-repeat;   
       }  
       .red-text {  
          font-size: 20px;
@@ -69,7 +68,6 @@
                position: relative;width: 200px;
                }
 }
-    
 </style>
 <script>
 $(document).ready(function(){     
@@ -78,13 +76,19 @@ $(document).ready(function(){
           {
              alert (x);
           } 
-          console.log(screen.availHeight);
-          console.log(screen.availWidth);
+          console.log(screen);
+          console.log(screen.availHeight); 
+          console.log(screen.height);
+          console.log(document.body.clientHeight);
+          console.log(document.body.scrollHeight);
+          console.log(document.body.offsetHeight); 
           var obj = document.getElementById("row");
            obj.style.cssText = "top:"+screen.availHeight*0.35+"px;left:"+screen.availWidth*0.61+"px";
            var obj = document.getElementById("red-text");
            obj.style.cssText = "top:"+screen.availHeight*0.28+"px;left:"+screen.availWidth*0.615+"px";
-           document.body.style.height=screen.availHeight*0.754+"px";  
+          var obj = document.body;
+          obj.style.cssText="height:"+(screen.height-209) +"px"
+          console.log(obj.style.cssText); 
 });
 </script>      
  <p hidden="hidden" id="notice"><%= notice%></p>  
@@ -124,8 +128,7 @@ $(document).ready(function(){
 function greet_user()
 {
             session_account=document.getElementById("session_account") .value// 找到用户名
-            session_password=document.getElementById("session_password") .value// 找到密码
-            
+            session_password=document.getElementById("session_password") .value// 找到密码 
             if( session_account.replace(/\s*/g, '')  ==""||  session_password.replace(/\s*/g, '')  ==""   )
             {
                alert("用户名不能为空或者密码不用为空");

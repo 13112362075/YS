@@ -6,7 +6,7 @@ class UsersController < ApplicationController
     @name = user.name
     @departmentname = user.departmentname 
     @id=   params[:id]  
-    @id[3]=    @departmentname 
+    @id[4]=    @departmentname 
     render 'choose/choose.js.erb'
   end 
 

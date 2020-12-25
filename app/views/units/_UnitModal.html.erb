@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <% @unit.each do |unit| %>
-            <tr class="select" data-user_id="<%= unit.id %>" >
+            <tr class="select_unit" data-user_id="<%= unit.id %>" >
               <td><%= unit.Unitcode %></td>
               <td><%= unit.name %></td> 
             </tr>
@@ -47,8 +47,8 @@
 
 
 <script>
-$('tr.select').click(function(e){ 
-    $("tr.select").css("backgroundColor","white");
+$('tr.select_unit').click(function(e){ 
+    $("tr.select_unit").css("backgroundColor","white");
     this.style.backgroundColor = "#357ebd" 
     $("#unitid").text(this.dataset.user_id);
 
@@ -61,6 +61,7 @@ $('#chooseunit').click(function(e){
        var List=new Array();
   List[0]="计量单位";
   List[1]=   $("#UnitModalid").text();
+  List[2]="unitModal";
 $.ajax({
    type:"post", 
    url :"/units_choose",
@@ -75,4 +76,25 @@ $.ajax({
  });  
 }) 
 
+
+
+
+$('tr.select_unit').dblclick(function(e){    
+      var List=new Array();
+  List[0]="计量单位";
+  List[1]=   $("#UnitModalid").text();
+  List[2]="unitModal";
+$.ajax({
+   type:"post", 
+   url :"/units_choose",
+   data:{ 
+      "unitid": $("#unitid").text(),
+      "id" :List
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });  
+})
 </script>

@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <% @assetseate.each do |assetseate| %>
-            <tr class="select" data-assetseate_id="<%= assetseate.id %>" >
+            <tr class="select select_assetseate" data-assetseate_id="<%= assetseate.id %>" >
               <td><%= assetseate.Assetseatecode %></td>
               <td><%= assetseate.Name %></td> 
             </tr>
@@ -47,8 +47,8 @@
 
 
 <script>
-$('tr.select').click(function(e){ 
-    $("tr.select").css("backgroundColor","white");
+$('tr.select_assetseate').click(function(e){ 
+    $("tr.select_assetseate").css("backgroundColor","white");
     this.style.backgroundColor = "#357ebd"
     console.log(this.dataset.assetseate_id) 
     $("#assetseateid").text(this.dataset.assetseate_id);
@@ -62,6 +62,7 @@ $('#chooseassetseate').click(function(e){
     var List=new Array();
   List[0]="资产位置";
   List[1]=   $("#AssetseateModalid").text();
+    List[2]="assetseateModal";
 $.ajax({
    type:"post", 
    url :"/assetseates_choose",
@@ -76,4 +77,23 @@ $.ajax({
  });  
 }) 
 
+
+$('tr.select_assetseate').dblclick(function(e){    
+  var List=new Array();
+  List[0]="资产位置";
+  List[1]=   $("#AssetseateModalid").text();
+  List[2]="assetseateModal";
+$.ajax({
+   type:"post", 
+   url :"/assetseates_choose",
+   data:{ 
+      "assetseateid": $("#assetseateid").text(),
+      "id" :List
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });    
+})
 </script>

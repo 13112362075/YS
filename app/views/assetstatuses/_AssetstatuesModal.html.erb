@@ -21,7 +21,7 @@
             </thead>
             <tbody>
               <% @assetstatus.each do |assetstatus| %>
-              <tr class="select" data-assetstatus_id="<%= assetstatus.id %>" >
+              <tr class="select_assetstatus" data-assetstatus_id="<%= assetstatus.id %>" >
                 <td><%= assetstatus.Assetstatuscode %></td>
                 <td><%= assetstatus.Name %></td> 
               </tr>
@@ -47,8 +47,8 @@
   
   
   <script>
-  $('tr.select').click(function(e){ 
-      $("tr.select").css("backgroundColor","white");
+  $('tr.select_assetstatus').click(function(e){ 
+      $("tr.select_assetstatus").css("backgroundColor","white");
       this.style.backgroundColor = "#357ebd"
       console.log(this.dataset.assetstatus_id) 
       $("#assetstatusid").text(this.dataset.assetstatus_id);
@@ -62,6 +62,7 @@
        var List=new Array();
   List[0]="资产状态";
   List[1]=   $("#AssetstatusModalid").text();
+  List[2]="assetstatusModal";
   $.ajax({
      type:"post", 
      url :"/assetstatuses_choose",
@@ -76,5 +77,25 @@
    });  
   }) 
   
+
+
+$('tr.select_assetstatus').dblclick(function(e){    
+        var List=new Array();
+  List[0]="资产状态";
+  List[1]=   $("#AssetstatusModalid").text();
+  List[2]="assetstatusModal";
+  $.ajax({
+     type:"post", 
+     url :"/assetstatuses_choose",
+     data:{ 
+        "assetstatusid": $("#assetstatusid").text(),
+        "id" :List
+       }, 
+     success: function(){ 
+       },
+              error :function(){ 
+          } 
+   });  
+})
   </script>
   

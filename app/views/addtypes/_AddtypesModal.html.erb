@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <% @addtype.each do |addtype| %>
-            <tr class="select" data-addtype_id="<%= addtype.id %>" >
+            <tr class="select select_addtype" data-addtype_id="<%= addtype.id %>" >
               <td><%= addtype.Addtypecode %></td>
               <td><%= addtype.Name %></td> 
             </tr>
@@ -47,10 +47,9 @@
 
 
 <script>
-$('tr.select').click(function(e){ 
-    $("tr.select").css("backgroundColor","white");
-    this.style.backgroundColor = "#357ebd"
-    console.log(this.dataset.addtype_id) 
+$('tr.select_addtype').click(function(e){ 
+    $("tr.select_addtype").css("backgroundColor","white");
+    this.style.backgroundColor = "#357ebd" 
     $("#addtypeid").text(this.dataset.addtype_id);
 
 }) 
@@ -62,6 +61,7 @@ $('#chooseaddtype').click(function(e){
   var List=new Array();
   List[0]="变动方式";
   List[1]=   $("#AddtypeModalid").text();
+  List[2]=  "addtypeModal";
 $.ajax({
    type:"post", 
    url :"/addtypes_choose",
@@ -76,4 +76,23 @@ $.ajax({
  });  
 }) 
 
+
+$('tr.select_addtype').dblclick(function(e){    
+  var List=new Array();
+   List[0]="变动方式";
+  List[1]=   $("#AddtypeModalid").text();
+  List[2]=  "addtypeModal";
+$.ajax({
+   type:"post", 
+   url :"/addtypes_choose",
+   data:{ 
+      "addtypeid": $("#addtypeid").text(),
+      "id" :List
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });  
+})
 </script>

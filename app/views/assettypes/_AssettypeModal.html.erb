@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <% @assettype.each do |assettype| %>
-            <tr class="select" data-assettype_id="<%= assettype.id %>" >
+            <tr class="select_assettype" data-assettype_id="<%= assettype.id %>" >
               <td><%= assettype.Assettypecode %></td>
               <td><%= assettype.Name %></td> 
             </tr>
@@ -47,8 +47,8 @@
 
 
 <script>
-$('tr.select').click(function(e){ 
-    $("tr.select").css("backgroundColor","white");
+$('tr.select_assettype').click(function(e){ 
+    $("tr.select_assettype").css("backgroundColor","white");
     this.style.backgroundColor = "#357ebd"
     console.log(this.dataset.assettype_id) 
     $("#assettypeid").text(this.dataset.assettype_id);
@@ -62,6 +62,7 @@ $('#chooseassettype').click(function(e){
    var List=new Array();
   List[0]="资产类别";
   List[1]=   $("#AssettypeModalid").text();
+  List[2]="assettypeModal";
 $.ajax({
    type:"post", 
    url :"/assettypes_choose",
@@ -76,4 +77,25 @@ $.ajax({
  });  
 }) 
 
+
+
+
+$('tr.select_assettype').dblclick(function(e){    
+   var List=new Array();
+  List[0]="资产类别";
+  List[1]=   $("#AssettypeModalid").text();
+  List[2]="assettypeModal";
+$.ajax({
+   type:"post", 
+   url :"/assettypes_choose",
+   data:{ 
+      "assettypeid": $("#assettypeid").text(),
+      "id" :List
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });  
+})
 </script>

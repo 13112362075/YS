@@ -21,7 +21,7 @@
           </thead>
           <tbody>
             <% @usestate.each do |usestate| %>
-            <tr class="select" data-usestate_id="<%= usestate.id %>" >
+            <tr class="select_usestate" data-usestate_id="<%= usestate.id %>" >
               <td><%= usestate.Usestatecode %></td>
               <td><%= usestate.Name %></td> 
             </tr>
@@ -47,8 +47,8 @@
 
 
 <script>
-$('tr.select').click(function(e){ 
-    $("tr.select").css("backgroundColor","white");
+$('tr.select_usestate').click(function(e){ 
+    $("tr.select_usestate").css("backgroundColor","white");
     this.style.backgroundColor = "#357ebd"
     console.log(this.dataset.usestate_id) 
     $("#usestateid").text(this.dataset.usestate_id);
@@ -62,6 +62,7 @@ $('#chooseusestate').click(function(e){
          var List=new Array();
   List[0]="资产使用状态";
   List[1]=   $("#UsestateModalid").text(); 
+  List[2]="usestateModal";
 $.ajax({
    type:"post", 
    url :"/usestates_choose",
@@ -76,4 +77,23 @@ $.ajax({
  });  
 }) 
 
+
+$('tr.select_usestate').dblclick(function(e){    
+     var List=new Array();
+  List[0]="资产使用状态";
+  List[1]=   $("#UsestateModalid").text(); 
+  List[2]="usestateModal";
+$.ajax({
+   type:"post", 
+   url :"/usestates_choose",
+   data:{ 
+      "usestateid": $("#usestateid").text(),
+      "id" :List
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });  
+})
 </script>

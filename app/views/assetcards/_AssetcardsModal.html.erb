@@ -25,7 +25,7 @@
           </thead>
           <tbody>
             <% @assetcard.each do |assetcard| %>
-            <tr class="select" data-assetcard_id="<%= assetcard.id %>" >
+            <tr class="select select_assetcard" data-assetcard_id="<%= assetcard.id %>" >
               <td><%= assetcard.assetCode %></td>
               <td><%= assetcard.assetname %></td> 
               <td><%= assetcard.Unit_id %></td>
@@ -56,16 +56,13 @@
 
 
 <script>
-$('tr.select').click(function(e){ 
-    $("tr.select").css("backgroundColor","white");
-    this.style.backgroundColor = "#357ebd"
-    console.log(this.dataset.assetcard_id) 
-    $("#assetcardid").text(this.dataset.assetcard_id);
-     
-
+$('tr.select_assetcard').click(function(e){ 
+    $("tr.select_assetcard").css("backgroundColor","white");
+    this.style.backgroundColor = "#357ebd" 
+    $("#assetcardid").text(this.dataset.assetcard_id); 
 }) 
 
-$('tr.select').dblclick(function(e){  
+$('tr.select_assetcard').dblclick(function(e){  
 
 var rows=document.getElementById('testid').rows;   
 var  isaddrow="true";

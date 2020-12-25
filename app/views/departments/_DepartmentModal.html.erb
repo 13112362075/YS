@@ -22,7 +22,7 @@
           </thead>
           <tbody>
             <% @department.each do |department| %>
-            <tr class="select" data-user_id="<%= department.id %>" >
+            <tr class="select_department" data-user_id="<%= department.id %>" >
               <td><%= department.departmentcode %></td>
               <td><%= department.departmentname %></td> 
             </tr>
@@ -48,8 +48,8 @@
 
 
 <script>
-$('tr.select').click(function(e){ 
-    $("tr.select").css("backgroundColor","white");
+$('tr.select_department').click(function(e){ 
+    $("tr.select_department").css("backgroundColor","white");
     this.style.backgroundColor = "#357ebd"
     console.log(this.dataset.user_id) 
     $("#departmentid").text(this.dataset.user_id);
@@ -59,7 +59,8 @@ $('#choose').click(function(e){
      var List=new Array();
   List[0]="部门";
   List[1]=   $("#departmentidModalid").text();
-  List[2]=$("#userModalid").text();
+  List[2]="departmentModal";
+  List[3]=$("#userModalid").text();
 $.ajax({
    type:"post", 
    url :"/departments_choose",
@@ -76,24 +77,24 @@ $.ajax({
 
 
 
-$('tr.select').dblclick(function(e){  
+$('tr.select_department').dblclick(function(e){   
+  var List=new Array();
+  List[0]="部门";
+  List[1]=   $("#departmentidModalid").text();
+  List[2]="departmentModal";
+  List[3]=$("#userModalid").text();
 
-//   var List=new Array();
-//   List[0]="部门";
-//   List[1]=   $("#departmentidModalid").text();
-//   List[2]=$("#userModalid").text();
-//   List[3]="departmentModal";
-// $.ajax({
-//    type:"post", 
-//    url :"/departments_choose",
-//    data:{ 
-//       "departmentid": $("#departmentid").text(),
-//       "id" :List
-//      }, 
-//    success: function(){ 
-//      },
-// 			error :function(){ 
-//         } 
-//  });
+$.ajax({
+   type:"post", 
+   url :"/departments_choose",
+   data:{ 
+      "departmentid": $("#departmentid").text(),
+      "id" :List
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });
 });
 </script>
