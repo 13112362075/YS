@@ -1,6 +1,20 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy] 
 
+  def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
+    render json:{code: code, msg: message, count: count,data: data};
+  end
+
+
+  def test
+    user=User.order(:id);
+    total_count=user.count
+    user=user.page(params[:page]).per(params[:limit])
+    data=user.as_json;
+    api_success(count: total_count,data: data)
+  end
+
+
   def choose   
     user = User.find(params[:userid]) 
     @name = user.name
@@ -19,16 +33,21 @@ class UsersController < ApplicationController
 
   
   def save_multiple    
-    ActiveRecord::Base.transaction do 
-    params["userid"].each do |i|  
-      user = User.create!(account: i[1][0],password: i[1][1],name: i[1][2],address: i[1][3],email: i[1][4], telephone: i[1][5],sex: i[1][6],role: i[1][7],departmentname: i[1][8],orgainize_id: i[1][9])
-    end
-  end  
+    if Frole?
+      ActiveRecord::Base.transaction do 
+        params["userid"].each do |i|  
+          user = User.create!(account: i[1][0],password: i[1][1],name: i[1][2],address: i[1][3],email: i[1][4], telephone: i[1][5],sex: i[1][6],role: i[1][7],departmentname: i[1][8],orgainize_id: i[1][9])
+        end
+      end  
+    else
+      message="导入失败！只有管理员才允许进行导入操作！";
+      render :json  => {code: 200,message: message }
+    end 
 end
 
- 
 def destroy_multiple
-  sussess=0;
+  if Frole?
+    sussess=0;
   error=0;
   message="";
  # ActiveRecord::Base.transaction do
@@ -49,8 +68,13 @@ def destroy_multiple
     #rescue ActiveRecord::RecordNotFound => exception 
     message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
     render :json  => {code: 200,message: message }
+  else
+    message="删除失败！只有管理员才允许进行删除操作！";
+    render :json  => {code: 200,message: message }
+  end
+  
 end 
- 
+  
  
   def index   
     @q = User.search(params[:q]) 

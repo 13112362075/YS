@@ -97,6 +97,11 @@ post 'asset_turnover_details_save_all',:to =>'asset_turnover_details#save_all'
 post 'asset_allocates_save_all',:to =>'asset_allocates#save_all'
 post 'asset_recoveries_save_all',:to =>'asset_recoveries#save_all'
 post 'asset_scrappings_save_all',:to =>'asset_scrappings#save_all'
+
+
+get 'user_test',:to =>'users#test'
+
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
  
 
