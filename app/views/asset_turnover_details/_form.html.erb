@@ -124,7 +124,7 @@
   </colgroup>
   <thead > 
     <tr >  
-      <th style="text-align:center;font-size:10px;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
+      <th style="text-align:center;font-size:10px;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this,'entry.ids[]')"></th>
       <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">序号</th>
       <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产编码</th>
       <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产名称</th> 
@@ -271,10 +271,9 @@ layui.use('laydate', function(){
 
  <script>  
       $('td').click(function(e){  
+        console.log("1")
         if(e.currentTarget.className !="")
-        {
-              console.log(e.currentTarget.parentNode.id); 
-              console.log(e.currentTarget.parentNode.firstElementChild.children[0].checked);
+        {  
               if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
               {
                 e.currentTarget.parentNode.firstElementChild.children[0].checked=false;
@@ -370,11 +369,11 @@ for(var i=items.length-1;i>=0;i--){
 
 
 //全选
-   function selectAll(obj){ 
+   function selectAll(obj,type){ 
         //创建数组
         var arr=new Array();
         //获取所有id为“cb1”的复选框
-        var items=document.getElementsByName("entry.ids[]");
+        var items=document.getElementsByName(type);
         //判断复选框是否选中
         if(obj.checked)
         {

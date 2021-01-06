@@ -1,5 +1,4 @@
-
-
+ 
 <!-- Modal -->
 <div class="modal fade" id="assetcardModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -14,6 +13,7 @@
         <table class="table table-bordered">
           <thead>
           <tr>
+          <th style="text-align:center;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this,'assetcard.ids[]')"></th>
             <th>编号</th>
             <th>资产卡片名称</th> 
             <th>单位</th> 
@@ -26,6 +26,7 @@
           <tbody>
             <% @assetcard.each do |assetcard| %>
             <tr class="select select_assetcard" data-assetcard_id="<%= assetcard.id %>" >
+            <td  class='test' ><input class='awsui-checkbox_modal' id='assetcard.ids[]' name='assetcard.ids[]' value=<%= assetcard.id %> type='checkbox'/></td>  
               <td><%= assetcard.assetCode %></td>
               <td><%= assetcard.assetname %></td> 
               <td><%= assetcard.Unit_id %></td>
@@ -38,14 +39,13 @@
           </tbody>
         </table>
       </div>
-
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
         <button id="chooseassetcard" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
       </div> 
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+    </div> 
+  </div> 
+</div> 
 
 
 
@@ -62,8 +62,7 @@ $('tr.select_assetcard').click(function(e){
     $("#assetcardid").text(this.dataset.assetcard_id); 
 }) 
 
-$('tr.select_assetcard').dblclick(function(e){  
-
+$('tr.select_assetcard').dblclick(function(e){   
 var rows=document.getElementById('testid').rows;   
 var  isaddrow="true";
 row=rows.length;
@@ -98,11 +97,10 @@ $.ajax({
 </script>
 
 <script> 
-$('#chooseassetcard').click(function(e){     
-
+$('#chooseassetcard').click(function(e){       
 var rows=document.getElementById('testid').rows;   
 var  isaddrow="true";
-row=rows.length;
+row=rows.length; 
 for(var i=1;i<rows.length;i++) 
 {
   var BH=rows[i].cells[2].innerText; 
@@ -112,22 +110,58 @@ for(var i=1;i<rows.length;i++)
     row = i;
     break;
   }
+}  
+items = getCheckedCheckbox("awsui-checkbox_modal");   
+for(var j=0;j<items.length;j++) 
+{       
+  console.log(rows.length);
+   console.log(row);
+  if(j>0&&rows.length+j-1<=row)
+  {
+    console.log(isaddrow);
+      isaddrow="true";
+  } 
+  $.ajax({
+    type:"post", 
+    url :"/assetcards_choose",
+    data:{ 
+        "assetcardid": items[j],
+        "id" :$("#AssetcardModalid").text(),
+        "row":row,
+        "idlist":["2","3","4","5","10","11","12"],
+        "isaddrow":isaddrow
+      }  
+  });   
+  row++;  
 }
-
-$.ajax({
-   type:"post", 
-   url :"/assetcards_choose",
-   data:{ 
-      "assetcardid": $("#assetcardid").text(),
-      "id" :$("#AssetcardModalid").text(),
-      "row":row,
-      "idlist":["2","3","4","5","10","11","12"],
-      "isaddrow":isaddrow
-     }, 
-   success: function(){ 
-     },
-			error :function(){ 
-        } 
- });  
 })  
+
+      $('td').click(function(e){    
+        if(e.currentTarget.className =="")
+        {  
+              if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
+              {
+                e.currentTarget.parentNode.firstElementChild.children[0].checked=false;
+              }
+              else
+              {
+                e.currentTarget.parentNode.firstElementChild.children[0].checked=true;
+              }
+        }   
+      }) 
+
+
+        function getCheckedCheckbox(checkboxClassName) {
+				var array = new Array();
+				var j = 0;
+				var selectedItems = document.getElementsByClassName(checkboxClassName);
+    
+				for (var i = 0; i < selectedItems.length; i++) { 
+					if (selectedItems[i].checked == true) {
+						array[j] = selectedItems[i].value;
+						j++;
+					}
+				} 
+				return array;
+			}
 </script>
