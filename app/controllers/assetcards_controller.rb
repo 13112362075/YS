@@ -121,7 +121,9 @@ end
 
   # GET /assetcards/new
   def new
+
     @assetcard = Assetcard.new
+    puts  @assetcard.attributes.keys
     @department = Department.all   
     @addtype = Addtype.all   
     @assetseate = Assetseate.all   
@@ -192,6 +194,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def assetcard_params
-      params.require(:assetcard).permit(:assetCode, :assetname, :Assettype_id, :Unit_id, :Amount, :Assetstatus_id, :Addtype_id, :BuyDate, :Usestate_id, :description, :Orgainize_id, :Entrydate, :Price, :Lastprice, :Expectedperiod, :CNOSP, :barcode, :Mould, :Assetseat_id, :Client, :Supplier, :department_id, :Employeeld)
+      params.require(:assetcard).permit(:assetCode, :assetname, :Assettype_id, :Unit_id, :Amount, :Assetstatus_id, :Addtype_id, :BuyDate, :Usestate_id, :description, :Orgainize_id, :Entrydate, :Price, :Lastprice, :Expectedperiod, :CNOSP, :barcode, :Mould, :Assetseat_id, :Client, :Supplier, :department_id, :Employeeld,:fbillstatus)
     end
 end

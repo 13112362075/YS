@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Assetalters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fbillno</th>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Alterdate</th>
+      <th>Reason</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assetalters.each do |assetalter| %>
+      <tr>
+        <td><%= assetalter.Fbillno %></td>
+        <td><%= assetalter.Code %></td>
+        <td><%= assetalter.name %></td>
+        <td><%= assetalter.Alterdate %></td>
+        <td><%= assetalter.Reason %></td>
+        <td><%= link_to 'Show', assetalter %></td>
+        <td><%= link_to 'Edit', edit_assetalter_path(assetalter) %></td>
+        <td><%= link_to 'Destroy', assetalter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Assetalter', new_assetalter_path %>

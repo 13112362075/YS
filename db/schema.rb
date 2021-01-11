@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_02_022635) do
+ActiveRecord::Schema.define(version: 2021_01_07_061008) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -119,6 +119,25 @@ ActiveRecord::Schema.define(version: 2020_12_02_022635) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "assetalter_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Altertype"
+    t.string "Information_Old"
+    t.string "Information_New"
+    t.integer "Assetalter_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "assetalters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Fbillno"
+    t.string "Code"
+    t.string "name"
+    t.date "Alterdate"
+    t.string "Reason"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "assetcards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "assetCode"
     t.string "assetname"
@@ -145,6 +164,7 @@ ActiveRecord::Schema.define(version: 2020_12_02_022635) do
     t.string "Employeeld"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fbillstatus"
   end
 
   create_table "assetseates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

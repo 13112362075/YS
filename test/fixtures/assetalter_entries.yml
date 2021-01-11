@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Altertype: MyString
+  Information_Old: MyString
+  Information_New: MyString
+  Assetalter_id: 1
+
+two:
+  Altertype: MyString
+  Information_Old: MyString
+  Information_New: MyString
+  Assetalter_id: 1

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  resources :assetalter_entries
+  resources :assetalters
   resources :asset_scrapping_entries
   resources :asset_scrappings
   resources :asset_allocate_entries

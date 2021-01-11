@@ -1,0 +1,37 @@
+<%= form_with(model: assetalter_entry, local: true) do |form| %>
+  <% if assetalter_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(assetalter_entry.errors.count, "error") %> prohibited this assetalter_entry from being saved:</h2>
+
+      <ul>
+        <% assetalter_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Altertype %>
+    <%= form.text_field :Altertype %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Information_Old %>
+    <%= form.text_field :Information_Old %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Information_New %>
+    <%= form.text_field :Information_New %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Assetalter_id %>
+    <%= form.number_field :Assetalter_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

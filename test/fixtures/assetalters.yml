@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Fbillno: MyString
+  Code: MyString
+  name: MyString
+  Alterdate: 2021-01-07
+  Reason: MyString
+
+two:
+  Fbillno: MyString
+  Code: MyString
+  name: MyString
+  Alterdate: 2021-01-07
+  Reason: MyString
