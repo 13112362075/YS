@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  resources :assetalter_entries
-  resources :assetalters
   resources :asset_scrapping_entries
   resources :asset_scrappings
   resources :asset_allocate_entries
@@ -102,6 +100,10 @@ post 'asset_scrappings_save_all',:to =>'asset_scrappings#save_all'
 
 
 get 'user_test',:to =>'users#test'
+
+
+#更新状态
+post 'assetcards_Update_Fbillstatus',:to => 'assetcards#Update_Fbillstatus'
 
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html

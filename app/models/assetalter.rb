@@ -1,2 +1,0 @@
-class Assetalter < ApplicationRecord
-end

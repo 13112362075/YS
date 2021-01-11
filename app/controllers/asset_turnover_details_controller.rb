@@ -44,6 +44,7 @@ end
 
   # GET /asset_turnover_details/1/edit
   def edit
+    IsRresh(); 
     @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  "#{params[:id]}" )  
     @assetcard  =  Assetcard.all
     @index=0

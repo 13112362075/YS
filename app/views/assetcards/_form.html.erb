@@ -1,5 +1,4 @@
-
-  <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
   <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
 <script src="https://www.layuicdn.com/layui/layui.js"></script>
  
@@ -109,11 +108,9 @@
     <div class="layui-input-block"> <input     class="layui-input input1"    placeholder="请输入数量"    type="text" name="assetcard[Amount]" id="assetcard_Amount"
        value=<%= @assetcard.Amount%>  ></div>
   </div> 
-
    
      <div class="field" >
     <label class="layui-form-label  label1"   for="assetcard_资产状态">资产状态</label>
-
     <%if  @assetcard.Assetstatus_id.nil?%>
      <div class="layui-input-block"> <input     class="layui-input image_input "  placeholder="请输入资产状态"    type="text" name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id"   value="正常使用">
     <%else%>
@@ -321,17 +318,53 @@
    </div>
  
   <div class="layui-btn-group " style="margin:10px;0px;">
-  <div   style="top:10px;"  class="actions layui-form-label  label1">
-    <input  class="layui-btn  " type="submit" name="commit" value="保存" data-disable-with="保存">
-  </div>
+ 
+  <a> <input  class="layui-btn  " type="submit" name="commit" value="保存" data-disable-with="保存"></a>
+  <a       rel="nofollow"  ><button   onclick="Update_Status(<%= @assetcard.id%>,'审核')"  type="button" class="layui-btn  ">审核</button></a> 
+  <a     rel="nofollow"  ><button onclick="Update_Status(<%= @assetcard.id%>,'反审核')"    type="button" class="layui-btn  ">反审核</button></a> 
     <a   href="/assetcards"   rel="nofollow"  ><button    type="button" class="layui-btn  ">返回列表</button></a> 
     </div>  
 
 
  
 <% end %> 
+<p id=IsRresh_2 , hidden="hidden" > <%=   session[:IsRresh_2]%> </p>
+
+<script>
+$(document).ready(function(){ 
+console.log($("#IsRresh_2").text().replace(/^\s+|\s+$/g,""));
+  if($("#IsRresh_2").text().replace(/^\s+|\s+$/g,"")=='false')
+  { 
  
+      location.reload();
+  } 
+})
+</script>
+
+
  
+ <script>
+ function Update_Status(id,fbillstatus)
+ {
+   var id_list=new Array();
+   id_list[0]=id; 
+$.ajax({
+   type:"post", 
+   url :"/assetcards_Update_Fbillstatus",
+   data:{ 
+      "id": id_list,
+      "fbillstatus":fbillstatus
+     }, 
+   success: function(res){
+     if(res.code == 200)
+     { 
+       alert(res.message);
+       location.reload();
+     }
+     } 
+ }); 
+ }
+ </script>
 
  
  <script>
@@ -355,19 +388,11 @@ layui.use('laydate', function(){
 
   <script type="text/javascript">
  function copyText(modalid)
-            { 
-              $('#'+modalid.id).modal('show');   
-              }  
+ {
+   $('#'+modalid.id).modal('show');
+   }  
     </script>
     
 <%= render    'departments/DepartmentModal.html.erb',  id: "assetcard_department_id" ,userid:  "assetcard_Employeeld"%>
 <%= render    'users/UserModal.html.erb',  id: "assetcard_Employeeld",department: "assetcard_department_id"  %>
-<%= render    'units/UnitModal.html.erb',  id: "assetcard_Unit_id"  %>
-<%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetcard_Assetstatus_id"  %> 
-<%= render    'assettypes/AssettypeModal.html.erb',  id: "assetcard_Assettype_id"  %> 
-<%= render    'addtypes/AddtypesModal.html.erb',  id: "assetcard_Addtype_id"  %> 
-<%= render    'assetseates/AssetseateModal.html.erb',  id: "assetcard_Assetseat_id"  %> 
-<%= render    'usestates/UsestateModal.html.erb',  id: "assetcard_Usestate_id"  %> 
-
-
- 
+<%= render    'units/UnitModal.html.erb',  id: "assetcard_Unit_id"  %> 

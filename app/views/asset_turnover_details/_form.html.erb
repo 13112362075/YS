@@ -188,7 +188,18 @@
 </form> 
 
 
+<p id=IsRresh_2 , hidden="hidden" > <%=   session[:IsRresh_2]%> </p>
 
+<script>
+$(document).ready(function(){ 
+console.log($("#IsRresh_2").text().replace(/^\s+|\s+$/g,""));
+  if($("#IsRresh_2").text().replace(/^\s+|\s+$/g,"")=='false')
+  { 
+ 
+      location.reload();
+  } 
+})
+</script>
 
 
 
@@ -270,8 +281,7 @@ layui.use('laydate', function(){
  
 
  <script>  
-      $('td').click(function(e){  
-        console.log("1")
+      $('td').click(function(e){   
         if(e.currentTarget.className !="")
         {  
               if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
@@ -456,9 +466,9 @@ console.log(array1);
 
   <script type="text/javascript">
  function copyText(modalid)
-            { 
-              $('#'+modalid.id).modal('show');   
-              }  
+ {
+   $('#'+modalid.id).modal('show');
+   }  
     </script>
 
 <%= render    'assetcards/AssetcardsModal.html.erb'  %> 

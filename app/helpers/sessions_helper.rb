@@ -1,11 +1,19 @@
 module SessionsHelper 
+
+    def IsRresh()
+        if(session[:IsRresh_2] =="true")
+            session[:IsRresh_2] ="false";
+        else
+            session[:IsRresh_2] ="true";
+        end
+    end
+
     def log_in(user)
         session[:user_id]=user.id
         @user=User.find_by(account:  params[:session][:account].downcase)
         session[:role]=@user.role
-        session[:name]=@user.name
-
-
+        session[:name]=@user.name 
+        session[:IsRresh_2] ="true";
         session[:IsRresh] ="True";
         session[:IsFirst] ="True";
 

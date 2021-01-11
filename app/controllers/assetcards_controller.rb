@@ -1,6 +1,26 @@
 class AssetcardsController < ApplicationController
   before_action :set_assetcard, only: [:show, :edit, :update, :destroy]
 
+def  Update_Fbillstatus
+  if  params[:fbillstatus].lstrip.rstrip=='反审核'
+    @status='未审核'
+  else
+    @status='已审核'
+  end
+  message="";
+  params[:id].each do |i|
+    @assetcard_by_id=Assetcard.where("id = ?   and  fbillstatus = ?" ,i,  @status);   
+    if @assetcard_by_id.length>0 
+      message=message+"资产卡片编码为："+ @assetcard_by_id[0].assetCode+"失败！已经是"+ @status+"状态，不允许"+ params[:fbillstatus]+"\r\n"
+    else  
+      @assetcard_by_status=Assetcard.where("id = ? " ,i); 
+      @assetcard_by_status.update(fbillstatus:   @status); 
+      message=message+"资产卡片编码为："+ @assetcard_by_status[0].assetCode+"  "+ params[:fbillstatus].lstrip.rstrip+"成功!\r\n";  
+    end
+  end
+  render :json  => {code: 200,message: message }
+end
+
 
 
   def  Update_Status 
@@ -125,6 +145,7 @@ end
   def new
 
     @assetcard = Assetcard.new
+    @assetcard.fbillstatus="未审核"
     puts  @assetcard.attributes.keys
     @department = Department.all   
     @addtype = Addtype.all   
@@ -137,7 +158,8 @@ end
   end
 
   # GET /assetcards/1/edit
-  def edit
+  def edit 
+    IsRresh(); 
     @department = Department.all   
     @addtype = Addtype.all   
     @assetseate = Assetseate.all   
@@ -151,6 +173,14 @@ end
   # POST /assetcards
   # POST /assetcards.json
   def create
+    @department = Department.all   
+    @addtype = Addtype.all   
+    @assetseate = Assetseate.all   
+    @assetstatus =  Assetstatus.all   
+    @assettype = Assettype.all   
+    @unit = Unit.all   
+    @user = User.all   
+    @usestate  =  Usestate.all   
     @assetcard = Assetcard.new(assetcard_params)
 
     respond_to do |format|
@@ -167,6 +197,14 @@ end
   # PATCH/PUT /assetcards/1
   # PATCH/PUT /assetcards/1.json
   def update
+    @department = Department.all   
+    @addtype = Addtype.all   
+    @assetseate = Assetseate.all   
+    @assetstatus =  Assetstatus.all   
+    @assettype = Assettype.all   
+    @unit = Unit.all   
+    @user = User.all   
+    @usestate  =  Usestate.all   
     respond_to do |format|
       if @assetcard.update(assetcard_params)
         format.html { redirect_to @assetcard, notice: '修改成功！' }
