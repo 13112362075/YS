@@ -35,8 +35,9 @@ end
 
 
 
-  def choose   
-    @assetcard = Assetcard.find(params[:assetcardid]) 
+  def choose    
+   puts params[:row]
+    @assetcard = Assetcard.find(params[:assetcardid])   
     @assetname = @assetcard.assetname
     @assetCode = @assetcard.assetCode
     @Unit_id = @assetcard.Unit_id
@@ -46,7 +47,8 @@ end
     @Assetseat_id = @assetcard.Assetseat_id 
     @row =params[:row]
     @id=   params[:idlist] 
-    @isaddrow=params[:isaddrow]   
+    @isaddrow=params[:isaddrow]    
+  
     render 'choose/assetcard_choose.js.erb'
   end 
 

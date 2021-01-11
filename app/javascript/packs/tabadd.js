@@ -1,9 +1,7 @@
 
 
   layui.use("element" , function(){
-    var element=layui.element , $=layui.jquery; 
-
- 
+    var element=layui.element , $=layui.jquery;  
     var active={  
       tabAdd: function(url,id,title){   
     window.parent.layui.element.tabAdd("demo" , {
@@ -12,19 +10,16 @@
     id:id  
     }) 
     },
-    
     tabchange: function(id){    
     window.parent.layui.element.tabChange("demo", id)   
     } 
     }; 
     
     $(".linkActive").on("click", function(){    
-    var datas=$(this);   
+    var datas=$(this);    
     tabcz(datas,active); 
     });
   });  
-
-
   function tabcz(datas,active)
   {
     var sum =1; 
@@ -37,8 +32,7 @@
       isOpen=true;
       sum++;
       }
-      }); 
-      console.log(isOpen);
+      });  
       active.tabAdd(datas.attr("data-url" ), datas.attr("data-id")+sum, datas.attr("data-title"))  
       }  
       active.tabchange(datas.attr("data-id")+sum); 

@@ -3,7 +3,22 @@
  
  <script src="https://www.layuicdn.com/layui/layui.js"></script> 
 
- 
+ <style>
+.layui-layout-admin .layui-side {
+    top: 60px;
+    width: 150px;
+    overflow-x: hidden;
+}
+.layui-nav-tree .layui-nav-more {
+    right: 60px;
+}
+.layui-body {
+  left:150px;
+}
+.layui-layout-admin .layui-footer {
+    left:150px;
+}
+  </style>
 <div  class="layui-layout layui-layout-admin ">
   <div   class="layui-header">
     <div class="layui-logo">固定资产管理系统</div>
@@ -63,30 +78,17 @@
       <div style="z-index:10; left:2000px;top:200px;" ><i  onclick="visible(this)" class="layui-icon"  >&#xe603;</i>  </div>
     <!-- 内容主体区域 -->  
  
-  <div class="layadmin-pagetabs" id="LAY_app_tabs"> 
- 
-      
-    
+  <div class="layadmin-pagetabs" id="LAY_app_tabs">  
 
-  <div class="layui-tab layui-tab-brief" lay-filter="demo"lay-allowclose="true">
-
+  <div class="layui-tab layui-tab-brief" lay-filter="demo"lay-allowclose="true"> 
               <ul class="layui-tab-title" id="LAY_app_tabsheader"> 
           </ul> 
             <div class="layui-tab-content"> 
             </div> 
-        </div> 
-          
+        </div>  
     </div>  
-
-
-
-    <!-- 页面标签 -->
-    
-
-
-
-
-
+  
+    <!-- 页面标签 --> 
 
   <div id="footer"  class="layui-footer">
     <!-- 底部固定区域 -->
@@ -95,6 +97,7 @@
 </div>
 
 <p id="IsRresh"><%= session[:IsRresh]%></p> 
+
 <script> 
 
 function visible(element)
@@ -110,8 +113,8 @@ function visible(element)
   {
     element.innerHTML="&#xe603;"
     document.getElementById("List").style.visibility="visible"; 
-    document.getElementById("body").style.left=200+"px";
-    document.getElementById("footer").style.left=200+"px";
+    document.getElementById("body").style.left=150+"px";
+    document.getElementById("footer").style.left=150+"px";
   } 
 }
 
@@ -189,4 +192,4 @@ $(document).ready(function(){
         });
     }); 
         }); 
-</script>2020/12/23
+</script> 
