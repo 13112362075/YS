@@ -2,6 +2,7 @@ class AssetcardsController < ApplicationController
   before_action :set_assetcard, only: [:show, :edit, :update, :destroy]
 
 def  Update_Fbillstatus
+  puts Time.new.strftime("%Y-%m-%d %H:%M:%S") 
   if  params[:fbillstatus].lstrip.rstrip=='反审核'
     @status='未审核'
   else
@@ -11,10 +12,13 @@ def  Update_Fbillstatus
   params[:id].each do |i|
     @assetcard_by_id=Assetcard.where("id = ?   and  fbillstatus = ?" ,i,  @status);   
     if @assetcard_by_id.length>0 
-      message=message+"资产卡片编码为："+ @assetcard_by_id[0].assetCode+"失败！已经是"+ @status+"状态，不允许"+ params[:fbillstatus]+"\r\n"
+      message=message+"资产卡片编码为："+ @assetcard_by_id[0].assetCode+params[:fbillstatus].lstrip.rstrip+"失败！已经是"+ @status+"状态，不允许"+ params[:fbillstatus]+"\r\n"
     else  
       @assetcard_by_status=Assetcard.where("id = ? " ,i); 
-      @assetcard_by_status.update(fbillstatus:   @status); 
+      @assetcard_by_status.update(fbillstatus:   @status);  
+      if params[:fbillstatus].lstrip.rstrip=='审核'
+        @assetcard_by_status.update(Approver:   session[:name],Approverdate:Time.new.strftime("%Y-%m-%d %H:%M:%S") );  
+      end
       message=message+"资产卡片编码为："+ @assetcard_by_status[0].assetCode+"  "+ params[:fbillstatus].lstrip.rstrip+"成功!\r\n";  
     end
   end
@@ -80,11 +84,13 @@ end
 
   
   def save_multiple  
+    ActiveRecord::Base.transaction do 
     params["assetcardid"].each do |i| 
       puts i[1].length    
       assetcard = Assetcard.create!(assetCode: i[1][0],assetname: i[1][1],Assettype_id: i[1][2],Unit_id: i[1][3],Amount: i[1][4], Assetstatus_id: i[1][5],Addtype_id: i[1][6],BuyDate: i[1][7],Usestate_id: i[1][8],description: i[1][9],Orgainize_id: i[1][10],Entrydate: i[1][11],Price: i[1][12],Lastprice: i[1][13],Expectedperiod: i[1][14], CNOSP: i[1][15],barcode: i[1][16],Mould: i[1][17],Assetseat_id: i[1][18],Client: i[1][19], Supplier: i[1][20],department_id: i[1][21],Employeeld: i[1][22])
     end
   end
+end
 
  
 
@@ -126,6 +132,11 @@ end
         @assetcards  = Assetcard.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(10)
       end
   end
+  # @assetcards.each do |i|
+  #   @assetcards_by_id =Assetcard.find(i.id);
+  #   @assetcards_by_id.update(Creator:   session[:name],Createdate:Time.new.strftime("%Y-%m-%d %H:%M:%S") );  
+  # end
+ 
 end
 
   # GET /assetcards/1
@@ -146,6 +157,7 @@ end
 
     @assetcard = Assetcard.new
     @assetcard.fbillstatus="未审核"
+    @assetcard.Entrydate=Time.new.strftime("%Y-%m-%d %H:%M:%S")
     puts  @assetcard.attributes.keys
     @department = Department.all   
     @addtype = Addtype.all   
@@ -181,8 +193,9 @@ end
     @unit = Unit.all   
     @user = User.all   
     @usestate  =  Usestate.all   
-    @assetcard = Assetcard.new(assetcard_params)
-
+    @assetcard = Assetcard.new(assetcard_params) 
+    @assetcard.Creator=session[:name]
+    @assetcard.Createdate= Time.new.strftime("%Y-%m-%d %H:%M:%S")
     respond_to do |format|
       if @assetcard.save
         format.html { redirect_to @assetcard, notice: '创建成功！' }
@@ -234,6 +247,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def assetcard_params
-      params.require(:assetcard).permit(:assetCode, :assetname, :Assettype_id, :Unit_id, :Amount, :Assetstatus_id, :Addtype_id, :BuyDate, :Usestate_id, :description, :Orgainize_id, :Entrydate, :Price, :Lastprice, :Expectedperiod, :CNOSP, :barcode, :Mould, :Assetseat_id, :Client, :Supplier, :department_id, :Employeeld,:fbillstatus)
+      params.require(:assetcard).permit(:assetCode, :assetname, :Assettype_id, :Unit_id, :Amount, :Assetstatus_id, :Addtype_id, :BuyDate, :Usestate_id, :description, :Orgainize_id, :Entrydate, :Price, :Lastprice, :Expectedperiod, :CNOSP, :barcode, :Mould, :Assetseat_id, :Client, :Supplier, :department_id, :Employeeld,:fbillstatus,:Creator,:Createdate,:Approver,:Approverdate)
     end
 end

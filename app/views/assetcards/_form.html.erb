@@ -59,6 +59,9 @@
     </div>
   <% end %> 
 
+<div  hidden='hidden' style="margin: 10px 15px 20px 800px;" ><img  style="z-index:10;" src="/assets/审核-794a0c0abd27f361e8dfc60c8210d254be090ce259eaeba0d07b4260532fd60f.png" height="100" width="100"></div>
+
+
 
 卡片基本信息
 <hr class="layui-bg-red"> 
@@ -183,7 +186,7 @@
 
       <div class="field" >
     <label class="layui-form-label  label1"      for="assetcard_单据状态">单据状态</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"    placeholder="请输入单据状态"    type="text" name="assetcard[fbillstatus]" id="assetcard_fbillstatus"
+    <div class="layui-input-block"> <input     class="layui-input input1"     readonly='true'   type="text" name="assetcard[fbillstatus]" id="assetcard_fbillstatus"
        value=<%= @assetcard.fbillstatus%>  ></div>
   </div>  
 
@@ -297,8 +300,7 @@
 
  
 
-    <div style="display:flex;">
-
+    <div style="display:flex;"> 
 
        <div class="field" >
     <label class="layui-form-label  label1"   for="assetcard_使用部门">使用部门</label>
@@ -313,8 +315,36 @@
     <div class="layui-input-block"> <input     class="layui-input  image_input "  placeholder="请输入使用人"    type="text" name="assetcard[Employeeld]" id="assetcard_Employeeld" 
       value=<%= @assetcard.Employeeld%>  ></div> 
   </div> 
-          <div  class ="image",   onclick="copyText(userModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>     
+  <div  class ="image",   onclick="copyText(userModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>     
  
+       <div class="field" >
+    <label class="layui-form-label  label1"   for="assetcard_创建人">创建人</label>
+    <div class="layui-input-block"> <input    readonly='true'  class="layui-input input1"     type="text" name="assetcard[Creator]" id="assetcard_Creator" 
+      value=<%= @assetcard.Creator%>  ></div>
+  </div> 
+  
+  </div> 
+      <div style="display:flex;"> 
+
+       <div class="field" >
+    <label class="layui-form-label  label1"   for="assetcard_创建日期">创建日期</label>
+    <div class="layui-input-block"> <input   readonly='true'  class="layui-input input1"     type="text" name="assetcard[Createdate]" id="assetcard_Createdate" 
+      value=<%= @assetcard.Createdate%>  ></div>
+  </div> 
+
+         <div class="field" >
+    <label class="layui-form-label  label1"   for="assetcard_审核人">审核人</label>
+    <div class="layui-input-block"> <input   readonly='true'   class="layui-input input1"    type="text" name="assetcard[Approver]" id="assetcard_Approver" 
+      value=<%= @assetcard.Approver%>  ></div>
+  </div> 
+
+         <div class="field" >
+    <label class="layui-form-label  label1"   for="assetcard_审核日期">审核日期</label>
+    <div class="layui-input-block"> <input   readonly='true'  class="layui-input input1"    type="text" name="assetcard[Approverdate]" id="assetcard_Approverdate" 
+      value=<%= @assetcard.Approverdate%>  ></div>
+  </div> 
+
+
    </div>
  
   <div class="layui-btn-group " style="margin:10px;0px;">
@@ -383,6 +413,18 @@ layui.use('laydate', function(){
 <!--%=image_tag("timg.jpg")%-->    
 
 
+<script>
+$(document).ready(function(){
+
+if($("#assetcard_fbillstatus").val()=='已审核')
+{
+ $("input").prop('disabled','disabled');
+ $("select").prop('disabled','disabled'); 
+ $("input").css('background-color','#F5F5F5');
+ $("select").css('background-color','#F5F5F5'); 
+ }
+});
+</script>
 
  
 
@@ -393,6 +435,13 @@ layui.use('laydate', function(){
    }  
     </script>
     
+    
 <%= render    'departments/DepartmentModal.html.erb',  id: "assetcard_department_id" ,userid:  "assetcard_Employeeld"%>
 <%= render    'users/UserModal.html.erb',  id: "assetcard_Employeeld",department: "assetcard_department_id"  %>
-<%= render    'units/UnitModal.html.erb',  id: "assetcard_Unit_id"  %> 
+<%= render    'units/UnitModal.html.erb',  id: "assetcard_Unit_id"  %>
+<%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetcard_Assetstatus_id"  %> 
+<%= render    'assettypes/AssettypeModal.html.erb',  id: "assetcard_Assettype_id"  %> 
+<%= render    'addtypes/AddtypesModal.html.erb',  id: "assetcard_Addtype_id"  %> 
+<%= render    'assetseates/AssetseateModal.html.erb',  id: "assetcard_Assetseat_id"  %> 
+<%= render    'usestates/UsestateModal.html.erb',  id: "assetcard_Usestate_id"  %> 
+

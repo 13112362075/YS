@@ -81,10 +81,23 @@ module   DataCheckHelper
             if( AssetTurnoverDetailEntry.where( "assetcards_Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#借用、归还单 
                 return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
             end  
-        end
+        end 
 
         return "" 
     end 
+
+    def  Save_Check_Entry(type,datas,datas_entry)
+        if(type=="资产借出/归还单")
+            # if(datas[:id]="")
+            # else
+
+            # end
+        end
+    end 
+    def  Save_Check(type,datas)
+        
+    end 
+
 end
     
  

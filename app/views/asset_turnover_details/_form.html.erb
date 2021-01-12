@@ -53,7 +53,7 @@
  
 
 <p  id="id"  hidden='hidden'><%= @asset_turnover_detail.id%></p>
-   <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a> 
+   <a id="a_test"   rel="nofollow"  ><button   onclick="Save()"   type="button" class="layui-btn">保存</button></a> 
    <a id="a_undit"   rel="nofollow"  ><button   onclick="undit()"   type="button" class="layui-btn">审核</button></a> 
    <a id="a_Back"   rel="nofollow"  ><button   onclick="back()"   type="button" class="layui-btn">归还</button></a> 
     <a   href="/asset_turnover_details"   rel="nofollow"  ><button    type="button" class="layui-btn">返回列表</button></a> 
@@ -149,9 +149,9 @@
                 <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
                 <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
                 <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true"></td>
-                <td class="tdd1" contenteditable="true" ></td>
-                <td><input class='awsui-checkbox'    type='checkbox'></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="true"></td>
+                <td class="tdd1 fdatetd" contenteditable="false" ></td>
+                <td><input class='awsui-checkbox'    type='checkbox'  disabled='true'></td>
                 <td style="text-align:center;font-size:8px;" class="tdd1 fdatetd " contenteditable="false" > </td>
                 <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false" ></td>
                 <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
@@ -169,11 +169,11 @@
                 <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.Unit %></td>
                 <td style="text-align:center;font-size:9px;"  class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.Amount %></td>
                 <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Reasons_for_borrowing %></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.givebackPlanDate %></td>
+                <td style="text-align:center;font-size:9px;" class="tdd1 fdatetd" contenteditable="true" ><%= assetTurnoverDetailEntry.givebackPlanDate %></td>
                  <% if   assetTurnoverDetailEntry.Has_Been_returned=='true'  %>
-                    <td><input class='awsui-checkbox' type='checkbox'   checked='checked'></td> 
+                    <td   ><input class='awsui-checkbox' type='checkbox'   checked='checked'  disabled="true"></td> 
                  <%else%>
-                    <td><input class='awsui-checkbox' type='checkbox' ></td>
+                    <td  ><input class='awsui-checkbox' type='checkbox' disabled="true" ></td>
                  <%end%>
                  <td style="text-align:center;font-size:8px;"  class="tdd1 fdatetd " contenteditable="false" ><%= assetTurnoverDetailEntry.givebackDate %></td> 
                 <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false" ><%= assetTurnoverDetailEntry.Deptment %> </td>
@@ -195,7 +195,6 @@ $(document).ready(function(){
 console.log($("#IsRresh_2").text().replace(/^\s+|\s+$/g,""));
   if($("#IsRresh_2").text().replace(/^\s+|\s+$/g,"")=='false')
   { 
- 
       location.reload();
   } 
 })
@@ -233,15 +232,15 @@ function undit(){
 
 function back(){
 
-  test1()//先保存
+  Save()//先保存
   var tb = document.getElementById('testid');    // table 的 id
   var rows = tb.rows;
   var id_list=new Array();
   var index= 0;
   for (i=1;i<rows.length;i++)
   {
-    console.log(rows[i].cells[8].children[0].checked); 
-    if(rows[i].cells[8].children[0].checked)
+    console.log(rows[i].cells[7].value); 
+    if(rows[i].cells[7].value!="undefined")
     {
       id_list[index]=rows[i].cells[2].innerHTML;
       index++;
@@ -327,9 +326,10 @@ function addrow(){
        }
        else if (i==8)
        {
-         y.innerHTML="       <td><input class='awsui-checkbox' type='checkbox' ></td>";
+         y.innerHTML="       <td><input class='awsui-checkbox' type='checkbox' disabled='true' ></td>";
+            y.setAttribute("contenteditable","false");
        }
-       else if (i==9)
+       else if (i==9||i==7)
       {
           var laydate = layui.laydate
           console.log(laydate) 
@@ -406,7 +406,7 @@ for(var i=items.length-1;i>=0;i--){
  </script>
 
 <script>
-function test1(){  
+function Save(){  
 var  id=document.getElementById("id").innerText; 
 var  Document_number=document.getElementById("asset_turnover_detail_Document_number").value;
 
@@ -414,7 +414,7 @@ var  Borrowing_date=document.getElementById("asset_turnover_detail_Borrowing_dat
 var  Borrowing_Department=document.getElementById("asset_turnover_detail_Borrowing_Department").value;
 var  Borrowed_To_id=document.getElementById("asset_turnover_detail_Borrowed_To_id").value;
 var  Loaner=document.getElementById("asset_turnover_detail_Loaner").value; 
-console.log(Borrowing_date);
+ 
 var array1 = new Array();
 var  array_id = new Array(); 
 var tb = document.getElementById('testid');    // table 的 id
@@ -436,8 +436,7 @@ for(var i = 1; i<rows.length; i++ ){
   }
    array2[rows[i].cells.length-2]=rows[i].id;
    array1[i-1]=array2;
-}
-console.log(array1);    
+} 
  $.ajax({
    type:"post", 
    url:"/asset_turnover_details_save_all", 
@@ -451,14 +450,14 @@ console.log(array1);
       "Document_number":Document_number,
       "Borrowing_date":Borrowing_date
      }, 
-   success: function(){
-      alert("保存成功！");
-     location.reload();
-     },
-			error :function(){
-        alert("保存失败！")
-        } 
- });
+     success: function(res){
+       alert(res.message);
+       if(res.code == 200)
+       { 
+         location.reload();
+       }
+     } 
+ });  
 } 
  </script>
 

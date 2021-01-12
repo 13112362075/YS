@@ -37,7 +37,8 @@ end
   def new
     @asset_turnover_detail = AssetTurnoverDetail.new
     @entry = AssetTurnoverDetailEntry.new
-    @assetcard  =  Assetcard.all
+    @assetcard  =  Assetcard.where("Usestate_id='可用'");   
+
     @user = User.all   
     @department = Department.all   
   end
@@ -46,7 +47,7 @@ end
   def edit
     IsRresh(); 
     @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  "#{params[:id]}" )  
-    @assetcard  =  Assetcard.all
+    @assetcard  =  Assetcard.where("Usestate_id='可用'");   
     @index=0
     @user = User.all   
     @department = Department.all   
@@ -56,35 +57,58 @@ end
   # POST /asset_turnover_details
   # POST /asset_turnover_details.json
   def  save_all 
-    @id=0;
-   if params["id"]==""  
-       @asset_turnover_detail = AssetTurnoverDetail.create!(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"]);
-       @id=@asset_turnover_detail.id
-       params["datas"].each do |i| 
-         assetTurnoverDetailEntry = AssetTurnoverDetailEntry.create!(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11],AssetTurnoverDetail_id: @id);
-       end 
-     else
-       @id=params["id"]; 
-       @asset_turnover_detail= AssetTurnoverDetail.find_by(id: @id) 
-       @asset_turnover_detail.update(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"]);
-       @Entry_by_AssetTurnoverDetail_id  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  "#{params[:id]}")
-       @Entry_by_AssetTurnoverDetail_id.each do  |id| 
-           if  !params[:array_id].to_a.include?(id.id.to_s)
-             assetTurnoverDetailEntry_1 = AssetTurnoverDetailEntry.find_by(id: id.id)
-             assetTurnoverDetailEntry_1.destroy
-           end
-       end 
-       params[:datas].each do  |i|
-         if  i[1][12].to_s == "0"
-           assetTurnoverDetailEntry_3 = AssetTurnoverDetailEntry.create!(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11],AssetTurnoverDetail_id: @id);
-           puts i[1][12];
-         else
-           assetTurnoverDetailEntry_2= AssetTurnoverDetailEntry.find_by(id: i[1][12])
-           puts  i[1][12];
-           assetTurnoverDetailEntry_2.update(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11]);
-         end 
-       end       
-  end    
+    message=""
+    ActiveRecord::Base.transaction do
+      @id=0;
+    if params["id"]==""  
+        @asset_turnover_detail = AssetTurnoverDetail.create!(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"]);
+        @id=@asset_turnover_detail.id
+        params["datas"].each do |i| 
+          Save_Check_Entry("资产借出/归还单",params,i)
+          if(i[1][7]<params["Borrowing_date"]|| i[1][5]<params["Borrowing_date"])
+
+            message=message +"第"+index.to_s+"行分录预计归还时间、归还时间不允许小于借出时间\r\n"; 
+          end
+          assetTurnoverDetailEntry = AssetTurnoverDetailEntry.create!(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11],AssetTurnoverDetail_id: @id);
+        end 
+      else
+        @id=params["id"]; 
+        @asset_turnover_detail= AssetTurnoverDetail.find_by(id: @id) 
+        @asset_turnover_detail.update(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"]);
+        @Entry_by_AssetTurnoverDetail_id  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  "#{params[:id]}")
+        @Entry_by_AssetTurnoverDetail_id.each do  |id| 
+            if  !params[:array_id].to_a.include?(id.id.to_s)
+              assetTurnoverDetailEntry_1 = AssetTurnoverDetailEntry.find_by(id: id.id)
+              assetTurnoverDetailEntry_1.destroy
+            end
+        end 
+        index =0;
+        params[:datas].each do  |i|
+          index+=1;
+          if(i[1][7]<params["Borrowing_date"]|| i[1][5]<params["Borrowing_date"]) 
+            Save_Check_Entry("资产借出/归还单",params,i)
+            message=message +"第"+index.to_s+"行分录预计归还时间、归还时间不允许小于借出时间\r\n"; 
+          end 
+          if  i[1][12].to_s == "0"
+            assetTurnoverDetailEntry_3 = AssetTurnoverDetailEntry.create!(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11],AssetTurnoverDetail_id: @id);
+            puts i[1][12];
+          else
+            assetTurnoverDetailEntry_2= AssetTurnoverDetailEntry.find_by(id: i[1][12])
+            if   i[1][7].lstrip.rstrip!=""
+              i[1][6]='true';
+          end
+            assetTurnoverDetailEntry_2.update(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11]);
+          end 
+        end       
+    end    
+    if(message!="")
+      render :json  => {code: 202,message: message }
+      raise ActiveRecord::Rollback
+
+    else
+      render :json  => {code: 200,message: "保存成功！" }
+    end
+  end
 end
  
 
