@@ -30,9 +30,14 @@ end
   def  Update_Status 
     @IsUpdate="true";
     @id=[];
-    @status= params[:Status];
-    params[:id_list].each do |i|
+    if(params[:Status]=="归还")
+      @status="可用"
+    else
+      @status= params[:Status];
+    end
+
    
+    params[:id_list].each do |i| 
       if(params[:Status]=="借出")
         @assetcard_by_status=Assetcard.where("assetCode = ?   and  Usestate_id = ?" ,i, "借出");  
         if   @assetcard_by_status.length >0
@@ -51,7 +56,8 @@ end
   if  (@IsUpdate =="true")
     params[:id_list].each do |i|
       @assetcard_by_status=Assetcard.where("assetCode = ? " ,i); 
-      @assetcard_by_status.update(Usestate_id:   params[:Status]);
+
+      @assetcard_by_status.update(Usestate_id:   @status);
     end
   end
 end
@@ -194,7 +200,7 @@ end
     @user = User.all   
     @usestate  =  Usestate.all   
     @assetcard = Assetcard.new(assetcard_params) 
-    @assetcard.Creator=session[:name]
+    @assetcard.Creator=session[:name] 
     @assetcard.Createdate= Time.new.strftime("%Y-%m-%d %H:%M:%S")
     respond_to do |format|
       if @assetcard.save

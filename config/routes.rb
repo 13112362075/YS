@@ -104,7 +104,7 @@ get 'user_test',:to =>'users#test'
 
 #更新状态
 post 'assetcards_Update_Fbillstatus',:to => 'assetcards#Update_Fbillstatus'
-
+post 'asset_turnover_details_Update_Fbillstatus',:to => 'asset_turnover_details#Update_Fbillstatus'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
  

@@ -54,7 +54,8 @@
 
 <p  id="id"  hidden='hidden'><%= @asset_turnover_detail.id%></p>
    <a id="a_test"   rel="nofollow"  ><button   onclick="Save()"   type="button" class="layui-btn">保存</button></a> 
-   <a id="a_undit"   rel="nofollow"  ><button   onclick="undit()"   type="button" class="layui-btn">审核</button></a> 
+   <a id="a_audit"   rel="nofollow"  ><button   onclick="updatestatus(<%=@asset_turnover_detail.id%>,'审核','借出')"   type="button" class="layui-btn">审核</button></a> 
+   <a id="a_unaudit"   rel="nofollow"  ><button   onclick="updatestatus(<%=@asset_turnover_detail.id%>,'反审核','归还')"   type="button" class="layui-btn">反审核</button></a> 
    <a id="a_Back"   rel="nofollow"  ><button   onclick="back()"   type="button" class="layui-btn">归还</button></a> 
     <a   href="/asset_turnover_details"   rel="nofollow"  ><button    type="button" class="layui-btn">返回列表</button></a> 
  <br><br> 
@@ -86,9 +87,7 @@
      
  
 
-    <div style="display:flex;">
-
-
+    <div style="display:flex;"> 
      <div class="field" >
     <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用组织">借用组织</label>
     <div  class="layui-input-block"> <input     class="layui-input  input1 "    placeholder="请输入借用组织"    type="text" name="asset_turnover_detail[Borrowed_To_id]" id="asset_turnover_detail_Borrowed_To_id"
@@ -99,12 +98,47 @@
      <div class="field" >
     <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用人">借用人</label>
     <div  class="layui-input-block"> <input    class="layui-input  image_input   "    placeholder="请输入借用人"    type="text" name="asset_turnover_detail[Loaner]" id="asset_turnover_detail_Loaner"
-       value=<%= @asset_turnover_detail.Loaner%>  ></div>
-     
+       value=<%= @asset_turnover_detail.Loaner%>  ></div> 
   </div>   
    <div  class ="image",   onclick="copyText(userModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>  
+
+     <div class="field" >
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据状态">单据状态</label>
+    <div  class="layui-input-block "> <input   readonly='true'    class="layui-input input1  "      type="text" name="asset_turnover_detail[fbillstatus]" id="asset_turnover_detail_fbillstatus"
+       value=<%= @asset_turnover_detail.fbillstatus%>  ></div>
+  </div> 
+
 </div>
  
+
+
+    <div style="display:flex;"> 
+         <div class="field" >
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据状态">创建人</label>
+    <div  class="layui-input-block "> <input   readonly='true'    class="layui-input input1  "      type="text" name="asset_turnover_detail[Creator]" id="asset_turnover_detail_Creator"
+       value=<%= @asset_turnover_detail.Creator%>  ></div>
+  </div> 
+       <div class="field" >
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_创建日期">创建日期</label>
+    <div  class="layui-input-block "> <input   readonly='true'   class="layui-input input1  "      type="text" name="asset_turnover_detail[Createdate]" id="asset_turnover_detail_Createdate"
+       value=<%= @asset_turnover_detail.Createdate%>  ></div>
+  </div> 
+       <div class="field" >
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_审核人">审核人</label>
+    <div  class="layui-input-block "> <input   readonly='true'   class="layui-input input1  "      type="text" name="asset_turnover_detail[Approver]" id="asset_turnover_detail_Approver"
+       value=<%= @asset_turnover_detail.Approver%>  ></div>
+  </div> 
+    </div>
+
+
+    <div style="display:flex;"> 
+         <div class="field" >
+    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据状态">审核日期</label>
+    <div  class="layui-input-block "> <input  readonly='true'    class="layui-input input1  "      type="text" name="asset_turnover_detail[Approverdate]" id="asset_turnover_detail_Approverdate"
+       value=<%= @asset_turnover_detail.Approverdate%>  ></div>
+  </div> 
+ 
+    </div>
 
 
 
@@ -207,7 +241,7 @@ console.log($("#IsRresh_2").text().replace(/^\s+|\s+$/g,""));
 
 <script>
 
-function undit(){
+function updatestatus(id,status,usestatus){
   var tb = document.getElementById('testid');    // table 的 id
   var rows = tb.rows;                           // 获取表格所有行 
   var id_list=new Array();
@@ -220,13 +254,30 @@ function undit(){
    url:"/assetcards_Update_Status", 
    data:{ 
      "id_list" :id_list, 
-     "Status":"借出"
+     "Status":usestatus
      }, 
-   success: function(){ 
+   success: function(){  
      },
 			error :function(){ 
         } 
  });
+
+ $.ajax({
+   type:"post", 
+   url:"/asset_turnover_details_Update_Fbillstatus", 
+   data:{ 
+     "id" :id, 
+     "Status":status
+     }, 
+   success: function(res){ 
+     if(res.code==200)
+     {
+       alert(res.message)
+       location.reload();
+     }
+     } 
+ });
+
 }
 
 

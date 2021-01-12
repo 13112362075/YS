@@ -2,6 +2,22 @@ class AssetTurnoverDetailsController < ApplicationController
   before_action :set_asset_turnover_detail, only: [:show, :edit, :update, :destroy]
  
 
+
+  def  Update_Fbillstatus
+    if params["Status"].lstrip.rstrip=="审核"
+      @status="已审核"
+    else
+      @status="未审核"
+    end 
+    puts @status
+    @assetTurnoverDetail=AssetTurnoverDetail.find(params["id"])
+    @assetTurnoverDetail.update(Approver: session[:name],Approverdate:Time.new.strftime("%Y-%m-%d %H:%M:%S"),fbillstatus:  @status)
+    message=  params["Status"]+"成功22！" 
+    render :json  => {code: 200,message: message}
+  end
+
+
+
 def destroy_multiple    
 
   params["asset_turnover_detailid"].each do |i| 
@@ -36,6 +52,7 @@ end
   # GET /asset_turnover_details/new
   def new
     @asset_turnover_detail = AssetTurnoverDetail.new
+    @asset_turnover_detail.fbillstatus='未审核'
     @entry = AssetTurnoverDetailEntry.new
     @assetcard  =  Assetcard.where("Usestate_id='可用'");   
 
@@ -61,11 +78,11 @@ end
     ActiveRecord::Base.transaction do
       @id=0;
     if params["id"]==""  
-        @asset_turnover_detail = AssetTurnoverDetail.create!(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"]);
+        @asset_turnover_detail = AssetTurnoverDetail.create!(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"],Creator: session[:name],fbillstatus: '未审核', Createdate: Time.new.strftime("%Y-%m-%d %H:%M:%S"));
         @id=@asset_turnover_detail.id
         params["datas"].each do |i| 
           Save_Check_Entry("资产借出/归还单",params,i)
-          if(i[1][7]<params["Borrowing_date"]|| i[1][5]<params["Borrowing_date"])
+          if(  i[1][5]<params["Borrowing_date"])
 
             message=message +"第"+index.to_s+"行分录预计归还时间、归还时间不允许小于借出时间\r\n"; 
           end
@@ -162,6 +179,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def asset_turnover_detail_params
-      params.require(:asset_turnover_detail).permit(:Document_number, :Borrowing_date, :Borrowing_Department, :Borrowed_To_id, :Loaner)
+      params.require(:asset_turnover_detail).permit(:Document_number, :Borrowing_date, :Borrowing_Department, :Borrowed_To_id, :Loaner,:fbillstatus,:Creator,:Createdate,:Approver,:Approverdate)
     end
 end
