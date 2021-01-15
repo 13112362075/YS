@@ -1,6 +1,6 @@
- if(<%= @IsUpdate %>)
+ if("<%= @status %>"=="可用")
  {
-      
+      alert("归还成功！")
  }
  else
  { 
@@ -8,6 +8,5 @@
      <% @id.each do |id| %> 
      error=error+"资产编码为："+"<%=id%>"+"已经为"+"<%=@status%>"+"状态\n" 
      <%end%>
-     error=error+"<%=@status%>"+"失败！"
-       alert(error);
+     error=error+"<%=@status%>"+"失败！"  
  }

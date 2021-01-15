@@ -34,9 +34,7 @@ end
       @status="可用"
     else
       @status= params[:Status];
-    end
-
-   
+    end 
     params[:id_list].each do |i| 
       if(params[:Status]=="借出")
         @assetcard_by_status=Assetcard.where("assetCode = ?   and  Usestate_id = ?" ,i, "借出");  
@@ -47,19 +45,23 @@ end
       else
         @assetcard_by_status=Assetcard.where("assetCode = ? and  Usestate_id = ? " ,i, "可用"); 
         if   @assetcard_by_status.length >0
-          @IsUpdate="false";
-          puts i;
+          @IsUpdate="false"; 
           @id << i; 
         end
       end  
     end  
-  if  (@IsUpdate =="true")
-    params[:id_list].each do |i|
-      @assetcard_by_status=Assetcard.where("assetCode = ? " ,i); 
-
-      @assetcard_by_status.update(Usestate_id:   @status);
-    end
+    #2021/1/14 阿斌修改，直接修改状态，不考虑是否借出可用，直接修改
+  # if  (@IsUpdate =="true")
+  #   params[:id_list].each do |i|
+  #     @assetcard_by_status=Assetcard.where("assetCode = ? " ,i); 
+  #     @assetcard_by_status.update(Usestate_id:   @status);
+  #   end
+  # end
+  params[:id_list].each do |i|
+    @assetcard_by_status=Assetcard.where("assetCode = ? " ,i); 
+    @assetcard_by_status.update(Usestate_id:   @status);
   end
+      #2021/1/14 阿斌修改，直接修改状态，不考虑是否借出可用，直接修改
 end
 
 

@@ -135,63 +135,7 @@ $.ajax({
         } 
  });
 }
-
-
- 
-
-
-
-function addrow(){
-   var c=document.getElementById('testid');//获得表格的信息 
-   
-   if( c.rows.length==1)//如果是向一个空表增加一行
-   {
-     var x=c.insertRow(1);//向空表插入一行 
-     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行  
-     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
-     {
-       var y=x.insertCell(i); 
-     }
-   }
-   else
-   {
-    
-     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行 
-     var x=c.insertRow(c.rows.length);
-     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
-     { 
-       
-       var y=x.insertCell(i);  
-       if(i==0)
-       { 
-              y.innerHTML="<input class='awsui-checkbox' id='asset_turnover_detail.ids[]' name='asset_turnover_detail.ids[]'  type='checkbox'/>";
-       }
-       else
-       {
-         y.setAttribute("contenteditable","true");
-       }
-     }
-   }
-}
-
-
-
-
-
-
-
-function delrow(){
-var x=document.getElementById("testid");
-if(x.rows.length==2)
-{
-  alert("数据数据行至少为1行，不允许删除！");
-  return false;
-}
-x.deleteRow(x.rows.length-1);//删除一行
-}
- 
-
-
+  
 </script>
  
 	<script type="text/javascript">
@@ -274,13 +218,10 @@ items = getCheckedCheckbox("awsui-checkbox");
    data:{ 
       "asset_turnover_detailid": items
      }, 
-   success: function(){
-     alert("删除成功！");
+   success: function(res){
+     alert(res.message)
      location.reload();
-     },
-			error :function(){
-        alert("删除失败！")
-        } 
+     } 
  });
 }
   

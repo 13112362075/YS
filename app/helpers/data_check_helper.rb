@@ -86,18 +86,65 @@ module   DataCheckHelper
         return "" 
     end 
 
-    def  Save_Check_Entry(type,datas,datas_entry)
-        if(type=="资产借出/归还单")
-            # if(datas[:id]="")
-            # else
-
-            # end
+    def  Save_Check_Entry(type,datas,datas_entry,index)
+        resule=""
+        if(type=="资产借出/归还单") 
+            if(datas[:id]="") 
+                if datas_entry[1][5].lstrip.rstrip==""
+                    resule=resule + "第"+index.to_s + "行分录预计归还时间不允许为空!\r\n";
+                else
+                    if datas_entry[1][5]<datas["Borrowing_date"]
+                        resule=resule +  "第" + index.to_s + "行分录预计归还时间不允许小于借出时间\r\n";
+                    end
+                end  
+            end
+            if(datas_entry[1][0].lstrip.rstrip=="")
+                resule=resule +  "第" + index.to_s + "行分录资产编码为空\r\n";
+            end
         end
+        return resule;
     end 
     def  Save_Check(type,datas)
-        
-    end 
+        resule=" "
+        if(type=="资产借出/归还单")   
 
+                if(datas[:id]="")
+                    if datas["Document_number"].lstrip.rstrip==""
+                        resule=resule +  "单据编号不允许为空！\r\n";
+                    end
+                end
+                if datas["Borrowing_date"].lstrip.rstrip==""
+                    resule=resule +  "借出日期不允许为空！\r\n";
+                end
+                if datas["Borrowing_Department"].lstrip.rstrip==""
+                    resule=resule +  "借用部门不允许为空！\r\n";
+                end
+                if datas["Loaner"]==""
+                    resule=resule +  "借用人不允许为空！\r\n";
+                end   
+                if (!datas.include? 'datas')
+                    resule=resule +  "分录数据行数量为0\r\n";  
+                end
+        end
+        return resule
+    end  
+
+
+
+ 
+
+    def   Update_Fbillstatus_Check_Entry(type,datas,datas_entry,index,fbillstatus)
+        resule=" "
+        if(type=="资产借出/归还单")   
+            if (fbillstatus=="归还")
+                if datas_entry[1][7].lstrip.rstrip!=""
+                    if datas_entry[1][7]<datas["Borrowing_date"]
+                        resule=resule +  "第" + index.to_s + "行分录归还时间不允许小于借出时间\r\n";
+                    end 
+                end  
+            end 
+        end
+    end 
 end
     
  
