@@ -80,7 +80,7 @@ post 'addtypes_choose'  ,:to => 'addtypes#choose'
 post 'assetseates_choose'  ,:to => 'assetseates#choose'   
 post 'assetstatuses_choose'  ,:to => 'assetstatuses#choose'   
 post 'assetcards_choose'  ,:to => 'assetcards#choose'  
-
+post 'assetcards_choose_single'  ,:to => 'assetcards#choose_single'  
 
 #更新资产卡片状态
 post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'  

@@ -64,10 +64,16 @@ end
 end
 
 
+def choose_single
+    @assetCodeid= params[:assetCode]
+    @assetcard = Assetcard.find(params[:id])   
+    @assetCode= @assetcard.assetCode
+    render 'choose/assetcard_choose_single.js.erb'
+end
 
 
-  def choose    
-   puts params[:row]
+  def choose     
+    @type="multiple"
     @assetcard = Assetcard.find(params[:assetcardid])   
     @assetname = @assetcard.assetname
     @assetCode = @assetcard.assetCode
@@ -78,8 +84,7 @@ end
     @Assetseat_id = @assetcard.Assetseat_id 
     @row =params[:row]
     @id=   params[:idlist] 
-    @isaddrow=params[:isaddrow]    
-  
+    @isaddrow=params[:isaddrow]     
     render 'choose/assetcard_choose.js.erb'
   end 
 
@@ -161,10 +166,7 @@ end
 
   # GET /assetcards/new
   def new 
-    @assetalter = Assetalter.all
-    puts "开始"
-    puts     @assetalter.length
-    puts "结束"
+    @assetalter = Assetalter.all 
     @assetalters = Assetalter.all
     @assetcard = Assetcard.new
     @assetcard.fbillstatus="未审核"
