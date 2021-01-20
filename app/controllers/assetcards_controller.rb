@@ -1,8 +1,7 @@
 class AssetcardsController < ApplicationController
   before_action :set_assetcard, only: [:show, :edit, :update, :destroy]
 
-def  Update_Fbillstatus
-  puts Time.new.strftime("%Y-%m-%d %H:%M:%S") 
+def  Update_Fbillstatus 
   if  params[:fbillstatus].lstrip.rstrip=='反审核'
     @status='未审核'
   else
@@ -17,7 +16,7 @@ def  Update_Fbillstatus
       @assetcard_by_status=Assetcard.where("id = ? " ,i); 
       @assetcard_by_status.update(fbillstatus:   @status);  
       if params[:fbillstatus].lstrip.rstrip=='审核'
-        @assetcard_by_status.update(Approver:   session[:name],Approverdate:Time.new.strftime("%Y-%m-%d %H:%M:%S") );  
+        @assetcard_by_status.update(Approver:   session[:name],Approverdate:Time.now.strftime("%Y-%m-%d %H:%M:%S") );  
       end
       message=message+"资产卡片编码为："+ @assetcard_by_status[0].assetCode+"  "+ params[:fbillstatus].lstrip.rstrip+"成功!\r\n";  
     end
@@ -142,7 +141,7 @@ end
   end
   # @assetcards.each do |i|
   #   @assetcards_by_id =Assetcard.find(i.id);
-  #   @assetcards_by_id.update(Creator:   session[:name],Createdate:Time.new.strftime("%Y-%m-%d %H:%M:%S") );  
+  #   @assetcards_by_id.update(Creator:   session[:name],Createdate:Time.now.strftime("%Y-%m-%d %H:%M:%S") );  
   # end
  
 end
@@ -161,11 +160,15 @@ end
   end 
 
   # GET /assetcards/new
-  def new
-
+  def new 
+    @assetalter = Assetalter.all
+    puts "开始"
+    puts     @assetalter.length
+    puts "结束"
+    @assetalters = Assetalter.all
     @assetcard = Assetcard.new
     @assetcard.fbillstatus="未审核"
-    @assetcard.Entrydate=Time.new.strftime("%Y-%m-%d %H:%M:%S")
+    @assetcard.Entrydate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
     puts  @assetcard.attributes.keys
     @department = Department.all   
     @addtype = Addtype.all   
@@ -180,6 +183,9 @@ end
   # GET /assetcards/1/edit
   def edit 
     IsRresh(); 
+    @assetcard=Assetcard.find(params[:id]);
+    @assetalter = Assetalter.where("assetCode=? and fbillstatus= '已审核' ", @assetcard.assetCode)
+    
     @department = Department.all   
     @addtype = Addtype.all   
     @assetseate = Assetseate.all   
@@ -203,10 +209,10 @@ end
     @usestate  =  Usestate.all   
     @assetcard = Assetcard.new(assetcard_params) 
     @assetcard.Creator=session[:name] 
-    @assetcard.Createdate= Time.new.strftime("%Y-%m-%d %H:%M:%S")
+    @assetcard.Createdate= Time.now.strftime("%Y-%m-%d %H:%M:%S")
     respond_to do |format|
       if @assetcard.save
-        format.html { redirect_to @assetcard, notice: '创建成功！' }
+        format.html { redirect_to   @assetcard, notice: '创建成功！' }
         format.json { render :show, status: :created, location: @assetcard }
       else
         format.html { render :new }

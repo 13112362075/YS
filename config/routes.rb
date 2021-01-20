@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :assetalters
   resources :asset_scrapping_entries
   resources :asset_scrappings
   resources :asset_allocate_entries
@@ -98,13 +99,21 @@ post 'asset_allocates_save_all',:to =>'asset_allocates#save_all'
 post 'asset_recoveries_save_all',:to =>'asset_recoveries#save_all'
 post 'asset_scrappings_save_all',:to =>'asset_scrappings#save_all'
 
-
+#获取数据接口
 get 'user_test',:to =>'users#test'
-
+get 'assetalters_Get_Data',:to =>'assetalters#Get_DataApi'
+get 'AssetList_Get_Data',:to =>'asset_list#Get_DataApi'
 
 #更新状态
 post 'assetcards_Update_Fbillstatus',:to => 'assetcards#Update_Fbillstatus'
 post 'asset_turnover_details_Update_Fbillstatus',:to => 'asset_turnover_details#Update_Fbillstatus'
+post 'assetalters_Update_Fbillstatus',:to => 'assetalters#Update_Fbillstatus'
+#判断是否存在未审核的资产变更单
+get 'assetalters_Check_IsExist',:to => 'assetalters#Check_IsExist'
+
+#资产实物清单
+get 'AssetList_show',:to => 'asset_list#show'
+
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
  

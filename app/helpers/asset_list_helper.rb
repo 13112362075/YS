@@ -1,0 +1,2 @@
+module AssetListHelper
+end

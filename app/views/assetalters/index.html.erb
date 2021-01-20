@@ -1,0 +1,124 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Assetalters</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fbillno</th>
+      <th>Assetcode</th>
+      <th>Assetname</th>
+      <th>Assettype</th>
+      <th>Unit</th>
+      <th>Amount</th>
+      <th>Assetstatus</th>
+      <th>Addtype</th>
+      <th>Buydate</th>
+      <th>Description</th>
+      <th>Orgainize</th>
+      <th>Entrydate</th>
+      <th>Price</th>
+      <th>Lastprice</th>
+      <th>Expectedperiod</th>
+      <th>Cnosp</th>
+      <th>Barcode</th>
+      <th>Mould</th>
+      <th>Assetseat</th>
+      <th>Client</th>
+      <th>Supplier</th>
+      <th>Department</th>
+      <th>Employeeld</th>
+      <th>Assetcode old</th>
+      <th>Assetname old</th>
+      <th>Assettype id old</th>
+      <th>Unit id old</th>
+      <th>Amount old</th>
+      <th>Assetstatus id old</th>
+      <th>Addtype id old</th>
+      <th>Buydate old</th>
+      <th>Description old</th>
+      <th>Orgainize id old</th>
+      <th>Entrydate old</th>
+      <th>Price old</th>
+      <th>Lastprice old</th>
+      <th>Expectedperiod old</th>
+      <th>Cnosp old</th>
+      <th>Barcode old</th>
+      <th>Mould old</th>
+      <th>Assetseat id old</th>
+      <th>Client old</th>
+      <th>Supplier old</th>
+      <th>Department id old</th>
+      <th>Employeeld old</th>
+      <th>Fbillstatus</th>
+      <th>Creator</th>
+      <th>Createdate</th>
+      <th>Approver</th>
+      <th>Approverdate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @assetalters.each do |assetalter| %>
+      <tr>
+        <td><%= assetalter.Fbillno %></td>
+        <td><%= assetalter.assetCode %></td>
+        <td><%= assetalter.assetname %></td>
+        <td><%= assetalter.Assettype_id %></td>
+        <td><%= assetalter.Unit_id %></td>
+        <td><%= assetalter.Amount %></td>
+        <td><%= assetalter.Assetstatus_id %></td>
+        <td><%= assetalter.Addtype_id %></td>
+        <td><%= assetalter.BuyDate %></td>
+        <td><%= assetalter.description %></td>
+        <td><%= assetalter.Orgainize_id %></td>
+        <td><%= assetalter.Entrydate %></td>
+        <td><%= assetalter.Price %></td>
+        <td><%= assetalter.Lastprice %></td>
+        <td><%= assetalter.Expectedperiod %></td>
+        <td><%= assetalter.CNOSP %></td>
+        <td><%= assetalter.barcode %></td>
+        <td><%= assetalter.Mould %></td>
+        <td><%= assetalter.Assetseat_id %></td>
+        <td><%= assetalter.Client %></td>
+        <td><%= assetalter.Supplier %></td>
+        <td><%= assetalter.department_id %></td>
+        <td><%= assetalter.Employeeld %></td>
+        <td><%= assetalter.assetCode_Old %></td>
+        <td><%= assetalter.assetname_Old %></td>
+        <td><%= assetalter.Assettype_id_Old %></td>
+        <td><%= assetalter.Unit_id_Old %></td>
+        <td><%= assetalter.Amount_Old %></td>
+        <td><%= assetalter.Assetstatus_id_Old %></td>
+        <td><%= assetalter.Addtype_id_Old %></td>
+        <td><%= assetalter.BuyDate_Old %></td>
+        <td><%= assetalter.description_Old %></td>
+        <td><%= assetalter.Orgainize_id_Old %></td>
+        <td><%= assetalter.Entrydate_Old %></td>
+        <td><%= assetalter.Price_Old %></td>
+        <td><%= assetalter.Lastprice_Old %></td>
+        <td><%= assetalter.Expectedperiod_Old %></td>
+        <td><%= assetalter.CNOSP_Old %></td>
+        <td><%= assetalter.barcode_Old %></td>
+        <td><%= assetalter.Mould_Old %></td>
+        <td><%= assetalter.Assetseat_id_Old %></td>
+        <td><%= assetalter.Client_Old %></td>
+        <td><%= assetalter.Supplier_Old %></td>
+        <td><%= assetalter.department_id_Old %></td>
+        <td><%= assetalter.Employeeld_Old %></td>
+        <td><%= assetalter.fbillstatus %></td>
+        <td><%= assetalter.Creator %></td>
+        <td><%= assetalter.Createdate %></td>
+        <td><%= assetalter.Approver %></td>
+        <td><%= assetalter.Approverdate %></td>
+        <td><%= link_to 'Show', assetalter %></td>
+        <td><%= link_to 'Edit', edit_assetalter_path(assetalter) %></td>
+        <td><%= link_to 'Destroy', assetalter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+ 

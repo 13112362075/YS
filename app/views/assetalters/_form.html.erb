@@ -1,0 +1,470 @@
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<style>
+  .image_input {
+    width: 192px;
+    font-size: 11px;
+    border: 1px solid #e6e6e6;
+    border-left: 1;
+    border-right: 0;
+    border-top: 1;
+    border-bottom: 1;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+  }
+  .image {
+    border: 1px solid #e6e6e6;
+    border-left: 0px;
+    border-right: 1;
+    border-top: 1;
+    border-bottom: 1;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+    height: 38px;
+    width: 38px;
+  }
+  .label1 {
+    width: 100px;
+    font-size: 11px;
+  }
+  .input1 {
+    width: 230px;
+    font-size: 11px;
+  }
+  .btn1 {
+    top: 20px;
+  }
+</style>
+<%= form_with(model: assetalter, local: true) do |form| %>
+<% if assetalter.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(assetalter.errors.count, "error") %> prohibited this assetalter from being saved:</h2>
+  <ul>
+    <% assetalter.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+<div class="layui-tab layui-tab-brief">
+  <ul class="layui-tab-title">
+    <li class="layui-this">变更后</li>
+    <li>变更前</li>
+  </ul>
+  <div class="layui-tab-content">
+    <div class="layui-tab-item layui-show">
+      <div class="field">
+        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetalter_单据编号">单据编号</label>
+        <div class="layui-input-block "> <input class="layui-input input1 " placeholder="请输入单据编号" type="text"
+            name="assetalter[Fbillno]" id="assetalter_Fbillno" value=<%= @assetalter.Fbillno%>></div>
+      </div>
+      卡片基本信息
+      <hr class="layui-bg-red">
+      <div style="display:flex;">
+
+      <div class="field">
+        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetalter_资产卡片编码">资产卡片编码</label>
+        <div class="layui-input-block "> <input class="layui-input input1 UnChange_field11111 " placeholder="请输入资产卡片编码" type="text"
+            name="assetalter[assetCode]" id="assetalter_assetCode" value=<%= @assetalter.assetCode%>></div>
+      </div>
+
+ 
+
+
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产卡片名称">资产卡片名称</label>
+          <div class="layui-input-block"> <input class="layui-input input1 UnChange_field11111" placeholder="请输入资产卡片名称" type="text"
+              name="assetalter[assetname]" id="assetalter_assetname" value=<%= @assetalter.assetname%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产类别">资产类别</label>
+          <div class="layui-input-block"> <input class="layui-input  input1  UnChange_field11111" placeholder="请输入资产类别" type="text"
+              name="assetalter[Assettype_id]" id="assetalter_Assettype_id" value=<%= @assetalter.Assettype_id%>></div>
+        </div> 
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_计量单位">计量单位</label>
+          <div class="layui-input-block"> <input class="layui-input input1  UnChange_field11111" placeholder="请输入计量单位" type="text"
+              name="assetalter[Unit_id]" id="assetalter_Unit_id" value=<%= @assetalter.Unit_id%>></div>
+        </div> 
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_数量">数量</label>
+          <div class="layui-input-block"> <input class="layui-input input1 UnChange_field11111" placeholder="请输入数量" type="text"
+              name="assetalter[Amount]" id="assetalter_Amount" value=<%= @assetalter.Amount%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产状态">资产状态</label>
+          <div class="layui-input-block">
+            <input class="layui-input image_input   " placeholder="请输入资产状态" type="text" name="assetalter[Assetstatus_id]"
+              id="assetalter_Assetstatus_id" value= <%=@assetalter.Assetstatus_id%>>
+          </div>
+        </div>
+        <div class="image" , onclick="copyText(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_变动方式">变动方式</label>
+          <div class="layui-input-block">
+            <input class="layui-input input1  UnChange_field11111" placeholder="请输入变动方式" type="text" name="assetalter[Addtype_id]"
+              id="assetalter_Addtype_id" value= <%=@assetalter.Addtype_id%>>
+          </div>
+        </div> 
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产使用状态">资产使用状态</label>
+          <div class="layui-input-block"> <input class="layui-input  input1 UnChange_field11111 " placeholder="请输入资产使用状态" type="text"
+              name="assetalter[Usestate_id]" id="assetalter_Usestate_id" value= <%=@assetalter.Usestate_id%>>
+          </div>
+        </div> 
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_购买日期">购买日期</label>
+          <div class="layui-input-block"> <input class="layui-input  fdate input1 UnChange_field11111" placeholder="请输入购买日期" type="text"
+              name="assetalter[BuyDate]" id="assetalter_BuyDate" value=<%= @assetalter.BuyDate%>></div>
+        </div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_备注">备注</label>
+          <div class="layui-input-block"> <input class="layui-input input1 UnChange_field11111" placeholder="请输入备注" type="text"
+              name="assetalter[description]" id="assetalter_description" value=<%= @assetalter.description%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_所属组织">所属组织</label>
+          <div class="layui-input-block"> <input class="layui-input input1 UnChange_field11111" placeholder="请输入所属组织" type="text"
+              name="assetalter[Orgainize_id]" id="assetalter_Orgainize_id" value=<%= @assetalter.Orgainize_id%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_单据状态">单据状态</label>
+          <div class="layui-input-block"> <input class="layui-input input1 UnChange_field11111" readonly='true' type="text"
+              name="assetalter[fbillstatus]" id="assetalter_fbillstatus" value=<%= @assetalter.fbillstatus%>></div>
+        </div>
+      </div>
+      卡片财务信息
+      <hr>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_入账日期">入账日期</label>
+          <div class="layui-input-block"> <input class="layui-input  fdate input1 UnChange_field11111" placeholder="请输入入账日期" type="text"
+              name="assetalter[Entrydate]" id="assetalter_Entrydate" value=<%= @assetalter.Entrydate%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_购进价格">购进价格</label>
+          <div class="layui-input-block"> <input class="layui-input input1  " placeholder="请输入购进价格" type="text"
+              name="assetalter[Price]" id="assetalter_Price" value=<%= @assetalter.Price%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产净值（现价）">资产净值（现价）</label>
+          <div class="layui-input-block"> <input class="layui-input input1 UnChange_field11111" placeholder="请输入资产净值（现价）" type="text"
+              name="assetalter[Lastprice]" id="assetalter_Lastprice" value=<%= @assetalter.Lastprice%>></div>
+        </div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_预计使用期间">预计使用寿命(月)</label>
+          <div class="layui-input-block"> <input class="layui-input input1  " placeholder="请输入预计使用寿命(月)" type="text"
+              name="assetalter[Expectedperiod]" id="assetalter_Expectedperiod" value=<%= @assetalter.Expectedperiod%>>
+          </div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_累计使用期间数(月)">累计使用期间数(月)</label>
+          <div class="layui-input-block"> <input class="layui-input input1 UnChange_field11111" placeholder="请输入累计使用期间数(月)" type="text"
+              name="assetalter[CNOSP]" id="assetalter_CNOSP" value=<%= @assetalter.CNOSP%>></div>
+        </div>
+      </div>
+      卡片实物信息
+      <hr>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_条形码">条形码</label>
+          <div class="layui-input-block"> <input class="layui-input input1 UnChange_field11111" placeholder="请输入条形码" type="text"
+              name="assetalter[barcode]" id="assetalter_barcode" value=<%= @assetalter.barcode%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产位置">资产位置</label>
+          <div class="layui-input-block"> <input class="layui-input image_input    " placeholder="请输入资产位置" type="text"
+              name="assetalter[Assetseat_id]" id="assetalter_Assetseat_id" value=<%= @assetalter.Assetseat_id%>></div>
+        </div>
+        <div class="image" , onclick="copyText(assetseateModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_规格型号">规格型号</label>
+          <div class="layui-input-block"> <input class="layui-input input1  " placeholder="请输入规格型号" type="text"
+              name="assetalter[Mould]" id="assetalter_Mould" value=<%= @assetalter.Mould %>></div>
+        </div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_产地（厂家）">产地（厂家）</label>
+          <div class="layui-input-block"> <input class="layui-input input1  " placeholder="请输入产地（厂家）" type="text"
+              name="assetalter[Client]" id="assetalter_Client" value=<%= @assetalter.Client%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_供应商">供应商</label>
+          <div class="layui-input-block"> <input class="layui-input input1  " placeholder="请输入供应商" type="text"
+              name="assetalter[Supplier]" id="assetalter_Supplier" value=<%= @assetalter.Supplier%>></div>
+        </div>
+      </div>
+      使用分配
+      <hr>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_使用部门">使用部门</label>
+          <div class="layui-input-block"> <input class="layui-input image_input  " placeholder="请输入使用部门" type="text"
+              name="assetalter[department_id]" id="assetalter_department_id" value=<%= @assetalter.department_id%>>
+          </div>
+        </div>
+        <div class="image" , onclick="copyText(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_使用人">使用人</label>
+          <div class="layui-input-block"> <input class="layui-input  image_input   " placeholder="请输入使用人" type="text"
+              name="assetalter[Employeeld]" id="assetalter_Employeeld" value=<%= @assetalter.Employeeld%>></div>
+        </div>
+        <div class="image" , onclick="copyText(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_创建人">创建人</label>
+          <div class="layui-input-block"> <input readonly='true' class="layui-input input1 UnChange_field11111" type="text"
+              name="assetalter[Creator]" id="assetalter_Creator" value=<%= @assetalter.Creator%>></div>
+        </div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_创建日期">创建日期</label>
+          <div class="layui-input-block"> <input readonly='true' class="layui-input input1 UnChange_field11111" type="text"
+              name="assetalter[Createdate]" id="assetalter_Createdate" value=<%= @assetalter.Createdate%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_审核人">审核人</label>
+          <div class="layui-input-block"> <input readonly='true' class="layui-input input1 UnChange_field11111" type="text"
+              name="assetalter[Approver]" id="assetalter_Approver" value=<%= @assetalter.Approver%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_审核日期">审核日期</label>
+          <div class="layui-input-block"> <input readonly='true' class="layui-input input1 UnChange_field11111" type="text"
+              name="assetalter[Approverdate]" id="assetalter_Approverdate" value=<%= @assetalter.Approverdate%>></div>
+        </div>
+      </div>
+      <div class="layui-btn-group " style="margin:10px;0px;">
+        <a> <input class="layui-btn  " type="submit" name="commit" value="保存" data-disable-with="保存"></a>
+              <a rel="nofollow"><button  onclick ="Update_Status(<%=@assetalter.id%>)"  type="button"class="layui-btn  ">审核</button></a>
+        <a href="/assetalters" rel="nofollow"><button type="button" class="layui-btn  ">返回列表</button></a>
+      </div>
+    </div>
+    <div class="layui-tab-item">
+      卡片基本信息
+      <hr class="layui-bg-red">
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetalter_资产卡片编码">资产卡片编码</label>
+          <div class="layui-input-block "> <input class="layui-input input1 input_Last" placeholder="请输入资产卡片编码"
+              type="text" name="assetalter[assetCode_Old]" id="assetalter_assetCode_Old" value=<%= @assetalter.assetCode_Old%>>
+          </div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产卡片名称">资产卡片名称</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入资产卡片名称"
+              type="text" name="assetalter[assetname_Old]" id="assetalter_assetname_Old" value=<%= @assetalter.assetname_Old%>>
+          </div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产类别">资产类别</label>
+          <div class="layui-input-block"> <input class="layui-input  input1  input_Last" placeholder="请输入资产类别"
+              type="text" name="assetalter[Assettype_id_Old]" id="assetalter_Assettype_id_Old"
+              value=<%= @assetalter.Assettype_id_Old%>></div>
+        </div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_计量单位">计量单位</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last " placeholder="请输入计量单位"
+              type="text" name="assetalter[Unit_id_Old]" id="assetalter_Unit_id_Old" value=<%= @assetalter.Unit_id_Old%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_数量">数量</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入数量" type="text"
+              name="assetalter[Amount_Old]" id="assetalter_Amount_Old" value=<%= @assetalter.Amount_Old%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产状态">资产状态</label>
+          <div class="layui-input-block">
+            <input class="layui-input input1  input_Last" placeholder="请输入资产状态" type="text"
+              name="assetalter[Assetstatus_id_Old]" id="assetalter_Assetstatus_id_Old" value= <%=@assetalter.Assetstatus_id_Old%>>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_变动方式">变动方式</label>
+          <div class="layui-input-block">
+            <input class="layui-input input1  input_Last " placeholder="请输入变动方式" type="text"
+              name="assetalter[Addtype_id_Old]" id="assetalter_Addtype_id_Old"   value= <%=@assetalter.Addtype_id_Old%> >
+          </div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产使用状态">资产使用状态</label>
+          <div class="layui-input-block"> <input class="layui-input  input1 input_Last" placeholder="请输入资产使用状态"
+              type="text" name="assetalter[Usestate_id_Old]" id="assetalter_Usestate_id_Old" value= <%=@assetalter.Usestate_id_Old%>>
+          </div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_购买日期">购买日期</label>
+          <div class="layui-input-block"> <input class="layui-input  fdate input1 input_Last" placeholder="请输入购买日期"
+              type="text" name="assetalter[BuyDate_Old]" id="assetalter_BuyDate_Old" value=<%= @assetalter.BuyDate_Old%>></div>
+        </div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_备注">备注</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入备注" type="text"
+              name="assetalter[description_Old]" id="assetalter_description_Old" value=<%= @assetalter.description_Old%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_所属组织">所属组织</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入所属组织" type="text"
+              name="assetalter[Orgainize_id_Old]" id="assetalter_Orgainize_id_Old" value=<%= @assetalter.Orgainize_id_Old%>></div>
+        </div>
+ 
+      </div>
+      卡片财务信息
+      <hr>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_入账日期">入账日期</label>
+          <div class="layui-input-block"> <input class="layui-input  fdate input1 input_Last" placeholder="请输入入账日期"
+              type="text" name="assetalter[Entrydate_Old]" id="assetalter_Entrydate_Old" value=<%= @assetalter.Entrydate_Old%>>
+          </div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_购进价格">购进价格</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入购进价格" type="text"
+              name="assetalter[Price_Old]" id="assetalter_Price_Old" value=<%= @assetalter.Price_Old%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产净值（现价）">资产净值（现价）</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入资产净值（现价）"
+              type="text" name="assetalter[Lastprice_Old]" id="assetalter_Lastprice_Old" value=<%= @assetalter.Lastprice_Old%>>
+          </div>
+        </div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_预计使用期间">预计使用寿命(月)</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入预计使用寿命(月)"
+              type="text" name="assetalter[Expectedperiod_Old]" id="assetalter_Expectedperiod_Old"
+              value=<%= @assetalter.Expectedperiod_Old%>>
+          </div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_累计使用期间数(月)">累计使用期间数(月)</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入累计使用期间数(月)"
+              type="text" name="assetalter[CNOSP_Old]" id="assetalter_CNOSP_Old" value=<%= @assetalter.CNOSP_Old%>></div>
+        </div>
+      </div>
+      卡片实物信息
+      <hr>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_条形码">条形码</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入条形码" type="text"
+              name="assetalter[barcode_Old]" id="assetalter_barcode_Old" value=<%= @assetalter.barcode_Old%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_资产位置">资产位置</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last  " placeholder="请输入资产位置"
+              type="text" name="assetalter[Assetseat_id_Old]" id="assetalter_Assetseat_id_Old"
+              value=<%= @assetalter.Assetseat_id_Old%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_规格型号">规格型号</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入规格型号" type="text"
+              name="assetalter[Mould_Old]" id="assetalter_Mould_Old" value=<%= @assetalter.Mould_Old %>></div>
+        </div>
+      </div>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_产地（厂家）">产地（厂家）</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入产地（厂家）"
+              type="text" name="assetalter[Client_Old]" id="assetalter_Client_Old" value=<%= @assetalter.Client_Old%>></div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_供应商">供应商</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入供应商" type="text"
+              name="assetalter[Supplier_Old]" id="assetalter_Supplier_Old" value=<%= @assetalter.Supplier_Old%>></div>
+        </div>
+      </div>
+      使用分配
+      <hr>
+      <div style="display:flex;">
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_使用部门">使用部门</label>
+          <div class="layui-input-block"> <input class="layui-input input1 input_Last" placeholder="请输入使用部门" type="text"
+              name="assetalter[department_id_Old]" id="assetalter_department_id_Old" value=<%= @assetalter.department_id_Old%>>
+          </div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label  label1" for="assetalter_使用人">使用人</label>
+          <div class="layui-input-block"> <input class="layui-input  input1 input_Last " placeholder="请输入使用人"
+              type="text" name="assetalter[Employeeld_Old]" id="assetalter_Employeeld_Old" value=<%= @assetalter.Employeeld_Old%>>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<% end %>
+<script>
+  $(document).ready(function () {
+    layui.use('element', function () {
+      var element = layui.element;
+      var $ = layui.jquery;
+    })
+    $(".input_Last").prop('readOnly', 'true');
+    $(".input_Last").css('background-color', '#F5F5F5');
+    $(".UnChange_field11111").prop('readOnly', 'true');
+    $(".UnChange_field11111").css('background-color', '#F5F5F5');
+  })
+  function copyText(modalid) {
+    $('#' + modalid.id).modal('show');
+  }
+  layui.use('laydate', function () {
+    var laydate = layui.laydate;
+    $('.fdate').each(function () {
+      laydate.render({
+        elem: this
+      });
+    })
+  });
+
+
+      function Update_Status(id) {
+        var id_list = new Array();
+        id_list[0] = id;
+        $.ajax({
+          type: "post",
+          url: "/assetalters_Update_Fbillstatus",
+          data: {
+            "id": id
+          },
+          success: function (res) {
+            if (res.code == 200) {
+              alert(res.message);
+              location.reload();
+            }
+          }
+        });
+      }
+
+
+
+</script>
+<%= render    'departments/DepartmentModal.html.erb',  id: "assetalter_department_id" ,userid:  "assetalter_Employeeld"%>
+<%= render    'users/UserModal.html.erb',  id: "assetalter_Employeeld",department: "assetalter_department_id"  %>
+<%= render    'units/UnitModal.html.erb',  id: "assetalter_Unit_id"  %>
+<%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetalter_Assetstatus_id"  %>
+<%= render    'assettypes/AssettypeModal.html.erb',  id: "assetalter_Assettype_id"  %>
+<%= render    'addtypes/AddtypesModal.html.erb',  id: "assetalter_Addtype_id"  %>
+<%= render    'assetseates/AssetseateModal.html.erb',  id: "assetalter_Assetseat_id"  %>
+<%= render    'usestates/UsestateModal.html.erb',  id: "assetalter_Usestate_id"  %>

@@ -1,0 +1,105 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Fbillno: MyString
+  assetCode: MyString
+  assetname: MyString
+  Assettype_id: MyString
+  Unit_id: MyString
+  Amount: 1
+  Assetstatus_id: MyString
+  Addtype_id: MyString
+  BuyDate: 2021-01-19 11:36:37
+  description: MyString
+  Orgainize_id: MyString
+  Entrydate: 2021-01-19 11:36:37
+  Price: 9.99
+  Lastprice: 9.99
+  Expectedperiod: 1
+  CNOSP: MyString
+  barcode: MyString
+  Mould: MyString
+  Assetseat_id: MyString
+  Client: MyString
+  Supplier: MyString
+  department_id: MyString
+  Employeeld: MyString
+  assetCode_Old: MyString
+  assetname_Old: MyString
+  Assettype_id_Old: MyString
+  Unit_id_Old: MyString
+  Amount_Old: 1
+  Assetstatus_id_Old: MyString
+  Addtype_id_Old: MyString
+  BuyDate_Old: 2021-01-19 11:36:37
+  description_Old: MyString
+  Orgainize_id_Old: MyString
+  Entrydate_Old: 2021-01-19 11:36:37
+  Price_Old: 9.99
+  Lastprice_Old: 9.99
+  Expectedperiod_Old: 1
+  CNOSP_Old: MyString
+  barcode_Old: MyString
+  Mould_Old: MyString
+  Assetseat_id_Old: MyString
+  Client_Old: MyString
+  Supplier_Old: MyString
+  department_id_Old: MyString
+  Employeeld_Old: MyString
+  fbillstatus: MyString
+  Creator: MyString
+  Createdate: 2021-01-19 11:36:37
+  Approver: MyString
+  Approverdate: 2021-01-19 11:36:37
+
+two:
+  Fbillno: MyString
+  assetCode: MyString
+  assetname: MyString
+  Assettype_id: MyString
+  Unit_id: MyString
+  Amount: 1
+  Assetstatus_id: MyString
+  Addtype_id: MyString
+  BuyDate: 2021-01-19 11:36:37
+  description: MyString
+  Orgainize_id: MyString
+  Entrydate: 2021-01-19 11:36:37
+  Price: 9.99
+  Lastprice: 9.99
+  Expectedperiod: 1
+  CNOSP: MyString
+  barcode: MyString
+  Mould: MyString
+  Assetseat_id: MyString
+  Client: MyString
+  Supplier: MyString
+  department_id: MyString
+  Employeeld: MyString
+  assetCode_Old: MyString
+  assetname_Old: MyString
+  Assettype_id_Old: MyString
+  Unit_id_Old: MyString
+  Amount_Old: 1
+  Assetstatus_id_Old: MyString
+  Addtype_id_Old: MyString
+  BuyDate_Old: 2021-01-19 11:36:37
+  description_Old: MyString
+  Orgainize_id_Old: MyString
+  Entrydate_Old: 2021-01-19 11:36:37
+  Price_Old: 9.99
+  Lastprice_Old: 9.99
+  Expectedperiod_Old: 1
+  CNOSP_Old: MyString
+  barcode_Old: MyString
+  Mould_Old: MyString
+  Assetseat_id_Old: MyString
+  Client_Old: MyString
+  Supplier_Old: MyString
+  department_id_Old: MyString
+  Employeeld_Old: MyString
+  fbillstatus: MyString
+  Creator: MyString
+  Createdate: 2021-01-19 11:36:37
+  Approver: MyString
+  Approverdate: 2021-01-19 11:36:37

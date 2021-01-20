@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_11_075821) do
+ActiveRecord::Schema.define(version: 2021_01_19_074817) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -117,6 +117,11 @@ ActiveRecord::Schema.define(version: 2021_01_11_075821) do
     t.string "Loaner"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "Creator"
+    t.datetime "Createdate"
+    t.string "Approver"
+    t.datetime "Approverdate"
+    t.string "fbillstatus"
   end
 
   create_table "assetalter_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -130,12 +135,59 @@ ActiveRecord::Schema.define(version: 2021_01_11_075821) do
 
   create_table "assetalters", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Fbillno"
-    t.string "Code"
-    t.string "name"
-    t.date "Alterdate"
-    t.string "Reason"
+    t.string "assetCode"
+    t.string "assetname"
+    t.string "Assettype_id"
+    t.string "Unit_id"
+    t.integer "Amount"
+    t.string "Assetstatus_id"
+    t.string "Addtype_id"
+    t.datetime "BuyDate"
+    t.string "description"
+    t.string "Orgainize_id"
+    t.datetime "Entrydate"
+    t.decimal "Price", precision: 10
+    t.decimal "Lastprice", precision: 10
+    t.integer "Expectedperiod"
+    t.string "CNOSP"
+    t.string "barcode"
+    t.string "Mould"
+    t.string "Assetseat_id"
+    t.string "Client"
+    t.string "Supplier"
+    t.string "department_id"
+    t.string "Employeeld"
+    t.string "assetCode_Old"
+    t.string "assetname_Old"
+    t.string "Assettype_id_Old"
+    t.string "Unit_id_Old"
+    t.integer "Amount_Old"
+    t.string "Assetstatus_id_Old"
+    t.string "Addtype_id_Old"
+    t.datetime "BuyDate_Old"
+    t.string "description_Old"
+    t.string "Orgainize_id_Old"
+    t.datetime "Entrydate_Old"
+    t.decimal "Price_Old", precision: 10
+    t.decimal "Lastprice_Old", precision: 10
+    t.integer "Expectedperiod_Old"
+    t.string "CNOSP_Old"
+    t.string "barcode_Old"
+    t.string "Mould_Old"
+    t.string "Assetseat_id_Old"
+    t.string "Client_Old"
+    t.string "Supplier_Old"
+    t.string "department_id_Old"
+    t.string "Employeeld_Old"
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.datetime "Createdate"
+    t.string "Approver"
+    t.datetime "Approverdate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "Usestate_id"
+    t.string "Usestate_id_Old"
   end
 
   create_table "assetcards", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

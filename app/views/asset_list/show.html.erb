@@ -1,0 +1,292 @@
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+
+<style>
+ .layui-table-page select
+ {
+   height: 26px;
+ }
+ .layui-disabled
+ {
+   background-color: #fff !important;
+ }
+ .layui-laypage select
+ {
+   padding: 0px;
+   border-radius: 2px;
+   cursor: pointer;
+ }
+ .layui-table-page
+ { 
+   text-align: center;
+ }
+ .layui-laypage .layui-laypage-skip
+ {
+   color: #000;
+ }
+ .layui-table-box {
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+ </style>
+
+<h1 style="text-align: center;">资产实物清单</h1>
+
+
+
+<table class="layui-hide" id="assetlist" lay-filter="assetlist"></table>
+
+
+<%# <script>
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#assetlist',
+             url: '/AssetList_Get_Data',
+                //   url:'/user_test'  
+            ,toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,
+            defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '刷新',
+                layEvent: 'Refresh',
+                icon: "layui-icon-refresh-3" 
+            }, { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '新增',
+                layEvent: 'Add',
+                icon: "layui-icon-addition"
+            }],
+            title: '用户数据表',
+            cols: [
+                    [, {
+                            field: 'Assettype_id',
+                            width: 80,
+                            title: '资产类别',
+                            sort: true
+                        }, {
+                            field: 'assetCode',
+                            width: 80,
+                            title: '资产编码'
+                        }, {
+                            field: 'assetname',
+                            width: 80,
+                            title: '资产名称',
+                            sort: true
+                        }, {
+                            field: 'Unit_id',
+                            width: 80,
+                            title: '计量单位'
+                        }, {
+                            field: 'Assetstatus_id',
+                            title: '资产状态',
+                            width: '10%',
+                            minWidth: 100
+                        } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                        , {
+                            field: 'Addtype_id',
+                            title: '变动方式',
+                            sort: true
+                        }, {
+                            field: 'BuyDate',
+                            title: '购买日期',
+                            sort: true
+                        }, {
+                            field: 'description',
+                            title: '备注'
+                        }, {
+                            field: 'Entrydate',
+                            title: '入账日期'
+                        }, {
+                            field: 'Price',
+                            title: '购进价格'
+                        }, {
+                            field: 'Lastprice',
+                            title: '资产净值（现价）'
+                        }, {
+                            field: 'Expectedperiod',
+                            title: '预计使用寿命'
+                        }, {
+                            field: 'CNOSP',
+                            title: '累计使用期间数'
+                        }, {
+                            field: 'barcode',
+                            title: '条形码'
+                        }, {
+                            field: 'Mould',
+                            title: '规格型号'
+                        }, {
+                            field: 'Assetseat_id',
+                            title: '资产位置'
+                        }, {
+                            field: 'Client',
+                            title: '产地（厂家）'
+                        }, {
+                            field: 'Supplier',
+                            title: '供应商'
+                        }, {
+                            field: 'department_id',
+                            title: '使用部门'
+                        }, {
+                            field: 'Employeeld',
+                            title: '使用人'
+                        } 
+                    ]
+                ] ,
+            page: true
+        });
+
+
+
+        //监听行单击事件（双击事件为：rowDouble）
+        table.on('row(test)', function (obj) {
+            var data = obj.data;
+            //console.log(data);
+            // layer.alert(JSON.stringify(data), {
+            //   title: '当前行数据：'
+            // }); 
+            //标注选中样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                //自定义头工具栏右侧图标 - 提示
+                case 'Refresh':
+                    Refresh();
+                    break;
+            };
+        });
+    });
+</script> %>
+
+
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        table.render({
+            elem: '#assetlist',
+            url: '/AssetList_Get_Data',
+            toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                ,
+            defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '刷新',
+                layEvent: 'Refresh',
+                icon: "layui-icon-refresh-3"
+
+            }, { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '新增',
+                layEvent: 'Add',
+                icon: "layui-icon-addition"
+            }],
+            title: '用户数据表',
+            cols: [
+                    [{
+                            field: 'Assettype_id',
+                            width: 80,
+                            title: '资产类别',
+                            sort: true
+                        }, {
+                            field: 'assetCode',
+                            width: 80,
+                            title: '资产编码'
+                        }, {
+                            field: 'assetname',
+                            width: 80,
+                            title: '资产名称',
+                            sort: true
+                        }, {
+                            field: 'Unit_id',
+                            width: 80,
+                            title: '计量单位'
+                        }, {
+                            field: 'Assetstatus_id',
+                            title: '资产状态',
+                            width: '10%',
+                            minWidth: 100
+                        } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                        , {
+                            field: 'Addtype_id',
+                            title: '变动方式',
+                            sort: true
+                        }, {
+                            field: 'BuyDate',
+                            title: '购买日期',
+                            sort: true
+                        },  {
+                            field: 'Usestate_id',
+                            title: '资产使用状态',
+                            sort: true
+                        },{
+                            field: 'description',
+                            title: '备注'
+                        }, {
+                            field: 'Entrydate',
+                            title: '入账日期'
+                        }, {
+                            field: 'Price',
+                            title: '购进价格'
+                        }, {
+                            field: 'Lastprice',
+                            title: '资产净值（现价）'
+                        }, {
+                            field: 'Expectedperiod',
+                            title: '预计使用寿命'
+                        }, {
+                            field: 'CNOSP',
+                            title: '累计使用期间数'
+                        }, {
+                            field: 'barcode',
+                            title: '条形码'
+                        }, {
+                            field: 'Mould',
+                            title: '规格型号'
+                        }, {
+                            field: 'Assetseat_id',
+                            title: '资产位置'
+                        }, {
+                            field: 'Client',
+                            title: '产地（厂家）'
+                        }, {
+                            field: 'Supplier',
+                            title: '供应商'
+                        }, {
+                            field: 'department_id',
+                            title: '使用部门'
+                        }, {
+                            field: 'Employeeld',
+                            title: '使用人'
+                        }   
+                    ]
+                ] ,
+            page: true
+        });
+
+
+
+        //监听行单击事件（双击事件为：rowDouble）
+        table.on('row(test)', function (obj) {
+            var data = obj.data;
+            //console.log(data);
+            // layer.alert(JSON.stringify(data), {
+            //   title: '当前行数据：'
+            // }); 
+            //标注选中样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                //自定义头工具栏右侧图标 - 提示
+                case 'Refresh':
+                    Refresh();
+                    break;
+            };
+        });
+    });
+</script>

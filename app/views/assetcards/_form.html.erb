@@ -1,448 +1,378 @@
-<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
-  <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
 <script src="https://www.layuicdn.com/layui/layui.js"></script>
- 
 <style>
-.image_input{  
-         width:192px; 
-         font-size: 11px; 
-         border: 1px solid #e6e6e6;
-         border-left: 1; 
-         border-right: 0; 
-         border-top:1; 
-         border-bottom: 1;   
-         border-top-left-radius: 2px;
-         border-top-right-radius: 0px;
-         border-bottom-right-radius: 0;
-         border-bottom-left-radius: 2px;
-         }
- .image
-         {
-           border: 1px solid #e6e6e6;  
-           border-left: 0px; 
-           border-right: 1; 
-           border-top:1; 
-           border-bottom: 1;   
-           border-bottom-left-radius: 0;
-           border-top-left-radius: 0;
-           border-bottom-right-radius: 2px;
-           border-top-right-radius: 2px;
-           height:38px;
-           width:38px;
-         }
+  .image_input {
+    width: 192px;
+    font-size: 11px;
+    border: 1px solid #e6e6e6;
+    border-left: 1;
+    border-right: 0;
+    border-top: 1;
+    border-bottom: 1;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+  }
 
-         .label1{
-           width:100px;
-           font-size: 11px; 
-         } 
-            .input1{
-           width:230px;
-           font-size: 11px; 
-         }  
-         .btn1{
-           top:20px;
-         } 
+  .image {
+    border: 1px solid #e6e6e6;
+    border-left: 0px;
+    border-right: 1;
+    border-top: 1;
+    border-bottom: 1;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+    height: 38px;
+    width: 38px;
+  }
+
+  .label1 {
+    width: 100px;
+    font-size: 11px;
+  }
+
+  .input1 {
+    width: 230px;
+    font-size: 11px;
+  }
+
+  .btn1 {
+    top: 20px;
+  }
 </style>
-
-
-
 <%= form_with(model: assetcard, local: true) do |form| %>
-  <% if assetcard.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(assetcard.errors.count, "error") %> prohibited this assetcard  from being saved:</h2>
+<% if assetcard.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(assetcard.errors.count, "error") %> prohibited this assetcard from being saved:</h2>
+  <ul>
+    <% assetcard.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+<div hidden='hidden' style="margin: 10px 15px 20px 800px;"><img style="z-index:10;"
+    src="/assets/审核-794a0c0abd27f361e8dfc60c8210d254be090ce259eaeba0d07b4260532fd60f.png" height="100" width="100">
+</div>
 
-      <ul>
-        <% assetcard.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %> 
-
-<div  hidden='hidden' style="margin: 10px 15px 20px 800px;" ><img  style="z-index:10;" src="/assets/审核-794a0c0abd27f361e8dfc60c8210d254be090ce259eaeba0d07b4260532fd60f.png" height="100" width="100"></div>
 
 
 
 卡片基本信息
-<hr class="layui-bg-red"> 
-
-    <div style="display:flex;">
-
-
-     <div class="field" >
-    <label class="layui-form-label  label1 "    style="  font-family: '黑体'"  for="assetcard_资产卡片编码">资产卡片编码</label>
-    <div  class="layui-input-block "> <input     class="layui-input input1 "    placeholder="请输入资产卡片编码"    type="text" name="assetcard[assetCode]" id="assetcard_assetCode"
-       value=<%= @assetcard.assetCode%>  ></div>
-  </div> 
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_资产卡片名称">资产卡片名称</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"  placeholder="请输入资产卡片名称"    type="text" name="assetcard[assetname]" id="assetcard_assetname" 
-      value=<%= @assetcard.assetname%>  ></div>
-  </div> 
- 
-
-   
-   
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_资产类别">资产类别</label>
-    <div class="layui-input-block"> <input     class="layui-input  image_input  "  placeholder="请输入资产类别"    type="text" name="assetcard[Assettype_id]" id="assetcard_Assettype_id" 
-      value=<%= @assetcard.Assettype_id%>  ></div> 
-  </div>   
-         <div  class ="image",  onclick="copyText(assettypeModal)"   href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+<hr class="layui-bg-red">
+<div style="display:flex;">
+  <div class="field">
+    <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产卡片编码">资产卡片编码</label>
+    <div class="layui-input-block "> <input class="layui-input input1 " placeholder="请输入资产卡片编码" type="text"
+        name="assetcard[assetCode]" id="assetcard_assetCode" value=<%= @assetcard.assetCode%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label  label1" for="assetcard_资产卡片名称">资产卡片名称</label>
+    <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入资产卡片名称" type="text"
+        name="assetcard[assetname]" id="assetcard_assetname" value=<%= @assetcard.assetname%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label  label1" for="assetcard_资产类别">资产类别</label>
+    <div class="layui-input-block"> <input class="layui-input  image_input  " placeholder="请输入资产类别" type="text"
+        name="assetcard[Assettype_id]" id="assetcard_Assettype_id" value=<%= @assetcard.Assettype_id%>></div>
+  </div>
+  <div class="image" , onclick="copyText(assettypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
 </div>
-  
-
-
-    <div style="display:flex;">
-
-
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_计量单位">计量单位</label>
-    <div class="layui-input-block"> <input     class="layui-input image_input  "  placeholder="请输入计量单位"    type="text" name="assetcard[Unit_id]" id="assetcard_Unit_id" 
-      value=<%= @assetcard.Unit_id%>  ></div>
-         
-  </div>  
-   <div  class ="image",  onclick="copyText(unitModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>
-
-     <div class="field" >
-    <label class="layui-form-label  label1"      for="assetcard_数量">数量</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"    placeholder="请输入数量"    type="text" name="assetcard[Amount]" id="assetcard_Amount"
-       value=<%= @assetcard.Amount%>  ></div>
-  </div> 
-   
-     <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_资产状态">资产状态</label>
+<div style="display:flex;">
+  <div class="field">
+    <label class="layui-form-label  label1" for="assetcard_计量单位">计量单位</label>
+    <div class="layui-input-block"> <input class="layui-input image_input  " placeholder="请输入计量单位" type="text"
+        name="assetcard[Unit_id]" id="assetcard_Unit_id" value=<%= @assetcard.Unit_id%>></div>
+  </div>
+  <div class="image" , onclick="copyText(unitModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+  <div class="field">
+    <label class="layui-form-label  label1" for="assetcard_数量">数量</label>
+    <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入数量" type="text"
+        name="assetcard[Amount]" id="assetcard_Amount" value=<%= @assetcard.Amount%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label  label1" for="assetcard_资产状态">资产状态</label>
     <%if  @assetcard.Assetstatus_id.nil?%>
-     <div class="layui-input-block"> <input     class="layui-input image_input "  placeholder="请输入资产状态"    type="text" name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id"   value="正常使用">
-    <%else%>
-     <div class="layui-input-block"> <input     class="layui-input image_input "  placeholder="请输入资产状态"    type="text" name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id"   value=<%= @assetcard.Assetstatus_id%>>
-    <%end%>
-   
-      
-      </div> 
-  </div>  
-            <div  class ="image",    onclick="copyText(assetstatusModal)"   href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
-</div> 
-
-  
-
-
-    <div style="display:flex;">
-
-
- 
-     <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_变动方式">变动方式</label>
-    <div class="layui-input-block"> 
-    <% if @assetcard.Addtype_id.nil?%>
-     <input     class="layui-input image_input  "  placeholder="请输入变动方式"    type="text" name="assetcard[Addtype_id]" id="assetcard_Addtype_id" value="购入" >
-    <%else%>
-       <input     class="layui-input image_input "  placeholder="请输入变动方式"    type="text" name="assetcard[Addtype_id]" id="assetcard_Addtype_id" value=<%= @assetcard.Addtype_id %> >
-    <%end%>
- 
+    <div class="layui-input-block"> <input class="layui-input image_input " placeholder="请输入资产状态" type="text"
+        name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id" value="正常使用">
+      <%else%>
+      <div class="layui-input-block"> <input class="layui-input image_input " placeholder="请输入资产状态" type="text"
+          name="assetcard[Assetstatus_id]" id="assetcard_Assetstatus_id" value=<%= @assetcard.Assetstatus_id%>>
+        <%end%>
       </div>
-          
-  </div>  
-      <div  class ="image",    onclick="copyText(addtypeModal)"   href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
-   
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_资产使用状态">资产使用状态</label>
-    <%if @assetcard.Usestate_id.nil?%>
-    <div class="layui-input-block"> <input     class="layui-input  image_input "  placeholder="请输入资产使用状态"    type="text" name="assetcard[Usestate_id]" id="assetcard_Usestate_id" value="可用">
-    <%else%>
-    <div class="layui-input-block"> <input     class="layui-input  image_input "  placeholder="请输入资产使用状态"    type="text" name="assetcard[Usestate_id]" id="assetcard_Usestate_id" value=<%= @assetcard.Usestate_id%>>
-    <%end%>
-    
-      </div> 
-  </div> 
-      <div  class ="image",  onclick="copyText(usestateModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>   
- 
-  <div class="field" >
-    <label class="layui-form-label  label1"      for="assetcard_购买日期">购买日期</label>
-    <div class="layui-input-block"> <input     class="layui-input  fdate input1"    placeholder="请输入购买日期"    type="text" name="assetcard[BuyDate]" id="assetcard_BuyDate"
-       value=<%= @assetcard.BuyDate%>  ></div>
-  </div> 
-
-</div> 
-
-
+    </div>
+    <div class="image" , onclick="copyText(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+  </div>
+  <div style="display:flex;">
+    <div class="field">
+      <label class="layui-form-label  label1" for="assetcard_变动方式">变动方式</label>
+      <div class="layui-input-block">
+        <% if @assetcard.Addtype_id.nil?%>
+        <input class="layui-input image_input  " placeholder="请输入变动方式" type="text" name="assetcard[Addtype_id]"
+          id="assetcard_Addtype_id" value="购入">
+        <%else%>
+        <input class="layui-input image_input " placeholder="请输入变动方式" type="text" name="assetcard[Addtype_id]"
+          id="assetcard_Addtype_id" value=<%= @assetcard.Addtype_id %>>
+        <%end%>
+      </div>
+    </div>
+    <div class="image" , onclick="copyText(addtypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+    <div class="field">
+      <label class="layui-form-label  label1" for="assetcard_资产使用状态">资产使用状态</label>
+      <%if @assetcard.Usestate_id.nil?%>
+      <div class="layui-input-block"> <input class="layui-input  image_input " placeholder="请输入资产使用状态" type="text"
+          name="assetcard[Usestate_id]" id="assetcard_Usestate_id" value="可用">
+        <%else%>
+        <div class="layui-input-block"> <input class="layui-input  image_input " placeholder="请输入资产使用状态" type="text"
+            name="assetcard[Usestate_id]" id="assetcard_Usestate_id" value=<%= @assetcard.Usestate_id%>>
+          <%end%>
+        </div>
+      </div>
+      <div class="image" , onclick="copyText(usestateModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_购买日期">购买日期</label>
+        <div class="layui-input-block"> <input class="layui-input  fdate input1" placeholder="请输入购买日期" type="text"
+            name="assetcard[BuyDate]" id="assetcard_BuyDate" value=<%= @assetcard.BuyDate%>></div>
+      </div>
+    </div>
     <div style="display:flex;">
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_备注">备注</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"  placeholder="请输入备注"    type="text" name="assetcard[description]" id="assetcard_description" 
-      value=<%= @assetcard.description%>  ></div>
-  </div> 
- 
-      <div class="field" >
-    <label class="layui-form-label  label1"      for="assetcard_所属组织">所属组织</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"    placeholder="请输入所属组织"    type="text" name="assetcard[Orgainize_id]" id="assetcard_Orgainize_id"
-       value=<%= @assetcard.Orgainize_id%>  ></div>
-  </div>  
-
-
-      <div class="field" >
-    <label class="layui-form-label  label1"      for="assetcard_单据状态">单据状态</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"     readonly='true'   type="text" name="assetcard[fbillstatus]" id="assetcard_fbillstatus"
-       value=<%= @assetcard.fbillstatus%>  ></div>
-  </div>  
-
-</div>
- 
-卡片财务信息
-<hr> 
-
-
-
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_备注">备注</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入备注" type="text"
+            name="assetcard[description]" id="assetcard_description" value=<%= @assetcard.description%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_所属组织">所属组织</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入所属组织" type="text"
+            name="assetcard[Orgainize_id]" id="assetcard_Orgainize_id" value=<%= @assetcard.Orgainize_id%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_单据状态">单据状态</label>
+        <div class="layui-input-block"> <input class="layui-input input1" readonly='true' type="text"
+            name="assetcard[fbillstatus]" id="assetcard_fbillstatus" value=<%= @assetcard.fbillstatus%>></div>
+      </div>
+    </div>
+    卡片财务信息
+    <hr>
     <div style="display:flex;">
-
-
-     <div class="field" >
-    <label class="layui-form-label  label1"      for="assetcard_入账日期">入账日期</label>
-    <div class="layui-input-block"> <input     class="layui-input  fdate input1"    placeholder="请输入入账日期"    type="text" name="assetcard[Entrydate]" id="assetcard_Entrydate"
-       value=<%= @assetcard.Entrydate%>  ></div>
-  </div> 
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_购进价格">购进价格</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"  placeholder="请输入购进价格"    type="text" name="assetcard[Price]" id="assetcard_Price" 
-      value=<%= @assetcard.Price%>  ></div>
-  </div> 
- 
-      <div class="field" >
-    <label class="layui-form-label  label1"      for="assetcard_资产净值（现价）">资产净值（现价）</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"    placeholder="请输入资产净值（现价）"    type="text" name="assetcard[Lastprice]" id="assetcard_Lastprice"
-       value=<%= @assetcard.Lastprice%>  ></div>
-  </div>   
-
-  </div>   
-
-
-
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_入账日期">入账日期</label>
+        <div class="layui-input-block"> <input class="layui-input  fdate input1" placeholder="请输入入账日期" type="text"
+            name="assetcard[Entrydate]" id="assetcard_Entrydate" value=<%= @assetcard.Entrydate%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_购进价格">购进价格</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入购进价格" type="text"
+            name="assetcard[Price]" id="assetcard_Price" value=<%= @assetcard.Price%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_资产净值（现价）">资产净值（现价）</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入资产净值（现价）" type="text"
+            name="assetcard[Lastprice]" id="assetcard_Lastprice" value=<%= @assetcard.Lastprice%>></div>
+      </div>
+    </div>
     <div style="display:flex;">
-
-
-     <div class="field" >
-    <label class="layui-form-label  label1"      for="assetcard_预计使用期间">预计使用寿命(月)</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"    placeholder="请输入预计使用寿命(月)"    type="text" name="assetcard[Expectedperiod]" id="assetcard_Expectedperiod"
-       value=<%= @assetcard.Expectedperiod%>  ></div>
-  </div> 
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_累计使用期间数(月)">累计使用期间数(月)</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"  placeholder="请输入累计使用期间数(月)"    type="text" name="assetcard[CNOSP]" id="assetcard_CNOSP" 
-      value=<%= @assetcard.CNOSP%>  ></div>
-  </div> 
-  
-  
-  </div>   
-
- 
-卡片实物信息
-<hr> 
-
-
-
-
-
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_预计使用期间">预计使用寿命(月)</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入预计使用寿命(月)" type="text"
+            name="assetcard[Expectedperiod]" id="assetcard_Expectedperiod" value=<%= @assetcard.Expectedperiod%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_累计使用期间数(月)">累计使用期间数(月)</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入累计使用期间数(月)" type="text"
+            name="assetcard[CNOSP]" id="assetcard_CNOSP" value=<%= @assetcard.CNOSP%>></div>
+      </div>
+    </div>
+    卡片实物信息
+    <hr>
     <div style="display:flex;">
-
-
-     <div class="field" >
-    <label class="layui-form-label  label1"      for="assetcard_条形码">条形码</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"    placeholder="请输入条形码"    type="text" name="assetcard[barcode]" id="assetcard_barcode"
-       value=<%= @assetcard.barcode%>  ></div>
-  </div> 
-
-
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_资产位置">资产位置</label>
-    <div class="layui-input-block"> <input     class="layui-input image_input  "  placeholder="请输入资产位置"    type="text" name="assetcard[Assetseat_id]" id="assetcard_Assetseat_id" 
-      value=<%= @assetcard.Assetseat_id%>  ></div> 
-  </div> 
-        <div  class ="image",    onclick="copyText(assetseateModal)"   href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_规格型号">规格型号</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"  placeholder="请输入规格型号"    type="text" name="assetcard[Mould]" id="assetcard_Mould" 
-      value=<%= @assetcard.Mould %>  ></div>
-  </div> 
-
-
- 
-</div>
-
-
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_条形码">条形码</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入条形码" type="text"
+            name="assetcard[barcode]" id="assetcard_barcode" value=<%= @assetcard.barcode%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_资产位置">资产位置</label>
+        <div class="layui-input-block"> <input class="layui-input image_input  " placeholder="请输入资产位置" type="text"
+            name="assetcard[Assetseat_id]" id="assetcard_Assetseat_id" value=<%= @assetcard.Assetseat_id%>></div>
+      </div>
+      <div class="image" , onclick="copyText(assetseateModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_规格型号">规格型号</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入规格型号" type="text"
+            name="assetcard[Mould]" id="assetcard_Mould" value=<%= @assetcard.Mould %>></div>
+      </div>
+    </div>
     <div style="display:flex;">
-
-
-     <div class="field" >
-    <label class="layui-form-label  label1"      for="assetcard_产地（厂家）">产地（厂家）</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"    placeholder="请输入产地（厂家）"    type="text" name="assetcard[Client]" id="assetcard_Client"
-       value=<%= @assetcard.Client%>  ></div>
-  </div> 
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_供应商">供应商</label>
-    <div class="layui-input-block"> <input     class="layui-input input1"  placeholder="请输入供应商"    type="text" name="assetcard[Supplier]" id="assetcard_Supplier" 
-      value=<%= @assetcard.Supplier%>  ></div>
-  </div> 
-  
-  
-  </div>   
- 
-使用分配
-<hr> 
-
- 
-
-    <div style="display:flex;"> 
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_使用部门">使用部门</label>
-    <div class="layui-input-block"> <input     class="layui-input image_input "  placeholder="请输入使用部门"    type="text" name="assetcard[department_id]" id="assetcard_department_id" 
-      value=<%= @assetcard.department_id%>  ></div> 
-  </div>  
-        <div  class ="image",   onclick="copyText(departmentModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>    
-   
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_使用人">使用人</label>
-    <div class="layui-input-block"> <input     class="layui-input  image_input "  placeholder="请输入使用人"    type="text" name="assetcard[Employeeld]" id="assetcard_Employeeld" 
-      value=<%= @assetcard.Employeeld%>  ></div> 
-  </div> 
-  <div  class ="image",   onclick="copyText(userModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>     
- 
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_创建人">创建人</label>
-    <div class="layui-input-block"> <input    readonly='true'  class="layui-input input1"     type="text" name="assetcard[Creator]" id="assetcard_Creator" 
-      value=<%= @assetcard.Creator%>  ></div>
-  </div> 
-  
-  </div> 
-      <div style="display:flex;"> 
-
-       <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_创建日期">创建日期</label>
-    <div class="layui-input-block"> <input   readonly='true'  class="layui-input input1"     type="text" name="assetcard[Createdate]" id="assetcard_Createdate" 
-      value=<%= @assetcard.Createdate%>  ></div>
-  </div> 
-
-         <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_审核人">审核人</label>
-    <div class="layui-input-block"> <input   readonly='true'   class="layui-input input1"    type="text" name="assetcard[Approver]" id="assetcard_Approver" 
-      value=<%= @assetcard.Approver%>  ></div>
-  </div> 
-
-         <div class="field" >
-    <label class="layui-form-label  label1"   for="assetcard_审核日期">审核日期</label>
-    <div class="layui-input-block"> <input   readonly='true'  class="layui-input input1"    type="text" name="assetcard[Approverdate]" id="assetcard_Approverdate" 
-      value=<%= @assetcard.Approverdate%>  ></div>
-  </div> 
-
-
-   </div>
- 
-  <div class="layui-btn-group " style="margin:10px;0px;">
- 
-  <a> <input  class="layui-btn  " type="submit" name="commit" value="保存" data-disable-with="保存"></a>
-  <a       rel="nofollow"  ><button   onclick="Update_Status(<%= @assetcard.id%>,'审核')"  type="button" class="layui-btn  ">审核</button></a> 
-  <a     rel="nofollow"  ><button onclick="Update_Status(<%= @assetcard.id%>,'反审核')"    type="button" class="layui-btn  ">反审核</button></a> 
-    <a   href="/assetcards"   rel="nofollow"  ><button    type="button" class="layui-btn  ">返回列表</button></a> 
-    </div>  
-
-
- 
-<% end %> 
-<p id=IsRresh_2 , hidden="hidden" > <%=   session[:IsRresh_2]%> </p>
-
-<script>
-$(document).ready(function(){ 
-console.log($("#IsRresh_2").text().replace(/^\s+|\s+$/g,""));
-  if($("#IsRresh_2").text().replace(/^\s+|\s+$/g,"")=='false')
-  { 
- 
-      location.reload();
-  } 
-})
-</script>
-
-
- 
- <script>
- function Update_Status(id,fbillstatus)
- {
-   var id_list=new Array();
-   id_list[0]=id; 
-$.ajax({
-   type:"post", 
-   url :"/assetcards_Update_Fbillstatus",
-   data:{ 
-      "id": id_list,
-      "fbillstatus":fbillstatus
-     }, 
-   success: function(res){
-     if(res.code == 200)
-     { 
-       alert(res.message);
-       location.reload();
-     }
-     } 
- }); 
- }
- </script>
-
- 
- <script>
-layui.use('laydate', function(){
-  var laydate = layui.laydate;
-    $('.fdate').each(function(){
-    laydate.render({
-			elem: this     
-	});
-  }) 
-});
-
-</script>
-  
-
-<!--%=image_tag("timg.jpg")%-->    
-
-
-<script>
-$(document).ready(function(){
-
-if($("#assetcard_fbillstatus").val()=='已审核')
-{
- $("input").prop('disabled','disabled');
- $("select").prop('disabled','disabled'); 
- $("input").css('background-color','#F5F5F5');
- $("select").css('background-color','#F5F5F5'); 
-  $("image").prop('disabled','disabled');
- }
-});
-</script>
-
- 
-
-  <script type="text/javascript">
- function copyText(modalid)
- {
-   $('#'+modalid.id).modal('show');
-   }  
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_产地（厂家）">产地（厂家）</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入产地（厂家）" type="text"
+            name="assetcard[Client]" id="assetcard_Client" value=<%= @assetcard.Client%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_供应商">供应商</label>
+        <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入供应商" type="text"
+            name="assetcard[Supplier]" id="assetcard_Supplier" value=<%= @assetcard.Supplier%>></div>
+      </div>
+    </div>
+    使用分配
+    <hr>
+    <div style="display:flex;">
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_使用部门">使用部门</label>
+        <div class="layui-input-block"> <input class="layui-input image_input " placeholder="请输入使用部门" type="text"
+            name="assetcard[department_id]" id="assetcard_department_id" value=<%= @assetcard.department_id%>></div>
+      </div>
+      <div class="image" , onclick="copyText(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_使用人">使用人</label>
+        <div class="layui-input-block"> <input class="layui-input  image_input " placeholder="请输入使用人" type="text"
+            name="assetcard[Employeeld]" id="assetcard_Employeeld" value=<%= @assetcard.Employeeld%>></div>
+      </div>
+      <div class="image" , onclick="copyText(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_创建人">创建人</label>
+        <div class="layui-input-block"> <input readonly='true' class="layui-input input1" type="text"
+            name="assetcard[Creator]" id="assetcard_Creator" value=<%= @assetcard.Creator%>></div>
+      </div>
+    </div>
+    <div style="display:flex;">
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_创建日期">创建日期</label>
+        <div class="layui-input-block"> <input readonly='true' class="layui-input input1" type="text"
+            name="assetcard[Createdate]" id="assetcard_Createdate" value=<%= @assetcard.Createdate%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_审核人">审核人</label>
+        <div class="layui-input-block"> <input readonly='true' class="layui-input input1" type="text"
+            name="assetcard[Approver]" id="assetcard_Approver" value=<%= @assetcard.Approver%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label  label1" for="assetcard_审核日期">审核日期</label>
+        <div class="layui-input-block"> <input readonly='true' class="layui-input input1" type="text"
+            name="assetcard[Approverdate]" id="assetcard_Approverdate" value=<%= @assetcard.Approverdate%>></div>
+      </div>
+    </div>
+    <div class="layui-btn-group " style="margin:10px;0px;">
+      <a> <input class="layui-btn  " type="submit" name="commit" value="保存" data-disable-with="保存"></a>
+      <a rel="nofollow"><button onclick="Update_Status(<%= @assetcard.id%>,'审核')" type="button"
+          class="layui-btn  ">审核</button></a>
+      <a rel="nofollow"><button onclick="Update_Status(<%= @assetcard.id%>,'反审核')" type="button"
+          class="layui-btn  ">反审核</button></a>
+      <a><button onclick="Alter(<%=@assetcard.id%>,this)" type="button" class="layui-btn  ">变更</button></a>
+      <a rel="nofollow"><button onclick="Show_Alter(assetalterModal,<%=@assetalter.length%>)" type="button"
+          class="layui-btn  ">变更记录</button></a>
+      <a href="/assetcards" rel="nofollow"><button type="button" class="layui-btn  ">返回列表</button></a>
+    </div>
+    <% end %>
+    <p id=IsRresh_2 , hidden="hidden"> <%=   session[:IsRresh_2]%> </p>
+    <script>
+      $(document).ready(function () {
+        console.log($("#IsRresh_2").text().replace(/^\s+|\s+$/g, ""));
+        if ($("#IsRresh_2").text().replace(/^\s+|\s+$/g, "") == 'false') {
+          location.reload();
+        }
+      })
     </script>
-    
-    
-<%= render    'departments/DepartmentModal.html.erb',  id: "assetcard_department_id" ,userid:  "assetcard_Employeeld"%>
-<%= render    'users/UserModal.html.erb',  id: "assetcard_Employeeld",department: "assetcard_department_id"  %>
-<%= render    'units/UnitModal.html.erb',  id: "assetcard_Unit_id"  %>
-<%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetcard_Assetstatus_id"  %> 
-<%= render    'assettypes/AssettypeModal.html.erb',  id: "assetcard_Assettype_id"  %> 
-<%= render    'addtypes/AddtypesModal.html.erb',  id: "assetcard_Addtype_id"  %> 
-<%= render    'assetseates/AssetseateModal.html.erb',  id: "assetcard_Assetseat_id"  %> 
-<%= render    'usestates/UsestateModal.html.erb',  id: "assetcard_Usestate_id"  %> 
+    <script>
+      function Update_Status(id, fbillstatus) {
+        var id_list = new Array();
+        id_list[0] = id;
+        $.ajax({
+          type: "post",
+          url: "/assetcards_Update_Fbillstatus",
+          data: {
+            "id": id_list,
+            "fbillstatus": fbillstatus
+          },
+          success: function (res) {
+            if (res.code == 200) {
+              alert(res.message);
+              location.reload();
+            }
+          }
+        });
+      }
+    </script>
+    <script>
+      layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        $('.fdate').each(function () {
+          laydate.render({
+            elem: this
+          });
+        })
+      });
+    </script>
+    <!--%=image_tag("timg.jpg")%-->
+    <script>
+      $(document).ready(function () {
+        if ($("#assetcard_fbillstatus").val() == '已审核') {
+          $("input").prop('disabled', 'disabled');
+          $("select").prop('disabled', 'disabled');
+          $("input").css('background-color', '#F5F5F5');
+          $("select").css('background-color', '#F5F5F5');
+          $("image").prop('disabled', 'disabled');
+        }
+      });
+    </script>
+    <script type="text/javascript">
+      function copyText(modalid) {
+        console.log(modalid)
+        $('#' + modalid.id).modal('show');
+      }
+    </script>
 
+    <script>
+      function Alter(id, element) { 
+        if ($("#assetcard_fbillstatus")[0].value != "已审核") {
+          alert("该资产卡片还未审核，不允许变更！");
+          return;
+        }
+        $.ajax({
+          type: "get",
+          async: false,
+          url: "/assetalters_Check_IsExist",
+          data: {
+            "assetCode": id
+          },
+          success: function (res) {
+            if (res.code == 201) {
+              alert(res.message);
+              return;
+            } else {
+              element.parentElement.href = "/assetalters/new?assetcardid=" + id
+            }
+          }
+        });
+      }
+    </script>
+
+    <script>
+      function Show_Alter(modalid, assetalterCount) {
+        console.log($("#assetcard_fbillstatus").text())
+        if ($("#assetcard_fbillstatus")[0].value != "已审核") {
+          alert("该资产卡片还未审核，不允许查看变更记录！");
+          return;
+        }
+        if (assetalterCount == 0) {
+          alert("该资产卡片没有任何变更记录！");
+        } else {
+          copyText(assetalterModal)
+        }
+      }
+    </script>
+
+    <%= render    'departments/DepartmentModal.html.erb',  id: "assetcard_department_id" ,userid:  "assetcard_Employeeld"%>
+    <%= render    'users/UserModal.html.erb',  id: "assetcard_Employeeld",department: "assetcard_department_id"  %>
+    <%= render    'units/UnitModal.html.erb',  id: "assetcard_Unit_id"  %>
+    <%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetcard_Assetstatus_id"  %>
+    <%= render    'assettypes/AssettypeModal.html.erb',  id: "assetcard_Assettype_id"  %>
+    <%= render    'addtypes/AddtypesModal.html.erb',  id: "assetcard_Addtype_id"  %>
+    <%= render    'assetseates/AssetseateModal.html.erb',  id: "assetcard_Assetseat_id"  %>
+    <%= render    'usestates/UsestateModal.html.erb',  id: "assetcard_Usestate_id"  %>
+    <%= render    'assetalters/AssetaltersModal.html.erb',  id:  @assetcard.id  %>
