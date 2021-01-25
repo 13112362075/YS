@@ -1,0 +1,51 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Picking Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Asset type</th>
+      <th>Unit</th>
+      <th>Picking amount</th>
+      <th>Backqty</th>
+      <th>Canbackqty</th>
+      <th>Pickingfor</th>
+      <th>Asset seat</th>
+      <th>Picking seat</th>
+      <th>Fsrcfbillno</th>
+      <th>Fsrcfseq</th>
+      <th>Assetpicking</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_picking_entries.each do |asset_picking_entry| %>
+      <tr>
+        <td><%= asset_picking_entry.Code %></td>
+        <td><%= asset_picking_entry.name %></td>
+        <td><%= asset_picking_entry.Asset_type %></td>
+        <td><%= asset_picking_entry.Unit %></td>
+        <td><%= asset_picking_entry.Picking_Amount %></td>
+        <td><%= asset_picking_entry.BackQty %></td>
+        <td><%= asset_picking_entry.CanbackQty %></td>
+        <td><%= asset_picking_entry.PickingFor %></td>
+        <td><%= asset_picking_entry.Asset_seat %></td>
+        <td><%= asset_picking_entry.Picking_seat %></td>
+        <td><%= asset_picking_entry.FSrcFbillno %></td>
+        <td><%= asset_picking_entry.FSrcFseq %></td>
+        <td><%= asset_picking_entry.AssetPicking_id %></td>
+        <td><%= link_to 'Show', asset_picking_entry %></td>
+        <td><%= link_to 'Edit', edit_asset_picking_entry_path(asset_picking_entry) %></td>
+        <td><%= link_to 'Destroy', asset_picking_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Picking Entry', new_asset_picking_entry_path %>

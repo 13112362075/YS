@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_19_074817) do
+ActiveRecord::Schema.define(version: 2021_01_22_075220) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -41,6 +41,39 @@ ActiveRecord::Schema.define(version: 2021_01_19_074817) do
     t.string "Allocate_reason"
     t.string "Bring_in_Number"
     t.string "Bring_in_Confirm"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_picking_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Code"
+    t.string "name"
+    t.string "Asset_type"
+    t.string "Unit"
+    t.decimal "Picking_Amount", precision: 10
+    t.decimal "BackQty", precision: 10
+    t.decimal "CanbackQty", precision: 10
+    t.string "PickingFor"
+    t.string "Asset_seat"
+    t.string "Picking_seat"
+    t.string "FSrcFbillno"
+    t.string "FSrcFseq"
+    t.string "AssetPicking_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_pickings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "FBillno"
+    t.string "Type_of_business"
+    t.datetime "Picking_Date"
+    t.string "Picking_Dept"
+    t.string "Picking_Employeeld"
+    t.string "Fbillstatus"
+    t.string "Creator"
+    t.string "Approver"
+    t.datetime "CreateDate"
+    t.datetime "ApproveDate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

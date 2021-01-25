@@ -1,0 +1,2 @@
+class AssetPicking < ApplicationRecord
+end

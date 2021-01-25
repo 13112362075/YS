@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @asset_picking_entry.Code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @asset_picking_entry.name %>
+</p>
+
+<p>
+  <strong>Asset type:</strong>
+  <%= @asset_picking_entry.Asset_type %>
+</p>
+
+<p>
+  <strong>Unit:</strong>
+  <%= @asset_picking_entry.Unit %>
+</p>
+
+<p>
+  <strong>Picking amount:</strong>
+  <%= @asset_picking_entry.Picking_Amount %>
+</p>
+
+<p>
+  <strong>Backqty:</strong>
+  <%= @asset_picking_entry.BackQty %>
+</p>
+
+<p>
+  <strong>Canbackqty:</strong>
+  <%= @asset_picking_entry.CanbackQty %>
+</p>
+
+<p>
+  <strong>Pickingfor:</strong>
+  <%= @asset_picking_entry.PickingFor %>
+</p>
+
+<p>
+  <strong>Asset seat:</strong>
+  <%= @asset_picking_entry.Asset_seat %>
+</p>
+
+<p>
+  <strong>Picking seat:</strong>
+  <%= @asset_picking_entry.Picking_seat %>
+</p>
+
+<p>
+  <strong>Fsrcfbillno:</strong>
+  <%= @asset_picking_entry.FSrcFbillno %>
+</p>
+
+<p>
+  <strong>Fsrcfseq:</strong>
+  <%= @asset_picking_entry.FSrcFseq %>
+</p>
+
+<p>
+  <strong>Assetpicking:</strong>
+  <%= @asset_picking_entry.AssetPicking_id %>
+</p>
+
+<%= link_to 'Edit', edit_asset_picking_entry_path(@asset_picking_entry) %> |
+<%= link_to 'Back', asset_picking_entries_path %>

@@ -1,678 +1,581 @@
 <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
 <script src="https://www.layuicdn.com/layui/layui.js"></script>
-
-  <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
 <style>
-.image_input{  
-         width:192px; 
-         border: 1px solid #e6e6e6;
-         border-left: 1; 
-         border-right: 0; 
-         border-top:1; 
-         border-bottom: 1;   
-         border-top-left-radius: 2px;
-         border-top-right-radius: 0px;
-         border-bottom-right-radius: 0;
-         border-bottom-left-radius: 2px;
-         }
- .image
-         {
-           border: 1px solid #e6e6e6;  
-           border-left: 0px; 
-           border-right: 1; 
-           border-top:1; 
-           border-bottom: 1;   
-           border-bottom-left-radius: 0;
-           border-top-left-radius: 0;
-           border-bottom-right-radius: 2px;
-           border-top-right-radius: 2px;
-           height:38px;
-           width:38px;
-         }
-         .label1{
-           width:100px;
-           font-size: 12px; 
-         } 
-         .input1{
-           width:230px;
-         }  
+  .image_input {
+    width: 192px;
+    border: 1px solid #e6e6e6;
+    border-left: 1;
+    border-right: 0;
+    border-top: 1;
+    border-bottom: 1;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+  }
+  .image {
+    border: 1px solid #e6e6e6;
+    border-left: 0px;
+    border-right: 1;
+    border-top: 1;
+    border-bottom: 1;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+    height: 38px;
+    width: 38px;
+  }
+  .label1 {
+    width: 100px;
+    font-size: 12px;
+  }
+  .input1 {
+    width: 230px;
+  }
 </style>
-
 <%= form_with(model: asset_turnover_detail, local: true) do |form| %>
-  <% if asset_turnover_detail.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(asset_turnover_detail.errors.count, "error") %> prohibited this asset_turnover_detail from being saved:</h2>
-
-      <ul>
-        <% asset_turnover_detail.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
- 
-
-<p  id="id"  hidden='hidden'><%= @asset_turnover_detail.id%></p>
-   <a id="a_test"   rel="nofollow"  ><button   onclick="Save()"   type="button" class="layui-btn">保存</button></a> 
-   <a id="a_audit"   rel="nofollow"  ><button   onclick="updatestatus(<%=@asset_turnover_detail.id%>,'审核','借出')"   type="button" class="layui-btn">审核</button></a> 
-   <a id="a_unaudit"   rel="nofollow"  ><button   onclick="updatestatus(<%=@asset_turnover_detail.id%>,'反审核','归还')"   type="button" class="layui-btn">反审核</button></a> 
-   <a id="a_Back"   rel="nofollow"  ><button   onclick="back()"   type="button" class="layui-btn">归还</button></a> 
-    <a   href="/asset_turnover_details"   rel="nofollow"  ><button    type="button" class="layui-btn">返回列表</button></a> 
- <br><br> 
-
-    <div style="display:flex;">
-
-     <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据编号">单据编号</label>
-    <div  class="layui-input-block "> <input     class="layui-input input1  "    placeholder="请输入单据编号"    type="text" name="asset_turnover_detail[Document_number]" id="asset_turnover_detail_Document_number"
-       value=<%= @asset_turnover_detail.Document_number%>  ></div>
-  </div> 
-
- 
-     <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借出日期">借出日期</label>
-    <div  class="layui-input-block"> <input     class="layui-input input1   fdate"    placeholder="请输入借出日期"    type="text" name="asset_turnover_detail[Borrowing_date]" id="asset_turnover_detail_Borrowing_date"
-       value=<%= @asset_turnover_detail.Borrowing_date%>  ></div>
-       
-  </div>  
-
-
-     <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用部门">借用部门</label>
-    <div  class="layui-input-block"> <input     class="layui-input  image_input    "     placeholder="请输入借用部门"    type="text" name="asset_turnover_detail[Borrowing_Department]" id="asset_turnover_detail_Borrowing_Department"
-       value=<%= @asset_turnover_detail.Borrowing_Department%>  ></div> 
-  </div>   
-   <div  class ="image",   onclick="copyText(departmentModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>     
+<% if asset_turnover_detail.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(asset_turnover_detail.errors.count, "error") %> prohibited this asset_turnover_detail from being
+    saved:</h2>
+  <ul>
+    <% asset_turnover_detail.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
 </div>
-     
- 
-
-    <div style="display:flex;"> 
-     <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用组织">借用组织</label>
-    <div  class="layui-input-block"> <input     class="layui-input  input1 "    placeholder="请输入借用组织"    type="text" name="asset_turnover_detail[Borrowed_To_id]" id="asset_turnover_detail_Borrowed_To_id"
-       value=<%= @asset_turnover_detail.Borrowed_To_id%>  ></div>
-  </div> 
-
- 
-     <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_借用人">借用人</label>
-    <div  class="layui-input-block"> <input    class="layui-input  image_input   "    placeholder="请输入借用人"    type="text" name="asset_turnover_detail[Loaner]" id="asset_turnover_detail_Loaner"
-       value=<%= @asset_turnover_detail.Loaner%>  ></div> 
-  </div>   
-   <div  class ="image",   onclick="copyText(userModal)"  href="#"><%= image_tag('放大镜', size: "38" )   %></div>  
-
-     <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据状态">单据状态</label>
-    <div  class="layui-input-block "> <input   readonly='true'    class="layui-input input1  "      type="text" name="asset_turnover_detail[fbillstatus]" id="asset_turnover_detail_fbillstatus"
-       value=<%= @asset_turnover_detail.fbillstatus%>  ></div>
-  </div> 
-
-</div>
- 
-
-
-    <div style="display:flex;"> 
-         <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据状态">创建人</label>
-    <div  class="layui-input-block "> <input   readonly='true'    class="layui-input input1  "      type="text" name="asset_turnover_detail[Creator]" id="asset_turnover_detail_Creator"
-       value=<%= @asset_turnover_detail.Creator%>  ></div>
-  </div> 
-       <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_创建日期">创建日期</label>
-    <div  class="layui-input-block "> <input   readonly='true'   class="layui-input input1  "      type="text" name="asset_turnover_detail[Createdate]" id="asset_turnover_detail_Createdate"
-       value=<%= @asset_turnover_detail.Createdate%>  ></div>
-  </div> 
-       <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_审核人">审核人</label>
-    <div  class="layui-input-block "> <input   readonly='true'   class="layui-input input1  "      type="text" name="asset_turnover_detail[Approver]" id="asset_turnover_detail_Approver"
-       value=<%= @asset_turnover_detail.Approver%>  ></div>
-  </div> 
-    </div>
-
-
-    <div style="display:flex;"> 
-         <div class="field" >
-    <label class="layui-form-label label1"    style="  font-family: '黑体'"  for="asset_turnover_detail_单据状态">审核日期</label>
-    <div  class="layui-input-block "> <input  readonly='true'    class="layui-input input1  "      type="text" name="asset_turnover_detail[Approverdate]" id="asset_turnover_detail_Approverdate"
-       value=<%= @asset_turnover_detail.Approverdate%>  ></div>
-  </div> 
- 
-    </div>
-
-
-
 <% end %>
-
-
- <div class="layui-btn-group">
-<button class="layui-btn" onclick="addrow()">新增行</button>
-<button class="layui-btn"  onclick="delrow()">删除行</button>
-<button class="layui-btn"  onclick="copyText(assetcardModal)"    href="#">选择资产卡片</button>
+<p id="id" hidden='hidden'><%= @asset_turnover_detail.id%></p>
+<a id="a_test" rel="nofollow"><button onclick="Save()" type="button" class="layui-btn">保存</button></a>
+<a id="a_audit" rel="nofollow"><button onclick="updatestatus(<%=@asset_turnover_detail.id%>,'审核','借出')" type="button"
+    class="layui-btn">审核</button></a>
+<a id="a_unaudit" rel="nofollow"><button onclick="updatestatus(<%=@asset_turnover_detail.id%>,'反审核','归还')" type="button"
+    class="layui-btn">反审核</button></a>
+<a id="a_Back" rel="nofollow"><button onclick="back()" type="button" class="layui-btn">归还</button></a>
+<a href="/asset_turnover_details" rel="nofollow"><button type="button" class="layui-btn">返回列表</button></a>
+<br><br>
+<div style="display:flex;">
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据编号">单据编号</label>
+    <div class="layui-input-block "> <input class="layui-input input1  " placeholder="请输入单据编号" type="text"
+        name="asset_turnover_detail[Document_number]" id="asset_turnover_detail_Document_number"
+        value=<%= @asset_turnover_detail.Document_number%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借出日期">借出日期</label>
+    <div class="layui-input-block"> <input class="layui-input input1   fdate" placeholder="请输入借出日期" type="text"
+        name="asset_turnover_detail[Borrowing_date]" id="asset_turnover_detail_Borrowing_date"
+        value=<%= @asset_turnover_detail.Borrowing_date%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借用部门">借用部门</label>
+    <div class="layui-input-block"> <input class="layui-input  image_input    " placeholder="请输入借用部门" type="text"
+        name="asset_turnover_detail[Borrowing_Department]" id="asset_turnover_detail_Borrowing_Department"
+        value=<%= @asset_turnover_detail.Borrowing_Department%>></div>
+  </div>
+  <div class="image" , onclick="copyText(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+</div>
+<div style="display:flex;">
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借用组织">借用组织</label>
+    <div class="layui-input-block"> <input class="layui-input  input1 " placeholder="请输入借用组织" type="text"
+        name="asset_turnover_detail[Borrowed_To_id]" id="asset_turnover_detail_Borrowed_To_id"
+        value=<%= @asset_turnover_detail.Borrowed_To_id%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借用人">借用人</label>
+    <div class="layui-input-block"> <input class="layui-input  image_input   " placeholder="请输入借用人" type="text"
+        name="asset_turnover_detail[Loaner]" id="asset_turnover_detail_Loaner"
+        value=<%= @asset_turnover_detail.Loaner%>></div>
+  </div>
+  <div class="image" , onclick="copyText(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据状态">单据状态</label>
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+        name="asset_turnover_detail[fbillstatus]" id="asset_turnover_detail_fbillstatus"
+        value=<%= @asset_turnover_detail.fbillstatus%>></div>
+  </div>
+</div>
+<div style="display:flex;">
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据状态">创建人</label>
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+        name="asset_turnover_detail[Creator]" id="asset_turnover_detail_Creator"
+        value=<%= @asset_turnover_detail.Creator%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_创建日期">创建日期</label>
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+        name="asset_turnover_detail[Createdate]" id="asset_turnover_detail_Createdate"
+        value=<%= @asset_turnover_detail.Createdate%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_审核人">审核人</label>
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+        name="asset_turnover_detail[Approver]" id="asset_turnover_detail_Approver"
+        value=<%= @asset_turnover_detail.Approver%>></div>
+  </div>
+</div>
+<div style="display:flex;">
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据状态">审核日期</label>
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+        name="asset_turnover_detail[Approverdate]" id="asset_turnover_detail_Approverdate"
+        value=<%= @asset_turnover_detail.Approverdate%>></div>
+  </div>
+</div>
+<% end %>
+<div class="layui-btn-group">
+  <button class="layui-btn" onclick="addrow()">新增行</button>
+  <button class="layui-btn" onclick="delrow()">删除行</button>
+  <button class="layui-btn" onclick="copyText(assetcardModal)" href="#">选择资产卡片</button>
 </div>
 <form id="Entry" ,action="/save_multiple">
-<table    id="testid"  class="layui-table font"   style="text-align:center;margin:10px;0px; " >
-  <colgroup>
-    <col width="150"> 
-    <col>
-  </colgroup>
-  <thead > 
-    <tr >  
-      <th style="text-align:center;font-size:10px;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this,'entry.ids[]')"></th>
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">序号</th>
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产编码</th>
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产名称</th> 
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">计量单位</th>
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">数量</th> 
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">借用原因</th>
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 8%;">预计归还时间</th> 
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">是否已还</th>
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">归还日期</th> 
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 7%;">原使用部门</th> 
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">原使用人</th>
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 7%;">原资产位置</th> 
-      <th style="text-align:center;font-size:10px;font-weight:bold;width: 7%;">现存放位置</th> 
-    </tr>  
-  </thead>
-   <tbody>
+  <table id="testid" class="layui-table font" style="text-align:center;margin:10px;0px; ">
+    <colgroup>
+      <col width="150">
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th style="text-align:center;font-size:10px;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'
+            value='' type='checkbox' onclick="selectAll(this,'entry.ids[]')"></th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">序号</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产编码</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产名称</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">计量单位</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">数量</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">借用原因</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 8%;">预计归还时间</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">是否已还</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">归还日期</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 7%;">原使用部门</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">原使用人</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 7%;">原资产位置</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 7%;">现存放位置</th>
+      </tr>
+    </thead>
+    <tbody>
       <% if @assetTurnoverDetailEntry.nil?%>
-       <tr class="trr"  onclick =>
-                <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'/></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true">1</td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="true"></td>
-                <td class="tdd1 fdate " contenteditable="false" ></td>
-                <td><input class='awsui-checkbox'    type='checkbox'  disabled='true'></td>
-                <td style="text-align:center;font-size:8px;" class="tdd1 fdatetd " contenteditable="false" > </td>
-                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false" ></td>
-                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
-                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false" ></td>
-                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="true" ></td>  
-              </tr>
+      <tr class="trr" onclick=>
+        <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox' /></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true">1</td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="true"></td>
+        <td class="tdd1 fdate " contenteditable="false"></td>
+        <td><input class='awsui-checkbox' type='checkbox' disabled='true'></td>
+        <td style="text-align:center;font-size:8px;" class="tdd1 fdatetd " contenteditable="false"> </td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="true"></td>
+      </tr>
       <%else%>
-          <% @assetTurnoverDetailEntry.each do |assetTurnoverDetailEntry| %>
-              <% @index=@index+1%>
-              <tr class="trr"   id=<%=assetTurnoverDetailEntry.id%>>
-                <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'/></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true"><%= @index %></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.assetcards_Code %></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.assetcards_name %></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.Unit %></td>
-                <td style="text-align:center;font-size:9px;"  class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.Amount %></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true"><%= assetTurnoverDetailEntry.Reasons_for_borrowing %></td>
-                <td style="text-align:center;font-size:9px;" class="tdd1 fdate" contenteditable="true" ><%= assetTurnoverDetailEntry.givebackPlanDate %></td>
-                 <% if   assetTurnoverDetailEntry.Has_Been_returned=='true'  %>
-                    <td   ><input class='awsui-checkbox' type='checkbox'   checked='checked'  disabled="true"></td> 
-                 <%else%>
-                    <td  ><input class='awsui-checkbox' type='checkbox' disabled="true" ></td>
-                 <%end%>
-                 <td style="text-align:center;font-size:8px;"  class="tdd1 fdatetd " contenteditable="false" ><%= assetTurnoverDetailEntry.givebackDate %></td> 
-                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false" ><%= assetTurnoverDetailEntry.Deptment %> </td>
-                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"><%= assetTurnoverDetailEntry.Employeeld %> </td>
-                <td style="text-align:center;font-size:10px;"  class="tdd1" contenteditable="false" ><%= assetTurnoverDetailEntry.Asset_seat %> </td>
-                <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="true" ><%= assetTurnoverDetailEntry.Last_seat %></td>  
-              </tr>
-          <%end%>
-      <%end%> 
-  </tbody>
-</table>  
-</form> 
-
-
-<p id=IsRresh_2 , hidden="hidden" > <%=   session[:IsRresh_2]%> </p>
- 
+      <% @assetTurnoverDetailEntry.each do |assetTurnoverDetailEntry| %>
+      <% @index=@index+1%>
+      <tr class="trr" id=<%=assetTurnoverDetailEntry.id%>>
+        <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox' /></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true"><%= @index %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= assetTurnoverDetailEntry.assetcards_Code %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= assetTurnoverDetailEntry.assetcards_name %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= assetTurnoverDetailEntry.Unit %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= assetTurnoverDetailEntry.Amount %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true">
+          <%= assetTurnoverDetailEntry.Reasons_for_borrowing %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1 fdate" contenteditable="true">
+          <%= assetTurnoverDetailEntry.givebackPlanDate %></td>
+        <% if   assetTurnoverDetailEntry.Has_Been_returned=='true'  %>
+        <td><input class='awsui-checkbox' type='checkbox' checked='checked' disabled="true"></td>
+        <%else%>
+        <td><input class='awsui-checkbox' type='checkbox' disabled="true"></td>
+        <%end%>
+        <td style="text-align:center;font-size:8px;" class="tdd1 fdatetd " contenteditable="false">
+          <%= assetTurnoverDetailEntry.givebackDate %></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false">
+          <%= assetTurnoverDetailEntry.Deptment %> </td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false">
+          <%= assetTurnoverDetailEntry.Employeeld %> </td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false">
+          <%= assetTurnoverDetailEntry.Asset_seat %> </td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="true">
+          <%= assetTurnoverDetailEntry.Last_seat %></td>
+      </tr>
+      <%end%>
+      <%end%>
+    </tbody>
+  </table>
+</form>
+<p id=IsRresh_2 , hidden="hidden"> <%=   session[:IsRresh_2]%> </p>
 <script>
-$(document).ready(function(){ 
- if($("#id").text()!="")
- { 
-   $("#asset_turnover_detail_Document_number").attr("disabled","disabled");
- }
-  if($("#IsRresh_2").text().replace(/^\s+|\s+$/g,"")=='false')
-  { 
-      location.reload();
-  }  
-})
+  $(document).ready(function () {
+    if ($("#id").text() != "") {
+      $("#asset_turnover_detail_Document_number").attr("disabled", "disabled");
+    }
+    if ($("#IsRresh_2").text().replace(/^\s+|\s+$/g, "") == 'false') {
+      //location.reload();
+    }
+  })
 </script>
-
-
-
-
-
-
 <script>
-
-function updatestatus(id,status,usestatus){ 
-  if(status=="审核")
-  {
-    var result=Save_with_updatestatus("审核");  
-    if(result.code!=200)
-    {
-      alert(result.message);
-      return;
-    } 
-  }
-  //2021-1-14 阿斌修改，审核取消修改状态功能
-  // var tb = document.getElementById('testid');    // table 的 id
-  // var rows = tb.rows;                           // 获取表格所有行 
-  // var id_list=new Array();
-  // for(i=1;i<rows.length;i++)
-  // {  
-  //   id_list[i-1]=rows[i].cells[2].innerHTML; 
-  // }      
+  function updatestatus(id, status, usestatus) {
+    if (status == "审核") {
+      var result = Save_with_updatestatus("审核");
+      if (result.code != 200) {
+        alert(result.message);
+        return;
+      }
+    }
     //2021-1-14 阿斌修改，审核取消修改状态功能
- $.ajax({
-   type:"post", 
-   url:"/asset_turnover_details_Update_Fbillstatus", 
-   data:{ 
-     "id" :id, 
-     "Status":status
-     }, 
-   success: function(res){
-     if(res.code==200)
-     {
-       alert(res.message)
-       location.reload();
-     }
-     else if (res.code==201)
-     {  
-       alert(res.message) 
-       return;
-     }
-   } 
- }); 
-  //2021-1-14 阿斌修改，审核取消修改状态功能
-//  $.ajax({
-//    type:"post", 
-//    url:"/assetcards_Update_Status", 
-//    data:{ 
-//      "id_list" :id_list, 
-//      "Status":usestatus
-//      }, 
-//    success: function(){  
-//      } 
-//  });  
-//2021-1-14 阿斌修改，审核取消修改状态功能
-}
-
-
-function back(){ 
-
- 
-    var result=Save_with_updatestatus("归还");  
+    // var tb = document.getElementById('testid');    // table 的 id
+    // var rows = tb.rows;                           // 获取表格所有行 
+    // var id_list=new Array();
+    // for(i=1;i<rows.length;i++)
+    // {  
+    //   id_list[i-1]=rows[i].cells[2].innerHTML; 
+    // }      
+    //2021-1-14 阿斌修改，审核取消修改状态功能
+    $.ajax({
+      type: "post",
+      url: "/asset_turnover_details_Update_Fbillstatus",
+      data: {
+        "id": id,
+        "Status": status
+      },
+      success: function (res) {
+        if (res.code == 200) {
+          alert(res.message)
+          location.reload();
+        } else if (res.code == 201) {
+          alert(res.message)
+          return;
+        }
+      }
+    });
+    //2021-1-14 阿斌修改，审核取消修改状态功能
+    //  $.ajax({
+    //    type:"post", 
+    //    url:"/assetcards_Update_Status", 
+    //    data:{ 
+    //      "id_list" :id_list, 
+    //      "Status":usestatus
+    //      }, 
+    //    success: function(){  
+    //      } 
+    //  });  
+    //2021-1-14 阿斌修改，审核取消修改状态功能
+  }
+  function back() {
+    var result = Save_with_updatestatus("归还");
     console.log(result);
-    if(result.code!=200)
-    {
+    if (result.code != 200) {
       alert(result.message);
       return;
     }
-    var tb = document.getElementById('testid');    // table 的 id
-  var rows = tb.rows;
-  var id_list=new Array();
-  var index= 0;
-  for (i=1;i<rows.length;i++)
-  { 
-     
-    if(rows[i].cells[9].innerHTML!="" &&!rows[i].cells[8].childNodes[0].checked)//2021-1-15阿斌修改，已经归还了就不用再归还了
-    {
-      id_list[index]=rows[i].cells[2].innerHTML;
-      index++;
-    }   
-  } 
-  if(index==0)
-  {
-    alert("没有存在要归还的资产！")
-    return;
-  }
-  var tb = document.getElementById('testid');    // table 的 id
-  var rows = tb.rows;
-  var id_list=new Array();
-  var index= 0;
-  for (i=1;i<rows.length;i++)
-  { 
-    if(rows[i].cells[9].innerHTML!="")
-    {
-      id_list[index]=rows[i].cells[2].innerHTML;
-      index++;
-    }   
-  }  
-  $.ajax({
-   type:"post", 
-   url:"/assetcards_Update_Status", 
-   data:{ 
-     "id_list" :id_list, 
-     "Status":"可用"
-     }, 
-   success: function(){  
-     },
-			error :function(){  
-        } 
- });
-}
-
-</script>
- 
- <script> 
-layui.use('laydate', function(){ 
-  var laydate = layui.laydate;
-    $('.fdate').each(function(){ 
-    laydate.render({
-			elem: this     
-	});
-  })
-
-  if($("#asset_turnover_detail_fbillstatus").val()=="已审核")
-  {
-      $('.fdatetd').each(function(){ 
-      laydate.render({
-        elem: this     
+    var tb = document.getElementById('testid'); // table 的 id
+    var rows = tb.rows;
+    var id_list = new Array();
+    var index = 0;
+    for (i = 1; i < rows.length; i++) {
+      if (rows[i].cells[9].innerHTML != "" && !rows[i].cells[8].childNodes[0].checked) //2021-1-15阿斌修改，已经归还了就不用再归还了
+      {
+        id_list[index] = rows[i].cells[2].innerHTML;
+        index++;
+      }
+    }
+    if (index == 0) {
+      alert("没有存在要归还的资产！")
+      return;
+    }
+    var tb = document.getElementById('testid'); // table 的 id
+    var rows = tb.rows;
+    var id_list = new Array();
+    var index = 0;
+    for (i = 1; i < rows.length; i++) {
+      if (rows[i].cells[9].innerHTML != "") {
+        id_list[index] = rows[i].cells[2].innerHTML;
+        index++;
+      }
+    }
+    $.ajax({
+      type: "post",
+      url: "/assetcards_Update_Status",
+      data: {
+        "id_list": id_list,
+        "Status": "可用"
+      },
+      success: function () {},
+      error: function () {}
     });
-    }) 
-  $("input").prop('disabled','disabled'); 
-  $("input").css('background-color','#F5F5F5'); 
-  $("td").prop('contenteditable','false'); 
-    $("td").css('background-color','#F5F5F5');   
-      $("image").prop('disabled','disabled');
-  } 
-});   
+  }
 </script>
- 
-
- <script>  
-      $('td').click(function(e){   
-        if(e.currentTarget.className !="")
-        {  
-              if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
-              {
-                e.currentTarget.parentNode.firstElementChild.children[0].checked=false;
-              }
-              else
-              {
-                e.currentTarget.parentNode.firstElementChild.children[0].checked=true;
-              }
-        }   
-      }) 
-//新增行
-function addrow(){  
-    if($("#asset_turnover_detail_fbillstatus").val()=="已审核")
-    {
+<script>
+  layui.use('laydate', function () {
+    var laydate = layui.laydate;
+    $('.fdate').each(function () {
+      laydate.render({
+        elem: this
+      });
+    })
+    if ($("#asset_turnover_detail_fbillstatus").val() == "已审核") {
+      $('.fdatetd').each(function () {
+        laydate.render({
+          elem: this
+        });
+      })
+      $("input").prop('disabled', 'disabled');
+      $("input").css('background-color', '#F5F5F5');
+      $("td").prop('contenteditable', 'false');
+      $("td").css('background-color', '#F5F5F5');
+      $("image").prop('disabled', 'disabled');
+    }
+  });
+</script>
+<script>
+  $('td').click(function (e) {
+    if (e.currentTarget.className != "") {
+      if (e.currentTarget.parentNode.firstElementChild.children[0].checked) {
+        e.currentTarget.parentNode.firstElementChild.children[0].checked = false;
+      } else {
+        e.currentTarget.parentNode.firstElementChild.children[0].checked = true;
+      }
+    }
+  })
+  //新增行
+  function addrow() {
+    if ($("#asset_turnover_detail_fbillstatus").val() == "已审核") {
       alert("该单据已经审核，不允许增加行！")
       return;
     }
-    
-   var c=document.getElementById('testid');//获得表格的信息  
-   if( c.length==1)//如果是向一个空表增加一行
-   {
-     var x=c.insertRow(1);//向空表插入一行  
-     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行  
-     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
-     {
-       var y=x.insertCell(i); 
-     }
-   }
-   else
-   { 
-     var z=c.rows[0].cells;//如果不是空表，首先获得表格有多少列，先获取再插入新行 
-     var index = c.rows[c.rows.length-1].cells[1].innerHTML*1;
-     var index =c.rows.length *1;
-     var x=c.insertRow(c.rows.length);
-     x.id=0;
-     for(var i=0;i<z.length;i++)//依次向新行插入表格列数的单元格
-     { 
-       var y=x.insertCell(i);  
-       if(i==0)
-       { 
-              y.innerHTML="<input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]'  type='checkbox'/>";
-       }
-       else if(i==1)
-       {
-         y.innerHTML=index;
-         y.setAttribute("style","text-align:center;font-size:10px;")
-       }
-       else if (i==8)
-       {
-         y.innerHTML="       <td><input class='awsui-checkbox' type='checkbox' disabled='true' ></td>";
-            y.setAttribute("contenteditable","false");
-       }
-       else if (i==7)
-      {
-          var laydate = layui.laydate
-          console.log(laydate) 
-          laydate.render({
-              elem: y 
-            })
-            y.setAttribute("style","text-align:center;font-size:8px;")
-            y.setAttribute("contenteditable","false");
-      }
-       else
-       {
-         y.setAttribute("contenteditable","true");
-         y.setAttribute("style","text-align:center;font-size:10px;")
-       }
-       if(i==2||i==3||i==4||i==5||i==10||i==11||i==12)
-       {
-            y.setAttribute("contenteditable","false");
-       }
-       y.setAttribute("class","tdd1"); 
-     } 
-   }
-}
- //删除行
-function delrow(){
-  if($("#asset_turnover_detail_fbillstatus").val()=="已审核")
+    var c = document.getElementById('testid'); //获得表格的信息  
+    if (c.length == 1) //如果是向一个空表增加一行
     {
+      var x = c.insertRow(1); //向空表插入一行  
+      var z = c.rows[0].cells; //如果不是空表，首先获得表格有多少列，先获取再插入新行  
+      for (var i = 0; i < z.length; i++) //依次向新行插入表格列数的单元格
+      {
+        var y = x.insertCell(i);
+      }
+    } else {
+      var z = c.rows[0].cells; //如果不是空表，首先获得表格有多少列，先获取再插入新行 
+      var index = c.rows[c.rows.length - 1].cells[1].innerHTML * 1;
+      var index = c.rows.length * 1;
+      var x = c.insertRow(c.rows.length);
+      x.id = 0;
+      for (var i = 0; i < z.length; i++) //依次向新行插入表格列数的单元格
+      {
+        var y = x.insertCell(i);
+        if (i == 0) {
+          y.innerHTML = "<input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]'  type='checkbox'/>";
+        } else if (i == 1) {
+          y.innerHTML = index;
+          y.setAttribute("style", "text-align:center;font-size:10px;")
+        } else if (i == 8) {
+          y.innerHTML = "       <td><input class='awsui-checkbox' type='checkbox' disabled='true' ></td>";
+          y.setAttribute("contenteditable", "false");
+        } else if (i == 7) {
+          var laydate = layui.laydate
+          console.log(laydate)
+          laydate.render({
+            elem: y
+          })
+          y.setAttribute("style", "text-align:center;font-size:8px;")
+          y.setAttribute("contenteditable", "false");
+        } else {
+          y.setAttribute("contenteditable", "true");
+          y.setAttribute("style", "text-align:center;font-size:10px;")
+        }
+        if (i == 2 || i == 3 || i == 4 || i == 5 || i == 10 || i == 11 || i == 12) {
+          y.setAttribute("contenteditable", "false");
+        }
+        y.setAttribute("class", "tdd1");
+      }
+    }
+  }
+  //删除行
+  function delrow() {
+    if ($("#asset_turnover_detail_fbillstatus").val() == "已审核") {
       alert("该单据已经审核，不允许删除行！")
       return;
     }
-    var items=document.getElementsByName("entry.ids[]"); 
-    var x=document.getElementById("testid"); 
-    var IsCheckCount=0;
-    for(var i=items.length-1;i>=0;i--){
-      if(items[i].checked)
-      {  
-          IsCheckCount++; 
-          x=document.getElementById("testid"); 
-          var row = x.rows;    
-          for(j=i+2;j<row.length;j++)
-          {   
-            row[j].cells[1].innerHTML =row[j].cells[1].innerHTML *1 -1
-          }
-          if(row[i].cells[8].childNodes[0].checked)
-          {
-            alert("第"+(i+1).toString()+"行该资产编码已经归还，不允许删除！")
-            return;
-          }
-          x.deleteRow(i+1);//删除一行 
+    var items = document.getElementsByName("entry.ids[]");
+    var x = document.getElementById("testid");
+    var IsCheckCount = 0;
+    for (var i = items.length - 1; i >= 0; i--) {
+      if (items[i].checked) {
+        IsCheckCount++;
+        x = document.getElementById("testid");
+        var row = x.rows;
+        for (j = i + 2; j < row.length; j++) {
+          row[j].cells[1].innerHTML = row[j].cells[1].innerHTML * 1 - 1
+        }
+        if (row[i].cells[8].childNodes[0].checked) {
+          alert("第" + (i + 1).toString() + "行该资产编码已经归还，不允许删除！")
+          return;
+        }
+        x.deleteRow(i + 1); //删除一行 
       }
     }
-      if(IsCheckCount==0)
-      {
-        alert("请选择删除的数据！"); 
-      } 
-}
-
-
-//全选
-   function selectAll(obj,type){ 
-        //创建数组
-        var arr=new Array();
-        //获取所有id为“cb1”的复选框
-        var items=document.getElementsByName(type);
-        //判断复选框是否选中
-        if(obj.checked)
-        {
-        //循环将所有name为"category"的复选框设置为选中状态
-              for(var i=0;i<items.length;i++){
-              //alert(items[i]);
-              items[i].checked=true;
-              }
-        }
-        else
-        {
-              //循环将所有name为"category"的复选框设置为非选中状态
-              for(var i=0;i<items.length;i++)
-              {
-              //alert(items[i]);
-              items[i].checked=false;
-              }
-        }
-    }      
- </script>
-
+    if (IsCheckCount == 0) {
+      alert("请选择删除的数据！");
+    }
+  }
+  //全选
+  function selectAll(obj, type) {
+    //创建数组
+    var arr = new Array();
+    //获取所有id为“cb1”的复选框
+    var items = document.getElementsByName(type);
+    //判断复选框是否选中
+    if (obj.checked) {
+      //循环将所有name为"category"的复选框设置为选中状态
+      for (var i = 0; i < items.length; i++) {
+        //alert(items[i]);
+        items[i].checked = true;
+      }
+    } else {
+      //循环将所有name为"category"的复选框设置为非选中状态
+      for (var i = 0; i < items.length; i++) {
+        //alert(items[i]);
+        items[i].checked = false;
+      }
+    }
+  }
+</script>
 <script>
-function Save(){  
-var  id=document.getElementById("id").innerText; 
-var  Document_number=document.getElementById("asset_turnover_detail_Document_number").value; 
-var  Borrowing_date=document.getElementById("asset_turnover_detail_Borrowing_date").value;
-var  Borrowing_Department=document.getElementById("asset_turnover_detail_Borrowing_Department").value;
-var  Borrowed_To_id=document.getElementById("asset_turnover_detail_Borrowed_To_id").value;
-var  Loaner=document.getElementById("asset_turnover_detail_Loaner").value;  
-var array1 = new Array();
-var  array_id = new Array(); 
-var tb = document.getElementById('testid');    // table 的 id
-var rows = tb.rows;                           // 获取表格所有行 
-var t=0;
-for(var i = 1; i<rows.length; i++ ){
-  console.log(rows[i]);
-  array_id[i-1]=rows[i].id;
-  var array2 = new Array(); 
-   for(var j = 2; j<rows[i].cells.length; j++ ){    // 遍历该行的 td      
-    if(j==8)
-    {  
-        array2[j-2]=rows[i].cells[j].children[0].checked; 
+  function Save() {
+    var id = document.getElementById("id").innerText;
+    var Document_number = document.getElementById("asset_turnover_detail_Document_number").value;
+    var Borrowing_date = document.getElementById("asset_turnover_detail_Borrowing_date").value;
+    var Borrowing_Department = document.getElementById("asset_turnover_detail_Borrowing_Department").value;
+    var Borrowed_To_id = document.getElementById("asset_turnover_detail_Borrowed_To_id").value;
+    var Loaner = document.getElementById("asset_turnover_detail_Loaner").value;
+    var array1 = new Array();
+    var array_id = new Array();
+    var tb = document.getElementById('testid'); // table 的 id
+    var rows = tb.rows; // 获取表格所有行 
+    var t = 0;
+    for (var i = 1; i < rows.length; i++) {
+      console.log(rows[i]);
+      array_id[i - 1] = rows[i].id;
+      var array2 = new Array();
+      for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td      
+        if (j == 8) {
+          array2[j - 2] = rows[i].cells[j].children[0].checked;
+        } else {
+          array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '');
+        }
+      }
+      array2[rows[i].cells.length - 2] = rows[i].id;
+      array1[i - 1] = array2;
     }
-    else
-    {
-        array2[j-2]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
-    }
-  }
-   array2[rows[i].cells.length-2]=rows[i].id;
-   array1[i-1]=array2;
-}  
- $.ajax({
-   type:"post", 
-   url:"/asset_turnover_details_save_all", 
-   data:{ 
-     "type":"保存",
-     "array_id" :array_id,
-      "datas": array1,
-      "id":id,
-      "Borrowing_Department":Borrowing_Department,
-      "Borrowed_To_id":Borrowed_To_id,
-      "Loaner":Loaner,
-      "Document_number":Document_number,
-      "Borrowing_date":Borrowing_date
-     }, 
-     success: function(res){
+    $.ajax({
+      type: "post",
+      url: "/asset_turnover_details_save_all",
+      data: {
+        "type": "保存",
+        "array_id": array_id,
+        "datas": array1,
+        "id": id,
+        "Borrowing_Department": Borrowing_Department,
+        "Borrowed_To_id": Borrowed_To_id,
+        "Loaner": Loaner,
+        "Document_number": Document_number,
+        "Borrowing_date": Borrowing_date
+      },
+      success: function (res) {
         alert(res.message);
-         if(res.code == 200)
-         {
-           var  path=  "/asset_turnover_details/"+res.id+"/edit" ;    
-          window.location =path ;
-           //location.reload();
-         } 
-     } 
- }); 
-
-
-
-//2021-1-14 阿斌修改，保存之后直接修改状态
-
-
-  var tb = document.getElementById('testid');    // table 的 id
-  var rows = tb.rows;                           // 获取表格所有行 
-  var id_list=new Array();
-  for(i=1;i<rows.length;i++)
-  {  
-    id_list[i-1]=rows[i].cells[2].innerHTML; 
-  }       
- $.ajax({
-   type:"post", 
-   url:"/assetcards_Update_Status", 
-   data:{ 
-     "id_list" :id_list, 
-     "Status":"借出"
-     }, 
-   success: function(){  
-     } 
- });  
-
-
-//2021-1-14 阿斌修改，保存之后直接修改状态 
-} 
-
-function Save_with_updatestatus(type){  
-  var result=new Array();
-var  id=document.getElementById("id").innerText; 
-var  Document_number=document.getElementById("asset_turnover_detail_Document_number").value; 
-var  Borrowing_date=document.getElementById("asset_turnover_detail_Borrowing_date").value;
-var  Borrowing_Department=document.getElementById("asset_turnover_detail_Borrowing_Department").value;
-var  Borrowed_To_id=document.getElementById("asset_turnover_detail_Borrowed_To_id").value;
-var  Loaner=document.getElementById("asset_turnover_detail_Loaner").value;  
-var array1 = new Array();
-var  array_id = new Array(); 
-var tb = document.getElementById('testid');    // table 的 id
-var rows = tb.rows;                           // 获取表格所有行 
-var t=0;
-for(var i = 1; i<rows.length; i++ ){
-  console.log(rows[i]);
-  array_id[i-1]=rows[i].id;
-  var array2 = new Array(); 
-   for(var j = 2; j<rows[i].cells.length; j++ ){    // 遍历该行的 td      
-    if(j==8)
-    {  
-        array2[j-2]=rows[i].cells[j].children[0].checked; 
+        if (res.code == 200) {
+          var path = "/asset_turnover_details/" + res.id + "/edit";
+          window.location = path;
+          //location.reload();
+        }
+      }
+    });
+    //2021-1-14 阿斌修改，保存之后直接修改状态
+    var tb = document.getElementById('testid'); // table 的 id
+    var rows = tb.rows; // 获取表格所有行 
+    var id_list = new Array();
+    for (i = 1; i < rows.length; i++) {
+      id_list[i - 1] = rows[i].cells[2].innerHTML;
     }
-    else
-    {
-        array2[j-2]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
-    }
+    $.ajax({
+      type: "post",
+      url: "/assetcards_Update_Status",
+      data: {
+        "id_list": id_list,
+        "Status": "借出"
+      },
+      success: function () {}
+    });
+    //2021-1-14 阿斌修改，保存之后直接修改状态 
   }
-   array2[rows[i].cells.length-2]=rows[i].id;
-   array1[i-1]=array2;
-} 
-
- $.ajax({
-   type:"post", 
-   async : false, 
-   url:"/asset_turnover_details_save_all",  
-   data:{ 
-     "type":type,
-     "array_id" :array_id,
-      "datas": array1,
-      "id":id,
-      "Borrowing_Department":Borrowing_Department,
-      "Borrowed_To_id":Borrowed_To_id,
-      "Loaner":Loaner,
-      "Document_number":Document_number,
-      "Borrowing_date":Borrowing_date
-     }, 
-     success: function(res){   
-       result=res;
-     } 
- });      
- return result;
-} 
-
-
- </script>
-
-
-
-  <script type="text/javascript">
- function copyText(modalid)
- {
-   if($("#asset_turnover_detail_fbillstatus").val()=="已审核")
-    {
+  function Save_with_updatestatus(type) {
+    var result = new Array();
+    var id = document.getElementById("id").innerText;
+    var Document_number = document.getElementById("asset_turnover_detail_Document_number").value;
+    var Borrowing_date = document.getElementById("asset_turnover_detail_Borrowing_date").value;
+    var Borrowing_Department = document.getElementById("asset_turnover_detail_Borrowing_Department").value;
+    var Borrowed_To_id = document.getElementById("asset_turnover_detail_Borrowed_To_id").value;
+    var Loaner = document.getElementById("asset_turnover_detail_Loaner").value;
+    var array1 = new Array();
+    var array_id = new Array();
+    var tb = document.getElementById('testid'); // table 的 id
+    var rows = tb.rows; // 获取表格所有行 
+    var t = 0;
+    for (var i = 1; i < rows.length; i++) {
+      console.log(rows[i]);
+      array_id[i - 1] = rows[i].id;
+      var array2 = new Array();
+      for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td      
+        if (j == 8) {
+          array2[j - 2] = rows[i].cells[j].children[0].checked;
+        } else {
+          array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '');
+        }
+      }
+      array2[rows[i].cells.length - 2] = rows[i].id;
+      array1[i - 1] = array2;
+    }
+    $.ajax({
+      type: "post",
+      async: false,
+      url: "/asset_turnover_details_save_all",
+      data: {
+        "type": type,
+        "array_id": array_id,
+        "datas": array1,
+        "id": id,
+        "Borrowing_Department": Borrowing_Department,
+        "Borrowed_To_id": Borrowed_To_id,
+        "Loaner": Loaner,
+        "Document_number": Document_number,
+        "Borrowing_date": Borrowing_date
+      },
+      success: function (res) {
+        result = res;
+      }
+    });
+    return result;
+  }
+</script>
+<script type="text/javascript">
+  function copyText(modalid) {
+    if ($("#asset_turnover_detail_fbillstatus").val() == "已审核") {
       alert("该单据已经审核，不允许操作！")
       return;
     }
-   $('#'+modalid.id).modal('show');
- }  
-    </script>
-
-<%= render    'assetcards/AssetcardsModal.html.erb'  %> 
+    $('#' + modalid.id).modal('show');
+  }
+</script>
+<%= render    'assetcards/AssetcardsModal.html.erb' ,  fbillnotype: "资产借出归还单" %>
 <%= render    'departments/DepartmentModal.html.erb',  id: "asset_turnover_detail_Borrowing_Department" ,userid: "asset_turnover_detail_Loaner"%>
-<%= render    'users/UserModal.html.erb',  id: "asset_turnover_detail_Loaner"  ,department: "asset_turnover_detail_Borrowing_Department" %> 
+<%= render    'users/UserModal.html.erb',  id: "asset_turnover_detail_Loaner"  ,department: "asset_turnover_detail_Borrowing_Department" %>

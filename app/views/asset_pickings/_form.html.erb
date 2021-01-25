@@ -1,0 +1,67 @@
+<%= form_with(model: asset_picking, local: true) do |form| %>
+  <% if asset_picking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_picking.errors.count, "error") %> prohibited this asset_picking from being saved:</h2>
+
+      <ul>
+        <% asset_picking.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :FBillno %>
+    <%= form.text_field :FBillno %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Type_of_business %>
+    <%= form.text_field :Type_of_business %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Picking_Date %>
+    <%= form.datetime_select :Picking_Date %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Picking_Dept %>
+    <%= form.text_field :Picking_Dept %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Picking_Employeeld %>
+    <%= form.text_field :Picking_Employeeld %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Fbillstatus %>
+    <%= form.text_field :Fbillstatus %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Creator %>
+    <%= form.text_field :Creator %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Approver %>
+    <%= form.text_field :Approver %>
+  </div>
+
+  <div class="field">
+    <%= form.label :CreateDate %>
+    <%= form.datetime_select :CreateDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ApproveDate %>
+    <%= form.datetime_select :ApproveDate %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

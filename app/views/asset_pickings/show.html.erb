@@ -1,0 +1,54 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fbillno:</strong>
+  <%= @asset_picking.FBillno %>
+</p>
+
+<p>
+  <strong>Type of business:</strong>
+  <%= @asset_picking.Type_of_business %>
+</p>
+
+<p>
+  <strong>Picking date:</strong>
+  <%= @asset_picking.Picking_Date %>
+</p>
+
+<p>
+  <strong>Picking dept:</strong>
+  <%= @asset_picking.Picking_Dept %>
+</p>
+
+<p>
+  <strong>Picking employeeld:</strong>
+  <%= @asset_picking.Picking_Employeeld %>
+</p>
+
+<p>
+  <strong>Fbillstatus:</strong>
+  <%= @asset_picking.Fbillstatus %>
+</p>
+
+<p>
+  <strong>Creator:</strong>
+  <%= @asset_picking.Creator %>
+</p>
+
+<p>
+  <strong>Approver:</strong>
+  <%= @asset_picking.Approver %>
+</p>
+
+<p>
+  <strong>Createdate:</strong>
+  <%= @asset_picking.CreateDate %>
+</p>
+
+<p>
+  <strong>Approvedate:</strong>
+  <%= @asset_picking.ApproveDate %>
+</p>
+
+<%= link_to 'Edit', edit_asset_picking_path(@asset_picking) %> |
+<%= link_to 'Back', asset_pickings_path %>

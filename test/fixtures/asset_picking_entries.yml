@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Code: MyString
+  name: MyString
+  Asset_type: MyString
+  Unit: MyString
+  Picking_Amount: 9.99
+  BackQty: 9.99
+  CanbackQty: 9.99
+  PickingFor: MyString
+  Asset_seat: MyString
+  Picking_seat: MyString
+  FSrcFbillno: MyString
+  FSrcFseq: MyString
+  AssetPicking_id: MyString
+
+two:
+  Code: MyString
+  name: MyString
+  Asset_type: MyString
+  Unit: MyString
+  Picking_Amount: 9.99
+  BackQty: 9.99
+  CanbackQty: 9.99
+  PickingFor: MyString
+  Asset_seat: MyString
+  Picking_seat: MyString
+  FSrcFbillno: MyString
+  FSrcFseq: MyString
+  AssetPicking_id: MyString

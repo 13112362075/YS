@@ -9,21 +9,26 @@ def  Update_Fbillstatus
   end
   message="";
   params[:id].each do |i|
+    puts i
     @assetcard_by_id=Assetcard.where("id = ?   and  fbillstatus = ?" ,i,  @status);   
     if @assetcard_by_id.length>0 
       message=message+"资产卡片编码为："+ @assetcard_by_id[0].assetCode+params[:fbillstatus].lstrip.rstrip+"失败！已经是"+ @status+"状态，不允许"+ params[:fbillstatus]+"\r\n"
-    else  
-      @assetcard_by_status=Assetcard.where("id = ? " ,i); 
-      @assetcard_by_status.update(fbillstatus:   @status);  
-      if params[:fbillstatus].lstrip.rstrip=='审核'
-        @assetcard_by_status.update(Approver:   session[:name],Approverdate:Time.now.strftime("%Y-%m-%d %H:%M:%S") );  
-      end
-      message=message+"资产卡片编码为："+ @assetcard_by_status[0].assetCode+"  "+ params[:fbillstatus].lstrip.rstrip+"成功!\r\n";  
+    else   
+      puts i
+      @assetcard_by_status=Assetcard.where("id = ? " ,i);  
+      if Update_Fbillstatus_Check("资产卡片", i,params[:fbillstatus].lstrip.rstrip).to_s .lstrip.lstrip==""
+        message=message+"资产卡片编码为："+ @assetcard_by_status[0].assetCode+"  "+ params[:fbillstatus].lstrip.rstrip+"成功!\r\n";  
+        @assetcard_by_status.update(fbillstatus:   @status);  
+        if params[:fbillstatus].lstrip.rstrip=="审核"
+          @assetcard_by_status.update(Approver:   session[:name],Approverdate:Time.now.strftime("%Y-%m-%d %H:%M:%S"));  
+        end
+      else
+        message=message+Update_Fbillstatus_Check("资产卡片", i,params[:fbillstatus].lstrip.rstrip).to_s  
+      end 
     end
   end
   render :json  => {code: 200,message: message }
-end
-
+end 
 
 
   def  Update_Status 
@@ -73,7 +78,7 @@ end
 
 
   def choose     
-    @type="multiple"
+    @FbillnoType=params[:type]
     @assetcard = Assetcard.find(params[:assetcardid])   
     @assetname = @assetcard.assetname
     @assetCode = @assetcard.assetCode
@@ -154,6 +159,8 @@ end
   # GET /assetcards/1
   # GET /assetcards/1.json
   def show
+    @assetcard=Assetcard.find(params[:id]);
+    @assetalter = Assetalter.where("assetCode=? and fbillstatus= '已审核' ", @assetcard.assetCode)
     @department = Department.all   
     @addtype = Addtype.all   
     @assetseate = Assetseate.all   
@@ -201,6 +208,7 @@ end
   # POST /assetcards
   # POST /assetcards.json
   def create
+    @assetalter = Assetalter.all 
     @department = Department.all   
     @addtype = Addtype.all   
     @assetseate = Assetseate.all   

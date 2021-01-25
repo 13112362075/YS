@@ -1,0 +1,25 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  FBillno: MyString
+  Type_of_business: MyString
+  Picking_Date: 2021-01-22 15:52:20
+  Picking_Dept: MyString
+  Picking_Employeeld: MyString
+  Fbillstatus: MyString
+  Creator: MyString
+  Approver: MyString
+  CreateDate: 2021-01-22 15:52:20
+  ApproveDate: 2021-01-22 15:52:20
+
+two:
+  FBillno: MyString
+  Type_of_business: MyString
+  Picking_Date: 2021-01-22 15:52:20
+  Picking_Dept: MyString
+  Picking_Employeeld: MyString
+  Fbillstatus: MyString
+  Creator: MyString
+  Approver: MyString
+  CreateDate: 2021-01-22 15:52:20
+  ApproveDate: 2021-01-22 15:52:20

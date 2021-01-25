@@ -1,0 +1,82 @@
+<%= form_with(model: asset_picking_entry, local: true) do |form| %>
+  <% if asset_picking_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_picking_entry.errors.count, "error") %> prohibited this asset_picking_entry from being saved:</h2>
+
+      <ul>
+        <% asset_picking_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Code %>
+    <%= form.text_field :Code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_type %>
+    <%= form.text_field :Asset_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Unit %>
+    <%= form.text_field :Unit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Picking_Amount %>
+    <%= form.text_field :Picking_Amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :BackQty %>
+    <%= form.text_field :BackQty %>
+  </div>
+
+  <div class="field">
+    <%= form.label :CanbackQty %>
+    <%= form.text_field :CanbackQty %>
+  </div>
+
+  <div class="field">
+    <%= form.label :PickingFor %>
+    <%= form.text_field :PickingFor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_seat %>
+    <%= form.text_field :Asset_seat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Picking_seat %>
+    <%= form.text_field :Picking_seat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :FSrcFbillno %>
+    <%= form.text_field :FSrcFbillno %>
+  </div>
+
+  <div class="field">
+    <%= form.label :FSrcFseq %>
+    <%= form.text_field :FSrcFseq %>
+  </div>
+
+  <div class="field">
+    <%= form.label :AssetPicking_id %>
+    <%= form.text_field :AssetPicking_id %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

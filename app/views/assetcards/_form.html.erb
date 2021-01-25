@@ -263,9 +263,8 @@
           class="layui-btn  ">审核</button></a>
       <a rel="nofollow"><button onclick="Update_Status(<%= @assetcard.id%>,'反审核')" type="button"
           class="layui-btn  ">反审核</button></a>
-      <a><button onclick="Alter(<%=@assetcard.id%>,this)" type="button" class="layui-btn  ">变更</button></a>
-      <a rel="nofollow"><button onclick="Show_Alter(assetalterModal,<%=@assetalter.length%>)" type="button"
-          class="layui-btn  ">变更记录</button></a>
+      <a><button onclick="Alter(this,<%=@assetcard.id%> )" type="button" class="layui-btn  ">变更</button></a>
+
       <a href="/assetcards" rel="nofollow"><button type="button" class="layui-btn  ">返回列表</button></a>
     </div>
     <% end %>
@@ -274,7 +273,7 @@
       $(document).ready(function () {
         console.log($("#IsRresh_2").text().replace(/^\s+|\s+$/g, ""));
         if ($("#IsRresh_2").text().replace(/^\s+|\s+$/g, "") == 'false') {
-          location.reload();
+          //location.reload();
         }
       })
     </script>
@@ -328,7 +327,8 @@
     </script>
 
     <script>
-      function Alter(id, element) { 
+      function Alter(element,id){
+        console.log("1")
         if ($("#assetcard_fbillstatus")[0].value != "已审核") {
           alert("该资产卡片还未审核，不允许变更！");
           return;
@@ -354,7 +354,6 @@
 
     <script>
       function Show_Alter(modalid, assetalterCount) {
-        console.log($("#assetcard_fbillstatus").text())
         if ($("#assetcard_fbillstatus")[0].value != "已审核") {
           alert("该资产卡片还未审核，不允许查看变更记录！");
           return;

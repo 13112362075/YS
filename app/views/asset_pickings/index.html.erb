@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Pickings</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fbillno</th>
+      <th>Type of business</th>
+      <th>Picking date</th>
+      <th>Picking dept</th>
+      <th>Picking employeeld</th>
+      <th>Fbillstatus</th>
+      <th>Creator</th>
+      <th>Approver</th>
+      <th>Createdate</th>
+      <th>Approvedate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_pickings.each do |asset_picking| %>
+      <tr>
+        <td><%= asset_picking.FBillno %></td>
+        <td><%= asset_picking.Type_of_business %></td>
+        <td><%= asset_picking.Picking_Date %></td>
+        <td><%= asset_picking.Picking_Dept %></td>
+        <td><%= asset_picking.Picking_Employeeld %></td>
+        <td><%= asset_picking.Fbillstatus %></td>
+        <td><%= asset_picking.Creator %></td>
+        <td><%= asset_picking.Approver %></td>
+        <td><%= asset_picking.CreateDate %></td>
+        <td><%= asset_picking.ApproveDate %></td>
+        <td><%= link_to 'Show', asset_picking %></td>
+        <td><%= link_to 'Edit', edit_asset_picking_path(asset_picking) %></td>
+        <td><%= link_to 'Destroy', asset_picking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Picking', new_asset_picking_path %>
