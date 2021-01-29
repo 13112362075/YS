@@ -1,6 +1,5 @@
 class CreateAssetScrappingEntries < ActiveRecord::Migration[6.0]
   def change
-    drop_table :asset_scrapping_entries
     create_table :asset_scrapping_entries do |t|
       t.string :Code
       t.string :Name
