@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_27_023210) do
+ActiveRecord::Schema.define(version: 2021_01_29_031211) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -41,6 +41,32 @@ ActiveRecord::Schema.define(version: 2021_01_27_023210) do
     t.string "Allocate_reason"
     t.string "Bring_in_Number"
     t.string "Bring_in_Confirm"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_disposal_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Code"
+    t.string "name"
+    t.string "Unit"
+    t.decimal "Amount", precision: 10
+    t.decimal "DisposeAmount", precision: 10
+    t.string "Asset_seat"
+    t.decimal "DisposePrice", precision: 10
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_disposals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "FBillno"
+    t.date "DisposeDate"
+    t.string "Disposemethod"
+    t.string "DisposeReason"
+    t.string "Fbillstatus"
+    t.string "Creator"
+    t.string "Approver"
+    t.datetime "CreateDate"
+    t.datetime "ApproveDate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

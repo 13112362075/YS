@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Fbillno:</strong>
+  <%= @asset_disposal.FBillno %>
+</p>
+
+<p>
+  <strong>Disposedate:</strong>
+  <%= @asset_disposal.DisposeDate %>
+</p>
+
+<p>
+  <strong>Disposemethod:</strong>
+  <%= @asset_disposal.Disposemethod %>
+</p>
+
+<p>
+  <strong>Disposereason:</strong>
+  <%= @asset_disposal.DisposeReason %>
+</p>
+
+<p>
+  <strong>Fbillstatus:</strong>
+  <%= @asset_disposal.Fbillstatus %>
+</p>
+
+<p>
+  <strong>Creator:</strong>
+  <%= @asset_disposal.Creator %>
+</p>
+
+<p>
+  <strong>Approver:</strong>
+  <%= @asset_disposal.Approver %>
+</p>
+
+<p>
+  <strong>Createdate:</strong>
+  <%= @asset_disposal.CreateDate %>
+</p>
+
+<p>
+  <strong>Approvedate:</strong>
+  <%= @asset_disposal.ApproveDate %>
+</p>
+
+<%= link_to 'Edit', edit_asset_disposal_path(@asset_disposal) %> |
+<%= link_to 'Back', asset_disposals_path %>

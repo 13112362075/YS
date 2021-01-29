@@ -1,0 +1,52 @@
+<%= form_with(model: asset_disposal_entry, local: true) do |form| %>
+  <% if asset_disposal_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_disposal_entry.errors.count, "error") %> prohibited this asset_disposal_entry from being saved:</h2>
+
+      <ul>
+        <% asset_disposal_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Code %>
+    <%= form.text_field :Code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Unit %>
+    <%= form.text_field :Unit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Amount %>
+    <%= form.text_field :Amount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :DisposeAmount %>
+    <%= form.text_field :DisposeAmount %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_seat %>
+    <%= form.text_field :Asset_seat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :DisposePrice %>
+    <%= form.text_field :DisposePrice %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

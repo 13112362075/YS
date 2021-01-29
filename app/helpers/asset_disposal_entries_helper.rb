@@ -1,0 +1,2 @@
+module AssetDisposalEntriesHelper
+end

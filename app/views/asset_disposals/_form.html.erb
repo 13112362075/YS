@@ -1,0 +1,62 @@
+<%= form_with(model: asset_disposal, local: true) do |form| %>
+  <% if asset_disposal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_disposal.errors.count, "error") %> prohibited this asset_disposal from being saved:</h2>
+
+      <ul>
+        <% asset_disposal.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :FBillno %>
+    <%= form.text_field :FBillno %>
+  </div>
+
+  <div class="field">
+    <%= form.label :DisposeDate %>
+    <%= form.date_select :DisposeDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Disposemethod %>
+    <%= form.text_field :Disposemethod %>
+  </div>
+
+  <div class="field">
+    <%= form.label :DisposeReason %>
+    <%= form.text_field :DisposeReason %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Fbillstatus %>
+    <%= form.text_field :Fbillstatus %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Creator %>
+    <%= form.text_field :Creator %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Approver %>
+    <%= form.text_field :Approver %>
+  </div>
+
+  <div class="field">
+    <%= form.label :CreateDate %>
+    <%= form.datetime_select :CreateDate %>
+  </div>
+
+  <div class="field">
+    <%= form.label :ApproveDate %>
+    <%= form.datetime_select :ApproveDate %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

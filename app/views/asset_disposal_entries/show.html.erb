@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Code:</strong>
+  <%= @asset_disposal_entry.Code %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @asset_disposal_entry.name %>
+</p>
+
+<p>
+  <strong>Unit:</strong>
+  <%= @asset_disposal_entry.Unit %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @asset_disposal_entry.Amount %>
+</p>
+
+<p>
+  <strong>Disposeamount:</strong>
+  <%= @asset_disposal_entry.DisposeAmount %>
+</p>
+
+<p>
+  <strong>Asset seat:</strong>
+  <%= @asset_disposal_entry.Asset_seat %>
+</p>
+
+<p>
+  <strong>Disposeprice:</strong>
+  <%= @asset_disposal_entry.DisposePrice %>
+</p>
+
+<%= link_to 'Edit', edit_asset_disposal_entry_path(@asset_disposal_entry) %> |
+<%= link_to 'Back', asset_disposal_entries_path %>

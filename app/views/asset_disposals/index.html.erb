@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Disposals</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Fbillno</th>
+      <th>Disposedate</th>
+      <th>Disposemethod</th>
+      <th>Disposereason</th>
+      <th>Fbillstatus</th>
+      <th>Creator</th>
+      <th>Approver</th>
+      <th>Createdate</th>
+      <th>Approvedate</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_disposals.each do |asset_disposal| %>
+      <tr>
+        <td><%= asset_disposal.FBillno %></td>
+        <td><%= asset_disposal.DisposeDate %></td>
+        <td><%= asset_disposal.Disposemethod %></td>
+        <td><%= asset_disposal.DisposeReason %></td>
+        <td><%= asset_disposal.Fbillstatus %></td>
+        <td><%= asset_disposal.Creator %></td>
+        <td><%= asset_disposal.Approver %></td>
+        <td><%= asset_disposal.CreateDate %></td>
+        <td><%= asset_disposal.ApproveDate %></td>
+        <td><%= link_to 'Show', asset_disposal %></td>
+        <td><%= link_to 'Edit', edit_asset_disposal_path(asset_disposal) %></td>
+        <td><%= link_to 'Destroy', asset_disposal, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Disposal', new_asset_disposal_path %>

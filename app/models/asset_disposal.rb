@@ -1,0 +1,2 @@
+class AssetDisposal < ApplicationRecord
+end

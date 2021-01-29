@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  FBillno: MyString
+  DisposeDate: 2021-01-29
+  Disposemethod: MyString
+  DisposeReason: MyString
+  Fbillstatus: MyString
+  Creator: MyString
+  Approver: MyString
+  CreateDate: 2021-01-29 11:12:05
+  ApproveDate: 2021-01-29 11:12:05
+
+two:
+  FBillno: MyString
+  DisposeDate: 2021-01-29
+  Disposemethod: MyString
+  DisposeReason: MyString
+  Fbillstatus: MyString
+  Creator: MyString
+  Approver: MyString
+  CreateDate: 2021-01-29 11:12:05
+  ApproveDate: 2021-01-29 11:12:05
