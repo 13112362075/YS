@@ -5,7 +5,6 @@ Rails.application.routes.draw do
   resources :asset_pickings
   resources :asset_picking_entries
   resources :assetalters
-  resources :asset_scrappings
   resources :asset_allocate_entries
   resources :inventory_plans
   resources :asset_turnover_detail_entries
@@ -41,6 +40,8 @@ Rails.application.routes.draw do
   post 'asset_allocates_destroy_multiple'  ,:to => 'asset_allocates#destroy_multiple'
   post 'asset_scrappings_destroy_multiple'  ,:to => 'asset_scrappings#destroy_multiple'
   post 'asset_pickings_destroy_multiple'  ,:to => 'asset_pickings#destroy_multiple'
+  post 'assetalters_destroy_multiple'  ,:to => 'assetalters#destroy_multiple'
+  post 'asset_disposals_destroy_multiple'  ,:to => 'asset_disposals#destroy_multiple'
 
    
   #导出
@@ -102,18 +103,20 @@ post 'asset_recoveries_save_all',:to =>'asset_recoveries#save_all'
 post 'asset_scrappings_save_all',:to =>'asset_scrappings#save_all'
 post 'asset_pickings_save_all',:to =>'asset_pickings#save_all'
 post 'assetalters_save_all',:to =>'assetalters#save_all'
+post 'asset_disposals_save_all',:to =>'asset_disposals#save_all'
 #获取数据接口
 get 'user_test',:to =>'users#test'
 get 'assetalters_Get_Data',:to =>'assetalters#Get_DataApi'
 get 'AssetList_Get_Data',:to =>'asset_list#Get_DataApi'
 get 'asset_pickings_Get_Data',:to =>'asset_pickings#Get_DataApi' 
- 
+get 'asset_disposals_Get_Data',:to =>'asset_disposals#Get_DataApi' 
 
 #更新状态
 post 'assetcards_Update_Fbillstatus',:to => 'assetcards#Update_Fbillstatus'
 post 'asset_turnover_details_Update_Fbillstatus',:to => 'asset_turnover_details#Update_Fbillstatus'
 post 'assetalters_Update_Fbillstatus',:to => 'assetalters#Update_Fbillstatus'
 post 'asset_pickings_Update_Fbillstatus',:to => 'asset_pickings#Update_fbillstatus'
+post 'asset_disposals_Update_Fbillstatus',:to => 'asset_disposals#Update_fbillstatus'
  
 #判断是否存在未审核的资产变更单
 get 'assetalters_Check_IsExist',:to => 'assetalters#Check_IsExist'

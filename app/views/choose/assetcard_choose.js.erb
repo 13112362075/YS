@@ -34,7 +34,17 @@ else if ('<%=@FbillnoType%>'.replace(/(^\s*)|(\s*$)/g, "")=="资产领用单")
   rowss[index].cells[12].innerText="<%= @Employeeld%>"
   
 }
-
+else if ('<%=@FbillnoType%>'.replace(/(^\s*)|(\s*$)/g, "")=="资产处置单")
+{
+   rowss[index].cells[2].innerText="<%= @assetCode%>"
+ rowss[index].cells[3].innerText="<%= @assetname%>"
+  rowss[index].cells[4].innerText="<%= @Unit_id%>"
+  rowss[index].cells[5].innerText="<%= @Amount%>"  
+  rowss[index].cells[6].innerText="<%= @Amount%>"   
+  rowss[index].cells[7].innerText="<%= @Assetseat_id%>" 
+   rowss[index].cells[8].innerText="<%= @Price%>" 
+  
+}
  $('#assetcardModal').modal('hide');
  
 

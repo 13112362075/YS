@@ -1,124 +1,281 @@
-<p id="notice"><%= notice %></p>
+ <script src="https://www.layuicdn.com/layui/layui.js"></script>
+ <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+ <%=javascript_pack_tag 'tabadd' %>
+ <style>
+   .layui-table-page select {
+     height: 26px;
+   }
 
-<h1>Assetalters</h1>
+   .layui-disabled {
+     background-color: #fff !important;
+   }
 
-<table>
-  <thead>
-    <tr>
-      <th>Fbillno</th>
-      <th>Assetcode</th>
-      <th>Assetname</th>
-      <th>Assettype</th>
-      <th>Unit</th>
-      <th>Amount</th>
-      <th>Assetstatus</th>
-      <th>Addtype</th>
-      <th>Buydate</th>
-      <th>Description</th>
-      <th>Orgainize</th>
-      <th>Entrydate</th>
-      <th>Price</th>
-      <th>Lastprice</th>
-      <th>Expectedperiod</th>
-      <th>Cnosp</th>
-      <th>Barcode</th>
-      <th>Mould</th>
-      <th>Assetseat</th>
-      <th>Client</th>
-      <th>Supplier</th>
-      <th>Department</th>
-      <th>Employeeld</th>
-      <th>Assetcode old</th>
-      <th>Assetname old</th>
-      <th>Assettype id old</th>
-      <th>Unit id old</th>
-      <th>Amount old</th>
-      <th>Assetstatus id old</th>
-      <th>Addtype id old</th>
-      <th>Buydate old</th>
-      <th>Description old</th>
-      <th>Orgainize id old</th>
-      <th>Entrydate old</th>
-      <th>Price old</th>
-      <th>Lastprice old</th>
-      <th>Expectedperiod old</th>
-      <th>Cnosp old</th>
-      <th>Barcode old</th>
-      <th>Mould old</th>
-      <th>Assetseat id old</th>
-      <th>Client old</th>
-      <th>Supplier old</th>
-      <th>Department id old</th>
-      <th>Employeeld old</th>
-      <th>Fbillstatus</th>
-      <th>Creator</th>
-      <th>Createdate</th>
-      <th>Approver</th>
-      <th>Approverdate</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
+   .layui-laypage select {
+     padding: 0px;
+     border-radius: 2px;
+     cursor: pointer;
+   }
 
-  <tbody>
-    <% @assetalters.each do |assetalter| %>
-      <tr>
-        <td><%= assetalter.Fbillno %></td>
-        <td><%= assetalter.assetCode %></td>
-        <td><%= assetalter.assetname %></td>
-        <td><%= assetalter.Assettype_id %></td>
-        <td><%= assetalter.Unit_id %></td>
-        <td><%= assetalter.Amount %></td>
-        <td><%= assetalter.Assetstatus_id %></td>
-        <td><%= assetalter.Addtype_id %></td>
-        <td><%= assetalter.BuyDate %></td>
-        <td><%= assetalter.description %></td>
-        <td><%= assetalter.Orgainize_id %></td>
-        <td><%= assetalter.Entrydate %></td>
-        <td><%= assetalter.Price %></td>
-        <td><%= assetalter.Lastprice %></td>
-        <td><%= assetalter.Expectedperiod %></td>
-        <td><%= assetalter.CNOSP %></td>
-        <td><%= assetalter.barcode %></td>
-        <td><%= assetalter.Mould %></td>
-        <td><%= assetalter.Assetseat_id %></td>
-        <td><%= assetalter.Client %></td>
-        <td><%= assetalter.Supplier %></td>
-        <td><%= assetalter.department_id %></td>
-        <td><%= assetalter.Employeeld %></td>
-        <td><%= assetalter.assetCode_Old %></td>
-        <td><%= assetalter.assetname_Old %></td>
-        <td><%= assetalter.Assettype_id_Old %></td>
-        <td><%= assetalter.Unit_id_Old %></td>
-        <td><%= assetalter.Amount_Old %></td>
-        <td><%= assetalter.Assetstatus_id_Old %></td>
-        <td><%= assetalter.Addtype_id_Old %></td>
-        <td><%= assetalter.BuyDate_Old %></td>
-        <td><%= assetalter.description_Old %></td>
-        <td><%= assetalter.Orgainize_id_Old %></td>
-        <td><%= assetalter.Entrydate_Old %></td>
-        <td><%= assetalter.Price_Old %></td>
-        <td><%= assetalter.Lastprice_Old %></td>
-        <td><%= assetalter.Expectedperiod_Old %></td>
-        <td><%= assetalter.CNOSP_Old %></td>
-        <td><%= assetalter.barcode_Old %></td>
-        <td><%= assetalter.Mould_Old %></td>
-        <td><%= assetalter.Assetseat_id_Old %></td>
-        <td><%= assetalter.Client_Old %></td>
-        <td><%= assetalter.Supplier_Old %></td>
-        <td><%= assetalter.department_id_Old %></td>
-        <td><%= assetalter.Employeeld_Old %></td>
-        <td><%= assetalter.fbillstatus %></td>
-        <td><%= assetalter.Creator %></td>
-        <td><%= assetalter.Createdate %></td>
-        <td><%= assetalter.Approver %></td>
-        <td><%= assetalter.Approverdate %></td>
-        <td><%= link_to 'Show', assetalter %></td>
-        <td><%= link_to 'Edit', edit_assetalter_path(assetalter) %></td>
-        <td><%= link_to 'Destroy', assetalter, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+   .layui-table-page {
+     text-align: center;
+   }
 
-<br>
+   .layui-laypage .layui-laypage-skip {
+     color: #000;
+   }
+
+   .layui-table-box {
+     position: relative;
+     overflow: hidden;
+     text-align: center;
+   }
+ </style>
+
+
+ <h1 style="text-align:center;">资产变更单</h1>
  
+ <div class="layui-btn-group " style="margin:10px;0px;">
+ 
+   <a id="a_update" rel="nofollow" class="linkActive" data-id="newasset_pickings" data-title="资产领用单-修改"><button
+       type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+
+   <a id="a_delete" rel="nofollow"><button onclick="model_delete('  <%=assetalters_destroy_multiple_path%>')" type="button"
+       class="layui-btn">删除</button></a>
+   <a rel="nofollow"><button type="button" onclick="Refresh()" class="layui-btn">刷新</button></a>
+ 
+ </div>
+
+ <table class="layui-hide" id="assetalters" lay-filter="assetalters"></table>
+
+
+
+
+
+
+ <script>
+   layui.use('table', function () {
+     var table = layui.table;
+     table.render({
+       elem: '#assetalters',
+       url: '/assetalters_Get_Data',
+       toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+         ,
+       defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+         title: '刷新',
+         layEvent: 'Refresh',
+         icon: "layui-icon-refresh-3"
+       }, { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+         title: '新增',
+         layEvent: 'Add',
+         icon: "layui-icon-addition"
+       }],
+       title: '用户数据表',
+       cols: [
+         [{
+             type: 'checkbox'
+           }, {
+             field: 'Fbillno',
+             width: 80,
+             title: '单据编号',
+             sort: true
+           }  //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+           , {
+             field: 'fbillstatus',
+             title: '单据状态',
+             sort: true
+           }, {
+             field: 'assetCode',
+             title: '资产编号',
+             sort: true
+           }, {
+             field: 'assetname',
+             title: '资产名称',
+             sort: true
+           } ,{
+             field: 'Approver',
+             title: '审核人',
+             sort: true
+           }
+           , {
+             field: 'Approverdate',
+             title: '审核日期'
+           }
+         ]
+       ],
+       page: true
+     });
+
+
+
+     //监听行单击事件（双击事件为：rowDouble）
+     table.on('row(test)', function (obj) {
+       var data = obj.data;
+       //console.log(data);
+       // layer.alert(JSON.stringify(data), {
+       //   title: '当前行数据：'
+       // }); 
+       //标注选中样式
+       obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+     });
+
+     //头工具栏事件
+     table.on('toolbar(test)', function (obj) {
+       var checkStatus = table.checkStatus(obj.config.id);
+       switch (obj.event) {
+         //自定义头工具栏右侧图标 - 提示
+         case 'Refresh':
+           Refresh();
+           break;
+       };
+     });
+   });
+ </script>
+
+
+
+
+
+
+
+
+
+
+ <script>
+   $(document).on("click", ".layui-table-body table.layui-table tbody td", function () {
+     if ($(this)[0].className == "") {
+       var index = $(this)[0].parentElement.attributes[0].value;
+       var tableBox = $(this).parents('.layui-table-box');
+       //存在固定列
+       tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+       //获取已选中列并取消选中 
+       //选中单击行
+       var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+         "td div.laytable-cell-checkbox div.layui-form-checkbox I");
+       checkCell.click();
+     }
+   });
+
+
+
+ 
+ </script>
+
+ 
+
+ <script type="text/javascript">
+   function test1() {
+     var array1 = new Array();
+     var tb = document.getElementById('tab'); // table 的 id
+     var rows = tb.rows; // 获取表格所有行
+     var t = 0;
+     for (var i = 1; i < rows.length; i++) { 
+       var array2 = new Array();
+       for (var j = 1; j < rows[i].cells.length; j++) { // 遍历该行的 td     
+         array2[j - 1] = rows[i].cells[j].innerHTML.replace('<br>', '');
+       }
+       array1[i - 1] = array2;
+     }
+
+     $.ajax({
+       type: "post",
+       url: "/save_multiple",
+       data: {
+         "asset_pickingsid": array1
+       },
+       success: function (res) {
+
+         if (res.code == 200) {
+           alert("删除成功！");
+           location.reload();
+         }
+       },
+       error: function () {
+         alert("删除失败！")
+       }
+     });
+   }
+ </script>
+
+
+ <script type="text/javascript">
+   // 获取选中的复选框项，保存为一个数组
+   function getCheckedCheckbox(checkboxClassName) {
+     var array = new Array();
+     var j = 0;
+     var selectedItems = document.getElementsByClassName(checkboxClassName);
+     for (var i = 1; i < selectedItems.length; i++) {
+       if (selectedItems[i].checked == true) {
+         array[j] = selectedItems[i].value;
+         j++;
+       }
+     }
+     return array;
+   }
+
+   function getCheckedCheckbox_update() {
+     
+     var table = layui.table;
+     var checkStatus = table.checkStatus('assetalters');
+     if (checkStatus.data.length > 1) {
+       alert("选择了多行数据，请选择1行！");
+       document.getElementById("a_update").href = "";
+       return false;
+     } else if (checkStatus.data.length == 0) {
+       alert("没有选择数据，请重新选择！");
+       document.getElementById("a_update").href = "";
+       document.getElementById("a_update").dataset.url = "";
+       return false;
+     }
+     var asset_pickings_id = "/assetalters/" + checkStatus.data[0].id + "/edit";
+     document.getElementById("a_update").dataset.url = asset_pickings_id
+ 
+   }
+ </script>
+
+
+ <script>
+   function model_delete(path) {
+     if (!confirm('你确定要删除吗？')) {
+       return false
+     }
+     var items = new Array();
+     items = getCheckedCheckbox("awsui-checkbox");
+     var table = layui.table;
+     var checkStatus = table.checkStatus('assetalters').data;
+     for (var i = 0; i < checkStatus.length; i++) {
+       items[i] = checkStatus[i].id
+     }
+     if(items.length==0)
+     {
+       alert("请选择单据！");
+       return;
+     }
+     var resturl = path;
+     $.ajax({
+       type: "post",
+       url: resturl,
+       data: {
+         "assetaltersid": items
+       },
+       success: function (res) {
+         if (res.code == 200) {
+           alert(res.message);
+           location.reload();
+         }
+         else 
+         {
+           alert(res.message);
+         }
+       } 
+     });
+   }
+
+   function Refresh() {
+     location.reload([true])
+   }
+
+   $(document).ready(function () {
+     $("#progress").hide();
+   });
+ </script>

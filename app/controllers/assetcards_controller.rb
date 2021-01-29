@@ -96,6 +96,7 @@ end
     @Assetstatus_id = @assetcard.Assetstatus_id
     @Employeeld = @assetcard.Employeeld
     @Assetseat_id = @assetcard.Assetseat_id 
+    @Price = @assetcard.Price 
     @row =params[:row]
     @id=   params[:idlist] 
     @isaddrow=params[:isaddrow]     

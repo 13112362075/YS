@@ -66,6 +66,7 @@
 <a data-url="/asset_pickings" data-id="newasset_pickings" data-title="资产领用单-列表" class="linkActive"
   rel="nofollow"><button type="button" class="layui-btn">返回列表</button></a>
 <br><br>
+
 <div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_单据编号">单据编号</label>
@@ -143,6 +144,7 @@
   <button class="layui-btn" onclick="delrow()">删除行</button>
   <button id="btn_choose_assetcard" class="layui-btn" onclick="copyText(assetcardModal)" href="#">选择资产卡片</button>
 </div>
+
 <form id="Entry" ,action="/save_multiple">
   <table id="testid" class="layui-table font" style="text-align:center;margin:10px;0px; ">
     <colgroup>
@@ -332,11 +334,7 @@
         var row = x.rows;
         for (j = i + 2; j < row.length; j++) {
           row[j].cells[1].innerHTML = row[j].cells[1].innerHTML * 1 - 1
-        }
-        if (row[i].cells[8].childNodes[0].checked) {
-          alert("第" + (i + 1).toString() + "行该资产编码已经归还，不允许删除！")
-          return;
-        }
+        } 
         x.deleteRow(i + 1); //删除一行 
       }
     }

@@ -1,5 +1,25 @@
 class AssetaltersController < ApplicationController
   before_action :set_assetalter, only: [:show, :edit, :update, :destroy]
+ 
+
+  def destroy_multiple     
+    message=""
+    ActiveRecord::Base.transaction do
+      message="";
+      params["assetaltersid"].each do |i|  
+        message =message +  Delete_Check("资产变更单",i ).to_s
+        if message.lstrip.rstrip ==""  
+          Assetalter.destroy(i) 
+        end
+      end
+      if message.lstrip.rstrip!="" 
+        render :json  => {code: 201,message: message  }
+        raise ActiveRecord::Rollback 
+      else
+        render :json  => {code: 200,message: "删除成功！"  }
+      end
+    end 
+  end
 
 
   def  save_all
