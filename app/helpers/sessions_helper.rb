@@ -10,7 +10,7 @@ module SessionsHelper
 
     def log_in(user)
         session[:user_id]=user.id
-        @user=User.find_by(account:  params[:session][:account].downcase)
+        @user=User.find(user.id)
         session[:role]=@user.role
         session[:name]=@user.name 
         session[:IsRresh_2] ="true";

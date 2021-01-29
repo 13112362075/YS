@@ -327,10 +327,15 @@
     </script>
 
     <script>
-      function Alter(element,id){
-        console.log("1")
+      function Alter(element,id){ 
         if ($("#assetcard_fbillstatus")[0].value != "已审核") {
           alert("该资产卡片还未审核，不允许变更！");
+           element.parentElement.href = ""
+          return;
+        }
+        if ($("#assetcard_Assetstatus_id")[0].value != "可用") {
+          alert("该资产卡片非可用狀態，不允许变更！");
+           element.parentElement.href = ""
           return;
         }
         $.ajax({

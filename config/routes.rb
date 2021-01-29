@@ -5,11 +5,9 @@ Rails.application.routes.draw do
   resources :asset_scrapping_entries
   resources :asset_scrappings
   resources :asset_allocate_entries
-  resources :asset_recovery_entries
   resources :inventory_plans
   resources :asset_turnover_detail_entries
   resources :asset_allocates
-  resources :asset_recoveries
   resources :asset_turnover_details
   resources :assetcards
   resources :assetseates
@@ -40,7 +38,9 @@ Rails.application.routes.draw do
   post 'asset_turnover_details_destroy_multiple'  ,:to => 'asset_turnover_details#destroy_multiple'
   post 'asset_allocates_destroy_multiple'  ,:to => 'asset_allocates#destroy_multiple'
   post 'asset_scrappings_destroy_multiple'  ,:to => 'asset_scrappings#destroy_multiple'
+  post 'asset_pickings_destroy_multiple'  ,:to => 'asset_pickings#destroy_multiple'
 
+   
   #导出
   get 'users_export_all'  ,:to => 'users#export_all'
   get 'departments_export_all'  ,:to => 'departments#export_all'  
@@ -69,8 +69,7 @@ post 'assetcards_save_multiple'  ,:to => 'assetcards#save_multiple'
 post 'asset_recoveries_save_multiple'  ,:to => 'asset_recoveries#save_multiple'
 post 'asset_turnover_details_save_multiple'  ,:to => 'asset_turnover_details#save_multiple'
 post 'asset_allocates_save_multiple'  ,:to => 'asset_allocates#save_multiple'
-post 'asset_scrappings_save_multiple'  ,:to => 'asset_scrappings#save_multiple'
-
+post 'asset_scrappings_save_multiple'  ,:to => 'asset_scrappings#save_multiple' 
 #弹窗
 
 post 'departments_choose'  ,:to => 'departments#choose'  
@@ -85,8 +84,7 @@ post 'assetcards_choose'  ,:to => 'assetcards#choose'
 post 'assetcards_choose_single'  ,:to => 'assetcards#choose_single'  
 
 #更新资产卡片状态
-post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'  
-
+post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'   
 
   get 'login'  ,:to => 'sessions#new'  , :as => 'new_sessions'
   post 'login' ,:to   => 'sessions#create'
@@ -95,27 +93,37 @@ post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'
   get 'get_user'  ,:to => 'sessions#get_user'   
 
 
-
+#单据头单据体一起保存
 post 'asset_turnover_details_save_all',:to =>'asset_turnover_details#save_all'
 post 'asset_allocates_save_all',:to =>'asset_allocates#save_all'
 post 'asset_recoveries_save_all',:to =>'asset_recoveries#save_all'
 post 'asset_scrappings_save_all',:to =>'asset_scrappings#save_all'
-
+post 'asset_pickings_save_all',:to =>'asset_pickings#save_all'
+post 'assetalters_save_all',:to =>'assetalters#save_all'
 #获取数据接口
 get 'user_test',:to =>'users#test'
 get 'assetalters_Get_Data',:to =>'assetalters#Get_DataApi'
 get 'AssetList_Get_Data',:to =>'asset_list#Get_DataApi'
+get 'asset_pickings_Get_Data',:to =>'asset_pickings#Get_DataApi' 
+ 
 
 #更新状态
 post 'assetcards_Update_Fbillstatus',:to => 'assetcards#Update_Fbillstatus'
 post 'asset_turnover_details_Update_Fbillstatus',:to => 'asset_turnover_details#Update_Fbillstatus'
 post 'assetalters_Update_Fbillstatus',:to => 'assetalters#Update_Fbillstatus'
+post 'asset_pickings_Update_Fbillstatus',:to => 'asset_pickings#Update_fbillstatus'
+ 
 #判断是否存在未审核的资产变更单
 get 'assetalters_Check_IsExist',:to => 'assetalters#Check_IsExist'
 
 #资产实物清单
 get 'AssetList_show',:to => 'asset_list#show'
 
+#登录界面 
+post 'sessions_Login_user',:to => 'sessions#Login_user'
+
+#检查是否允许下推
+get 'asset_pickings_Check_IsPush',:to => 'asset_pickings#Check_IsPush'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
  

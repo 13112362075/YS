@@ -2,6 +2,9 @@
 <script src="https://www.layuicdn.com/layui/layui.js"></script>
 <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
 <style>
+  .locked{
+    background-color: '#F5F5F5' 
+  }
   .image_input {
     width: 192px;
     border: 1px solid #e6e6e6;
@@ -93,7 +96,7 @@
   <div class="image" , onclick="copyText(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据状态">单据状态</label>
-    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  locked" type="text"
         name="asset_turnover_detail[fbillstatus]" id="asset_turnover_detail_fbillstatus"
         value=<%= @asset_turnover_detail.fbillstatus%>></div>
   </div>
@@ -101,19 +104,19 @@
 <div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据状态">创建人</label>
-    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  locked" type="text"
         name="asset_turnover_detail[Creator]" id="asset_turnover_detail_Creator"
         value=<%= @asset_turnover_detail.Creator%>></div>
   </div>
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_创建日期">创建日期</label>
-    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  locked" type="text"
         name="asset_turnover_detail[Createdate]" id="asset_turnover_detail_Createdate"
         value=<%= @asset_turnover_detail.Createdate%>></div>
   </div>
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_审核人">审核人</label>
-    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1 locked  " type="text"
         name="asset_turnover_detail[Approver]" id="asset_turnover_detail_Approver"
         value=<%= @asset_turnover_detail.Approver%>></div>
   </div>
@@ -121,7 +124,7 @@
 <div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据状态">审核日期</label>
-    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  " type="text"
+    <div class="layui-input-block "> <input readonly='true' class="layui-input input1  locked" type="text"
         name="asset_turnover_detail[Approverdate]" id="asset_turnover_detail_Approverdate"
         value=<%= @asset_turnover_detail.Approverdate%>></div>
   </div>
@@ -310,7 +313,9 @@
       url: "/assetcards_Update_Status",
       data: {
         "id_list": id_list,
-        "Status": "可用"
+        "Status": "可用",
+        "type": "资产借出/归还单",
+        "id": id
       },
       success: function () {},
       error: function () {}

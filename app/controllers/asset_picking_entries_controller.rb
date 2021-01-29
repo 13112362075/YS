@@ -69,6 +69,6 @@ class AssetPickingEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def asset_picking_entry_params
-      params.require(:asset_picking_entry).permit(:Code, :name, :Asset_type, :Unit, :Picking_Amount, :BackQty, :CanbackQty, :PickingFor, :Asset_seat, :Picking_seat, :FSrcFbillno, :FSrcFseq, :AssetPicking_id)
+      params.require(:asset_picking_entry).permit(:Code, :name, :Asset_type, :Unit, :Picking_Amount, :BackQty, :CanbackQty, :PickingFor, :Asset_seat, :Picking_seat, :FSrcFbillno, :FSrcFseq, :AssetPicking_id,:fseq,:assetstatus,:Employeeld,:Deptment)
     end
 end

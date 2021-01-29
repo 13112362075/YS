@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_22_075220) do
+ActiveRecord::Schema.define(version: 2021_01_27_023210) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -61,6 +61,10 @@ ActiveRecord::Schema.define(version: 2021_01_22_075220) do
     t.string "AssetPicking_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "Deptment"
+    t.string "Employeeld"
+    t.string "assetstatus"
+    t.string "fseq"
   end
 
   create_table "asset_pickings", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

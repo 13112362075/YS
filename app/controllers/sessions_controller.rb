@@ -13,7 +13,28 @@ class SessionsController < ApplicationController
     render 'new'  
   end 
 
-
+def Login_user
+  session[:account]=params[:Useracount]
+  @user= User.find_by(account:  params[:Useracount].downcase)   
+  if params[:Useracount]==""
+    render :json  => {code: 201,message: "用户名不允许为空！" } 
+  else 
+    if  params[:Password] ==""
+      render :json  => {code: 201,message: "密码不允许为空！" }  
+    else 
+        if  @user   &&   @user.password == (params[:Password])  
+          store_location
+          log_in @user   
+          if logon?        
+            render :json  => {code: 200,message: "登录成功!" }  
+          end  
+        else 
+          render :json  => {code: 201,message: "您输入的用户名或密码不正确，请重新输入!" }  
+        end
+      end  
+    end
+  end
+ 
 
 
 

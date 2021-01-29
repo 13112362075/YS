@@ -2,6 +2,22 @@ class AssetaltersController < ApplicationController
   before_action :set_assetalter, only: [:show, :edit, :update, :destroy]
 
 
+  def  save_all
+    message=""
+    message=message+Save_Check("资产变更单",comment_params).to_s
+    if message.lstrip.rstrip!=""
+      render :json  => {code: 201,message: message }
+      return;
+    end
+    if params["id"]=="0"     
+      @assetalter=Assetalter.create!(comment_params)
+      @assetalter.update(Creator:session[:name],Createdate:Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+    else
+      @assetalter=Assetalter.find(params[:id])
+      @assetalter.update(comment_params)
+    end
+    render :json  => {code: 200,message: "保存成功！",id:@assetalter.id }
+  end
 
 
   def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
@@ -113,10 +129,7 @@ end
     @assetalter.Employeeld_Old=@assetcard[0].Employeeld 
     @assetalter.Usestate_id_Old=@assetcard[0].Usestate_id 
     @assetalter.Usestate_id=@assetcard[0].Usestate_id 
-    @assetalter.fbillstatus ="未审核"
-
-
-
+    @assetalter.fbillstatus ="未审核"  
     @department = Department.all   
     @addtype = Addtype.all   
     @assetseate = Assetseate.all   
@@ -139,6 +152,9 @@ end
     @usestate  =  Usestate.all   
   end
 
+ 
+
+
   # POST /assetalters
   # POST /assetalters.json
   def create 
@@ -153,14 +169,20 @@ end
     @assetalter = Assetalter.new(assetalter_params)
     @assetalter.Creator=session[:name]
     @assetalter.Createdate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
-    respond_to do |format|
-      if @assetalter.save
-        format.html { render :edit, notice: '创建成功' }
-        format.json { render :show, status: :created, location: @assetalter }
-      else
-        format.html { render :new }
-        format.json { render json: @assetalter.errors, status: :unprocessable_entity }
-      end
+    @message=""
+    respond_to do |format| 
+      @message=@message+Save_Check("资产变更单",@assetalter)
+      if(@message.lstrip.rstrip=="")
+        if @assetalter.save 
+          format.html { render :edit, notice: '创建成功' }
+          format.json { render :show, status: :created, location: @assetalter }
+        else
+          format.html { render :new }
+          format.json { render json: @assetalter.errors, status: :unprocessable_entity }
+        end
+      else 
+        render 'assetalters/alertmessage.js.erb'
+      end 
     end
   end
 
@@ -206,4 +228,12 @@ end
     def assetalter_params
       params.require(:assetalter).permit(:Fbillno, :assetCode, :assetname, :Assettype_id, :Unit_id, :Amount, :Assetstatus_id, :Addtype_id, :BuyDate, :description, :Orgainize_id, :Entrydate, :Price, :Lastprice, :Expectedperiod, :CNOSP, :barcode, :Mould, :Assetseat_id, :Client, :Supplier, :department_id, :Employeeld, :assetCode_Old, :assetname_Old, :Assettype_id_Old, :Unit_id_Old, :Amount_Old, :Assetstatus_id_Old, :Addtype_id_Old, :BuyDate_Old, :description_Old, :Orgainize_id_Old, :Entrydate_Old, :Price_Old, :Lastprice_Old, :Expectedperiod_Old, :CNOSP_Old, :barcode_Old, :Mould_Old, :Assetseat_id_Old, :Client_Old, :Supplier_Old, :department_id_Old, :Employeeld_Old, :fbillstatus, :Creator, :Createdate, :Approver, :Approverdate,:Usestate_id,:Usestate_id_Old)
     end
+
+
+    def comment_params
+      params.require(:datas).permit(:Fbillno, :assetCode, :assetname, :Assettype_id, :Unit_id, :Amount, :Assetstatus_id, :Addtype_id, :BuyDate, :description, :Orgainize_id, :Entrydate, :Price, :Lastprice, :Expectedperiod, :CNOSP, :barcode, :Mould, :Assetseat_id, :Client, :Supplier, :department_id, :Employeeld, :assetCode_Old, :assetname_Old, :Assettype_id_Old, :Unit_id_Old, :Amount_Old, :Assetstatus_id_Old, :Addtype_id_Old, :BuyDate_Old, :description_Old, :Orgainize_id_Old, :Entrydate_Old, :Price_Old, :Lastprice_Old, :Expectedperiod_Old, :CNOSP_Old, :barcode_Old, :Mould_Old, :Assetseat_id_Old, :Client_Old, :Supplier_Old, :department_id_Old, :Employeeld_Old, :fbillstatus, :Creator, :Createdate, :Approver, :Approverdate,:Usestate_id,:Usestate_id_Old)
+ 
+    end
+
+
 end

@@ -1,8 +1,6 @@
 <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
  <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
- 
  <script src="https://www.layuicdn.com/layui/layui.js"></script> 
-
  <style>
 .layui-layout-admin .layui-side {
     top: 60px;
@@ -23,7 +21,6 @@
   <div   class="layui-header">
     <div class="layui-logo">固定资产管理系统</div>
     <!-- 头部区域（可配合layui已有的水平导航） -->  
-
   <ul class="layui-nav layui-layout-right">
        <li  class="layui-nav-item">
            <% if   !logon?%>
@@ -34,10 +31,6 @@
           <%end%> </li>
     </ul>
   </div>
- 
-
- 
-
   <div id="List" class="layui-side layui-bg-black">
     <div class="layui-side-scroll">
       <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
@@ -45,7 +38,6 @@
         <li class="layui-nav-item layui-nav-itemed">
           <a class="" href="javascript:;">基础资料</a>
           <dl class="layui-nav-child">
- 
             <dd><a data-url= <%=users_path%> data-id="users_path" data-title="用户" class="site-demo-active"  href="javascript:;" data-type="tabAdd">用户</a></dd>
             <dd><a data-url= <%=departments_path%> data-id="departments_path" data-title="部门" class="site-demo-active"  href="javascript:;" data-type="tabAdd">部门</a></dd>
             <dd><a data-url= <%=assettypes_path%> data-id="assettypes_path" data-title="资产类别" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产类别</a></dd>
@@ -55,41 +47,32 @@
             <dd><a data-url= <%=usestates_path%> data-id="usestates_path" data-title="资产使用状态" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产使用状态</a></dd>
             <dd><a data-url= <%=units_path%> data-id="units_path" data-title="计量单位" class="site-demo-active"  href="javascript:;" data-type="tabAdd">计量单位</a></dd> 
               <dd><a data-url= <%=assetcards_path%> data-id="assetcards_path" data-title="资产卡片" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产卡片</a></dd>
- 
-          
           </dl>
-
         </li>
       <li class="layui-nav-item">
           <a href="javascript:;">资产管理 </a>
          <dl class="layui-nav-child">
-            <dd><a data-url= <%=asset_recoveries_path%> data-id="asset_recoveries_path" data-title="资产领用单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产领用单</a></dd>
             <dd><a data-url= <%=asset_turnover_details_path%> data-id="asset_turnover_details_path" data-title="资产借用/归还单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产借用/归还单</a></dd>
+            <dd><a data-url= <%=asset_pickings_path%> data-id="asset_pickings_path" data-title="资产领用单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产领用单</a></dd>
             <dd><a data-url= <%=asset_allocates_path%> data-id="asset_allocates_path" data-title="资产调拨单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产调拨单</a></dd>
              <dd><a data-url= <%=assetalters_path%> data-id="assetalters_path" data-title="资产变更单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产变更单</a></dd>
             <dd><a data-url= <%=asset_scrappings_path%> data-id="asset_scrappings_path" data-title="资产报废单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产报废单</a></dd>
             <dd><a data-url= <%=inventory_plans_path%> data-id="inventory_plans_path" data-title="盘点方案" class="site-demo-active"  href="javascript:;" data-type="tabAdd">盘点方案</a></dd>
           </dl>
         </li> 
-
       <li class="layui-nav-item">
           <a href="javascript:;">报表分析 </a>
          <dl class="layui-nav-child"> 
-            <dd><a data-url="/AssetList_show" data-id="AssetList_show" data-title="盘点方案" class="site-demo-active"  href="javascript:;" data-type="tabAdd">盘点方案</a></dd>
+            <dd><a data-url="/AssetList_show" data-id="AssetList_show" data-title="资产实物清单" class="site-demo-active"  href="javascript:;" data-type="tabAdd">资产实物清单</a></dd>
           </dl>
         </li> 
-
-
       </ul>
     </div>
   </div>
-   
   <div id="body" class="layui-body">
       <div style="z-index:10; left:2000px;top:200px;" ><i  onclick="visible(this)" class="layui-icon"  >&#xe603;</i>  </div>
     <!-- 内容主体区域 -->  
- 
   <div class="layadmin-pagetabs" id="LAY_app_tabs">  
-
   <div class="layui-tab layui-tab-brief" lay-filter="demo"lay-allowclose="true"> 
               <ul class="layui-tab-title" id="LAY_app_tabsheader"> 
           </ul> 
@@ -97,19 +80,14 @@
             </div> 
         </div>  
     </div>  
-  
     <!-- 页面标签 --> 
-
   <div id="footer"  class="layui-footer">
     <!-- 底部固定区域 -->
           珠海格致软件版权所有
   </div>
 </div>
-
 <p id="IsRresh"><%= session[:IsRresh]%></p> 
-
 <script> 
-
 function visible(element)
 {
   if(document.getElementById("List").style.visibility=="" ||document.getElementById("List").style.visibility=="visible"  )
@@ -127,15 +105,11 @@ function visible(element)
     document.getElementById("footer").style.left=150+"px";
   } 
 }
-
-
-
-
 $(document).ready(function(){ 
  $("#IsRresh").hide();  
   if($("#IsRresh").text()=='True')
   { 
-      location.reload();
+      //location.reload();
   } 
 })
 </script>
@@ -149,7 +123,6 @@ $(document).ready(function(){
  var active = {
             //在这里给active绑定几项事件，后面可通过active调用这些事件
  tabAdd: function(url,id,name) {
-   console.log(id)
                 //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
                 //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
  element.tabAdd('demo', {
@@ -158,7 +131,6 @@ $(document).ready(function(){
                     id: id //规定好的id
  })
                 element.render('tab');
-
             },
             tabChange: function(id) {
               console.log(id)

@@ -1,13 +1,17 @@
 
+
+ 
 var rowss=document.getElementById('testid').rows;   
  index=<%=@row%> 
  
- 
+ console.log('<%=@FbillnoType%>')
 
  if(<%= @isaddrow %>)
  {
     addrow();
  }
+if('<%=@FbillnoType%>'.replace(/(^\s*)|(\s*$)/g, "")=="资产借出归还单")
+{ 
  rowss[index].cells[2].innerText="<%= @assetCode%>"
  rowss[index].cells[3].innerText="<%= @assetname%>"
   rowss[index].cells[4].innerText="<%= @Unit_id%>"
@@ -15,7 +19,21 @@ var rowss=document.getElementById('testid').rows;
   rowss[index].cells[10].innerText="<%= @department_id%>"
   rowss[index].cells[11].innerText="<%= @Employeeld%>"
   rowss[index].cells[12].innerText="<%= @Assetseat_id%>"
-
+}
+else if ('<%=@FbillnoType%>'.replace(/(^\s*)|(\s*$)/g, "")=="资产领用单")
+{
+   rowss[index].cells[2].innerText="<%= @assetCode%>"
+ rowss[index].cells[3].innerText="<%= @assetname%>"
+  rowss[index].cells[5].innerText="<%= @Unit_id%>"
+  rowss[index].cells[6].innerText="<%= @Amount%>"
+    rowss[index].cells[7].innerText="0"
+  rowss[index].cells[8].innerText="<%= @Amount%>" 
+  rowss[index].cells[9].innerText="<%= @Assetstatus_id%>"
+  rowss[index].cells[13].innerText="<%= @Assetseat_id%>"
+  rowss[index].cells[11].innerText="<%= @department_id%>" 
+  rowss[index].cells[12].innerText="<%= @Employeeld%>"
+  
+}
 
  $('#assetcardModal').modal('hide');
  

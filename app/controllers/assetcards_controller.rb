@@ -1,5 +1,9 @@
 class AssetcardsController < ApplicationController
   before_action :set_assetcard, only: [:show, :edit, :update, :destroy]
+ 
+ 
+
+
 
 def  Update_Fbillstatus 
   if  params[:fbillstatus].lstrip.rstrip=='反审核'
@@ -54,6 +58,8 @@ end
         end
       end  
     end  
+
+
     #2021/1/14 阿斌修改，直接修改状态，不考虑是否借出可用，直接修改
   # if  (@IsUpdate =="true")
   #   params[:id_list].each do |i|
@@ -63,7 +69,9 @@ end
   # end
   params[:id_list].each do |i|
     @assetcard_by_status=Assetcard.where("assetCode = ? " ,i); 
-    @assetcard_by_status.update(Usestate_id:   @status);
+    @assetcard_by_status.update(Usestate_id:   @status); 
+    Update_datas(params[:type],params,@status);
+
   end
       #2021/1/14 阿斌修改，直接修改状态，不考虑是否借出可用，直接修改
 end
@@ -85,6 +93,7 @@ end
     @Unit_id = @assetcard.Unit_id
     @Amount = @assetcard.Amount
     @department_id = @assetcard.department_id
+    @Assetstatus_id = @assetcard.Assetstatus_id
     @Employeeld = @assetcard.Employeeld
     @Assetseat_id = @assetcard.Assetseat_id 
     @row =params[:row]
@@ -219,7 +228,7 @@ end
     @usestate  =  Usestate.all   
     @assetcard = Assetcard.new(assetcard_params) 
     @assetcard.Creator=session[:name] 
-    @assetcard.Createdate= Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    @assetcard.Createdate= Time.now.strftime("%Y-%m-%d %H:%M:%S") 
     respond_to do |format|
       if @assetcard.save
         format.html { redirect_to   @assetcard, notice: '创建成功！' }

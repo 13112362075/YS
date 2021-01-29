@@ -17,6 +17,10 @@
     
     $(".linkActive").on("click", function(){    
     var datas=$(this);    
+    if(datas[0].dataset.url=="")
+    {
+      return;
+    }
     tabcz(datas,active); 
     });
   });  

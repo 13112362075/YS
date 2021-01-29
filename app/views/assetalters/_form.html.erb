@@ -51,6 +51,7 @@
   </ul>
 </div>
 <% end %>
+<p id="id" hidden='hidden'><%= @assetalter.id%></p>
 <div class="layui-tab layui-tab-brief">
   <ul class="layui-tab-title">
     <li class="layui-this">变更后</li>
@@ -248,8 +249,8 @@
         </div>
       </div>
       <div class="layui-btn-group " style="margin:10px;0px;">
-        <a> <input class="layui-btn  " type="submit" name="commit" value="保存" data-disable-with="保存"></a>
-              <a rel="nofollow"><button  onclick ="Update_Status(<%=@assetalter.id%>)"  type="button"class="layui-btn  ">审核</button></a>
+       <a rel="nofollow"><button  onclick ="Save(<%=@assetalter.id%>)"  type="button"class="layui-btn  ">保存</button></a>
+       <a rel="nofollow"><button  onclick ="Update_Status(<%=@assetalter.id%>)"  type="button"class="layui-btn  ">审核</button></a>
         <a href="/assetalters" rel="nofollow"><button type="button" class="layui-btn  ">返回列表</button></a>
       </div>
     </div>
@@ -457,7 +458,80 @@
         });
       }
 
+function Save(id)
+{
+  var items=new Array(); 
 
+
+var obj = {'Fbillno' : $("#assetalter_Fbillno").val(),
+'assetCode' : $("#assetalter_assetCode").val(),
+'assetname' : $("#assetalter_assetname").val(),
+'Assettype_id' : $("#assetalter_Assettype_id").val(),
+'Unit_id' : $("#assetalter_Unit_id").val(),
+'Amount' : $("#assetalter_Amount").val(),
+'Assetstatus_id' : $("#assetalter_Assetstatus_id").val(),
+'Addtype_id' : $("#assetalter_Addtype_id").val(),
+'BuyDate' : $("#assetalter_BuyDate").val(),
+'description' : $("#assetalter_description").val(),
+'Orgainize_id' : $("#assetalter_Orgainize_id").val(),
+'Entrydate' : $("#assetalter_Entrydate").val(),
+'Price' : $("#assetalter_Price").val(),
+'Lastprice' : $("#assetalter_Lastprice").val(),
+'Expectedperiod' : $("#assetalter_Expectedperiod").val(),
+'CNOSP' : $("#assetalter_CNOSP").val(),
+'barcode' : $("#assetalter_barcode").val(),
+'Mould' : $("#assetalter_Mould").val(),
+'Assetseat_id' : $("#assetalter_Assetseat_id").val(),
+'Client' : $("#assetalter_Client").val(),
+'Supplier' : $("#assetalter_Supplier").val(),
+'department_id' : $("#assetalter_department_id").val(),
+'Employeeld' : $("#assetalter_Employeeld").val(),
+'assetCode_Old' : $("#assetalter_assetCode_Old").val(),
+'assetname_Old' : $("#assetalter_assetname_Old").val(),
+'Assettype_id_Old' : $("#assetalter_Assettype_id_Old").val(),
+'Unit_id_Old' : $("#assetalter_Unit_id_Old").val(),
+'Amount_Old' : $("#assetalter_Amount_Old").val(),
+'Assetstatus_id_Old' : $("#assetalter_Assetstatus_id_Old").val(),
+'Addtype_id_Old' : $("#assetalter_Addtype_id_Old").val(),
+'BuyDate_Old' : $("#assetalter_BuyDate_Old").val(),
+'description_Old' : $("#assetalter_description_Old").val(),
+'Orgainize_id_Old' : $("#assetalter_Orgainize_id_Old").val(),
+'Entrydate_Old' : $("#assetalter_Entrydate_Old").val(),
+'Price_Old' : $("#assetalter_Price_Old").val(),
+'Lastprice_Old' : $("#assetalter_Lastprice_Old").val(),
+'Expectedperiod_Old' : $("#assetalter_Expectedperiod_Old").val(),
+'CNOSP_Old' : $("#assetalter_CNOSP_Old").val(),
+'barcode_Old' : $("#assetalter_barcode_Old").val(),
+'Mould_Old' : $("#assetalter_Mould_Old").val(),
+'Assetseat_id_Old' : $("#assetalter_Assetseat_id_Old").val(),
+'Supplier_Old' : $("#assetalter_Supplier_Old").val(),
+'department_id_Old' : $("#assetalter_department_id_Old").val(),
+'Employeeld_Old' : $("#assetalter_Employeeld_Old").val(),
+'Usestate_id_Old' : $("#assetalter_Usestate_id_Old").val()} 
+ 
+  var id1=0;
+  console.log(typeof(id))
+  if(typeof(id) !="undefined")
+  {
+    id1=id;
+  } 
+  $.ajax({
+      type: "post",
+      url: "/assetalters_save_all",
+      data: {  
+
+        "id": id1,
+        "datas": obj 
+      },
+      success: function(res){
+        alert(res.message);
+        if (res.code == 200) { 
+          var path = "/assetalters/" + res.id + "/edit";
+          window.location = path;
+        } 
+      }
+    }); 
+}
 
 </script>
 <%= render    'departments/DepartmentModal.html.erb',  id: "assetalter_department_id" ,userid:  "assetalter_Employeeld"%>

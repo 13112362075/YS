@@ -109,8 +109,8 @@ $(document).ready(function(){
                       <br> 
                         <i class="icon-password"></i>
                         <input    class="layui-input input2"  placeholder="密码"  type="password" name="session[password]" id="session_password">  
-                        <br> 
-                        <input type="submit" name="commit" value="登陆" class="layui-btn btn2" data-disable-with="登陆">
+                        <br>  
+                        <a rel="nofollow"><button  onclick ="Login()"  type="button"class="layui-btn  btn2">登陆</button></a>
                        <% end %> 
  
                  </div>
@@ -125,13 +125,34 @@ $(document).ready(function(){
  
 
  <script>
-function greet_user()
-{
-            session_account=document.getElementById("session_account") .value// 找到用户名
-            session_password=document.getElementById("session_password") .value// 找到密码 
-            if( session_account.replace(/\s*/g, '')  ==""||  session_password.replace(/\s*/g, '')  ==""   )
-            {
-               alert("用户名不能为空或者密码不用为空");
-            }
+// function greet_user()
+// {
+//             session_account=document.getElementById("session_account") .value// 找到用户名
+//             session_password=document.getElementById("session_password") .value// 找到密码 
+//             if( session_account.replace(/\s*/g, '')  ==""||  session_password.replace(/\s*/g, '')  ==""   )
+//             {
+//                alert("用户名不能为空或者密码不用为空");
+//             }
+// }
+
+function Login()
+{ 
+     $.ajax({
+      type: "post",
+      url: "/sessions_Login_user",
+      data: { 
+        "Useracount":$("#session_account").val(),
+        "Password":$("#session_password").val()
+      },
+      success: function(res){
+        alert(res.message);
+        if (res.code == 200) {  
+           window.location = "/";
+        }
+        else
+        { 
+        }
+      }
+    }); 
 }
 </script> 

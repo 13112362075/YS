@@ -7,6 +7,7 @@
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h4>资产卡片表</h4> 
         <h4 hidden="hidden" id="assetcardid" class="modal-title"  ></h4>  
+           <h4  hidden="hidden" id="fbillnotype" class="modal-title"  > <%= fbillnotype%> </h4> 
       </div>
       <div class="modal-body"> 
 
@@ -77,10 +78,13 @@ for(var i=1;i<rows.length;i++)
   }
 }
 
+console.log($("#fbillnotype"))
+
 $.ajax({
    type:"post", 
    url :"/assetcards_choose",
    data:{ 
+     "type" :$("#fbillnotype").text(),
       "assetcardid": $("#assetcardid").text(),
       "id" :$("#AssetcardModalid").text(),
       "row":row,
@@ -125,6 +129,7 @@ for(var j=0;j<items.length;j++)
     type:"post", 
     url :"/assetcards_choose",
     data:{ 
+      "type" :$("#fbillnotype").text(),
         "assetcardid": items[j],
         "id" :$("#AssetcardModalid").text(),
         "row":row,
