@@ -113,6 +113,16 @@ module   DataCheckHelper
                 resule=resule +  "第" + index.to_s + "行分录资产编码为空\r\n";
             end
         end
+
+        if(type=="资产领用单")
+            if(datas_entry[1][0].lstrip.rstrip=="")
+                resule=resule +  "第" + index.to_s + "行分录资产编码为空\r\n";
+            end
+            if(datas_entry[1][12].lstrip.rstrip=="双击选择资产位置")
+                resule=resule +  "第" + index.to_s + "行分录资产位置为空\r\n";
+            end
+        end
+
         return resule;
     end 
 
@@ -145,7 +155,9 @@ module   DataCheckHelper
                     resule=resule + "退回日期不能小于源单资产领用单领用日期！\r\n";
                 end
             end
-
+            if (!datas.include? 'datas')
+                resule=resule +  "分录数据行数量为0\r\n";  
+            end 
         end 
 
 

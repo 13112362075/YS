@@ -80,7 +80,7 @@
     <div class="layui-input-block"> <input class="layui-input  image_input  " placeholder="请输入资产类别" type="text"
         name="assetcard[Assettype_id]" id="assetcard_Assettype_id" value=<%= @assetcard.Assettype_id%>></div>
   </div>
-  <div class="image" , onclick="copyText(assettypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+  <div class="image" , onclick="Choosedata(assettypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
 </div>
 <div style="display:flex;">
   <div class="field">
@@ -88,7 +88,7 @@
     <div class="layui-input-block"> <input class="layui-input image_input  " placeholder="请输入计量单位" type="text"
         name="assetcard[Unit_id]" id="assetcard_Unit_id" value=<%= @assetcard.Unit_id%>></div>
   </div>
-  <div class="image" , onclick="copyText(unitModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+  <div class="image" , onclick="Choosedata(unitModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
   <div class="field">
     <label class="layui-form-label  label1" for="assetcard_数量">数量</label>
     <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入数量" type="text"
@@ -105,7 +105,7 @@
         <%end%>
       </div>
     </div>
-    <div class="image" , onclick="copyText(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+    <div class="image" , onclick="Choosedata(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
   </div>
   <div style="display:flex;">
     <div class="field">
@@ -120,7 +120,7 @@
         <%end%>
       </div>
     </div>
-    <div class="image" , onclick="copyText(addtypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+    <div class="image" , onclick="Choosedata(addtypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
     <div class="field">
       <label class="layui-form-label  label1" for="assetcard_资产使用状态">资产使用状态</label>
       <%if @assetcard.Usestate_id.nil?%>
@@ -132,7 +132,7 @@
           <%end%>
         </div>
       </div>
-      <div class="image" , onclick="copyText(usestateModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+      <div class="image" , onclick="Choosedata(usestateModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
       <div class="field">
         <label class="layui-form-label  label1" for="assetcard_购买日期">购买日期</label>
         <div class="layui-input-block"> <input class="layui-input  fdate input1" placeholder="请输入购买日期" type="text"
@@ -200,7 +200,7 @@
         <div class="layui-input-block"> <input class="layui-input image_input  " placeholder="请输入资产位置" type="text"
             name="assetcard[Assetseat_id]" id="assetcard_Assetseat_id" value=<%= @assetcard.Assetseat_id%>></div>
       </div>
-      <div class="image" , onclick="copyText(assetseateModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+      <div class="image" , onclick="Choosedata(assetseateModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
       <div class="field">
         <label class="layui-form-label  label1" for="assetcard_规格型号">规格型号</label>
         <div class="layui-input-block"> <input class="layui-input input1" placeholder="请输入规格型号" type="text"
@@ -227,13 +227,13 @@
         <div class="layui-input-block"> <input class="layui-input image_input " placeholder="请输入使用部门" type="text"
             name="assetcard[department_id]" id="assetcard_department_id" value=<%= @assetcard.department_id%>></div>
       </div>
-      <div class="image" , onclick="copyText(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+      <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
       <div class="field">
         <label class="layui-form-label  label1" for="assetcard_使用人">使用人</label>
         <div class="layui-input-block"> <input class="layui-input  image_input " placeholder="请输入使用人" type="text"
             name="assetcard[Employeeld]" id="assetcard_Employeeld" value=<%= @assetcard.Employeeld%>></div>
       </div>
-      <div class="image" , onclick="copyText(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+      <div class="image" , onclick="Choosedata(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
       <div class="field">
         <label class="layui-form-label  label1" for="assetcard_创建人">创建人</label>
         <div class="layui-input-block"> <input readonly='true' class="layui-input input1" type="text"
@@ -320,7 +320,7 @@
       });
     </script>
     <script type="text/javascript">
-      function copyText(modalid) {
+      function Choosedata(modalid) {
         console.log(modalid)
         $('#' + modalid.id).modal('show');
       }
@@ -366,7 +366,7 @@
         if (assetalterCount == 0) {
           alert("该资产卡片没有任何变更记录！");
         } else {
-          copyText(assetalterModal)
+          Choosedata(assetalterModal)
         }
       }
     </script>

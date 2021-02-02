@@ -74,7 +74,7 @@ post 'asset_turnover_details_save_multiple'  ,:to => 'asset_turnover_details#sav
 post 'asset_allocates_save_multiple'  ,:to => 'asset_allocates#save_multiple'
 post 'asset_scrappings_save_multiple'  ,:to => 'asset_scrappings#save_multiple' 
 #弹窗
-
+#选择基础资料
 post 'departments_choose'  ,:to => 'departments#choose'  
 post 'users_choose'  ,:to => 'users#choose'  
 post 'units_choose'  ,:to => 'units#choose'  
@@ -85,6 +85,7 @@ post 'assetseates_choose'  ,:to => 'assetseates#choose'
 post 'assetstatuses_choose'  ,:to => 'assetstatuses#choose'   
 post 'assetcards_choose'  ,:to => 'assetcards#choose'  
 post 'assetcards_choose_single'  ,:to => 'assetcards#choose_single'  
+post 'assetseates_choose_row'  ,:to => 'assetseates#choose_row'  
 
 #更新资产卡片状态
 post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'   
@@ -108,6 +109,7 @@ post 'asset_disposals_save_all',:to =>'asset_disposals#save_all'
 get 'user_test',:to =>'users#test'
 get 'assetalters_Get_Data',:to =>'assetalters#Get_DataApi'
 get 'AssetList_Get_Data',:to =>'asset_list#Get_DataApi'
+get 'asset_expiration_warning_Get_Data',:to =>'asset_expiration_warning#Get_DataApi'
 get 'asset_pickings_Get_Data',:to =>'asset_pickings#Get_DataApi' 
 get 'asset_disposals_Get_Data',:to =>'asset_disposals#Get_DataApi' 
 
@@ -123,6 +125,8 @@ get 'assetalters_Check_IsExist',:to => 'assetalters#Check_IsExist'
 
 #资产实物清单
 get 'AssetList_show',:to => 'asset_list#show'
+#资产到期预警
+get 'asset_expiration_warning_show',:to => 'asset_expiration_warning#show'
 
 #登录界面 
 post 'sessions_Login_user',:to => 'sessions#Login_user'

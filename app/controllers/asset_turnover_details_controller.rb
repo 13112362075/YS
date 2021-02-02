@@ -7,14 +7,14 @@ class AssetTurnoverDetailsController < ApplicationController
     message=""
     ActiveRecord::Base.transaction do
     if params["Status"].lstrip.rstrip=="审核"
-      @status="已审核"
+      @status="已审核" 
     else
       @status="未审核"
     end   
     @assetTurnoverDetail  = AssetTurnoverDetail.where( "id =  ? and fbillstatus= ?", params["id"],@status )  
     if    @assetTurnoverDetail.length==0 
       @assetTurnoverDetail = AssetTurnoverDetail.find(params["id"])
-      @assetTurnoverDetail.update(Approver: session[:name],Approverdate:Time.new.strftime("%Y-%m-%d %H:%M:%S"),fbillstatus:  @status)
+      @assetTurnoverDetail.update(Approver: session[:name],Approverdate:Time.now.strftime("%Y-%m-%d %H:%M:%S"),fbillstatus:  @status)
 
       if message.lstrip.rstrip!="" 
         render :json  => {code: 201,message: message}
@@ -79,7 +79,7 @@ def destroy_multiple
     @asset_turnover_detail.fbillstatus='未审核'
     @entry = AssetTurnoverDetailEntry.new
     @assetcard  =  Assetcard.where("Usestate_id='可用'");   
-
+    @assetseate = Assetseate.all   
     @user = User.all   
     @department = Department.all   
   end
@@ -91,7 +91,8 @@ def destroy_multiple
     @assetcard  =  Assetcard.where("Usestate_id='可用'");   
     @index=0
     @user = User.all   
-    @department = Department.all   
+    @department = Department.all  
+    @assetseate = Assetseate.all    
   end
 
 
@@ -104,7 +105,7 @@ def destroy_multiple
     if params["id"]==""  
         message = message + Save_Check("资产借出/归还单",params ).to_s
         if message.lstrip.rstrip==""
-           @asset_turnover_detail = AssetTurnoverDetail.create!(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"],Creator: session[:name],fbillstatus: '未审核', Createdate: Time.new.strftime("%Y-%m-%d %H:%M:%S"));
+           @asset_turnover_detail = AssetTurnoverDetail.create!(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"],Creator: session[:name],fbillstatus: '未审核', Createdate: Time.now.strftime("%Y-%m-%d %H:%M:%S"));
            @id=@asset_turnover_detail.id
            index =0;
            params["datas"].each do |i| 
@@ -117,12 +118,10 @@ def destroy_multiple
         @id=params["id"]; 
         message = message + Save_Check("资产借出/归还单",params ).to_s 
         @asset_turnover_detail= AssetTurnoverDetail.find_by(id: @id) 
-        if message.lstrip.rstrip==""
-           
+        if message.lstrip.rstrip=="" 
             @asset_turnover_detail.update(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"]);
             @Entry_by_AssetTurnoverDetail_id  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",   @id)
-            @Entry_by_AssetTurnoverDetail_id.each do  |id| 
-             
+            @Entry_by_AssetTurnoverDetail_id.each do  |id|  
                 if  !params[:array_id].to_a.include?(id.id.to_s)
                   assetTurnoverDetailEntry_1 = AssetTurnoverDetailEntry.find_by(id: id.id) 
                   @assetcard=Assetcard.where("assetCode =  ?",  assetTurnoverDetailEntry_1. assetcards_Code)#2021-1-14 阿斌修改，删除的过程中，修改状态

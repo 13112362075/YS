@@ -106,7 +106,7 @@
               id="assetalter_Assetstatus_id" value= <%=@assetalter.Assetstatus_id%>>
           </div>
         </div>
-        <div class="image" , onclick="copyText(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+        <div class="image" , onclick="Choosedata(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
       </div>
       <div style="display:flex;">
         <div class="field">
@@ -190,7 +190,7 @@
           <div class="layui-input-block"> <input class="layui-input image_input    " placeholder="请输入资产位置" type="text"
               name="assetalter[Assetseat_id]" id="assetalter_Assetseat_id" value=<%= @assetalter.Assetseat_id%>></div>
         </div>
-        <div class="image" , onclick="copyText(assetseateModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+        <div class="image" , onclick="Choosedata(assetseateModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
         <div class="field">
           <label class="layui-form-label  label1" for="assetalter_规格型号">规格型号</label>
           <div class="layui-input-block"> <input class="layui-input input1  " placeholder="请输入规格型号" type="text"
@@ -218,13 +218,13 @@
               name="assetalter[department_id]" id="assetalter_department_id" value=<%= @assetalter.department_id%>>
           </div>
         </div>
-        <div class="image" , onclick="copyText(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+        <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
         <div class="field">
           <label class="layui-form-label  label1" for="assetalter_使用人">使用人</label>
           <div class="layui-input-block"> <input class="layui-input  image_input   " placeholder="请输入使用人" type="text"
               name="assetalter[Employeeld]" id="assetalter_Employeeld" value=<%= @assetalter.Employeeld%>></div>
         </div>
-        <div class="image" , onclick="copyText(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+        <div class="image" , onclick="Choosedata(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
         <div class="field">
           <label class="layui-form-label  label1" for="assetalter_创建人">创建人</label>
           <div class="layui-input-block"> <input readonly='true' class="layui-input input1 UnChange_field11111" type="text"
@@ -427,7 +427,7 @@
     $(".UnChange_field11111").prop('readOnly', 'true');
     $(".UnChange_field11111").css('background-color', '#F5F5F5');
   })
-  function copyText(modalid) {
+  function Choosedata(modalid) {
     $('#' + modalid.id).modal('show');
   }
   layui.use('laydate', function () {

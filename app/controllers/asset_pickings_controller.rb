@@ -79,10 +79,7 @@ end
         end
         message=params[:fbillstatus].to_s + "成功！"
       end 
-    end
-    puts "开始"
-    puts message
-    puts "结束"
+    end 
       render :json  => {code: 200,message: message,id: @id}
   end
 
@@ -99,6 +96,9 @@ def  save_all
         params["datas"].each do |i| 
           index+=1;
           message=message+Save_Check_Entry("资产领用单",params,i,index) 
+          if i[1][12].lstrip.rstrip =="双击选择资产位置"
+            i[1][12]="";
+          end
           @AssetPickingEntry = AssetPickingEntry.create!(Code: i[1][0],name: i[1][1],Asset_type: i[1][2],Unit: i[1][3],Picking_Amount: i[1][4],BackQty: i[1][5],CanbackQty: i[1][6],assetstatus: i[1][7],PickingFor: i[1][8],Deptment:i[1][9],Employeeld: i[1][10],Asset_seat: i[1][11],Picking_seat: i[1][12] ,FSrcFbillno: i[1][13],FSrcFseq:i[1][14],AssetPicking_id: @id,fseq: i[1][16]);
           
         end
@@ -123,10 +123,16 @@ def  save_all
           index+=1;
           message=message+ Save_Check_Entry("资产领用单",params,i,index) 
           if  i[1][15].to_s == "0"
+            if i[1][12].lstrip.rstrip =="双击选择资产位置"
+              i[1][12]="";
+            end
             @AssetPickingEntry_3 = AssetPickingEntry.create!(Code: i[1][0],name: i[1][1],Asset_type: i[1][2],Unit: i[1][3],Picking_Amount: i[1][4],BackQty: i[1][5],CanbackQty: i[1][6],assetstatus: i[1][7],PickingFor: i[1][8],Deptment:i[1][9],Employeeld: i[1][10],Asset_seat: i[1][11],Picking_seat: i[1][12] ,FSrcFbillno: i[1][13],FSrcFseq:i[1][14],AssetPicking_id: @id,fseq: i[1][16]);
  
           else 
             @AssetPickingEntry_2= AssetPickingEntry.find(i[1][15]) 
+            if i[1][12].lstrip.rstrip =="双击选择资产位置"
+              i[1][12]="";
+            end
             @AssetPickingEntry_2.update(Code: i[1][0],name: i[1][1],Asset_type: i[1][2],Unit: i[1][3],Picking_Amount: i[1][4],BackQty: i[1][5],CanbackQty: i[1][6],assetstatus: i[1][7],PickingFor: i[1][8],Deptment:i[1][9],Employeeld: i[1][10],Asset_seat: i[1][11],Picking_seat: i[1][12] ,FSrcFbillno: i[1][13],FSrcFseq:i[1][14],AssetPicking_id: @id,fseq: i[1][16]);
           end
         end
@@ -182,6 +188,8 @@ end
     @assetcard  =  Assetcard.where("Usestate_id='可用'");    
     @user = User.all   
     @department = Department.all     
+
+    @assetseate = Assetseate.all   
   end
 
   # GET /asset_pickings/1/edit
@@ -190,6 +198,8 @@ end
     @assetcard  =  Assetcard.where("Usestate_id='可用'");    
     @user = User.all   
     @department = Department.all   
+
+    @assetseate = Assetseate.all   
   end
 
   # POST /asset_pickings

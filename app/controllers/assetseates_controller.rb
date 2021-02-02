@@ -1,6 +1,18 @@
 class AssetseatesController < ApplicationController
   before_action :set_assetseate, only: [:show, :edit, :update, :destroy]
 
+
+  def choose_row
+    assetseate = Assetseate.find(params[:assetseateid]) 
+    @name = assetseate.Name
+    @Modaltype=  params[:Modaltype] 
+    @id=   params[:id] 
+    render 'choose/choose_row.js.erb'
+  end 
+
+
+
+
   def choose   
     assetseate = Assetseate.find(params[:assetseateid]) 
     @name = assetseate.Name

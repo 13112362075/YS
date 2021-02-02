@@ -149,7 +149,7 @@
 <div class="layui-btn-group">
   <button id="add_row" class="layui-btn" onclick="addrow()">新增行</button>
   <button class="layui-btn" onclick="delrow()">删除行</button>
-  <button id="btn_choose_assetcard" class="layui-btn" onclick="copyText(assetcardModal)" href="#">选择资产卡片</button>
+  <button id="btn_choose_assetcard" class="layui-btn" onclick="Choosedata(assetcardModal)" href="#">选择资产卡片</button>
 </div>
 
 
@@ -249,7 +249,7 @@
     }); 
   }
 
-  function copyText(modalid) {
+  function Choosedata(modalid) {
     if ($("#asset_picking_Fbillstatus").val() == "已审核") {
       alert("该单据已经审核，不允许操作！")
       return;

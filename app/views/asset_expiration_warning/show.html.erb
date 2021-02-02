@@ -70,7 +70,7 @@
     }
 </style>
 
-<h1 style="text-align: center;">资产实物清单</h1>
+<h1 style="text-align: center;">资产到期预警</h1>
 
 <div class="demoTable">
     <div style="display:flex;">
@@ -100,7 +100,7 @@
     </div>
 </div>
 
-<table class="layui-hide" id="assetlist" lay-filter="assetlist"></table>
+<table class="layui-hide" id="asset_expiration_warning" lay-filter="asset_expiration_warning"></table>
 
 
 
@@ -108,8 +108,8 @@
     layui.use('table', function () {
         var table = layui.table;
         table.render({
-            elem: '#assetlist',
-            url: '/AssetList_Get_Data',
+            elem: '#asset_expiration_warning',
+            url: '/asset_expiration_warning_Get_Data',
             toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
                 ,
             defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
@@ -125,82 +125,67 @@
             title: '用户数据表',
             cols: [
                 [{
-                        field: 'Assettype_id',
-                        width: 80,
-                        title: '资产类别',
-                        sort: true
-                    }, {
-                        field: 'assetCode',
-                        width: 80,
-                        title: '资产编码'
-                    }, {
-                        field: 'assetname',
-                        width: 80,
-                        title: '资产名称',
-                        sort: true
-                    }, {
-                        field: 'Unit_id',
-                        width: 80,
-                        title: '计量单位'
-                    }, {
-                        field: 'Assetstatus_id',
-                        title: '资产状态',
-                        width: '10%',
-                        minWidth: 100
-                    } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                    , {
-                        field: 'Addtype_id',
-                        title: '变动方式',
-                        sort: true
-                    }, {
-                        field: 'BuyDate',
-                        title: '购买日期',
-                        sort: true
-                    }, {
-                        field: 'Usestate_id',
-                        title: '资产使用状态',
-                        sort: true
-                    }, {
-                        field: 'description',
-                        title: '备注'
-                    }, {
-                        field: 'Entrydate',
-                        title: '入账日期'
-                    }, {
-                        field: 'Price',
-                        title: '购进价格'
-                    }, {
-                        field: 'Lastprice',
-                        title: '资产净值（现价）'
-                    }, {
-                        field: 'Expectedperiod',
-                        title: '预计使用寿命'
-                    }, {
-                        field: 'CNOSP',
-                        title: '累计使用期间数'
-                    }, {
-                        field: 'barcode',
-                        title: '条形码'
-                    }, {
-                        field: 'Mould',
-                        title: '规格型号'
-                    }, {
-                        field: 'Assetseat_id',
-                        title: '资产位置'
-                    }, {
-                        field: 'Client',
-                        title: '产地（厂家）'
-                    }, {
-                        field: 'Supplier',
-                        title: '供应商'
-                    }, {
-                        field: 'department_id',
-                        title: '使用部门'
-                    }, {
-                        field: 'Employeeld',
-                        title: '使用人'
-                    }
-                ]
+                    field: 'Assettype_id',
+                    width: 80,
+                    title: '资产类别',
+                    sort: true
+                }, {
+                    field: 'assetCode',
+                    width: 80,
+                    title: '资产编码'
+                }, {
+                    field: 'assetname',
+                    width: 80,
+                    title: '资产名称',
+                    sort: true
+                }, {
+                    field: 'BuyDate',
+                    title: '购买日期',
+                    sort: true
+                }, {
+                    field: 'Entrydate',
+                    title: '入账日期'
+                }, {
+                    field: 'test',
+                    title: '到期日期',
+                    sort: true
+                }, {
+                    field: 'Amount',
+                    title: '数量',
+                    sort: true
+                }, {
+                    field: 'Assetstatus_id',
+                    title: '资产状态',
+                    sort: true
+                }, {
+                    field: 'Usestate_id',
+                    title: '资产使用状态',
+                    sort: true
+                }, {
+                    field: 'Price',
+                    title: '购进价格'
+                }, {
+                    field: 'Lastprice',
+                    title: '资产净值（现价）'
+                }, {
+                    field: 'Expectedperiod',
+                    title: '预计使用寿命'
+                }, {
+                    field: 'CNOSP',
+                    title: '已使用寿命'
+                }, {
+                    field: 'test',
+                    title: '剩余寿命'
+                }, {
+                    field: 'Mould',
+                    title: '规格型号'
+                }, {
+                    field: 'department_id',
+                    title: '使用部门'
+                }, {
+                    field: 'Employeeld',
+                    title: '使用人'
+                }]
             ],
             id: 'testReload',
             page: true
@@ -222,7 +207,7 @@
                             key: {
                                 assetCode: assetCode.val(),
                                 Assettype_id: Assettype_id.val(),
-                                fbillstatus:fbillstatus.val()
+                                fbillstatus: fbillstatus.val()
                             }
                         }
                     }, 'data');
@@ -252,7 +237,7 @@
             };
         });
 
-        $('.demoTable .layui-btn').on('click', function () { 
+        $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
@@ -267,13 +252,13 @@
 </script>
 
 <script>
-$(document).ready(function(){ 
-    $("body").keydown(function() {
-             if (event.keyCode == "13") {//keyCode=13是回车键
-               $('.demoTable .layui-btn').click();
-             }
-         });
-});
+    $(document).ready(function () {
+        $("body").keydown(function () {
+            if (event.keyCode == "13") { //keyCode=13是回车键
+                $('.demoTable .layui-btn').click();
+            }
+        });
+    });
 </script>
 
 

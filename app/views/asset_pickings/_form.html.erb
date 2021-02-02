@@ -93,26 +93,26 @@
 </div>
 <div style="display:flex;">
   <div class="field">
-<label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_领用部门">领用部门</label>
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_领用部门">领用部门</label>
     <div class="layui-input-block"> <input class="layui-input  image_input " placeholder="请输入领用部门" type="text"
         name="asset_picking[Picking_Dept]" id="asset_picking_Picking_Dept" value=<%= @asset_picking.Picking_Dept%>>
     </div>
   </div>
-  <div class="image" , onclick="copyText(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+  <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
   <div class="field">
-  
-  <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_领用人">领用人</label>
-  <div class="layui-input-block"> <input class="layui-input  image_input   " placeholder="请输入退回人" type="text"
-      name="asset_picking[Picking_Employeeld]" id="asset_picking_Picking_Employeeld"
-      value=<%= @asset_picking.Picking_Employeeld%>></div>
-</div> 
 
-<div class="image" , onclick="copyText(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
-<div class="field">
-  <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_单据状态">单据状态</label>
-  <div class="layui-input-block  "> <input readonly='true' class="layui-input input1  locked " type="text"
-      name="asset_picking[Fbillstatus]" id="asset_picking_Fbillstatus" value=<%= @asset_picking.Fbillstatus%>></div>
-</div>
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_领用人">领用人</label>
+    <div class="layui-input-block"> <input class="layui-input  image_input   " placeholder="请输入领用人" type="text"
+        name="asset_picking[Picking_Employeeld]" id="asset_picking_Picking_Employeeld"
+        value=<%= @asset_picking.Picking_Employeeld%>></div>
+  </div>
+
+  <div class="image" , onclick="Choosedata(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_单据状态">单据状态</label>
+    <div class="layui-input-block  "> <input readonly='true' class="layui-input input1  locked " type="text"
+        name="asset_picking[Fbillstatus]" id="asset_picking_Fbillstatus" value=<%= @asset_picking.Fbillstatus%>></div>
+  </div>
 </div>
 <div style="display:flex;">
   <div class="field">
@@ -142,7 +142,7 @@
 <div class="layui-btn-group">
   <button id="add_row" class="layui-btn" onclick="addrow()">新增行</button>
   <button class="layui-btn" onclick="delrow()">删除行</button>
-  <button id="btn_choose_assetcard" class="layui-btn" onclick="copyText(assetcardModal)" href="#">选择资产卡片</button>
+  <button id="btn_choose_assetcard" class="layui-btn" onclick="Choosedata(assetcardModal)" href="#">选择资产卡片</button>
 </div>
 
 <form id="Entry" ,action="/save_multiple">
@@ -196,7 +196,8 @@
         <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="false"></td>
         <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
         <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="false"></td>
-        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;" ondblclick="ChooseSeat(this)"
+          class="tdd1" contenteditable="false">双击选择资产位置</td>
         <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="false"></td>
         <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
       </tr>
@@ -231,8 +232,13 @@
           <%= assetPickingEntry.Employeeld %> </td>
         <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false">
           <%= assetPickingEntry.Asset_seat %> </td>
-        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false">
-          <%= assetPickingEntry.Picking_seat %> </td>
+        <%if  assetPickingEntry.Picking_seat ==""%>
+        <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseSeat(this)" class="tdd1"
+          contenteditable="false">双击选择资产位置</td>
+        <%else%>
+        <td style="text-align:center;font-size: 10px;" ondblclick="ChooseSeat(this)" class="tdd1"
+          contenteditable="false"><%= assetPickingEntry.Picking_seat %> </td>
+        <%end%>
         <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="true">
           <%= assetPickingEntry.FSrcFbillno %></td>
         <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="true">
@@ -247,6 +253,18 @@
 
 
 <script type="text/javascript">
+  function ChooseSeat(element) {
+    var list = document.getElementsByClassName("tdd1 update");
+    if (list.length > 0) {
+      list[0].classList.remove("update")
+    }
+
+    $(element)[0].style.color = "#666";
+    $(element).css("font-size", "9px")
+    $(element).addClass("update");
+    Choosedata(assetseateModal_row);
+  }
+
   function Update_Fbillstatus(id, fbillstatus) {
     if (fbillstatus == "审核") {
       var result = Save_with_updatestatus();
@@ -308,14 +326,15 @@
       success: function () {},
       error: function () {}
     });
- 
+
   }
 
-  function copyText(modalid) {
+  function Choosedata(modalid) {
     if ($("#asset_picking_Fbillstatus").val() == "已审核") {
       alert("该单据已经审核，不允许操作！")
       return;
     }
+    console.log(modalid)
     $('#' + modalid.id).modal('show');
   }
 
@@ -334,7 +353,7 @@
         var row = x.rows;
         for (j = i + 2; j < row.length; j++) {
           row[j].cells[1].innerHTML = row[j].cells[1].innerHTML * 1 - 1
-        } 
+        }
         x.deleteRow(i + 1); //删除一行 
       }
     }
@@ -371,6 +390,10 @@
         } else if (i == 1) {
           y.innerHTML = index;
           y.setAttribute("style", "text-align:center;font-size:10px;")
+        } else if (i == 14) {
+          y.innerHTML = "双击选择资产位置";
+          y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
+          y.setAttribute("ondblclick", " ChooseSeat(this)")
         } else {
           y.setAttribute("contenteditable", "true");
           y.setAttribute("style", "text-align:center;font-size:10px;")
@@ -391,6 +414,7 @@
         });
       });
     })
+
 
     if ($("#asset_picking_Type_of_business").val() == "领用") {
       $("#btn_choose_assetcard").show();
@@ -417,7 +441,15 @@
     $(".locked").prop('disabled', 'disabled');
     $(".locked").css('background-color', '#F5F5F5');
 
-
+    if ($("#id").val() == "") {
+      $("#a_unaudit").hide();
+      $("#a_audit").hide();
+      $("#a_Back").hide();
+    } else {
+      $("#a_unaudit").show();
+      $("#a_audit").show();
+      $("#a_Back").show();
+    }
   });
 
 
@@ -559,7 +591,7 @@
 
     if ($("#asset_picking_Fbillstatus").val() != "已审核") {
       alert("只有审核状态才允许下推！");
-      element.parentElement.dataset.url = "" 
+      element.parentElement.dataset.url = ""
       return;
     }
 
@@ -576,7 +608,7 @@
 
           element.parentElement.dataset.url = "/asset_pickings/new?id=" + id
         } else {
-          element.parentElement.dataset.url = "" 
+          element.parentElement.dataset.url = ""
           alert(res.message)
         }
       }
@@ -589,3 +621,4 @@
 <%= render    'assetcards/AssetcardsModal.html.erb' ,fbillnotype: "资产领用单" %>
 <%= render    'departments/DepartmentModal.html.erb',  id: "asset_picking_Picking_Dept" ,userid: "asset_picking_Picking_Employeeld"%>
 <%= render    'users/UserModal.html.erb',  id: "asset_picking_Picking_Employeeld"  ,department: "asset_picking_Picking_Dept" %>
+<%= render    'assetseates/AssetseateModal_row.html.erb',  id: "assetcard_Assetseat_id"  %>
