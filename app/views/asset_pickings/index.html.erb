@@ -115,7 +115,9 @@
            }
          ]
        ],
-       page: true
+       page: true,
+       limits: [100,200,500,1000,2000,10000],
+       limit: 100
      });
 
 
@@ -404,6 +406,7 @@
      if (checkStatus.data.length > 1) {
        alert("选择了多行数据，请选择1行！");
        document.getElementById("a_update").href = "";
+       document.getElementById("a_update").dataset.url = "";
        return false;
      } else if (checkStatus.data.length == 0) {
        alert("没有选择数据，请重新选择！");

@@ -7,7 +7,7 @@ module AssetcardsHelper
                     @AssetPickingEntry  = AssetPickingEntry.where( "AssetPicking_id =  ?",   datas[:id])
                     @AssetPickingEntry.each do |i|
                         @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code);  
-                        @assetcard_by_assetCode.update(department_id: @assetPicking.Picking_Dept,Employeeld: @assetPicking.Picking_Employeeld) 
+                        @assetcard_by_assetCode.update(department_id: @assetPicking.Picking_Dept,Employeeld: @assetPicking.Picking_Employeeld,Assetseat_id: i.Picking_seat) 
                     end 
                 end
                 if(status=="可用")  
@@ -15,7 +15,7 @@ module AssetcardsHelper
                     @AssetPickingEntry.each do |i|
                         puts i.id
                         @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code);  
-                        @assetcard_by_assetCode.update(department_id: i.Deptment,Employeeld: i.Employeeld) 
+                        @assetcard_by_assetCode.update(department_id: i.Deptment,Employeeld: i.Employeeld,Assetseat_id: i.Asset_seat) 
                     end 
                 end
             end 
@@ -28,10 +28,33 @@ module AssetcardsHelper
                         @AssetPickingEntry_old =AssetPickingEntry.find_by_sql (sql) 
                         @AssetPickingEntry_old[0].update(BackQty: 1,CanbackQty:0);
                         @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code);  
-                        @assetcard_by_assetCode.update(department_id: i.Deptment,Employeeld: i.Employeeld) 
+                        @assetcard_by_assetCode.update(department_id: i.Deptment,Employeeld: i.Employeeld,Assetseat_id: i.Asset_seat) 
                     end 
                 end
             end
         end
+
+        if(type=="资产借出/归还单")
+            @asset_turnover_detail= AssetTurnoverDetail.find(datas[:id]) 
+
+            puts "开始"
+            if (status=="借出")
+                puts "1"
+                @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",   datas[:id])
+                @assetTurnoverDetailEntry.each do |i|
+                    @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.assetcards_Code.lstrip.rstrip);  
+                    @assetcard_by_assetCode.update(department_id: @asset_turnover_detail.Borrowing_Department,Employeeld: @asset_turnover_detail.Loaner,Assetseat_id: i.Last_seat) 
+                end 
+            end
+            if (status=="可用")
+                puts "结束"
+                @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",   datas[:id])
+                @assetTurnoverDetailEntry.each do |i|
+                    @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.assetcards_Code.lstrip.rstrip);  
+                    @assetcard_by_assetCode.update(department_id: i.Deptment,Employeeld: i.Employeeld,Assetseat_id: i.Asset_seat) 
+                end 
+            end 
+        end
+
     end
 end 

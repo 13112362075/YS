@@ -69,6 +69,6 @@ class AssetDisposalEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def asset_disposal_entry_params
-      params.require(:asset_disposal_entry).permit(:Code, :name, :Unit, :Amount, :DisposeAmount, :Asset_seat, :DisposePrice,:AssetDisposal_id,:fseq)
+      params.require(:asset_disposal_entry).permit(:Code, :name, :Unit, :Amount, :DisposeAmount, :Asset_seat, :DisposePrice,:AssetDisposal_id,:fseq,:Addtype_id)
     end
 end

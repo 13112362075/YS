@@ -46,8 +46,9 @@ def destroy_multiple
           @assetcard=Assetcard.where("assetCode =  ?", assetTurnoverDetailEntry_1.assetcards_Code)#2021-1-15 阿斌修改，删除的过程中，修改状态
           @assetcard.update(Usestate_id: "可用")#2021-1-15 阿斌修改，删除的过程中，修改状态  
           assetTurnoverDetailEntry_1.destroy
+          puts "开始"
+          end  
           AssetTurnoverDetail.destroy(i)
-          end
         end
       end
       if message.lstrip.rstrip!=""
@@ -78,7 +79,7 @@ def destroy_multiple
     @asset_turnover_detail = AssetTurnoverDetail.new
     @asset_turnover_detail.fbillstatus='未审核'
     @entry = AssetTurnoverDetailEntry.new
-    @assetcard  =  Assetcard.where("Usestate_id='可用'");   
+    @assetcard  =  Assetcard.where("Usestate_id='可用'  and fbillstatus ='已审核' ");  
     @assetseate = Assetseate.all   
     @user = User.all   
     @department = Department.all   
@@ -88,7 +89,7 @@ def destroy_multiple
   def edit
     IsRresh(); 
     @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  "#{params[:id]}" )  
-    @assetcard  =  Assetcard.where("Usestate_id='可用'");   
+    @assetcard  =  Assetcard.where("Usestate_id='可用'  and fbillstatus ='已审核' ");  
     @index=0
     @user = User.all   
     @department = Department.all  

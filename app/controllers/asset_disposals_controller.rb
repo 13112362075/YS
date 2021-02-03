@@ -82,7 +82,7 @@ def save_all
         params["datas"].each do |i| 
           index+=1;
           message=message+Save_Check_Entry("资产处置单",params,i,index)  
-          @AssetDisposalEntry = AssetDisposalEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6] ,AssetDisposal_id: @id,fseq: i[1][8]);
+          @AssetDisposalEntry = AssetDisposalEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6] ,AssetDisposal_id: @id,fseq: i[1][9],Addtype_id: i[1][7]);
         end
       end
     else
@@ -104,12 +104,11 @@ def save_all
         params[:datas].each do  |i|
           index+=1;
           message=message+ Save_Check_Entry("资产处置单",params,i,index) 
-          if  i[1][7].to_s == "0"
-            @AssetDisposalEntry_3 = AssetDisposalEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6] ,AssetDisposal_id: @id,fseq: i[1][8]);
- 
-          else 
-            @AssetDisposalEntry_2= AssetDisposalEntry.find(i[1][7]) 
-            @AssetDisposalEntry_2.update(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6] ,AssetDisposal_id: @id,fseq: i[1][8]);
+          if  i[1][8].to_s == "0"
+            @AssetDisposalEntry_3 = AssetDisposalEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6] ,AssetDisposal_id: @id,fseq: i[1][9],Addtype_id: i[1][7]);
+          else  
+            @AssetDisposalEntry_2= AssetDisposalEntry.find(i[1][8])  
+            @AssetDisposalEntry_2.update(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6] ,AssetDisposal_id: @id,fseq: i[1][9],Addtype_id: i[1][7]);
           end
         end
       end
@@ -138,16 +137,19 @@ end
   # GET /asset_disposals/new
   def new
     @asset_disposal = AssetDisposal.new
-    @assetcard  =  Assetcard.where("Usestate_id='可用'");    
+    @asset_disposal.Disposemethod="报废"
+    @assetcard  =  Assetcard.where(" fbillstatus ='已审核' ");    
     @user = User.all   
+    @addtype = Addtype.all   
     @department = Department.all     
-    @asset_disposal.Fbillstatus="未审核"
+    @assetcard  =  Assetcard.where("  fbillstatus ='已审核' ");    
     @asset_disposal.DisposeDate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
   end
 
   # GET /asset_disposals/1/edit
   def edit
     @asset_disposal_entry  = AssetDisposalEntry.where( "AssetDisposal_id =  ?",  "#{params[:id]}" )   
+    @addtype = Addtype.all   
     @assetcard  =  Assetcard.where("Usestate_id='可用'");    
   end
 

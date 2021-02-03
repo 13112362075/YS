@@ -4,7 +4,7 @@ class AssetcardsController < ApplicationController
  
 
 
-
+ 
 def  Update_Fbillstatus 
   if  params[:fbillstatus].lstrip.rstrip=='反审核'
     @status='未审核'
@@ -96,6 +96,7 @@ end
     @Assetstatus_id = @assetcard.Assetstatus_id
     @Employeeld = @assetcard.Employeeld
     @Assetseat_id = @assetcard.Assetseat_id 
+    @Addtype_id =@assetcard.Addtype_id
     @Price = @assetcard.Price 
     @row =params[:row]
     @id=   params[:idlist] 

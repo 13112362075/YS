@@ -243,6 +243,7 @@ function ChooseSeat(element)
   $(document).ready(function () {
     if ($("#id").text() != "") {
       $("#asset_turnover_detail_Document_number").attr("disabled", "disabled");
+      $("#asset_turnover_detail_Document_number").css('background-color', '#F5F5F5');
     }
     if ($("#IsRresh_2").text().replace(/^\s+|\s+$/g, "") == 'false') {
       //location.reload();

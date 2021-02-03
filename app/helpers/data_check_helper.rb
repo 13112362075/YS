@@ -104,7 +104,11 @@ module   DataCheckHelper
                 if datas_entry[1][5].lstrip.rstrip==""
                     resule=resule + "第"+index.to_s + "行分录预计归还时间不允许为空!\r\n";
                 else
-                    if datas_entry[1][5]<datas["Borrowing_date"]
+                    puts "开始"
+                    puts  datas_entry[1][5]
+                    puts datas["Borrowing_date"]
+                    puts "结束"
+                    if datas_entry[1][5].lstrip.rstrip<datas["Borrowing_date"]
                         resule=resule +  "第" + index.to_s + "行分录预计归还时间不允许小于借出时间\r\n";
                     end
                 end  
@@ -112,6 +116,9 @@ module   DataCheckHelper
             if(datas_entry[1][0].lstrip.rstrip=="")
                 resule=resule +  "第" + index.to_s + "行分录资产编码为空\r\n";
             end
+            if(datas_entry[1][11].lstrip.rstrip=="双击选择资产位置")
+                resule=resule +  "第" + index.to_s + "行分录资产位置为空\r\n";
+            end 
         end
 
         if(type=="资产领用单")
@@ -121,6 +128,9 @@ module   DataCheckHelper
             if(datas_entry[1][12].lstrip.rstrip=="双击选择资产位置")
                 resule=resule +  "第" + index.to_s + "行分录资产位置为空\r\n";
             end
+ 
+
+
         end
 
         return resule;
@@ -172,8 +182,8 @@ module   DataCheckHelper
             end
         end
 
-        if(type=="资产借出/归还单")    
-                if(datas[:id].lstrip.rstrip="")
+        if(type=="资产借出/归还单")
+                if (!datas.include? 'id') 
                     if datas["Document_number"].lstrip.rstrip==""
                         resule=resule +  "单据编号不允许为空！\r\n";
                     end
@@ -190,6 +200,7 @@ module   DataCheckHelper
                 if (!datas.include? 'datas')
                     resule=resule +  "分录数据行数量为0\r\n";  
                 end 
+     
         end 
         return resule
     end  

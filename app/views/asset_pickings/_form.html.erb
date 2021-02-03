@@ -417,6 +417,9 @@
 
 
     if ($("#asset_picking_Type_of_business").val() == "领用") {
+
+
+
       $("#btn_choose_assetcard").show();
       $("#add_row").show();
       $("#a_unaudit").show();
@@ -441,15 +444,19 @@
     $(".locked").prop('disabled', 'disabled');
     $(".locked").css('background-color', '#F5F5F5');
 
-    if ($("#id").val() == "") {
+    if ($("#id").text() == "") {
       $("#a_unaudit").hide();
       $("#a_audit").hide();
       $("#a_Back").hide();
     } else {
-      $("#a_unaudit").show();
       $("#a_audit").show();
       $("#a_Back").show();
+      $("#asset_picking_FBillno").attr("disabled", "disabled");
+      $("#asset_picking_FBillno").css('background-color', '#F5F5F5');
+       
     }
+
+
   });
 
 

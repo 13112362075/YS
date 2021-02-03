@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_29_035636) do
+ActiveRecord::Schema.define(version: 2021_02_02_082940) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -57,6 +57,7 @@ ActiveRecord::Schema.define(version: 2021_01_29_035636) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "fseq"
     t.string "AssetDisposal_id"
+    t.string "Addtype_id"
   end
 
   create_table "asset_disposals", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

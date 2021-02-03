@@ -144,7 +144,7 @@
   </div> 
 </div> 
 <% end %>
-
+ 
 
 <div class="layui-btn-group">
   <button id="add_row" class="layui-btn" onclick="addrow()">新增行</button>
@@ -171,6 +171,7 @@
         <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">处置数量</th>
         <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产位置</th> 
         <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">处置原值</th> 
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">原变动方式</th> 
       </tr>
     </thead>
     <tbody>
@@ -183,6 +184,7 @@
         <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
         <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
         <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="false"></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td> 
         <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td> 
         <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td> 
       </tr>
@@ -207,6 +209,8 @@
           <%= asset_disposal_entry.Asset_seat %></td>
         <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
           <%= asset_disposal_entry.DisposePrice %></td> 
+          <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
+          <%= asset_disposal_entry.Addtype_id %></td> 
       </tr>
       <%end%>
       <%end%>
@@ -321,6 +325,8 @@
       }
     }
   }
+
+  
   $(document).ready(function () {
     layui.use('laydate', function () {
       var laydate = layui.laydate;
@@ -330,9 +336,10 @@
         });
       });
     })
+
  
 
-    if ($("#asset_picking_Fbillstatus").val() == "已审核") {
+    if ($("#asset_disposal_Fbillstatus").val() == "已审核") {
       $('.fdatetd').each(function () {
         laydate.render({
           elem: this
@@ -347,9 +354,20 @@
     $(".locked").prop('disabled', 'disabled');
     $(".locked").css('background-color', '#F5F5F5');
 
+    if ($("#id").text() == "") {
+      $("#a_unaudit").hide();
+      $("#a_audit").hide();
+      $("#a_Back").hide();
+    } else {
+      $("#a_audit").show();
+      $("#a_Back").show();
+      $("#asset_disposal_FBillno").attr("disabled", "disabled");
+      $("#asset_disposal_FBillno").css('background-color', '#F5F5F5');
+       
+    }
+
 
   });
-
 
 
   function Save() {

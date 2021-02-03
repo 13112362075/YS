@@ -127,7 +127,6 @@ def  save_all
               i[1][12]="";
             end
             @AssetPickingEntry_3 = AssetPickingEntry.create!(Code: i[1][0],name: i[1][1],Asset_type: i[1][2],Unit: i[1][3],Picking_Amount: i[1][4],BackQty: i[1][5],CanbackQty: i[1][6],assetstatus: i[1][7],PickingFor: i[1][8],Deptment:i[1][9],Employeeld: i[1][10],Asset_seat: i[1][11],Picking_seat: i[1][12] ,FSrcFbillno: i[1][13],FSrcFseq:i[1][14],AssetPicking_id: @id,fseq: i[1][16]);
- 
           else 
             @AssetPickingEntry_2= AssetPickingEntry.find(i[1][15]) 
             if i[1][12].lstrip.rstrip =="双击选择资产位置"
@@ -185,17 +184,16 @@ end
     end
     @asset_picking.Fbillstatus="未审核"
     @asset_picking.Picking_Date=Time.now.strftime("%Y-%m-%d %H:%M:%S")
-    @assetcard  =  Assetcard.where("Usestate_id='可用'");    
+    @assetcard  =  Assetcard.where("Usestate_id='可用'  and fbillstatus ='已审核' ");    
     @user = User.all   
-    @department = Department.all     
-
+    @department = Department.all      
     @assetseate = Assetseate.all   
   end
 
   # GET /asset_pickings/1/edit
   def edit 
     @assetPickingEntry  = AssetPickingEntry.where( "AssetPicking_id =  ?",  "#{params[:id]}" )   
-    @assetcard  =  Assetcard.where("Usestate_id='可用'");    
+    @assetcard  =  Assetcard.where("Usestate_id='可用'  and fbillstatus ='已审核' ");    
     @user = User.all   
     @department = Department.all   
 
