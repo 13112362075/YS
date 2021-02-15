@@ -1,6 +1,5 @@
 class CreateAssetGainEntries < ActiveRecord::Migration[6.0]
-  def change
-    drop_table :asset_gain_entries
+  def change 
     create_table :asset_gain_entries do |t|
       t.string :Code
       t.string :name

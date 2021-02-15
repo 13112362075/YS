@@ -1,6 +1,5 @@
 class CreateAssetCountingreports < ActiveRecord::Migration[6.0]
-  def change
-    drop_table :asset_countingreports
+  def change 
     create_table :asset_countingreports do |t|
       t.string :BillNo
       t.string :description
