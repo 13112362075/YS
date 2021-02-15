@@ -1,0 +1,2 @@
+class AssetCountingreport < ApplicationRecord
+end

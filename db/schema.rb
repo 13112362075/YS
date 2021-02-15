@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_02_082940) do
+ActiveRecord::Schema.define(version: 2021_02_13_032417) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -25,22 +25,67 @@ ActiveRecord::Schema.define(version: 2021_02_02_082940) do
     t.string "Code"
     t.string "name"
     t.string "Unit"
-    t.integer "Amount"
-    t.integer "Transfer_out_quantity"
+    t.string "Model"
+    t.decimal "Amount", precision: 10
+    t.string "EXPdept"
+    t.string "Employeeld"
     t.string "Asset_seat"
-    t.integer "Asset_allocate_id"
+    t.decimal "EXPQTY", precision: 10
+    t.string "IMPdept"
+    t.string "Newuser"
+    t.string "IMP_seat"
+    t.string "fseq"
+    t.string "Asset_allocate_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "asset_allocates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
-    t.string "Document_number"
-    t.string "Pull_up_to_id"
-    t.string "Bring_in_to_id"
-    t.date "Pull_up_date"
+    t.string "FBillno"
+    t.datetime "Expdate"
     t.string "Allocate_reason"
-    t.string "Bring_in_Number"
-    t.string "Bring_in_Confirm"
+    t.string "FBillstatus"
+    t.string "Creator"
+    t.string "Approver"
+    t.datetime "CREATEDATE"
+    t.datetime "APPROVEDATE"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_countingreport_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Code"
+    t.string "name"
+    t.string "Asset_type"
+    t.string "Unit"
+    t.string "Model"
+    t.string "Asset_status"
+    t.decimal "BookQty", precision: 10
+    t.decimal "CountQty", precision: 10
+    t.decimal "Variance", precision: 10
+    t.string "Book_seat"
+    t.string "Book_dept"
+    t.string "Book_User"
+    t.string "Invent_seat"
+    t.string "Invent_dept"
+    t.string "InventUser"
+    t.datetime "CountDate"
+    t.string "Headnote"
+    t.string "fseq"
+    t.string "Asset_Countingreport_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_countingreports", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "BillNo"
+    t.string "description"
+    t.string "Creator"
+    t.datetime "CREATEDATE"
+    t.string "Approver"
+    t.string "APPROVEDATE"
+    t.string "fbillstatus"
+    t.datetime "fdate"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
@@ -70,6 +115,76 @@ ActiveRecord::Schema.define(version: 2021_02_02_082940) do
     t.string "Approver"
     t.datetime "CreateDate"
     t.datetime "ApproveDate"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_gain_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Code"
+    t.string "name"
+    t.string "Asset_type"
+    t.string "Unit"
+    t.decimal "BookQty", precision: 10
+    t.decimal "CountQty", precision: 10
+    t.decimal "GainQty", precision: 10
+    t.string "Book_seat"
+    t.string "Book_dept"
+    t.string "Book_User"
+    t.string "Actual_seat"
+    t.string "Actual_dept"
+    t.string "Actual_User"
+    t.string "fseq"
+    t.string "Asset_Gain_id"
+    t.string "FSrcFbillno"
+    t.string "FSrcFseq"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_gains", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "BillNo"
+    t.string "description"
+    t.datetime "fdate"
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.string "Approver"
+    t.string "CREATEDATE"
+    t.string "APPROVEDATE"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_loss_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "Code"
+    t.string "name"
+    t.string "Asset_type"
+    t.string "Unit"
+    t.decimal "BookQty", precision: 10
+    t.decimal "CountQty", precision: 10
+    t.decimal "LossQty", precision: 10
+    t.string "Book_seat"
+    t.string "Book_dept"
+    t.string "Book_User"
+    t.string "Actual_seat"
+    t.string "Actual_dept"
+    t.string "Actual_User"
+    t.string "fseq"
+    t.string "Asset_Loss_id"
+    t.string "FSrcFbillno"
+    t.string "FSrcFseq"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "asset_losses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
+    t.string "BillNo"
+    t.string "description"
+    t.datetime "fdate"
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.string "Approver"
+    t.string "CREATEDATE"
+    t.string "APPROVEDATE"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

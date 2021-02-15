@@ -1,12 +1,9 @@
 class AssetDisposalsController < ApplicationController
   before_action :set_asset_disposal, only: [:show, :edit, :update, :destroy]
 
-
-
   def Update_fbillstatus  
     message=""
-    ActiveRecord::Base.transaction do
-
+    ActiveRecord::Base.transaction do 
       @assetDisposal=AssetDisposal.find(params[:id]) 
       if params[:fbillstatus]=="审核"
         @Fbillstatus="已审核"
@@ -25,7 +22,7 @@ class AssetDisposalsController < ApplicationController
       render :json  => {code: 200,message: message,id: @id}
   end
 
-
+ 
   def destroy_multiple     
     ActiveRecord::Base.transaction do
       message="";
@@ -133,16 +130,16 @@ end
   # GET /asset_disposals/1.json
   def show
   end
-
+ 
   # GET /asset_disposals/new
   def new
     @asset_disposal = AssetDisposal.new
     @asset_disposal.Disposemethod="报废"
+    @asset_disposal.Fbillstatus="未审核"
     @assetcard  =  Assetcard.where(" fbillstatus ='已审核' ");    
     @user = User.all   
     @addtype = Addtype.all   
-    @department = Department.all     
-    @assetcard  =  Assetcard.where("  fbillstatus ='已审核' ");    
+    @department = Department.all      
     @asset_disposal.DisposeDate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
   end
 
@@ -150,7 +147,7 @@ end
   def edit
     @asset_disposal_entry  = AssetDisposalEntry.where( "AssetDisposal_id =  ?",  "#{params[:id]}" )   
     @addtype = Addtype.all   
-    @assetcard  =  Assetcard.where("Usestate_id='可用'");    
+    @assetcard  =  Assetcard.where(" fbillstatus ='已审核' ");    
   end
 
   # POST /asset_disposals

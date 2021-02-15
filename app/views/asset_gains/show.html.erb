@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Billno:</strong>
+  <%= @asset_gain.BillNo %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @asset_gain.description %>
+</p>
+
+<p>
+  <strong>Fdate:</strong>
+  <%= @asset_gain.fdate %>
+</p>
+
+<p>
+  <strong>Fbillstatus:</strong>
+  <%= @asset_gain.fbillstatus %>
+</p>
+
+<p>
+  <strong>Creator:</strong>
+  <%= @asset_gain.Creator %>
+</p>
+
+<p>
+  <strong>Approver:</strong>
+  <%= @asset_gain.Approver %>
+</p>
+
+<p>
+  <strong>Createdate:</strong>
+  <%= @asset_gain.CREATEDATE %>
+</p>
+
+<p>
+  <strong>Approvedate:</strong>
+  <%= @asset_gain.APPROVEDATE %>
+</p>
+
+<%= link_to 'Edit', edit_asset_gain_path(@asset_gain) %> |
+<%= link_to 'Back', asset_gains_path %>

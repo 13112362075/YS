@@ -92,11 +92,14 @@ end
     @assetCode = @assetcard.assetCode
     @Unit_id = @assetcard.Unit_id
     @Amount = @assetcard.Amount
+    @Mould = @assetcard.Mould
     @department_id = @assetcard.department_id
     @Assetstatus_id = @assetcard.Assetstatus_id
     @Employeeld = @assetcard.Employeeld
     @Assetseat_id = @assetcard.Assetseat_id 
     @Addtype_id =@assetcard.Addtype_id
+    @Assettype_id =@assetcard.Assettype_id
+    @Mould =@assetcard.Mould 
     @Price = @assetcard.Price 
     @row =params[:row]
     @id=   params[:idlist] 
@@ -125,7 +128,7 @@ end
   def destroy_multiple    
 
     sussess=0;
-    error=0;
+    error=0;水壶
     message="";
     params["assetcardid"].each do |i| 
       result=Delete_Check("资产卡片",i);    

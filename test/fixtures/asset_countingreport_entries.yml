@@ -1,0 +1,43 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  Code: MyString
+  name: MyString
+  Asset_type: MyString
+  Unit: MyString
+  Model: MyString
+  Asset_status: MyString
+  BookQty: 9.99
+  CountQty: 9.99
+  Variance: 9.99
+  Book_seat: MyString
+  Book_dept: MyString
+  Book_User: MyString
+  Invent_seat: MyString
+  Invent_dept: MyString
+  InventUser: MyString
+  CountDate: 2021-02-05 10:32:42
+  Headnote: MyString
+  fseq: MyString
+  Asset_Countingreport_id: MyString
+
+two:
+  Code: MyString
+  name: MyString
+  Asset_type: MyString
+  Unit: MyString
+  Model: MyString
+  Asset_status: MyString
+  BookQty: 9.99
+  CountQty: 9.99
+  Variance: 9.99
+  Book_seat: MyString
+  Book_dept: MyString
+  Book_User: MyString
+  Invent_seat: MyString
+  Invent_dept: MyString
+  InventUser: MyString
+  CountDate: 2021-02-05 10:32:42
+  Headnote: MyString
+  fseq: MyString
+  Asset_Countingreport_id: MyString

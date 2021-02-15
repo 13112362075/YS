@@ -17,7 +17,7 @@ class AssetAllocateEntriesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create asset_allocate_entry" do
     assert_difference('AssetAllocateEntry.count') do
-      post asset_allocate_entries_url, params: { asset_allocate_entry: { Amount: @asset_allocate_entry.Amount, Asset_allocate_id: @asset_allocate_entry.Asset_allocate_id, Asset_seat: @asset_allocate_entry.Asset_seat, Code: @asset_allocate_entry.Code, Transfer_out_quantity: @asset_allocate_entry.Transfer_out_quantity, Unit: @asset_allocate_entry.Unit, name: @asset_allocate_entry.name } }
+      post asset_allocate_entries_url, params: { asset_allocate_entry: { Amount: @asset_allocate_entry.Amount, Asset_allocate_id: @asset_allocate_entry.Asset_allocate_id, Asset_seat: @asset_allocate_entry.Asset_seat, Code: @asset_allocate_entry.Code, EXPQTY: @asset_allocate_entry.EXPQTY, EXPdept: @asset_allocate_entry.EXPdept, Employeeld: @asset_allocate_entry.Employeeld, IMP_seat: @asset_allocate_entry.IMP_seat, IMPdept: @asset_allocate_entry.IMPdept, Model: @asset_allocate_entry.Model, Newuser: @asset_allocate_entry.Newuser, Unit: @asset_allocate_entry.Unit, fseq: @asset_allocate_entry.fseq, name: @asset_allocate_entry.name } }
     end
 
     assert_redirected_to asset_allocate_entry_url(AssetAllocateEntry.last)
@@ -34,7 +34,7 @@ class AssetAllocateEntriesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update asset_allocate_entry" do
-    patch asset_allocate_entry_url(@asset_allocate_entry), params: { asset_allocate_entry: { Amount: @asset_allocate_entry.Amount, Asset_allocate_id: @asset_allocate_entry.Asset_allocate_id, Asset_seat: @asset_allocate_entry.Asset_seat, Code: @asset_allocate_entry.Code, Transfer_out_quantity: @asset_allocate_entry.Transfer_out_quantity, Unit: @asset_allocate_entry.Unit, name: @asset_allocate_entry.name } }
+    patch asset_allocate_entry_url(@asset_allocate_entry), params: { asset_allocate_entry: { Amount: @asset_allocate_entry.Amount, Asset_allocate_id: @asset_allocate_entry.Asset_allocate_id, Asset_seat: @asset_allocate_entry.Asset_seat, Code: @asset_allocate_entry.Code, EXPQTY: @asset_allocate_entry.EXPQTY, EXPdept: @asset_allocate_entry.EXPdept, Employeeld: @asset_allocate_entry.Employeeld, IMP_seat: @asset_allocate_entry.IMP_seat, IMPdept: @asset_allocate_entry.IMPdept, Model: @asset_allocate_entry.Model, Newuser: @asset_allocate_entry.Newuser, Unit: @asset_allocate_entry.Unit, fseq: @asset_allocate_entry.fseq, name: @asset_allocate_entry.name } }
     assert_redirected_to asset_allocate_entry_url(@asset_allocate_entry)
   end
 

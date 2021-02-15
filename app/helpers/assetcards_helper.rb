@@ -55,6 +55,23 @@ module AssetcardsHelper
                 end 
             end 
         end
+        if (type=="资产处置单")
+            @assetDisposal= AssetDisposal.find(datas[:id]) 
+            if(@assetDisposal.Fbillstatus=="已审核")
+                @Entry_by_AssetDisposal_id  = AssetDisposalEntry.where( "AssetDisposal_id =  ?",  "#{datas[:id]}")
+                @Entry_by_AssetDisposal_id.each do |i| 
+                    @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code.lstrip.rstrip);  
+                    @assetcard_by_assetCode.update(Addtype_id: @assetDisposal.Disposemethod) 
+                end 
+            end
+            if(@assetDisposal.Fbillstatus=="未审核")
+                @Entry_by_AssetDisposal_id  = AssetDisposalEntry.where( "AssetDisposal_id =  ?",  "#{datas[:id]}")
+                @Entry_by_AssetDisposal_id.each do |i| 
+                    @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code.lstrip.rstrip);  
+                    @assetcard_by_assetCode.update(Addtype_id: i.Addtype_id.lstrip.rstrip) 
+                end 
+            end 
+        end
 
     end
 end 

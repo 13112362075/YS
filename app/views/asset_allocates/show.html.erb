@@ -1,23 +1,13 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Document number:</strong>
-  <%= @asset_allocate.Document_number %>
+  <strong>Fbillno:</strong>
+  <%= @asset_allocate.FBillno %>
 </p>
 
 <p>
-  <strong>Pull up to:</strong>
-  <%= @asset_allocate.Pull_up_to_id %>
-</p>
-
-<p>
-  <strong>Bring in to:</strong>
-  <%= @asset_allocate.Bring_in_to_id %>
-</p>
-
-<p>
-  <strong>Pull up date:</strong>
-  <%= @asset_allocate.Pull_up_date %>
+  <strong>Expdate:</strong>
+  <%= @asset_allocate.Expdate %>
 </p>
 
 <p>
@@ -26,13 +16,28 @@
 </p>
 
 <p>
-  <strong>Bring in number:</strong>
-  <%= @asset_allocate.Bring_in_Number %>
+  <strong>Fbillstatus:</strong>
+  <%= @asset_allocate.FBillstatus %>
 </p>
 
 <p>
-  <strong>Bring in confirm:</strong>
-  <%= @asset_allocate.Bring_in_Confirm %>
+  <strong>Creator:</strong>
+  <%= @asset_allocate.Creator %>
+</p>
+
+<p>
+  <strong>Approver:</strong>
+  <%= @asset_allocate.Approver %>
+</p>
+
+<p>
+  <strong>Createdate:</strong>
+  <%= @asset_allocate.CREATEDATE %>
+</p>
+
+<p>
+  <strong>Approvedate:</strong>
+  <%= @asset_allocate.APPROVEDATE %>
 </p>
 
 <%= link_to 'Edit', edit_asset_allocate_path(@asset_allocate) %> |

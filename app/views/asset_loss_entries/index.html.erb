@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Loss Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Asset type</th>
+      <th>Unit</th>
+      <th>Bookqty</th>
+      <th>Countqty</th>
+      <th>Lossqty</th>
+      <th>Book seat</th>
+      <th>Book dept</th>
+      <th>Book user</th>
+      <th>Actual seat</th>
+      <th>Actual dept</th>
+      <th>Actual user</th>
+      <th>Fseq</th>
+      <th>Asset loss</th>
+      <th>Fsrcfbillno</th>
+      <th>Fsrcfseq</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_loss_entries.each do |asset_loss_entry| %>
+      <tr>
+        <td><%= asset_loss_entry.Code %></td>
+        <td><%= asset_loss_entry.name %></td>
+        <td><%= asset_loss_entry.Asset_type %></td>
+        <td><%= asset_loss_entry.Unit %></td>
+        <td><%= asset_loss_entry.BookQty %></td>
+        <td><%= asset_loss_entry.CountQty %></td>
+        <td><%= asset_loss_entry.LossQty %></td>
+        <td><%= asset_loss_entry.Book_seat %></td>
+        <td><%= asset_loss_entry.Book_dept %></td>
+        <td><%= asset_loss_entry.Book_User %></td>
+        <td><%= asset_loss_entry.Actual_seat %></td>
+        <td><%= asset_loss_entry.Actual_dept %></td>
+        <td><%= asset_loss_entry.Actual_User %></td>
+        <td><%= asset_loss_entry.fseq %></td>
+        <td><%= asset_loss_entry.Asset_Loss_id %></td>
+        <td><%= asset_loss_entry.FSrcFbillno %></td>
+        <td><%= asset_loss_entry.FSrcFseq %></td>
+        <td><%= link_to 'Show', asset_loss_entry %></td>
+        <td><%= link_to 'Edit', edit_asset_loss_entry_path(asset_loss_entry) %></td>
+        <td><%= link_to 'Destroy', asset_loss_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Loss Entry', new_asset_loss_entry_path %>

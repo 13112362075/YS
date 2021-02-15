@@ -1,14 +1,20 @@
 Rails.application.routes.draw do
+  resources :asset_loss_entries
+  resources :asset_gain_entries
+  resources :asset_gains
+  resources :asset_losses
+  resources :asset_countingreports
+  resources :asset_countingreport_entries
+  resources :asset_allocate_entries
+  resources :asset_allocates
   resources :asset_disposal_entries
   resources :asset_disposals
   resources :asset_scrapping_entries
   resources :asset_pickings
   resources :asset_picking_entries
   resources :assetalters
-  resources :asset_allocate_entries
   resources :inventory_plans
   resources :asset_turnover_detail_entries
-  resources :asset_allocates
   resources :asset_turnover_details
   resources :assetcards
   resources :assetseates
@@ -42,8 +48,10 @@ Rails.application.routes.draw do
   post 'asset_pickings_destroy_multiple'  ,:to => 'asset_pickings#destroy_multiple'
   post 'assetalters_destroy_multiple'  ,:to => 'assetalters#destroy_multiple'
   post 'asset_disposals_destroy_multiple'  ,:to => 'asset_disposals#destroy_multiple'
-
+  post 'asset_countingreports_destroy_multiple'  ,:to => 'asset_countingreports#destroy_multiple'
    
+post 'asset_gains_destroy_multiple',:to => 'asset_gains#destroy_multiple'
+post 'asset_losses_destroy_multiple',:to => 'asset_losses#destroy_multiple'
   #导出
   get 'users_export_all'  ,:to => 'users#export_all'
   get 'departments_export_all'  ,:to => 'departments#export_all'  
@@ -105,6 +113,9 @@ post 'asset_scrappings_save_all',:to =>'asset_scrappings#save_all'
 post 'asset_pickings_save_all',:to =>'asset_pickings#save_all'
 post 'assetalters_save_all',:to =>'assetalters#save_all'
 post 'asset_disposals_save_all',:to =>'asset_disposals#save_all'
+post 'asset_countingreports_save_all',:to =>'asset_countingreports#save_all'
+post 'asset_gains_save_all',:to => 'asset_gains#save_all'
+post 'asset_losses_save_all',:to => 'asset_losses#save_all'
 #获取数据接口
 get 'user_test',:to =>'users#test'
 get 'assetalters_Get_Data',:to =>'assetalters#Get_DataApi'
@@ -112,14 +123,20 @@ get 'AssetList_Get_Data',:to =>'asset_list#Get_DataApi'
 get 'asset_expiration_warning_Get_Data',:to =>'asset_expiration_warning#Get_DataApi'
 get 'asset_pickings_Get_Data',:to =>'asset_pickings#Get_DataApi' 
 get 'asset_disposals_Get_Data',:to =>'asset_disposals#Get_DataApi' 
-
+get 'asset_allocates_Get_Data',:to =>'asset_allocates#Get_DataApi' 
+get 'asset_countingreports_Get_Data',:to =>'asset_countingreports#Get_DataApi' 
+get 'asset_gains_Get_DataApi',:to => 'asset_gains#Get_DataApi'
+get 'asset_losses_Get_DataApi',:to => 'asset_losses#Get_DataApi'
 #更新状态
 post 'assetcards_Update_Fbillstatus',:to => 'assetcards#Update_Fbillstatus'
 post 'asset_turnover_details_Update_Fbillstatus',:to => 'asset_turnover_details#Update_Fbillstatus'
 post 'assetalters_Update_Fbillstatus',:to => 'assetalters#Update_Fbillstatus'
 post 'asset_pickings_Update_Fbillstatus',:to => 'asset_pickings#Update_fbillstatus'
 post 'asset_disposals_Update_Fbillstatus',:to => 'asset_disposals#Update_fbillstatus'
- 
+post 'asset_allocates_Update_Fbillstatus',:to => 'asset_allocates#Update_fbillstatus'
+post 'asset_countingreports_Update_Fbillstatus',:to => 'asset_countingreports#Update_fbillstatus'
+post 'asset_gains_Update_Fbillstatus',:to => 'asset_gains#Update_fbillstatus'
+post 'asset_losses_Update_Fbillstatus',:to => 'asset_losses#Update_fbillstatus'
 #判断是否存在未审核的资产变更单
 get 'assetalters_Check_IsExist',:to => 'assetalters#Check_IsExist'
 

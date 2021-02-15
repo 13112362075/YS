@@ -1,63 +1,130 @@
 class AssetAllocatesController < ApplicationController
   before_action :set_asset_allocate, only: [:show, :edit, :update, :destroy]
 
-
-  def destroy_multiple    
-
-    params["asset_allocateid"].each do |i| 
-      puts i;
-      @Entry_by_Asset_allocate_id  = AssetAllocateEntry.where( "Asset_allocate_id =  ?",  "#{i}")
-      @Entry_by_Asset_allocate_id.each do |id|  
-        assetAllocateEntry_1 = AssetAllocateEntry.find_by(id: id.id)
-        assetAllocateEntry_1.destroy
-      end 
-      AssetAllocate.destroy(i)  
-  end
-    respond_to do |format|
-      format.html { redirect_to asset_allocates_url notice: '删除成功！.'  }
-      format.json { head :no_content }
+  def destroy_multiple     
+    ActiveRecord::Base.transaction do
+      message="";
+      params["asset_allocatesid"].each do |i|  
+        message =message +  Delete_Check("资产调拨单",i ).to_s
+        if message.lstrip.rstrip =="" 
+          @Entry_by_Asset_Allocate_id  = AssetAllocateEntry.where( "Asset_Allocate_id =  ?",  "#{i}")
+          @Entry_by_Asset_Allocate_id.each do |id|
+            @AssetAllocate_1 = AssetAllocateEntry.find(id.id)  
+            @AssetAllocate_1.destroy
+          end 
+          AssetAllocate.destroy(i) 
+        end
+      end
+   
+      if message.lstrip.rstrip!=""
+        render :json  => {code: 201,message: message }
+        raise ActiveRecord::Rollback 
+      else
+        render :json  => {code: 200,message: "删除成功！" }
+      end
     end
   end
-  
 
 
-  def  save_all 
+
+  def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
+    render json:{code: code, msg: message, count: count,data: data};
+  end
+
+
+  def Get_DataApi
+    assetAllocate = AssetAllocate.order(:id);
+    total_count=assetAllocate.count
+    assetAllocate=assetAllocate.page(params[:page]).per(params[:limit])
+    data=assetAllocate.as_json;
+    api_success(count: total_count,data: data)
+  end
+
+
+
+
+  def Update_fbillstatus  
+    message=""
+    ActiveRecord::Base.transaction do
+
+      @AssetAllocate=AssetAllocate.find(params[:id]) 
+      if params[:fbillstatus]=="审核"
+        @Fbillstatus="已审核"
+      else
+        @Fbillstatus="未审核"
+      end 
+      message=message+ Update_Fbillstatus_Check("资产调拨单",params[:id],params[:fbillstatus]).to_s  
+      if  message.lstrip.rstrip==""
+        @AssetAllocate.update(FBillstatus:@Fbillstatus)
+        if(params[:fbillstatus]=="审核")
+          @AssetAllocate.update(Approver: session[:name],APPROVEDATE: Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+        end
+        message=params[:fbillstatus].to_s + "成功！"
+      end 
+    end 
+      render :json  => {code: 200,message: message,id: @id}
+  end
+
+
+
+def save_all
+  message=""   
+  ActiveRecord::Base.transaction do
     @id=0;
-   if params["id"]==""    
-       @asset_allocates = AssetAllocate.create!(Document_number:params["Document_number"],Pull_up_to_id: params["Pull_up_to_id"],Bring_in_to_id: params["Bring_in_to_id"],Pull_up_date:params["Pull_up_date"],Allocate_reason:params["Allocate_reason"],Bring_in_Number:params["Bring_in_Number"],Bring_in_Confirm:params["Bring_in_Confirm"]);
-       @id=@asset_allocates.id
-       params["datas"].each do |i|  
-       assetAllocateEntry = AssetAllocateEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],Transfer_out_quantity: i[1][4],Asset_seat: i[1][5],Asset_allocate_id: @id);
-       end
-     else
-       @id=params["id"]; 
-       @asset_allocates= AssetAllocate.find_by(id: @id) 
-       @asset_allocates.update(Document_number:params["Document_number"],Pull_up_to_id: params["Pull_up_to_id"],Bring_in_to_id: params["Bring_in_to_id"],Pull_up_date:params["Pull_up_date"],Allocate_reason:params["Allocate_reason"],Bring_in_Number:params["Bring_in_Number"],Bring_in_Confirm:params["Bring_in_Confirm"]);
-       @Entry_by_Asset_allocate_id  = AssetAllocateEntry.where( "Asset_allocate_id =  ?",  "#{params[:id]}")
-       @Entry_by_Asset_allocate_id.each do  |id| 
-           if  !params[:array_id].to_a.include?(id.id.to_s)
-            assetAllocateEntry_1 = AssetAllocateEntry.find_by(id: id.id)
-            assetAllocateEntry_1.destroy
-           end
-       end 
-       params[:datas].each do  |i|
-         if  i[1][6].to_s == "0"
-          assetAllocateEntry_3 = AssetAllocateEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],Transfer_out_quantity: i[1][4],Asset_seat: i[1][5],Asset_allocate_id: @id);
-           puts i[1][6];
-         else
-          assetAllocateEntry_2= AssetAllocateEntry.find_by(id: i[1][6])
-          assetAllocateEntry_2.update(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],Transfer_out_quantity: i[1][4],Asset_seat: i[1][5]);
-         end 
-       end       
-  end    
+    if params["id"]==""  
+      message = message + Save_Check("资产调拨单",params).to_s
+      if message.lstrip.rstrip=="" 
+        @AssetAllocate = AssetAllocate.create!( FBillno:params["FBillno"],Expdate: params["Expdate"],Allocate_reason: params["Allocate_reason"],Creator: session[:name],FBillstatus: '未审核', CREATEDATE: Time.now.strftime("%Y-%m-%d %H:%M:%S"));
+        @id=@AssetAllocate.id
+        index =0; 
+        params["datas"].each do |i| 
+          index+=1;
+          message=message+Save_Check_Entry("资产调拨单",params,i,index)  
+          @AssetAllocateEntry = AssetAllocateEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Model: i[1][3],Amount: i[1][4],EXPdept: i[1][5],Employeeld: i[1][6] ,Asset_seat:i[1][7] ,EXPQTY: i[1][8],IMPdept: i[1][9],Newuser: i[1][10],IMP_seat: i[1][11],fseq: i[1][13],Asset_allocate_id: @id);
+        end
+      end
+    else
+      @id=params["id"];  
+      message = message + Save_Check("资产调拨单",params ).to_s 
+      @AssetAllocate= AssetAllocate.find_by(id: @id) 
+      if message.lstrip.rstrip=="" 
+        @AssetAllocate.update(FBillno:params["FBillno"],Expdate: params["Expdate"],Allocate_reason: params["Allocate_reason"] );
+        @AssetAllocateEntry1  = AssetAllocateEntry.where( "Asset_Allocate_id =  ?",   @id)
+        @AssetAllocateEntry1.each do  |id| 
+          if  !params[:array_id].to_a.include?(id.id.to_s)
+            @AssetAllocateEntry_1 = AssetAllocateEntry.find(id.id) 
+            @assetcard=Assetcard.where("Code =  ?",  @AssetAllocateEntry_1. Code)#2021-1-14 阿斌修改，删除的过程中，修改状态
+            #@assetcard.update(Usestate_id: "可用")#2021-1-14 阿斌修改，删除的过程中，修改状态  
+            @AssetAllocateEntry_1.destroy
+          end
+        end
+        index =0;
+        params[:datas].each do  |i|
+          index+=1;
+          message=message+ Save_Check_Entry("资产调拨单",params,i,index) 
+          if  i[1][12].to_s == "0" 
+            @AssetAllocateEntry_3 = AssetAllocateEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Model: i[1][3],Amount: i[1][4],EXPdept: i[1][5],Employeeld: i[1][6] ,Asset_seat:i[1][7] ,EXPQTY: i[1][8],IMPdept: i[1][9],Newuser: i[1][10],IMP_seat: i[1][11],fseq: i[1][13],Asset_allocate_id: @id);
+          else  
+            @AssetAllocateEntry_2= AssetAllocateEntry.find(i[1][12])  
+            @AssetAllocateEntry_2.update(Code: i[1][0],name: i[1][1],Unit: i[1][2],Model: i[1][3],Amount: i[1][4],EXPdept: i[1][5],Employeeld: i[1][6] ,Asset_seat:i[1][7] ,EXPQTY: i[1][8],IMPdept: i[1][9],Newuser: i[1][10],IMP_seat: i[1][11],fseq: i[1][13] );
+          end
+        end
+      end
+    end
+    if(message.lstrip.rstrip!="")  
+      render :json  => {code: 202,message: message }
+      raise ActiveRecord::Rollback 
+    else
+      render :json  => {code: 200,message: "保存成功！",id: @id}
+    end
+  end 
 end
-
 
 
   # GET /asset_allocates
   # GET /asset_allocates.json
   def index
-    @asset_allocates = AssetAllocate.all.page(params[:page]).per(10)
+    @asset_allocates = AssetAllocate.all
   end
 
   # GET /asset_allocates/1
@@ -67,13 +134,15 @@ end
 
   # GET /asset_allocates/new
   def new
-    @asset_allocate = AssetAllocate.new
-    @entry = AssetAllocateEntry.new
+    @asset_allocate = AssetAllocate.new 
+    @asset_allocate.FBillstatus="未审核"
+    @assetcard  =  Assetcard.where("Usestate_id='可用'");   
   end
 
   # GET /asset_allocates/1/edit
-  def edit 
-     @assetAllocateEntry  = AssetAllocateEntry.where( "Asset_allocate_id =  ?",  "#{params[:id]}" )  
+  def edit
+    @asset_allocate_entry  = AssetAllocateEntry.where( "Asset_allocate_id =  ?",  "#{params[:id]}" )    
+    @assetcard  =  Assetcard.where("Usestate_id='可用'");    
   end
 
   # POST /asset_allocates
@@ -124,6 +193,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def asset_allocate_params
-      params.require(:asset_allocate).permit(:Document_number, :Pull_up_to_id, :Bring_in_to_id, :Pull_up_date, :Allocate_reason, :Bring_in_Number, :Bring_in_Confirm)
+      params.require(:asset_allocate).permit(:FBillno, :Expdate, :Allocate_reason, :FBillstatus, :Creator, :Approver, :CREATEDATE, :APPROVEDATE)
     end
 end

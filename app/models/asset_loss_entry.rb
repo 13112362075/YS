@@ -1,0 +1,2 @@
+class AssetLossEntry < ApplicationRecord
+end

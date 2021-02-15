@@ -17,7 +17,7 @@ class AssetAllocatesControllerTest < ActionDispatch::IntegrationTest
 
   test "should create asset_allocate" do
     assert_difference('AssetAllocate.count') do
-      post asset_allocates_url, params: { asset_allocate: { Allocate_reason: @asset_allocate.Allocate_reason, Bring_in_Confirm: @asset_allocate.Bring_in_Confirm, Bring_in_Number: @asset_allocate.Bring_in_Number, Bring_in_to_id: @asset_allocate.Bring_in_to_id, Document_number: @asset_allocate.Document_number, Pull_up_date: @asset_allocate.Pull_up_date, Pull_up_to_id: @asset_allocate.Pull_up_to_id } }
+      post asset_allocates_url, params: { asset_allocate: { APPROVEDATE: @asset_allocate.APPROVEDATE, Allocate_reason: @asset_allocate.Allocate_reason, Approver: @asset_allocate.Approver, CREATEDATE: @asset_allocate.CREATEDATE, Creator: @asset_allocate.Creator, Expdate: @asset_allocate.Expdate, FBillno: @asset_allocate.FBillno, FBillstatus: @asset_allocate.FBillstatus } }
     end
 
     assert_redirected_to asset_allocate_url(AssetAllocate.last)
@@ -34,7 +34,7 @@ class AssetAllocatesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update asset_allocate" do
-    patch asset_allocate_url(@asset_allocate), params: { asset_allocate: { Allocate_reason: @asset_allocate.Allocate_reason, Bring_in_Confirm: @asset_allocate.Bring_in_Confirm, Bring_in_Number: @asset_allocate.Bring_in_Number, Bring_in_to_id: @asset_allocate.Bring_in_to_id, Document_number: @asset_allocate.Document_number, Pull_up_date: @asset_allocate.Pull_up_date, Pull_up_to_id: @asset_allocate.Pull_up_to_id } }
+    patch asset_allocate_url(@asset_allocate), params: { asset_allocate: { APPROVEDATE: @asset_allocate.APPROVEDATE, Allocate_reason: @asset_allocate.Allocate_reason, Approver: @asset_allocate.Approver, CREATEDATE: @asset_allocate.CREATEDATE, Creator: @asset_allocate.Creator, Expdate: @asset_allocate.Expdate, FBillno: @asset_allocate.FBillno, FBillstatus: @asset_allocate.FBillstatus } }
     assert_redirected_to asset_allocate_url(@asset_allocate)
   end
 

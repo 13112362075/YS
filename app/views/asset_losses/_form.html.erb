@@ -1,0 +1,522 @@
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<%=javascript_pack_tag 'tabadd' %>
+<style>
+  .locked {
+    background-color: '#F5F5F5'
+  }
+
+  .image_input {
+    width: 192px;
+    border: 1px solid #e6e6e6;
+    border-left: 1;
+    border-right: 0;
+    border-top: 1;
+    border-bottom: 1;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 2px;
+  }
+
+  .image {
+    border: 1px solid #e6e6e6;
+    border-left: 0px;
+    border-right: 1;
+    border-top: 1;
+    border-bottom: 1;
+    border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+    height: 38px;
+    width: 38px;
+  }
+
+  .label1 {
+    width: 100px;
+    font-size: 12px;
+  }
+
+  .input1 {
+    width: 230px;
+  }
+</style>
+
+
+
+<%= form_with(model: asset_loss, local: true) do |form| %>
+<% if asset_loss.errors.any? %>
+<div id="error_explanation">
+  <h2><%= pluralize(asset_loss.errors.count, "error") %> prohibited this asset_loss from being saved:</h2>
+
+  <ul>
+    <% asset_loss.errors.full_messages.each do |message| %>
+    <li><%= message %></li>
+    <% end %>
+  </ul>
+</div>
+<% end %>
+
+
+
+<p id="id" hidden='hidden'><%= @asset_loss.id%></p>
+<a id="a_test" rel="nofollow"><button onclick="Save()" type="button" class="layui-btn">保存</button></a>
+<a id="a_audit" rel="nofollow"><button onclick="Update_fbillstatus(<%=@asset_loss.id%>,'审核','报废' )" type="button"
+    class="layui-btn">审核</button></a>
+<a id="a_unaudit" rel="nofollow"><button onclick="Update_fbillstatus(<%=@asset_loss.id%>,'反审核' ,'可用')" type="button"
+    class="layui-btn">反审核</button></a>
+
+<a data-url="/asset_losses" data-id="asset_losses" data-title="资产处置单-列表" class="linkActive" rel="nofollow"><button
+    type="button" class="layui-btn">返回列表</button></a>
+<br><br>
+
+
+
+
+<div style="display:flex;">
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_loss_单据编号">单据编号</label>
+    <div class="layui-input-block "> <input class="layui-input input1  " placeholder="请输入单据编号" type="text"
+        name="asset_loss[BillNo]" id="asset_loss_BillNo" value=<%= @asset_loss.BillNo%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_loss_业务日期">业务日期</label>
+    <div class="layui-input-block"> <input class="layui-input input1    fdate" placeholder="请输入业务日期" type="text"
+        name="asset_loss[fdate]" id="asset_loss_fdate" value=<%= @asset_loss.fdate%>></div>
+  </div>
+
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_loss_备注">备注</label>
+    <div class="layui-input-block"> <input class="layui-input input1    " placeholder="请输入备注" type="text"
+        name="asset_loss[description]" id="asset_loss_description" value=<%= @asset_loss.description%>></div>
+  </div>
+</div>
+
+
+
+<div style="display:flex;">
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_loss_单据状态">单据状态</label>
+    <div class="layui-input-block"> <input class="layui-input input1   locked" type="text"
+        name="asset_loss[fbillstatus]" id="asset_loss_fbillstatus" value=<%= @asset_loss.fbillstatus%>></div>
+  </div>
+
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_loss_创建人">创建人</label>
+    <div class="layui-input-block"> <input class="layui-input input1   locked" type="text" name="asset_loss[Creator]"
+        id="asset_loss_Creator" value=<%= @asset_loss.Creator%>></div>
+  </div>
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_loss_创建日期">创建日期</label>
+    <div class="layui-input-block"> <input class="layui-input input1   locked" type="text" name="asset_loss[CREATEDATE]"
+        id="asset_loss_CREATEDATE" value=<%= @asset_loss.CREATEDATE%>></div>
+  </div>
+</div>
+
+
+
+<div style="display:flex;">
+
+
+
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_loss_审核人">审核人</label>
+    <div class="layui-input-block "> <input class="layui-input input1  locked" type="text" name="asset_loss[Approver]"
+        id="asset_loss_Approver" value=<%= @asset_loss.Approver%>></div>
+  </div>
+
+  <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_loss_审核日期">审核日期</label>
+    <div class="layui-input-block"> <input class="layui-input input1   locked" type="text"
+        name="asset_loss[APPROVEDATE]" id="asset_loss_APPROVEDATE" value=<%= @asset_loss.APPROVEDATE%>></div>
+  </div>
+</div>
+<% end %>
+
+
+<div class="layui-btn-group">
+  <button id="add_row" class="layui-btn" onclick="addrow()">新增行</button>
+  <button class="layui-btn" onclick="delrow()">删除行</button>
+  <button id="btn_choose_assetcard" class="layui-btn" onclick="Choosedata(assetcardModal)" href="#">选择资产卡片</button>
+</div>
+
+
+
+<form id="Entry" ,action="/save_multiple">
+  <table id="testid" class="layui-table font" style="text-align:center;margin:10px;0px; ">
+    <colgroup>
+      <col width="150">
+      <col>
+    </colgroup>
+    <thead>
+      <tr>
+        <th style="text-align:center;font-size:10px;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'
+            value='' type='checkbox' onclick="selectAll(this,'entry.ids[]')"></th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">序号</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产编码</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产名称</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产类别</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">计量单位</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">账存数量</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">实际盘点数量</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">盘亏数量</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">账存资产位置</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">账存使用部门</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">账存使用人</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">实际资产位置</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">实际使用人</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">实际使用人</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">源单单号</th>
+        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">源单行号</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if @asset_loss_entry.nil?%>
+      <% @assetcard.each do |assetcard| %>
+      <%@fseq=@fseq+1%>
+      <tr class="trr" id="0" , onclick=>
+        <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%=@fseq%></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%=assetcard.assetCode%></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%=assetcard.assetname%></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%=assetcard.Assettype_id%>
+        </td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%=assetcard.Unit_id%></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"><%=assetcard.Amount%></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="true"></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%=assetcard.Assetseat_id%>
+        </td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%=assetcard.department_id%>
+        </td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"><%=assetcard.Employeeld%></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="false"></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="false"></td>
+        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+      </tr>
+      <%end%>
+      <%else%>
+      <% @asset_loss_entry.each do |asset_loss_entry| %>
+      <tr class="trr" id=<%=asset_loss_entry.id%>>
+        <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox' /></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true">
+          <%= asset_loss_entry.fseq %> </td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= asset_loss_entry.Code %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= asset_loss_entry.name %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= asset_loss_entry.Asset_type %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= asset_loss_entry.Unit %></td>
+        <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
+          <%= asset_loss_entry.BookQty %></td>
+        <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="true">
+          <%= asset_loss_entry.CountQty %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= asset_loss_entry.LossQty %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= asset_loss_entry.Book_seat %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= asset_loss_entry.Book_dept %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= asset_loss_entry.Book_User %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+          <%= asset_loss_entry.Actual_seat %></td>
+        <td style="text-align:center;font-size:9px;" class="tdd1  " contenteditable="false">
+          <%= asset_loss_entry.Actual_dept %></td>
+        <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
+          <%= asset_loss_entry.Actual_User %></td>
+        <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
+          <%= asset_loss_entry.FSrcFbillno %></td>
+        <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
+          <%= asset_loss_entry.FSrcFseq %></td>
+      </tr>
+      <%end%>
+      <%end%>
+    </tbody>
+  </table>
+</form>
+
+<script type="text/javascript">
+  function Update_fbillstatus(id, fbillstatus, usestatus) {
+    if (fbillstatus == "审核") {
+      var result = Save_with_updatestatus();
+      if (result.code != 200) {
+        alert(result.message);
+        return;
+      }
+    }
+
+    $.ajax({
+      type: "post",
+      async: false,
+      url: "/asset_losses_Update_Fbillstatus",
+      data: {
+        "id": id,
+        "fbillstatus": fbillstatus
+      },
+      success: function (res) {
+        alert(res.message);
+        if (res.code == 200) {
+          var path = "/asset_losses/" + id + "/edit";
+          window.location = path;
+        }
+      }
+    });
+
+
+ 
+  }
+
+  function Choosedata(modalid) {
+    if ($("#asset_picking_fbillstatus").val() == "已审核") {
+      alert("该单据已经审核，不允许操作！")
+      return;
+    }
+    $('#' + modalid.id).modal('show');
+  }
+
+  function delrow() {
+    if ($("#asset_picking_fbillstatus").val() == "已审核") {
+      alert("该单据已经审核，不允许删除行！")
+      return;
+    }
+    var items = document.getElementsByName("entry.ids[]");
+    var x = document.getElementById("testid");
+    var IsCheckCount = 0;
+    for (var i = items.length - 1; i >= 0; i--) {
+      if (items[i].checked) {
+        IsCheckCount++;
+        x = document.getElementById("testid");
+        var row = x.rows;
+        for (j = i + 2; j < row.length; j++) {
+          row[j].cells[1].innerHTML = row[j].cells[1].innerHTML * 1 - 1
+        }
+        x.deleteRow(i + 1); //删除一行 
+      }
+    }
+    if (IsCheckCount == 0) {
+      alert("请选择删除的数据！");
+    }
+  }
+
+  function addrow() {
+    if ($("#asset_picking_fbillstatus").val() == "已审核") {
+      alert("该单据已经审核，不允许增加行！")
+      return;
+    }
+    var c = document.getElementById('testid'); //获得表格的信息  
+    if (c.length == 1) //如果是向一个空表增加一行
+    {
+      var x = c.insertRow(1); //向空表插入一行  
+      var z = c.rows[0].cells; //如果不是空表，首先获得表格有多少列，先获取再插入新行  
+      for (var i = 0; i < z.length; i++) //依次向新行插入表格列数的单元格
+      {
+        var y = x.insertCell(i);
+      }
+    } else {
+      var z = c.rows[0].cells; //如果不是空表，首先获得表格有多少列，先获取再插入新行 
+      var index = c.rows[c.rows.length - 1].cells[1].innerHTML * 1;
+      var index = c.rows.length * 1;
+      var x = c.insertRow(c.rows.length);
+      x.id = 0;
+      for (var i = 0; i < z.length; i++) //依次向新行插入表格列数的单元格
+      {
+        var y = x.insertCell(i);
+        if (i == 0) {
+          y.innerHTML = "<input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]'  type='checkbox'/>";
+        } else if (i == 1) {
+          y.innerHTML = index;
+          y.setAttribute("style", "text-align:center;font-size:10px;")
+        } else {
+          y.setAttribute("contenteditable", "true");
+          y.setAttribute("style", "text-align:center;font-size:10px;")
+        }
+        if (i != 10) {
+          y.setAttribute("contenteditable", "false");
+        }
+        y.setAttribute("class", "tdd1");
+      }
+    }
+  }
+
+
+  $(document).ready(function () {
+    layui.use('laydate', function () {
+      var laydate = layui.laydate;
+      $('.fdate').each(function () {
+        laydate.render({
+          elem: this
+        });
+      });
+    })
+
+
+
+    if ($("#asset_loss_fbillstatus").val() == "已审核") {
+      $('.fdatetd').each(function () {
+        laydate.render({
+          elem: this
+        });
+      })
+      $("input").prop('disabled', 'disabled');
+      $("input").css('background-color', '#F5F5F5');
+      $("td").prop('contenteditable', 'false');
+      $("td").css('background-color', '#F5F5F5');
+      $("image").prop('disabled', 'disabled');
+    }
+    $(".locked").prop('disabled', 'disabled');
+    $(".locked").css('background-color', '#F5F5F5');
+
+    if ($("#id").text() == "") {
+      $("#a_unaudit").hide();
+      $("#a_audit").hide();
+      $("#a_Back").hide();
+    } else {
+      $("#a_audit").show();
+      $("#a_Back").show();
+      $("#asset_loss_BillNo").attr("disabled", "disabled");
+      $("#asset_loss_BillNo").css('background-color', '#F5F5F5');
+
+    }
+
+
+  });
+
+
+  function Save() {
+
+    var id = document.getElementById("id").innerText; //单据id 
+    var asset_loss_BillNo = document.getElementById("asset_loss_BillNo").value; //单据编码
+    var asset_loss_fdate = document.getElementById("asset_loss_fdate").value; //业务日期
+    var asset_loss_description = document.getElementById("asset_loss_description").value; //处置方式 
+    var array1 = new Array();
+    var array_id = new Array();
+    var tb = document.getElementById('testid'); // table 的 id
+    var rows = tb.rows; // 获取表格所有行 
+    var t = 0;
+    for (var i = 1; i < rows.length; i++) {
+      console.log(rows[i]);
+      array_id[i - 1] = rows[i].id;
+      var array2 = new Array();
+      for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td       
+        array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+      }
+
+      array2[rows[i].cells.length - 2] = rows[i].id;
+      array2[rows[i].cells.length - 1] = rows[i].cells[1].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+      array1[i - 1] = array2;
+    }
+    $.ajax({
+      type: "post",
+      async: false,
+      url: "/asset_losses_save_all",
+      data: {
+        "type": "保存",
+        "array_id": array_id,
+        "datas": array1,
+        "id": id,
+        "BillNo": asset_loss_BillNo,
+        "fdate": asset_loss_fdate,
+        "description": asset_loss_description
+      },
+      success: function (res) {
+        alert(res.message);
+        if (res.code == 200) {
+          var path = "/asset_losses/" + res.id + "/edit"
+          window.location = path;
+        }
+      }
+    });
+  }
+
+
+
+
+
+
+
+  function Save_with_updatestatus() {
+    var result = new Array();
+
+    var id = document.getElementById("id").innerText; //单据id 
+    var asset_loss_BillNo = document.getElementById("asset_loss_BillNo").value; //单据编码
+    var asset_loss_fdate = document.getElementById("asset_loss_fdate").value; //业务日期
+    var asset_loss_description = document.getElementById("asset_loss_description").value; //处置方式 
+    var array1 = new Array();
+    var array_id = new Array();
+    var tb = document.getElementById('testid'); // table 的 id
+    var rows = tb.rows; // 获取表格所有行 
+    var t = 0;
+    for (var i = 1; i < rows.length; i++) {
+      console.log(rows[i]);
+      array_id[i - 1] = rows[i].id;
+      var array2 = new Array();
+      for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td       
+        array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+      }
+
+      array2[rows[i].cells.length - 2] = rows[i].id;
+      array2[rows[i].cells.length - 1] = rows[i].cells[1].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+      array1[i - 1] = array2;
+    }
+    $.ajax({
+      type: "post",
+      async: false,
+      url: "/asset_losses_save_all",
+      data: {
+        "type": "保存",
+        "array_id": array_id,
+        "datas": array1,
+        "id": id,
+        "BillNo": asset_loss_BillNo,
+        "fdate": asset_loss_fdate,
+        "description": asset_loss_description
+      },
+      success: function (res) {
+        result = res;
+      }
+    });
+    return result;
+  }
+
+  function selectAll(obj, type) {
+    //创建数组
+    var arr = new Array();
+    //获取所有id为“cb1”的复选框
+    var items = document.getElementsByName(type);
+    //判断复选框是否选中
+    if (obj.checked) {
+      //循环将所有name为"category"的复选框设置为选中状态
+      for (var i = 0; i < items.length; i++) {
+        //alert(items[i]);
+        items[i].checked = true;
+      }
+    } else {
+      //循环将所有name为"category"的复选框设置为非选中状态
+      for (var i = 0; i < items.length; i++) {
+        //alert(items[i]);
+        items[i].checked = false;
+      }
+    }
+  }
+
+  $('td').click(function (e) {
+    if (e.currentTarget.className != "") {
+      if (e.currentTarget.parentNode.firstElementChild.children[0].checked) {
+        e.currentTarget.parentNode.firstElementChild.children[0].checked = false;
+      } else {
+        e.currentTarget.parentNode.firstElementChild.children[0].checked = true;
+      }
+    }
+  })
+</script>
+
+
+<%= render    'assetcards/AssetcardsModal.html.erb' ,fbillnotype: "资产盘亏单" %>
+

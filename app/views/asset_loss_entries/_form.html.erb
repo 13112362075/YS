@@ -1,0 +1,102 @@
+<%= form_with(model: asset_loss_entry, local: true) do |form| %>
+  <% if asset_loss_entry.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(asset_loss_entry.errors.count, "error") %> prohibited this asset_loss_entry from being saved:</h2>
+
+      <ul>
+        <% asset_loss_entry.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :Code %>
+    <%= form.text_field :Code %>
+  </div>
+
+  <div class="field">
+    <%= form.label :name %>
+    <%= form.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_type %>
+    <%= form.text_field :Asset_type %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Unit %>
+    <%= form.text_field :Unit %>
+  </div>
+
+  <div class="field">
+    <%= form.label :BookQty %>
+    <%= form.text_field :BookQty %>
+  </div>
+
+  <div class="field">
+    <%= form.label :CountQty %>
+    <%= form.text_field :CountQty %>
+  </div>
+
+  <div class="field">
+    <%= form.label :LossQty %>
+    <%= form.text_field :LossQty %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Book_seat %>
+    <%= form.text_field :Book_seat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Book_dept %>
+    <%= form.text_field :Book_dept %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Book_User %>
+    <%= form.text_field :Book_User %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Actual_seat %>
+    <%= form.text_field :Actual_seat %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Actual_dept %>
+    <%= form.text_field :Actual_dept %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Actual_User %>
+    <%= form.text_field :Actual_User %>
+  </div>
+
+  <div class="field">
+    <%= form.label :fseq %>
+    <%= form.text_field :fseq %>
+  </div>
+
+  <div class="field">
+    <%= form.label :Asset_Loss_id %>
+    <%= form.text_field :Asset_Loss_id %>
+  </div>
+
+  <div class="field">
+    <%= form.label :FSrcFbillno %>
+    <%= form.text_field :FSrcFbillno %>
+  </div>
+
+  <div class="field">
+    <%= form.label :FSrcFseq %>
+    <%= form.text_field :FSrcFseq %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

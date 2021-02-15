@@ -1,0 +1,2 @@
+class AssetGainEntry < ApplicationRecord
+end

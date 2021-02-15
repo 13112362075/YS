@@ -1,19 +1,21 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  Document_number: MyString
-  Pull_up_to_id: MyString
-  Bring_in_to_id: MyString
-  Pull_up_date: 2020-11-28
+  FBillno: MyString
+  Expdate: 2021-02-03 16:48:51
   Allocate_reason: MyString
-  Bring_in_Number: MyString
-  Bring_in_Confirm: MyString
+  FBillstatus: MyString
+  Creator: MyString
+  Approver: MyString
+  CREATEDATE: 2021-02-03 16:48:51
+  APPROVEDATE: 2021-02-03 16:48:51
 
 two:
-  Document_number: MyString
-  Pull_up_to_id: MyString
-  Bring_in_to_id: MyString
-  Pull_up_date: 2020-11-28
+  FBillno: MyString
+  Expdate: 2021-02-03 16:48:51
   Allocate_reason: MyString
-  Bring_in_Number: MyString
-  Bring_in_Confirm: MyString
+  FBillstatus: MyString
+  Creator: MyString
+  Approver: MyString
+  CREATEDATE: 2021-02-03 16:48:51
+  APPROVEDATE: 2021-02-03 16:48:51

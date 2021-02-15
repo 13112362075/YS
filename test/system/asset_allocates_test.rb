@@ -14,13 +14,14 @@ class AssetAllocatesTest < ApplicationSystemTestCase
     visit asset_allocates_url
     click_on "New Asset Allocate"
 
+    fill_in "Approvedate", with: @asset_allocate.APPROVEDATE
     fill_in "Allocate reason", with: @asset_allocate.Allocate_reason
-    fill_in "Bring in confirm", with: @asset_allocate.Bring_in_Confirm
-    fill_in "Bring in number", with: @asset_allocate.Bring_in_Number
-    fill_in "Bring in to", with: @asset_allocate.Bring_in_to_id
-    fill_in "Document number", with: @asset_allocate.Document_number
-    fill_in "Pull up date", with: @asset_allocate.Pull_up_date
-    fill_in "Pull up to", with: @asset_allocate.Pull_up_to_id
+    fill_in "Approver", with: @asset_allocate.Approver
+    fill_in "Createdate", with: @asset_allocate.CREATEDATE
+    fill_in "Creator", with: @asset_allocate.Creator
+    fill_in "Expdate", with: @asset_allocate.Expdate
+    fill_in "Fbillno", with: @asset_allocate.FBillno
+    fill_in "Fbillstatus", with: @asset_allocate.FBillstatus
     click_on "Create Asset allocate"
 
     assert_text "Asset allocate was successfully created"
@@ -31,13 +32,14 @@ class AssetAllocatesTest < ApplicationSystemTestCase
     visit asset_allocates_url
     click_on "Edit", match: :first
 
+    fill_in "Approvedate", with: @asset_allocate.APPROVEDATE
     fill_in "Allocate reason", with: @asset_allocate.Allocate_reason
-    fill_in "Bring in confirm", with: @asset_allocate.Bring_in_Confirm
-    fill_in "Bring in number", with: @asset_allocate.Bring_in_Number
-    fill_in "Bring in to", with: @asset_allocate.Bring_in_to_id
-    fill_in "Document number", with: @asset_allocate.Document_number
-    fill_in "Pull up date", with: @asset_allocate.Pull_up_date
-    fill_in "Pull up to", with: @asset_allocate.Pull_up_to_id
+    fill_in "Approver", with: @asset_allocate.Approver
+    fill_in "Createdate", with: @asset_allocate.CREATEDATE
+    fill_in "Creator", with: @asset_allocate.Creator
+    fill_in "Expdate", with: @asset_allocate.Expdate
+    fill_in "Fbillno", with: @asset_allocate.FBillno
+    fill_in "Fbillstatus", with: @asset_allocate.FBillstatus
     click_on "Update Asset allocate"
 
     assert_text "Asset allocate was successfully updated"

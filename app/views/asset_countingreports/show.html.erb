@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Billno:</strong>
+  <%= @asset_countingreport.BillNo %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @asset_countingreport.description %>
+</p>
+
+<p>
+  <strong>Creator:</strong>
+  <%= @asset_countingreport.Creator %>
+</p>
+
+<p>
+  <strong>Createdate:</strong>
+  <%= @asset_countingreport.CREATEDATE %>
+</p>
+
+<p>
+  <strong>Approver:</strong>
+  <%= @asset_countingreport.Approver %>
+</p>
+
+<p>
+  <strong>Approvedate:</strong>
+  <%= @asset_countingreport.APPROVEDATE %>
+</p>
+
+<p>
+  <strong>Fbillstatus:</strong>
+  <%= @asset_countingreport.fbillstatus %>
+</p>
+
+<p>
+  <strong>Fdate:</strong>
+  <%= @asset_countingreport.fdate %>
+</p>
+
+<%= link_to 'Edit', edit_asset_countingreport_path(@asset_countingreport) %> |
+<%= link_to 'Back', asset_countingreports_path %>

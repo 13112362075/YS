@@ -1,0 +1,44 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Billno:</strong>
+  <%= @asset_loss.BillNo %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @asset_loss.description %>
+</p>
+
+<p>
+  <strong>Fdate:</strong>
+  <%= @asset_loss.fdate %>
+</p>
+
+<p>
+  <strong>Fbillstatus:</strong>
+  <%= @asset_loss.fbillstatus %>
+</p>
+
+<p>
+  <strong>Creator:</strong>
+  <%= @asset_loss.Creator %>
+</p>
+
+<p>
+  <strong>Approver:</strong>
+  <%= @asset_loss.Approver %>
+</p>
+
+<p>
+  <strong>Createdate:</strong>
+  <%= @asset_loss.CREATEDATE %>
+</p>
+
+<p>
+  <strong>Approvedate:</strong>
+  <%= @asset_loss.APPROVEDATE %>
+</p>
+
+<%= link_to 'Edit', edit_asset_loss_path(@asset_loss) %> |
+<%= link_to 'Back', asset_losses_path %>

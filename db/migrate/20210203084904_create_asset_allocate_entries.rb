@@ -5,10 +5,17 @@ class CreateAssetAllocateEntries < ActiveRecord::Migration[6.0]
       t.string :Code
       t.string :name
       t.string :Unit
-      t.integer :Amount
-      t.integer :Transfer_out_quantity
+      t.string :Model
+      t.decimal :Amount
+      t.string :EXPdept
+      t.string :Employeeld
       t.string :Asset_seat
-      t.integer :Asset_allocate_id
+      t.decimal :EXPQTY
+      t.string :IMPdept
+      t.string :Newuser
+      t.string :IMP_seat
+      t.string :fseq
+      t.string :Asset_allocate_id
 
       t.timestamps
     end

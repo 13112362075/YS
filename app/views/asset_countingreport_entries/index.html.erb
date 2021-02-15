@@ -1,0 +1,63 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Asset Countingreport Entries</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Asset type</th>
+      <th>Unit</th>
+      <th>Model</th>
+      <th>Asset status</th>
+      <th>Bookqty</th>
+      <th>Countqty</th>
+      <th>Variance</th>
+      <th>Book seat</th>
+      <th>Book dept</th>
+      <th>Book user</th>
+      <th>Invent seat</th>
+      <th>Invent dept</th>
+      <th>Inventuser</th>
+      <th>Countdate</th>
+      <th>Headnote</th>
+      <th>Fseq</th>
+      <th>Asset countingreport</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @asset_countingreport_entries.each do |asset_countingreport_entry| %>
+      <tr>
+        <td><%= asset_countingreport_entry.Code %></td>
+        <td><%= asset_countingreport_entry.name %></td>
+        <td><%= asset_countingreport_entry.Asset_type %></td>
+        <td><%= asset_countingreport_entry.Unit %></td>
+        <td><%= asset_countingreport_entry.Model %></td>
+        <td><%= asset_countingreport_entry.Asset_status %></td>
+        <td><%= asset_countingreport_entry.BookQty %></td>
+        <td><%= asset_countingreport_entry.CountQty %></td>
+        <td><%= asset_countingreport_entry.Variance %></td>
+        <td><%= asset_countingreport_entry.Book_seat %></td>
+        <td><%= asset_countingreport_entry.Book_dept %></td>
+        <td><%= asset_countingreport_entry.Book_User %></td>
+        <td><%= asset_countingreport_entry.Invent_seat %></td>
+        <td><%= asset_countingreport_entry.Invent_dept %></td>
+        <td><%= asset_countingreport_entry.InventUser %></td>
+        <td><%= asset_countingreport_entry.CountDate %></td>
+        <td><%= asset_countingreport_entry.Headnote %></td>
+        <td><%= asset_countingreport_entry.fseq %></td>
+        <td><%= asset_countingreport_entry.Asset_Countingreport_id %></td>
+        <td><%= link_to 'Show', asset_countingreport_entry %></td>
+        <td><%= link_to 'Edit', edit_asset_countingreport_entry_path(asset_countingreport_entry) %></td>
+        <td><%= link_to 'Destroy', asset_countingreport_entry, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Asset Countingreport Entry', new_asset_countingreport_entry_path %>

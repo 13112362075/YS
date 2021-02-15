@@ -1,0 +1,21 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  BillNo: MyString
+  description: MyString
+  fdate: 2021-02-13 09:22:28
+  fbillstatus: MyString
+  Creator: MyString
+  Approver: MyString
+  CREATEDATE: MyString
+  APPROVEDATE: MyString
+
+two:
+  BillNo: MyString
+  description: MyString
+  fdate: 2021-02-13 09:22:28
+  fbillstatus: MyString
+  Creator: MyString
+  Approver: MyString
+  CREATEDATE: MyString
+  APPROVEDATE: MyString

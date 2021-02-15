@@ -18,8 +18,15 @@ class AssetAllocateEntriesTest < ApplicationSystemTestCase
     fill_in "Asset allocate", with: @asset_allocate_entry.Asset_allocate_id
     fill_in "Asset seat", with: @asset_allocate_entry.Asset_seat
     fill_in "Code", with: @asset_allocate_entry.Code
-    fill_in "Transfer out quantity", with: @asset_allocate_entry.Transfer_out_quantity
+    fill_in "Expqty", with: @asset_allocate_entry.EXPQTY
+    fill_in "Expdept", with: @asset_allocate_entry.EXPdept
+    fill_in "Employeeld", with: @asset_allocate_entry.Employeeld
+    fill_in "Imp seat", with: @asset_allocate_entry.IMP_seat
+    fill_in "Impdept", with: @asset_allocate_entry.IMPdept
+    fill_in "Model", with: @asset_allocate_entry.Model
+    fill_in "Newuser", with: @asset_allocate_entry.Newuser
     fill_in "Unit", with: @asset_allocate_entry.Unit
+    fill_in "Fseq", with: @asset_allocate_entry.fseq
     fill_in "Name", with: @asset_allocate_entry.name
     click_on "Create Asset allocate entry"
 
@@ -35,8 +42,15 @@ class AssetAllocateEntriesTest < ApplicationSystemTestCase
     fill_in "Asset allocate", with: @asset_allocate_entry.Asset_allocate_id
     fill_in "Asset seat", with: @asset_allocate_entry.Asset_seat
     fill_in "Code", with: @asset_allocate_entry.Code
-    fill_in "Transfer out quantity", with: @asset_allocate_entry.Transfer_out_quantity
+    fill_in "Expqty", with: @asset_allocate_entry.EXPQTY
+    fill_in "Expdept", with: @asset_allocate_entry.EXPdept
+    fill_in "Employeeld", with: @asset_allocate_entry.Employeeld
+    fill_in "Imp seat", with: @asset_allocate_entry.IMP_seat
+    fill_in "Impdept", with: @asset_allocate_entry.IMPdept
+    fill_in "Model", with: @asset_allocate_entry.Model
+    fill_in "Newuser", with: @asset_allocate_entry.Newuser
     fill_in "Unit", with: @asset_allocate_entry.Unit
+    fill_in "Fseq", with: @asset_allocate_entry.fseq
     fill_in "Name", with: @asset_allocate_entry.name
     click_on "Update Asset allocate entry"
 

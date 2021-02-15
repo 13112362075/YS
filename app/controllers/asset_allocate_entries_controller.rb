@@ -69,6 +69,6 @@ class AssetAllocateEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def asset_allocate_entry_params
-      params.require(:asset_allocate_entry).permit(:Code, :name, :Unit, :Amount, :Transfer_out_quantity, :Asset_seat, :Asset_allocate_id)
+      params.require(:asset_allocate_entry).permit(:Code, :name, :Unit, :Model, :Amount, :EXPdept, :Employeeld, :Asset_seat, :EXPQTY, :IMPdept, :Newuser, :IMP_seat, :fseq, :Asset_allocate_id)
     end
 end

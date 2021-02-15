@@ -4,16 +4,30 @@ one:
   Code: MyString
   name: MyString
   Unit: MyString
-  Amount: 1
-  Transfer_out_quantity: 1
+  Model: MyString
+  Amount: 9.99
+  EXPdept: MyString
+  Employeeld: MyString
   Asset_seat: MyString
-  Asset_allocate_id: 1
+  EXPQTY: 9.99
+  IMPdept: MyString
+  Newuser: MyString
+  IMP_seat: MyString
+  fseq: MyString
+  Asset_allocate_id: MyString
 
 two:
   Code: MyString
   name: MyString
   Unit: MyString
-  Amount: 1
-  Transfer_out_quantity: 1
+  Model: MyString
+  Amount: 9.99
+  EXPdept: MyString
+  Employeeld: MyString
   Asset_seat: MyString
-  Asset_allocate_id: 1
+  EXPQTY: 9.99
+  IMPdept: MyString
+  Newuser: MyString
+  IMP_seat: MyString
+  fseq: MyString
+  Asset_allocate_id: MyString

@@ -1,0 +1,2 @@
+module AssetCountingreportEntriesHelper
+end
