@@ -127,6 +127,7 @@ get 'asset_allocates_Get_Data',:to =>'asset_allocates#Get_DataApi'
 get 'asset_countingreports_Get_Data',:to =>'asset_countingreports#Get_DataApi' 
 get 'asset_gains_Get_DataApi',:to => 'asset_gains#Get_DataApi'
 get 'asset_losses_Get_DataApi',:to => 'asset_losses#Get_DataApi'
+get 'asset_turnover_details_Get_DataApi',:to => 'asset_turnover_details#Get_DataApi'
 #更新状态
 post 'assetcards_Update_Fbillstatus',:to => 'assetcards#Update_Fbillstatus'
 post 'asset_turnover_details_Update_Fbillstatus',:to => 'asset_turnover_details#Update_Fbillstatus'

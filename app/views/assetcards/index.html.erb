@@ -1,427 +1,473 @@
-<p id="notice"><%= notice %></p>
+ <script src="https://www.layuicdn.com/layui/layui.js"></script>
+ <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+ <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+ <%=javascript_pack_tag 'tabadd' %>
+ <style>
+   .layui-table-page select {
+     height: 26px;
+   }
 
-<style>
+   .layui-disabled {
+     background-color: #fff !important;
+   }
 
-      .headlist{  
-         font-size: 3px; 
-         }
-</style>
+   .layui-laypage select {
+     padding: 0px;
+     border-radius: 2px;
+     cursor: pointer;
+   }
 
-  <script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.js"></script>
-  <script src="https://cdn.bootcss.com/xlsx/0.11.5/xlsx.core.min.js"></script> 
+   .layui-table-page {
+     text-align: center;
+   }
 
+   .layui-laypage .layui-laypage-skip {
+     color: #000;
+   }
 
- 
-
-  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-<h1 style="text-align:center;">资产卡片</h1>
-<div class="layui-btn-group " style="margin:10px;0px;">
-  <a rel="nofollow" data-method="get" href="/assetcards/new"><button type="button" class="layui-btn">新增</button></a>
-   <a id="a_update"  rel="nofollow"    ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
-   <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
-   <a id="a_delete"   rel="nofollow"  ><button   onclick="model_delete('  <%=assetcards_destroy_multiple_path%>')"   type="button" class="layui-btn">删除</button></a>
-
-  
-     <a rel="nofollow"  ><button type="button"   onclick="Update_fbillstatus('审核')"  class="layui-btn">审核</button></a> 
-   <a rel="nofollow"  ><button type="button"   onclick="Update_fbillstatus('反审核')"  class="layui-btn">反审核</button></a>
-    <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a>
-
-<input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
-   <a rel="nofollow"  ><button type="button"   onclick="selectFile()"  class="layui-btn">导入</button></a> 
-   <a rel="nofollow"  ><button type="button"   onclick="exportSpecialExcel()"  class="layui-btn">导出</button></a>
- 
-
-
- <table  style="text-align:left;margin:10px;0px; " > 
-<%= search_form_for @q do |f| %>
-<td>
-<label class="layui-form-label" >搜索框</label>
- <select    class="layui-input "  name="q[search_cont]">
-          <option value="assetCode">资产卡片编码</option>
-          <option value="assetname">资产卡片名称</option>
-          <option value="Assettype_id">资产类别</option>
-          <option value="Unit_id">计量单位</option>
-          <option value="Amount">数量</option>
-          <option value="Assetstatus_id">资产状态</option>
-          <option value="Addtype_id">变动方式</option>
-          <option value="BuyDate">购买日期</option>
-          <option value="Usestate_id">资产使用状态</option>
-          <option value="description">备注</option>
-          <option value="orgainize_id">所属组织</option>
- 
-          </select>
-</td>
-<td><div class="layui-input-block"> <input     class="layui-input "    type="search" name="q[name_cont]" id="q_name_cont"  ></div> </td>
-
-  <td><button  class="layui-btn" type="submit" name="commit"  data-disable-with="查询"> 查询 </button></td>
-<% end %>
-</table>
-
-<div class="layui-progress layui-progress-big  "  hidden="hidden"  lay-filter="demo" lay-showPercent="true">
-  <div     class="layui-progress-bar" lay-percent="0%"></div>
-</div>
+   .layui-table-box {
+     position: relative;
+     overflow: hidden;
+     text-align: center;
+   }
+ </style>
 
 
+ <h1 style="text-align:center;">资产领用单</h1>
 
-<table id="tab" class="layui-table" style="text-align:center;margin:10px;0px; " >
-  <colgroup>
-    <col width="1000"> 
-    <col>
-  </colgroup>
-  <thead > 
-    <tr >  
-      <th style="text-align:center;width: 5%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'  value='' type='checkbox'   onclick="selectAll(this)"></th>
-      <th  style="text-align:center;font-size:11px;font-weight:bold;" class="headlist" >资产卡片编码</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">资产卡片名称</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">单据状态</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">资产类别</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">计量单位</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">数量</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">资产状态</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">变动方式</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">购买日期</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">资产使用状态</th>
-      <th style="text-align:center;font-size:11px;font-weight:bold;">备注</th> 
-      <th style="text-align:center;font-size:11px;font-weight:bold;">所属组织</th> 
-    </tr>  
-  </thead>
-   <tbody>
-    <% @assetcards.each do |assetcard| %>
-      <tr  id=<%= assetcard.id %>  ondblclick="show(this)"> 
-        <td><input class='awsui-checkbox' id='assetcard.ids[]' name='assetcard.ids[]' value=<%= assetcard.id %> type='checkbox'/></td> 
-        <td style="text-align:center;font-size:10px;"  class="assetCode" ><%= assetcard.assetCode %></td>
-        <td  style="text-align:center;font-size:10px;"  class="assetname"><%= assetcard.assetname %></td>
-        <td  style="text-align:center;font-size:10px;"  class="assetname"><%= assetcard.fbillstatus %></td>
-        <td style="text-align:center;font-size:10px;"  class="Assettype_id"><%= assetcard.Assettype_id %></td>
-        <td style="text-align:center;font-size:10px;"   class="Unit_id"><%= assetcard.Unit_id %></td>
-        <td style="text-align:center;font-size:10px;"   class="Amount"><%= assetcard.Amount %></td>
-        <td style="text-align:center;font-size:10px;"   class="Assetstatus_id"><%= assetcard.Assetstatus_id %></td>
-        <td style="text-align:center;font-size:10px;"   class="Addtype_id"><%= assetcard.Addtype_id %></td>
-        <td style="text-align:center;font-size:10px;"  class="BuyDate"><%= assetcard.BuyDate %></td>  
-        <td style="text-align:center;font-size:10px;"   class="Usestate_id"><%= assetcard.Usestate_id %></td>   
-        <td  style="text-align:center;font-size:10px;"  class="description"><%= assetcard.description  %></td> 
-        <td style="text-align:center;font-size:10px;"   class="Orgainize_id"><%= assetcard.Orgainize_id %></td> 
-      </tr>
-    <% end %>
-  </tbody>
-      <tr> 
-    <td td colspan="12"> <%= paginate @assetcards %>   </td> 
-    </tr>
-</table>  
 
-<br> 
+ <div class="layui-btn-group " style="margin:10px;0px;">
+   <a data-url="/assetcards/new" data-id="newassetcards" data-title="资产领用单-新增" class="linkActive"><button
+       type="button" class="layui-btn">新增</button></a>
+   <a id="a_update" rel="nofollow" class="linkActive" data-id="newassetcards" data-title="资产领用单-修改"><button
+       type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+
+   <a id="a_delete" rel="nofollow"><button onclick="model_delete('  <%=assetcards_destroy_multiple_path%>')" type="button"
+       class="layui-btn">删除</button></a>
+   <a rel="nofollow"><button type="button" onclick="Refresh()" class="layui-btn">刷新</button></a>
+   <input type="file" id="file" style="display:none;"
+     accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+   <a rel="nofollow"><button type="button" onclick="selectFile()" class="layui-btn">导入</button></a>
+   <a rel="nofollow"><button type="button" onclick="exportSpecialExcel()" class="layui-btn">导出</button></a>
+ </div>
+
+ <table class="layui-hide" id="assetcards" lay-filter="assetcards"></table>
 
 
 
 
-<%=javascript_pack_tag 'layui' %>
-<%=javascript_pack_tag 'element' %>  
+ <script>
+   layui.use('table', function () {
+     var table = layui.table;
+     table.render({
+       elem: '#assetcards',
+       url: '/AssetList_Get_Data',
+       toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+         ,
+       defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+         title: '刷新',
+         layEvent: 'Refresh',
+         icon: "layui-icon-refresh-3"
+       }, { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+         title: '新增',
+         layEvent: 'Add',
+         icon: "layui-icon-addition"
+       }],
+       title: '用户数据表',
+        cols: [
+         [{
+             type: 'checkbox'
+           },
+           {
+             field: 'Assettype_id',
+             width: 80,
+             title: '资产类别',
+             sort: true
+           }, {
+             field: 'assetCode',
+             width: 80,
+             title: '资产编码'
+           }, {
+             field: 'assetname',
+             width: 80,
+             title: '资产名称',
+             sort: true
+           } ,{
+             field: 'Assetstatus_id',
+             title: '资产状态',
+             width: '10%',
+             minWidth: 100
+           } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+           , {
+             field: 'Addtype_id',
+             title: '变动方式',
+             sort: true
+           },  {
+             field: 'Usestate_id',
+             title: '资产使用状态',
+             sort: true
+           }, {
+             field: 'Assetseat_id',
+             title: '资产位置'
+           }, {
+             field: 'department_id',
+             title: '使用部门'
+           }, {
+             field: 'Employeeld',
+             title: '使用人'
+           }
+         ]
+       ],
+       page: true,
+       limits: [100,200,500,1000,2000,10000],
+       limit: 100
+     });
 
 
 
-<script>
-function setPercent(Rate){
-layui.use('element', function(){
-  var $ = layui.jquery ,
-  element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块 
-  element.progress('demo', Rate+'%')
-})};
-</script>  
+     //监听行单击事件（双击事件为：rowDouble）
+     table.on('row(test)', function (obj) {
+       var data = obj.data;
+       //console.log(data);
+       // layer.alert(JSON.stringify(data), {
+       //   title: '当前行数据：'
+       // }); 
+       //标注选中样式
+       obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+     });
 
-
-
-
- 
-<script>
-
-$('td').click(function(e){ 
-  if(e.currentTarget.className !="")
-  {
-        console.log(e.currentTarget.parentNode.id); 
-        console.log(e.currentTarget.parentNode.firstElementChild.children[0].checked);
-        if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
-        {
-          e.currentTarget.parentNode.firstElementChild.children[0].checked=false;
-        }
-        else
-        {
-          e.currentTarget.parentNode.firstElementChild.children[0].checked=true;
-        }
-  }   
-})
-
-
-function exportSpecialExcel(){
-  $.ajax({
-   type:"get", 
-   url :"/assetcards_export_all", 
-   success: function(){
-      location.reload();
-      }, 
-			error :function(){
-      }  
- });  
-}  
-function openDownloadDialog(url, saveName)
-	{ 
-		if(typeof url == 'object' && url instanceof Blob)
-		{
-			url = URL.createObjectURL(url); // 创建blob地址
-		}
-		var aLink = document.createElement('a');
-		aLink.href = url;
-		aLink.download = saveName || ''; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
-		var event;
-		if(window.MouseEvent) event = new MouseEvent('click');
-		else
-		{
-			event = document.createEvent('MouseEvents');
-			event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
-		}
-		aLink.dispatchEvent(event);
-	}
-  function sheet2blob(sheet, sheetName) {
-		sheetName = sheetName || 'sheet1';
-		var workbook = {
-			SheetNames: [sheetName],
-			Sheets: {}
-		};
-		workbook.Sheets[sheetName] = sheet;
-		// 生成excel的配置项
-		var wopts = {
-			bookType: 'xlsx', // 要生成的文件类型
-			bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
-			type: 'binary'
-		};
-		var wbout = XLSX.write(workbook, wopts);
-		var blob = new Blob([s2ab(wbout)], {type:"application/octet-stream"});
-		// 字符串转ArrayBuffer
-		function s2ab(s) {
-			var buf = new ArrayBuffer(s.length);
-			var view = new Uint8Array(buf);
-			for (var i=0; i!=s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
-			return buf;
-		}
-		return blob;
-	}
-</script>
- 
-
-
-
-
-<script>
-function selectFile() {
-		document.getElementById('file').click(); 
-	} 
-  	$(function() {
-		document.getElementById('file').addEventListener('change', function(e) {
-			var files = e.target.files;
-			if(files.length == 0) return;
-			var f = files[0];
-			if(!/\.xlsx$/g.test(f.name)) {
-				alert('仅支持读取xlsx格式！');
-				return;
-			}   
-      setPercent('20');
-			readWorkbookFromLocalFile(f, function(workbook) {
-				readWorkbook(workbook);
-			});
-		}); 
-	});
-  // 读取本地excel文件
-	function readWorkbookFromLocalFile(file, callback) {
-		var reader = new FileReader();
-    setPercent('40');
-		reader.onload = function(e) {
-			var data = e.target.result;
-			var workbook = XLSX.read(data, {type: 'binary'});
- 
-			if(callback) callback(workbook);
-		};
-		reader.readAsBinaryString(file);
-	}
-
-
-function readWorkbook(workbook) {
-		var sheetNames = workbook.SheetNames; // 工作表名称集合
-		var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet 
-		var csv = XLSX.utils.sheet_to_csv(worksheet);
-    
-    var datas = getdatas(csv);   
-   setPercent('80');
-    SaveByAjax(datas);
-    setPercent('100');
-	}
-
-
-
-	function getdatas(csv)
-	{ 
-    var datas = new Array();
-    var rows = csv.split('\n');
-    var index=0; 
-    rows.pop(); // 最后一行没用的
-    rows.shift();//删掉列头
-		rows.forEach(function(row, idx) {
-      var columns = row.split(',');
-      datas[index]=columns;
-      index++;
-    }); 
-		return datas;
-	}
-
-function  SaveByAjax(datas)
-{
-
-$.ajax({
-   type:"post", 
-   url :"/assetcards_save_multiple",
-   data:{ 
-      "assetcardid": datas
-     }, 
-   success: function(){
-     alert("导入成功！");
-     location.reload();
-     },
-			error :function(){
-        alert("导入成功")
-        } 
- });
-}
-</script>
+     //头工具栏事件
+     table.on('toolbar(test)', function (obj) {
+       var checkStatus = table.checkStatus(obj.config.id);
+       switch (obj.event) {
+         //自定义头工具栏右侧图标 - 提示
+         case 'Refresh':
+           Refresh();
+           break;
+       };
+     });
+   });
+ </script>
 
 
 
 
-	<script type="text/javascript">
-
-function show (element)
-{ 
-  var  path=  "/assetcards/"+element.id ;   
-  window.location =path ;
-}
 
 
 
-			// 获取选中的复选框项，保存为一个数组
-			function getCheckedCheckbox(checkboxClassName) {
-				var array = new Array();
-				var j = 0;
-				var selectedItems = document.getElementsByClassName(checkboxClassName);
-				for (var i = 1; i < selectedItems.length; i++) {
-					if (selectedItems[i].checked == true) {
-						array[j] = selectedItems[i].value;
-						j++;
-					}
-				}
-				return array;
-			}
 
-        function getCheckedCheckbox_update(){	
-              // 输出选中
-              var items = getCheckedCheckbox("awsui-checkbox"); 
-              if(items.length>1)
-              {
-                    alert("选择了多行数据，请选择1行！");
-                    document.getElementById("a_update").href ="";
-                    return false;
-              } 
-              else if(items.length==0)
-              {
-                     alert("没有选择数据，请重新选择！");
-                    document.getElementById("a_update").href ="";
-                    return false;
-              }
-              var  user_id=  "/assetcards/"+ items[0]+"/edit";   
-              document.getElementById("a_update").href =user_id;
-        }
- 
 
-   function selectAll(obj){ 
-        //创建数组
-        var arr=new Array();
-        //获取所有id为“cb1”的复选框
-        var items=document.getElementsByName("assetcard.ids[]");
 
-        //判断复选框是否选中
-        if(obj.checked)
-        {
-        //循环将所有name为"category"的复选框设置为选中状态
-              for(var i=0;i<items.length;i++){
-              //alert(items[i]);
-              items[i].checked=true;
-              }
-        }
-        else
-        {
-              //循环将所有name为"category"的复选框设置为非选中状态
-              for(var i=0;i<items.length;i++)
-              {
-              //alert(items[i]);
-              items[i].checked=false;
-              }
-        }
-    }      
- 
-</script> 
-
-  <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-<script>  
-function model_delete(path){
-   if (!confirm('你确定要删除吗？'))
-   { 
-      return false
-   } 
-var items = new Array();
-items = getCheckedCheckbox("awsui-checkbox");     
- var resturl = path; 
- $.ajax({
-   type:"post", 
-   url:resturl, 
-   data:{ 
-      "assetcardid": items
-     }, 
-   success: function(res){
-      if(res.code==200)
-      { 
-        alert(res.message);
-        location.reload();
-      }
-     },
-			error :function(){
-        alert("删除失败！")
-        } 
- });
-}
-  
-function Refresh(){
-  location.reload([true])
-  }   
- 
-
- function Update_fbillstatus(fbillstatus)
- {
-   items = getCheckedCheckbox("awsui-checkbox");     
-   console.log(items);
-   $.ajax({
-   type:"post", 
-   url :"/assetcards_Update_Fbillstatus",
-   data:{ 
-      "id": items,
-      "fbillstatus":fbillstatus
-     }, 
-   success: function(res){
-     if(res.code == 200)
-     { 
-       alert(res.message);
-       location.reload();
+ <script>
+   $(document).on("click", ".layui-table-body table.layui-table tbody td", function () {
+     if ($(this)[0].className == "") {
+       var index = $(this)[0].parentElement.attributes[0].value;
+       var tableBox = $(this).parents('.layui-table-box');
+       //存在固定列
+       tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+       //获取已选中列并取消选中 
+       //选中单击行
+       var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+         "td div.laytable-cell-checkbox div.layui-form-checkbox I");
+       checkCell.click();
      }
-     } 
- }); 
- }
+   });
 
 
-</script> 
 
 
+
+
+   function setPercent(Rate) {
+     layui.use('element', function () {
+       var $ = layui.jquery,
+         element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块 
+       element.progress('demo', Rate + '%')
+     })
+   };
+ </script>
+
+
+
+ <script type="text/javascript">
+   // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
+   function sheet2blob(sheet, sheetName) {
+     sheetName = sheetName || 'sheet1';
+     var workbook = {
+       SheetNames: [sheetName],
+       Sheets: {}
+     };
+     workbook.Sheets[sheetName] = sheet;
+     // 生成excel的配置项
+     var wopts = {
+       bookType: 'xlsx', // 要生成的文件类型
+       bookSST: false, // 是否生成Shared String Table，官方解释是，如果开启生成速度会下降，但在低版本IOS设备上有更好的兼容性
+       type: 'binary'
+     };
+     var wbout = XLSX.write(workbook, wopts);
+     var blob = new Blob([s2ab(wbout)], {
+       type: "application/octet-stream"
+     });
+     // 字符串转ArrayBuffer
+     function s2ab(s) {
+       var buf = new ArrayBuffer(s.length);
+       var view = new Uint8Array(buf);
+       for (var i = 0; i != s.length; ++i) view[i] = s.charCodeAt(i) & 0xFF;
+       return buf;
+     }
+     return blob;
+   }
+   /**
+    * 通用的打开下载对话框方法，没有测试过具体兼容性
+    * @param url 下载地址，也可以是一个blob对象，必选
+    * @param saveName 保存文件名，可选
+    */
+   function openDownloadDialog(url, saveName) {
+     if (typeof url == 'object' && url instanceof Blob) {
+       url = URL.createObjectURL(url); // 创建blob地址
+     }
+     var aLink = document.createElement('a');
+     aLink.href = url;
+     aLink.download = saveName || ''; // HTML5新增的属性，指定保存文件名，可以不要后缀，注意，file:///模式下不会生效
+     var event;
+     if (window.MouseEvent) event = new MouseEvent('click');
+     else {
+       event = document.createEvent('MouseEvents');
+       event.initMouseEvent('click', true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+     }
+     aLink.dispatchEvent(event);
+   }
+
+   function exportSpecialExcel() {
+
+
+     $.ajax({
+       type: "get",
+       url: "/assetcards_export_all",
+       data: {},
+       success: function () {
+
+         location.reload();
+       },
+       error: function () {
+
+       }
+     });
+
+
+     return;
+
+
+
+   }
+
+   function selectFile() {
+     $("progress").show();
+     document.getElementById('file').click();
+   }
+   $(function () {
+     document.getElementById('file').addEventListener('change', function (e) {
+
+
+       var files = e.target.files;
+       if (files.length == 0) return;
+       var f = files[0];
+       if (!/\.xlsx$/g.test(f.name)) {
+         alert('仅支持读取xlsx格式！');
+         return;
+       }
+       setPercent('20');
+       readWorkbookFromLocalFile(f, function (workbook) {
+         readWorkbook(workbook);
+       });
+     });
+   });
+
+   // 读取本地excel文件
+   function readWorkbookFromLocalFile(file, callback) {
+     var reader = new FileReader();
+     setPercent('40');
+     reader.onload = function (e) {
+       var data = e.target.result;
+       var workbook = XLSX.read(data, {
+         type: 'binary'
+       });
+
+       if (callback) callback(workbook);
+     };
+     reader.readAsBinaryString(file);
+   }
+
+
+   function readWorkbook(workbook) {
+     var sheetNames = workbook.SheetNames; // 工作表名称集合
+     var worksheet = workbook.Sheets[sheetNames[0]]; // 这里我们只读取第一张sheet 
+     var csv = XLSX.utils.sheet_to_csv(worksheet);
+
+     var datas = getdatas(csv);
+     setPercent('80');
+     SaveByAjax(datas);
+     setPercent('100');
+   }
+
+
+
+   function getdatas(csv) {
+     var datas = new Array();
+     var rows = csv.split('\n');
+     var index = 0;
+     rows.pop(); // 最后一行没用的
+     rows.shift(); //删掉列头
+     rows.forEach(function (row, idx) {
+       var columns = row.split(',');
+       datas[index] = columns;
+       index++;
+     });
+     return datas;
+   }
+
+
+
+   function SaveByAjax(datas) {
+     $.ajax({
+       type: "post",
+       url: "/save_multiple",
+       data: {
+         "assetcardsid": datas
+       },
+       success: function (res) {
+         $("#progress").hide();
+         alert('导入成功')
+         location.reload();
+       },
+       error: function () {
+         alert("导入失败")
+         location.reload();
+       }
+     });
+   }
+ </script>
+ <script crossorigin="anonymous"
+   integrity="sha512-WNLxfP/8cVYL9sj8Jnp6et0BkubLP31jhTG9vhL/F5uEZmg5wEzKoXp1kJslzPQWwPT1eyMiSxlKCgzHLOTOTQ=="
+   src="https://lib.baomitu.com/jquery/3.5.1/jquery.js"></script>
+
+ <script type="text/javascript">
+   function test1() {
+     var array1 = new Array();
+     var tb = document.getElementById('tab'); // table 的 id
+     var rows = tb.rows; // 获取表格所有行
+     var t = 0;
+     for (var i = 1; i < rows.length; i++) {
+
+       var array2 = new Array();
+       for (var j = 1; j < rows[i].cells.length; j++) { // 遍历该行的 td     
+         array2[j - 1] = rows[i].cells[j].innerHTML.replace('<br>', '');
+       }
+       array1[i - 1] = array2;
+     }
+
+     $.ajax({
+       type: "post",
+       url: "/save_multiple",
+       data: {
+         "assetcardsid": array1
+       },
+       success: function (res) {
+
+         if (res.code == 200) {
+           alert("删除成功！");
+           location.reload();
+         }
+       },
+       error: function () {
+         alert("删除失败！")
+       }
+     });
+   }
+ </script>
+
+
+ <script type="text/javascript">
+   // 获取选中的复选框项，保存为一个数组
+   function getCheckedCheckbox(checkboxClassName) {
+     var array = new Array();
+     var j = 0;
+     var selectedItems = document.getElementsByClassName(checkboxClassName);
+     for (var i = 1; i < selectedItems.length; i++) {
+       if (selectedItems[i].checked == true) {
+         array[j] = selectedItems[i].value;
+         j++;
+       }
+     }
+     return array;
+   }
+
+   function getCheckedCheckbox_update() {
+     
+     var table = layui.table;
+     
+     var checkStatus = table.checkStatus('assetcards');
+     console.log(checkStatus)
+     if (checkStatus.data.length > 1) {
+       alert("选择了多行数据，请选择1行！");
+       document.getElementById("a_update").href = "";
+       document.getElementById("a_update").dataset.url = "";
+       return false;
+     } else if (checkStatus.data.length == 0) {
+       alert("没有选择数据，请重新选择！");
+       document.getElementById("a_update").href = "";
+       document.getElementById("a_update").dataset.url = "";
+       return false;
+     }
+     var assetcards_id = "/assetcards/" + checkStatus.data[0].id + "/edit";
+     document.getElementById("a_update").dataset.url = assetcards_id
+ 
+   }
+ </script>
+
+
+ <script>
+   function model_delete(path) {
+     if (!confirm('你确定要删除吗？')) {
+       return false
+     }
+     var items = new Array();
+     items = getCheckedCheckbox("awsui-checkbox");
+     var table = layui.table;
+     var checkStatus = table.checkStatus('assetcards').data;
+     for (var i = 0; i < checkStatus.length; i++) {
+       items[i] = checkStatus[i].id
+     }
+     if(items.length==0)
+     {
+       alert("请选择单据！");
+       return;
+     }
+     var resturl = path;
+     $.ajax({
+       type: "post",
+       url: resturl,
+       data: {
+         "assetcardsid": items
+       },
+       success: function (res) {
+         if (res.code == 200) {
+           alert(res.message);
+           location.reload();
+         }
+         else 
+         {
+           alert(res.message);
+         }
+       } 
+     });
+   }
+
+   function Refresh() {
+     location.reload([true])
+   }
+
+   $(document).ready(function () {
+     $("#progress").hide();
+   });
+ </script>

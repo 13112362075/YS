@@ -1,6 +1,7 @@
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
 <script src="https://www.layuicdn.com/layui/layui.js"></script>
-<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+<%=javascript_pack_tag 'tabadd' %>
 <style>
   .locked{
     background-color: '#F5F5F5' 
@@ -56,8 +57,9 @@
     class="layui-btn">审核</button></a>
 <a id="a_unaudit" rel="nofollow"><button onclick="updatestatus(<%=@asset_turnover_detail.id%>,'反审核','归还')" type="button"
     class="layui-btn">反审核</button></a>
-<a id="a_Back" rel="nofollow"><button onclick="back()" type="button" class="layui-btn">归还</button></a>
-<a href="/asset_turnover_details" rel="nofollow"><button type="button" class="layui-btn">返回列表</button></a>
+<a id="a_Back" rel="nofollow"><button onclick="back()" type="button" class="layui-btn">归还</button></a> 
+<a data-url="/asset_turnover_details" data-id="asset_turnover_details_list" data-title="资产借用/归还单-列表" class="linkActive"
+  rel="nofollow"><button type="button" class="layui-btn">列表</button></a>
 <br><br>
 <div style="display:flex;">
   <div class="field">

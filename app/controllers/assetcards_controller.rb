@@ -2,7 +2,7 @@ class AssetcardsController < ApplicationController
   before_action :set_assetcard, only: [:show, :edit, :update, :destroy]
  
  
-
+ 
 
  
 def  Update_Fbillstatus 

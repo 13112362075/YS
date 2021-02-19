@@ -3,6 +3,23 @@ class AssetTurnoverDetailsController < ApplicationController
  
 
 
+  def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
+    render json:{code: code, msg: message, count: count,data: data};
+  end
+
+
+  def Get_DataApi
+    assetTurnoverDetail=AssetTurnoverDetail.order(:id);
+    total_count=assetTurnoverDetail.count
+    assetTurnoverDetail=assetTurnoverDetail.page(params[:page]).per(params[:limit])
+    data=assetTurnoverDetail.as_json;
+    api_success(count: total_count,data: data)
+  end
+
+
+
+
+
   def  Update_Fbillstatus 
     message=""
     ActiveRecord::Base.transaction do
@@ -203,7 +220,7 @@ end
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_asset_turnover_detail
+    def set_asset_turnover_detail 
       @asset_turnover_detail = AssetTurnoverDetail.find(params[:id])
     end
 
