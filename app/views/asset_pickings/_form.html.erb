@@ -64,7 +64,7 @@
     onclick="Push(<%=@asset_picking.id%>,this)" type="button" class="layui-btn">下推</button></a>
 
 <a data-url="/asset_pickings" data-id="newasset_pickings" data-title="资产领用单-列表" class="linkActive"
-  rel="nofollow"><button type="button" class="layui-btn">返回列表</button></a>
+  rel="nofollow"><button type="button" class="layui-btn">列表</button></a>
 <br><br>
 
 <div style="display:flex;">
@@ -92,8 +92,15 @@
   </div>
 </div>
 <div style="display:flex;">
-  <div class="field">
+  <div class="field"> 
+      <% if   @asset_picking.Type_of_business =="领用" %>
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_领用部门">领用部门</label>
+    <%else%>
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_退回部门">退回部门</label>
+    <%end%>
+
+
+
     <div class="layui-input-block"> <input class="layui-input  image_input " placeholder="请输入领用部门" type="text"
         name="asset_picking[Picking_Dept]" id="asset_picking_Picking_Dept" value=<%= @asset_picking.Picking_Dept%>>
     </div>
@@ -101,7 +108,14 @@
   <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
   <div class="field">
 
+      <% if   @asset_picking.Type_of_business =="领用" %>
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_领用人">领用人</label>
+    <%else%>
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_picking_退回人">退回人</label>
+    <%end%>
+
+
+ 
     <div class="layui-input-block"> <input class="layui-input  image_input   " placeholder="请输入领用人" type="text"
         name="asset_picking[Picking_Employeeld]" id="asset_picking_Picking_Employeeld"
         value=<%= @asset_picking.Picking_Employeeld%>></div>

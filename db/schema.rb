@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_13_032417) do
+ActiveRecord::Schema.define(version: 2021_02_20_035818) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -438,6 +438,11 @@ ActiveRecord::Schema.define(version: 2021_02_13_032417) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.datetime "CreateDate"
+    t.string "Approver"
+    t.datetime "ApproverDate"
   end
 
   create_table "inventory_plans", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

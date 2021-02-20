@@ -1,6 +1,7 @@
 <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
 <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
 <script src="https://www.layuicdn.com/layui/layui.js"></script>
+<%=javascript_pack_tag 'tabadd' %>
 <style>
   .image_input {
     width: 192px;
@@ -265,7 +266,10 @@
           class="layui-btn  ">反审核</button></a>
       <a><button onclick="Alter(this,<%=@assetcard.id%> )" type="button" class="layui-btn  ">变更</button></a>
 
-      <a href="/assetcards" rel="nofollow"><button type="button" class="layui-btn  ">返回列表</button></a>
+
+      <a data-url="/assetcards" data-id="assetcards" data-title="资产卡片-列表" class="linkActive"><button type="button"
+          class="layui-btn">列表</button></a>
+
     </div>
     <% end %>
     <p id=IsRresh_2 , hidden="hidden"> <%=   session[:IsRresh_2]%> </p>
@@ -327,15 +331,15 @@
     </script>
 
     <script>
-      function Alter(element,id){ 
+      function Alter(element, id) {
         if ($("#assetcard_fbillstatus")[0].value != "已审核") {
           alert("该资产卡片还未审核，不允许变更！");
-           element.parentElement.href = ""
+          element.parentElement.href = ""
           return;
         }
         if ($("#assetcard_Assetstatus_id")[0].value != "可用") {
           alert("该资产卡片非可用狀態，不允许变更！");
-           element.parentElement.href = ""
+          element.parentElement.href = ""
           return;
         }
         $.ajax({

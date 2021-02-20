@@ -94,9 +94,7 @@ post 'assetstatuses_choose'  ,:to => 'assetstatuses#choose'
 post 'assetcards_choose'  ,:to => 'assetcards#choose'  
 post 'assetcards_choose_single'  ,:to => 'assetcards#choose_single'  
 post 'assetseates_choose_row'  ,:to => 'assetseates#choose_row'  
-
-#更新资产卡片状态
-post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'   
+ 
 
   get 'login'  ,:to => 'sessions#new'  , :as => 'new_sessions'
   post 'login' ,:to   => 'sessions#create'
@@ -128,6 +126,7 @@ get 'asset_countingreports_Get_Data',:to =>'asset_countingreports#Get_DataApi'
 get 'asset_gains_Get_DataApi',:to => 'asset_gains#Get_DataApi'
 get 'asset_losses_Get_DataApi',:to => 'asset_losses#Get_DataApi'
 get 'asset_turnover_details_Get_DataApi',:to => 'asset_turnover_details#Get_DataApi'
+get 'departments_Get_DataApi',:to => 'departments#Get_DataApi'
 #更新状态
 post 'assetcards_Update_Fbillstatus',:to => 'assetcards#Update_Fbillstatus'
 post 'asset_turnover_details_Update_Fbillstatus',:to => 'asset_turnover_details#Update_Fbillstatus'
@@ -138,6 +137,8 @@ post 'asset_allocates_Update_Fbillstatus',:to => 'asset_allocates#Update_fbillst
 post 'asset_countingreports_Update_Fbillstatus',:to => 'asset_countingreports#Update_fbillstatus'
 post 'asset_gains_Update_Fbillstatus',:to => 'asset_gains#Update_fbillstatus'
 post 'asset_losses_Update_Fbillstatus',:to => 'asset_losses#Update_fbillstatus'
+post 'departments_Update_Fbillstatus',:to => 'departments#Update_fbillstatus'
+post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'   
 #判断是否存在未审核的资产变更单
 get 'assetalters_Check_IsExist',:to => 'assetalters#Check_IsExist'
 

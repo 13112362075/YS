@@ -1,13 +1,58 @@
 class DepartmentsController < ApplicationController
   before_action :set_department, only: [:show, :edit, :update, :destroy]
 
+
+  def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
+    render json:{code: code, msg: message, count: count,data: data};
+  end
+
+
+  def Get_DataApi
+    department=Department.order(:id);
+    total_count=department.count
+    department=department.page(params[:page]).per(params[:limit])
+    data=department.as_json;
+    api_success(count: total_count,data: data)
+  end
+
+
+
+
+  def  Update_fbillstatus 
+    message=""
+    ActiveRecord::Base.transaction do
+    if params["fbillstatus"].lstrip.rstrip=="审核"
+      @status="已审核" 
+    else
+      @status="未审核"
+    end   
+    @department  = Department.where( "id =  ? and fbillstatus= ?", params["id"],@status )  
+    if    @department.length==0 
+      @department = Department.find(params["id"])
+      @department[0].update(Approver: session[:name],ApproverDate:Time.now.strftime("%Y-%m-%d %H:%M:%S"),fbillstatus:  @status)
+
+      if message.lstrip.rstrip!="" 
+        render :json  => {code: 201,message: message}
+        raise ActiveRecord::Rollback 
+      else 
+      message=  params["fbillstatus"]+"成功！" 
+      render :json  => {code: 200,message: message}
+      end
+    else  
+      message=   params[:fbillstatus].lstrip.rstrip+"失败！该部门已经是"+ @status+"状态，不允许"+ params[:fbillstatus]+"\r\n" 
+      render :json  => {code: 201,message: message}
+    end 
+  end 
+end
+
+
+
+
   def choose   
     department = Department.find(params[:departmentid]) 
     @name = department.departmentname
-    @id=   params[:id] 
-    puts @id
-    @type="部门";
-    puts @type;
+    @id=   params[:id]  
+    @type="部门"; 
     render 'choose/choose.js.erb'
   end
 
@@ -85,6 +130,7 @@ class DepartmentsController < ApplicationController
   # GET /departments/new
   def new  
     @department = Department.new
+    @department.fbillstatus="未审核"
   end
 
   # GET /departments/1/edit
@@ -104,8 +150,9 @@ class DepartmentsController < ApplicationController
   # POST /departments
   # POST /departments.json
   def create
-    @department = Department.new(department_params)
-
+    @department = Department.new(department_params) 
+    @department.Creator=session[:name] 
+    @department.CreateDate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
     respond_to do |format|
       if @department.save
         format.html { redirect_to @department, notice: '部门创建成功.' }
@@ -149,6 +196,6 @@ class DepartmentsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def department_params
-      params.require(:department).permit(:departmentcode, :departmentname, :organize_id, :description)
+      params.require(:department).permit(:departmentcode, :departmentname, :organize_id, :description,:fbillstatus,:Creator,:CreateDate,:Approver,:ApproverDate)
     end
 end
