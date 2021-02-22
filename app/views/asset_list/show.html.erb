@@ -76,13 +76,11 @@
     <div style="display:flex;">
         <div class="layui-form-item">
             <label class="layui-form-label  label1 " style="  font-family: '黑体'">单据状态：</label>
-            <div class="layui-input-block">
-                <select class="layui-input  input1" name="assetcard_fbillstatus" id="assetcard_fbillstatus">
-                    <option value="已审核">已审核</option>
-                    <option value="未审核">未审核</option>
-                    <option value="全部">全部</option>
-                </select>
-            </div>
+            <select class="layui-input  input1" name="assetcard_fbillstatus" id="assetcard_fbillstatus">
+                <option value="已审核">已审核</option>
+                <option value="未审核">未审核</option>
+                <option value="全部">全部</option>
+            </select>
         </div>
 
 
@@ -94,10 +92,31 @@
 
         <input class="layui-input image_input " name="id" id="Assettype_id" autocomplete="off">
         <div class="image" , onclick="Choosedata(assettypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
-
         </div>
+    </div>
+
+
+
+    <div style="display:flex;">
+        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产状态编码">资产状态：</label>
+        <input class="layui-input  image_input" name="id" id="assetstatusid" autocomplete="off">
+        <div class="image" , onclick="Choosedata(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+        </div>
+
+
+        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_使用部门">使用部门：</label>
+        <input class="layui-input  image_input" name="id" id="departmentid" autocomplete="off">
+        <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+        </div>
+
+        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_使用人">使用人：</label>
+        <input class="layui-input  image_input" name="id" id="userid" autocomplete="off">
+        <div class="image" , onclick="Choosedata(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+        </div>
+
         <button class="layui-btn" data-type="reload">搜索</button>
     </div>
+
 </div>
 
 <table class="layui-hide" id="assetlist" lay-filter="assetlist"></table>
@@ -204,8 +223,8 @@
             ],
             id: 'testReload',
             page: true,
-       limits: [100,200,500,1000,2000,10000],
-       limit: 100
+            limits: [100, 200, 500, 1000, 2000, 10000],
+            limit: 100
         });
 
         var $ = layui.$,
@@ -214,6 +233,10 @@
                     var assetCode = $('#assetCode');
                     var Assettype_id = $('#Assettype_id');
                     var fbillstatus = $('#assetcard_fbillstatus');
+
+                    var assetstatusid = $('#assetstatusid');
+                    var departmentid = $('#departmentid');
+                    var userid = $('#userid');
                     console.log(fbillstatus)
                     //执行重载
                     table.reload('testReload', {
@@ -224,7 +247,10 @@
                             key: {
                                 assetCode: assetCode.val(),
                                 Assettype_id: Assettype_id.val(),
-                                fbillstatus:fbillstatus.val()
+                                fbillstatus: fbillstatus.val(),
+                                assetstatusid: assetstatusid.val(),
+                                departmentid: departmentid.val(),
+                                userid: userid.val()
                             }
                         }
                     }, 'data');
@@ -254,7 +280,7 @@
             };
         });
 
-        $('.demoTable .layui-btn').on('click', function () { 
+        $('.demoTable .layui-btn').on('click', function () {
             var type = $(this).data('type');
             active[type] ? active[type].call(this) : '';
         });
@@ -269,16 +295,19 @@
 </script>
 
 <script>
-$(document).ready(function(){ 
-    $("body").keydown(function() {
-             if (event.keyCode == "13") {//keyCode=13是回车键
-               $('.demoTable .layui-btn').click();
-             }
-         });
-});
+    $(document).ready(function () {
+        $("body").keydown(function () {
+            if (event.keyCode == "13") { //keyCode=13是回车键
+                $('.demoTable .layui-btn').click();
+            }
+        });
+    });
 </script>
 
 
 
 <%= render    'assetcards/AssetcardsModal_single.html.erb'  %>
 <%= render    'assettypes/AssettypeModal.html.erb',  id: "Assettype_id"  %>
+<%= render    'departments/DepartmentModal.html.erb',  id: "departmentid" ,userid:  "userid"%>
+<%= render    'users/UserModal.html.erb',  id: "userid",department: "departmentid"  %>
+<%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetstatusid"  %>

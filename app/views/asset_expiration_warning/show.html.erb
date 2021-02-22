@@ -76,13 +76,11 @@
     <div style="display:flex;">
         <div class="layui-form-item">
             <label class="layui-form-label  label1 " style="  font-family: '黑体'">单据状态：</label>
-            <div class="layui-input-block">
-                <select class="layui-input  input1" name="assetcard_fbillstatus" id="assetcard_fbillstatus">
-                    <option value="已审核">已审核</option>
-                    <option value="未审核">未审核</option>
-                    <option value="全部">全部</option>
-                </select>
-            </div>
+            <select class="layui-input  input1" name="assetcard_fbillstatus" id="assetcard_fbillstatus">
+                <option value="已审核">已审核</option>
+                <option value="未审核">未审核</option>
+                <option value="全部">全部</option>
+            </select>
         </div>
 
 
@@ -94,11 +92,33 @@
 
         <input class="layui-input image_input " name="id" id="Assettype_id" autocomplete="off">
         <div class="image" , onclick="Choosedata(assettypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
-
         </div>
+    </div>
+
+
+
+    <div style="display:flex;">
+        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产状态编码">资产状态：</label>
+        <input class="layui-input  image_input" name="id" id="assetstatusid" autocomplete="off">
+        <div class="image" , onclick="Choosedata(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+        </div>
+
+
+        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_使用部门">使用部门：</label>
+        <input class="layui-input  image_input" name="id" id="departmentid" autocomplete="off">
+        <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+        </div>
+
+        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_使用人">使用人：</label>
+        <input class="layui-input  image_input" name="id" id="userid" autocomplete="off">
+        <div class="image" , onclick="Choosedata(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+        </div>
+
         <button class="layui-btn" data-type="reload">搜索</button>
     </div>
+
 </div>
+
 
 <table class="layui-hide" id="asset_expiration_warning" lay-filter="asset_expiration_warning"></table>
 
@@ -146,7 +166,7 @@
                     field: 'Entrydate',
                     title: '入账日期'
                 }, {
-                    field: 'test',
+                    field: 'Duedate',
                     title: '到期日期',
                     sort: true
                 }, {
@@ -174,7 +194,7 @@
                     field: 'CNOSP',
                     title: '已使用寿命'
                 }, {
-                    field: 'test',
+                    field: 'ResidualLife',
                     title: '剩余寿命'
                 }, {
                     field: 'Mould',
@@ -197,6 +217,10 @@
                     var assetCode = $('#assetCode');
                     var Assettype_id = $('#Assettype_id');
                     var fbillstatus = $('#assetcard_fbillstatus');
+
+                    var assetstatusid = $('#assetstatusid');
+                    var departmentid = $('#departmentid');
+                    var userid = $('#userid');
                     console.log(fbillstatus)
                     //执行重载
                     table.reload('testReload', {
@@ -207,7 +231,10 @@
                             key: {
                                 assetCode: assetCode.val(),
                                 Assettype_id: Assettype_id.val(),
-                                fbillstatus: fbillstatus.val()
+                                fbillstatus: fbillstatus.val(), 
+                                assetstatusid: assetstatusid.val(),
+                                departmentid: departmentid.val(),
+                                userid: userid.val()
                             }
                         }
                     }, 'data');
@@ -265,3 +292,6 @@
 
 <%= render    'assetcards/AssetcardsModal_single.html.erb'  %>
 <%= render    'assettypes/AssettypeModal.html.erb',  id: "Assettype_id"  %>
+<%= render    'departments/DepartmentModal.html.erb',  id: "departmentid" ,userid:  "userid"%>
+<%= render    'users/UserModal.html.erb',  id: "userid",department: "departmentid"  %>
+<%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetstatusid"  %>

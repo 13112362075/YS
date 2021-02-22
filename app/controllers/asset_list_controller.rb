@@ -14,9 +14,20 @@ class AssetListController < ApplicationController
          if(params[:key][:Assettype_id].lstrip.rstrip!="") 
           sql=sql+" and assetcards.Assettype_id like '%#{ params[:key][:Assettype_id]}%'"
         end
-        if(params[:key][:fbillstatus] !="全部") 
+        if(params[:key][:assetstatusid] .lstrip.rstrip!="") 
+          sql=sql+" and assetcards.Assetstatus_id = '#{ params[:key][:assetstatusid]}'"
+        end
+        if(params[:key][:departmentid] .lstrip.rstrip!="") 
+          sql=sql+" and assetcards.department_id = '#{ params[:key][:departmentid]}'"
+        end
+        if(params[:key][:userid].lstrip.rstrip!="") 
+          sql=sql+" and assetcards.Employeeld = '#{ params[:key][:userid]}'"
+        end
+
+        if(params[:key][:fbillstatus].lstrip.rstrip!="全部") 
           sql=sql+" and assetcards.fbillstatus = '#{ params[:key][:fbillstatus]}'"
         end
+
       else
         sql=sql+" and assetcards.fbillstatus ='已审核'"
       end  
@@ -30,5 +41,8 @@ class AssetListController < ApplicationController
       def show
         @assetcard=Assetcard.all
         @assettype = Assettype.all
+        @department = Department.all
+        @user = User.all
+        @assetstatus =  Assetstatus.all   
       end 
 end
