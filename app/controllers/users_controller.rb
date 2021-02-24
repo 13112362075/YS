@@ -6,6 +6,17 @@ class UsersController < ApplicationController
   end
 
 
+  def choose_row
+    user = User.find(params[:userid]) 
+    @name = user.name
+    @departmentname = user.departmentname 
+    @id=   params[:id]  
+    @id[4]=    @departmentname 
+    @Modaltype=  params[:Modaltype] 
+    @type="用户";  
+    render 'choose/choose_row.js.erb'  
+  end
+
   def test
     user=User.order(:id);
     total_count=user.count

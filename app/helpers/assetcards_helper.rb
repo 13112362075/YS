@@ -73,5 +73,43 @@ module AssetcardsHelper
             end 
         end
 
+        if (type=="资产调拨单") 
+            @assetAllocate= AssetAllocate.find(datas[:id])   
+            if datas[:fbillstatus]=="审核" 
+                @AssetAllocateEntry = AssetAllocateEntry.where( "Asset_Allocate_id =  ?", datas[:id])
+                @AssetAllocateEntry.each do |i|
+                    @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code.lstrip.rstrip);  
+                    @assetcard_by_assetCode.update(department_id: i.IMPdept.lstrip.rstrip,Employeeld: i.Newuser.lstrip.rstrip,Assetseat_id: i.IMP_seat.lstrip.rstrip) 
+                end
+            end
+            if datas[:fbillstatus]=="反审核" 
+                @AssetAllocateEntry = AssetAllocateEntry.where( "Asset_Allocate_id =  ?", datas[:id])
+                @AssetAllocateEntry.each do |i|
+                    @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code.lstrip.rstrip);   
+                    @assetcard_by_assetCode.update(department_id: i.EXPdept.lstrip.rstrip,Employeeld: i.Employeeld.lstrip.rstrip,Assetseat_id: i.Asset_seat.lstrip.rstrip) 
+                end
+            end 
+        end
+
+        if (type=="资产处置单") 
+            @assetDisposal= AssetDisposal.find(datas[:id])    
+            if datas[:fbillstatus].lstrip.rstrip=="审核" 
+                @AssetDisposalEntry1  = AssetDisposalEntry.where( "AssetDisposal_id =  ?",   datas[:id])
+                @AssetDisposalEntry1.each do |i|
+                    @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code.lstrip.rstrip);  
+                    @assetcard_by_assetCode.update(Addtype_id: @assetDisposal.Disposemethod.lstrip.rstrip,Usestate_id: "报废",Amount: i.Amount-i.DisposeAmount) 
+                     
+                end
+            end
+            if datas[:fbillstatus].lstrip.rstrip=="反审核" 
+                @AssetDisposalEntry1  = AssetDisposalEntry.where( "AssetDisposal_id =  ?",   datas[:id])
+                @AssetDisposalEntry1.each do |i|
+                    @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code.lstrip.rstrip);    
+                    @assetcard_by_assetCode.update(Addtype_id: i.Addtype_id.lstrip.rstrip,Usestate_id:i.Usestate_id.lstrip.rstrip ,Amount: i.Amount) 
+                end
+            end 
+        end
+
+
     end
 end 

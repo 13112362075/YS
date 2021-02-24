@@ -45,22 +45,22 @@ class AssetAllocatesController < ApplicationController
 
   def Update_fbillstatus  
     message=""
-    ActiveRecord::Base.transaction do
-
+    ActiveRecord::Base.transaction do 
       @AssetAllocate=AssetAllocate.find(params[:id]) 
       if params[:fbillstatus]=="审核"
         @Fbillstatus="已审核"
       else
         @Fbillstatus="未审核"
       end 
-      message=message+ Update_Fbillstatus_Check("资产调拨单",params[:id],params[:fbillstatus]).to_s  
+      message=message+ Update_Fbillstatus_Check("资产调拨单",params[:id],params[:fbillstatus]).to_s   
       if  message.lstrip.rstrip==""
         @AssetAllocate.update(FBillstatus:@Fbillstatus)
-        if(params[:fbillstatus]=="审核")
-          @AssetAllocate.update(Approver: session[:name],APPROVEDATE: Time.now.strftime("%Y-%m-%d %H:%M:%S"))
-        end
+        if(params[:fbillstatus].lstrip.rstrip=="审核")
+          @AssetAllocate.update(Approver: session[:name],APPROVEDATE: Time.now.strftime("%Y-%m-%d %H:%M:%S"))  
+        end 
+        Update_datas("资产调拨单",params,"");  
         message=params[:fbillstatus].to_s + "成功！"
-      end 
+      end  
     end 
       render :json  => {code: 200,message: message,id: @id}
   end
@@ -77,7 +77,7 @@ def save_all
         @AssetAllocate = AssetAllocate.create!( FBillno:params["FBillno"],Expdate: params["Expdate"],Allocate_reason: params["Allocate_reason"],Creator: session[:name],FBillstatus: '未审核', CREATEDATE: Time.now.strftime("%Y-%m-%d %H:%M:%S"));
         @id=@AssetAllocate.id
         index =0; 
-        params["datas"].each do |i| 
+        params["datas"].each do |i|  
           index+=1;
           message=message+Save_Check_Entry("资产调拨单",params,i,index)  
           @AssetAllocateEntry = AssetAllocateEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Model: i[1][3],Amount: i[1][4],EXPdept: i[1][5],Employeeld: i[1][6] ,Asset_seat:i[1][7] ,EXPQTY: i[1][8],IMPdept: i[1][9],Newuser: i[1][10],IMP_seat: i[1][11],fseq: i[1][13],Asset_allocate_id: @id);
@@ -136,13 +136,20 @@ end
   def new
     @asset_allocate = AssetAllocate.new 
     @asset_allocate.FBillstatus="未审核"
-    @assetcard  =  Assetcard.where("Usestate_id='可用'");   
+    @asset_allocate.Expdate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    @assetcard  =  Assetcard.where("Usestate_id='可用'  and fbillstatus='已审核' ");   
+    @user = User.all   
+    @department = Department.all      
+    @assetseate = Assetseate.all   
   end
 
   # GET /asset_allocates/1/edit
   def edit
     @asset_allocate_entry  = AssetAllocateEntry.where( "Asset_allocate_id =  ?",  "#{params[:id]}" )    
-    @assetcard  =  Assetcard.where("Usestate_id='可用'");    
+    @assetcard  =  Assetcard.where("Usestate_id='可用'  and fbillstatus='已审核' ");   
+    @user = User.all   
+    @department = Department.all      
+    @assetseate = Assetseate.all   
   end
 
   # POST /asset_allocates

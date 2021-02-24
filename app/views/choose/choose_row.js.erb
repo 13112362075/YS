@@ -1,7 +1,15 @@
 var list = document.getElementsByClassName("tdd1 update");
 list[0].innerHTML="<%=@name%>"
-
+if("<%=@type%>"=="用户")
+{
+    var index ="<%=@id[3]%>"
+    list[0].parentElement.cells[index.replace(/(^\s*)|(\s*$)/g, "")].innerHTML="<%= @departmentname%>" 
+}
+if("<%=@type%>"=="部门")
+{ 
+    var index ="<%=@id[3]%>"
+    list[0].parentElement.cells[index.replace(/(^\s*)|(\s*$)/g, "")].innerHTML="" 
+    list[0].parentElement.cells[12].innerHTML=""  
+} 
 var modal ="<%=  @Modaltype%>"   
-
 $('#'+modal).modal('hide');  
-

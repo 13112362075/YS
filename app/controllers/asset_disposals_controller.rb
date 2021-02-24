@@ -16,6 +16,7 @@ class AssetDisposalsController < ApplicationController
         if(params[:fbillstatus]=="审核")
           @assetDisposal.update(Approver: session[:name],ApproveDate: Time.now.strftime("%Y-%m-%d %H:%M:%S"))
         end
+        Update_datas("资产处置单",params,"");  
         message=params[:fbillstatus].to_s + "成功！"
       end 
     end 
@@ -79,7 +80,7 @@ def save_all
         params["datas"].each do |i| 
           index+=1;
           message=message+Save_Check_Entry("资产处置单",params,i,index)  
-          @AssetDisposalEntry = AssetDisposalEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6] ,AssetDisposal_id: @id,fseq: i[1][9],Addtype_id: i[1][7]);
+          @AssetDisposalEntry = AssetDisposalEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6],Usestate_id: i[1][8],AssetDisposal_id: @id,fseq: i[1][10],Addtype_id: i[1][7]);
         end
       end
     else
@@ -101,11 +102,11 @@ def save_all
         params[:datas].each do  |i|
           index+=1;
           message=message+ Save_Check_Entry("资产处置单",params,i,index) 
-          if  i[1][8].to_s == "0"
-            @AssetDisposalEntry_3 = AssetDisposalEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6] ,AssetDisposal_id: @id,fseq: i[1][9],Addtype_id: i[1][7]);
+          if  i[1][9].to_s == "0"
+            @AssetDisposalEntry_3 = AssetDisposalEntry.create!(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6],Usestate_id: i[1][8],AssetDisposal_id: @id,fseq: i[1][10],Addtype_id: i[1][7]);
           else  
-            @AssetDisposalEntry_2= AssetDisposalEntry.find(i[1][8])  
-            @AssetDisposalEntry_2.update(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6] ,AssetDisposal_id: @id,fseq: i[1][9],Addtype_id: i[1][7]);
+            @AssetDisposalEntry_2= AssetDisposalEntry.find(i[1][9])  
+            @AssetDisposalEntry_2.update(Code: i[1][0],name: i[1][1],Unit: i[1][2],Amount: i[1][3],DisposeAmount: i[1][4],Asset_seat: i[1][5],DisposePrice: i[1][6],Usestate_id: i[1][8],AssetDisposal_id: @id,fseq: i[1][10],Addtype_id: i[1][7]);
           end
         end
       end
@@ -136,11 +137,9 @@ end
     @asset_disposal = AssetDisposal.new
     @asset_disposal.Disposemethod="报废"
     @asset_disposal.Fbillstatus="未审核"
-    @assetcard  =  Assetcard.where(" fbillstatus ='已审核' ");    
-    @user = User.all   
-    @addtype = Addtype.all   
-    @department = Department.all      
+    @assetcard  =  Assetcard.where(" fbillstatus ='已审核'  ");     
     @asset_disposal.DisposeDate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    @addtype = Addtype.all   
   end
 
   # GET /asset_disposals/1/edit
@@ -162,7 +161,7 @@ end
       else
         format.html { render :new }
         format.json { render json: @asset_disposal.errors, status: :unprocessable_entity }
-      end
+      end.lstrip
     end
   end
 

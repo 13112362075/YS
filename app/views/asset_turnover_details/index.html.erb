@@ -41,7 +41,7 @@
       <a id="a_update" rel="nofollow" class="linkActive" data-id="edit_asset_turnover_details" data-title="资产借用/归还单-修改"><button
        type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
    <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
-   <a id="a_delete"   rel="nofollow"  ><button   onclick="model_delete()"   type="button" class="layui-btn">删除</button></a>
+   <a id="a_delete"   rel="nofollow"  ><button   onclick="model_delete('  <%=asset_turnover_details_destroy_multiple_path%>')"   type="button" class="layui-btn">删除</button></a>
    <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a> 
    	<input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
    <a rel="nofollow"  ><button type="button"   onclick="selectFile()"  class="layui-btn">导入</button></a> 
@@ -430,6 +430,7 @@
        return;
      }
      var resturl = path;
+     console.log(resturl);
      $.ajax({
        type: "post",
        url: resturl,

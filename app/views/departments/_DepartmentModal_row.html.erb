@@ -1,0 +1,105 @@
+
+
+<!-- Modal -->
+<div class="modal fade" id="departmentModal_row" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+         <h4>部门表</h4>
+        <h4  hidden="hidden" id="departmentid" class="modal-title"  > </h4>  
+        <h4  hidden="hidden" id="departmentidModalid" class="modal-title"  > <%= id%> </h4> 
+        <h4  hidden="hidden" id="userModalid" class="modal-title"  > <%= userid%> </h4> 
+      </div>
+      <div class="modal-body"> 
+
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th>部门编码</th>
+            <th>部门名称</th> 
+          </tr>
+          </thead>
+          <tbody>
+            <% @department.each do |department| %>
+            <tr class="select_department" data-user_id="<%= department.id %>" >
+              <td><%= department.departmentcode %></td>
+              <td><%= department.departmentname %></td> 
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+        <button id="choose" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+      </div> 
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+ 	<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+	<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+	<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+$('tr.select_department').click(function(e){ 
+    $("tr.select_department").css("backgroundColor","white");
+    this.style.backgroundColor = "#357ebd"
+    console.log(this.dataset.user_id) 
+    $("#departmentid").text(this.dataset.user_id);
+})
+
+
+ 
+
+$('#choose').click(function(e){   
+     var List=new Array();
+  List[0]="部门";
+  List[1]=   $("#departmentidModalid").text();
+  List[2]="departmentModal";
+  List[3]=$("#userModalid").text();
+$.ajax({
+   type:"post", 
+   url :"/departments_choose_row",
+   data:{ 
+      "departmentid": $("#departmentid").text(),
+      "id" :List,
+      "Modaltype":"departmentModal_row"
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });
+})
+
+
+
+$('tr.select_department').dblclick(function(e){   
+  var List=new Array();
+  List[0]="部门";
+  List[1]=   $("#departmentidModalid").text();
+  List[2]="departmentModal";
+  List[3]=$("#userModalid").text();
+
+$.ajax({
+   type:"post", 
+   url :"/departments_choose_row",
+   data:{ 
+      "departmentid": $("#departmentid").text(),
+      "id" :List,
+      "Modaltype":"departmentModal_row"
+     }, 
+   success: function(){ 
+     },
+			error :function(){ 
+        } 
+ });
+});
+</script>

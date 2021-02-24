@@ -1,0 +1,135 @@
+<!-- Modal -->
+<div class="modal fade" id="userModal_row" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4>用户表</h4>
+                <h4 hidden="hidden" id="userid" class="modal-title"></h4>
+                <h4 hidden="hidden" id="UserModalid" class="modal-title"> <%= id%> </h4>
+                <h4 hidden="hidden" id="departmentModalid" class="modal-title"> <%= department%> </h4>
+                <h4 hidden="hidden" id="departmentvalue" class="modal-title"> <%= departmentvalue%> </h4>
+            </div>
+            <div class="modal-body">
+
+                <table id="table_usermodal" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>用户名称</th>
+                            <th>所属部门</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% @user.each do |user| %>
+                        <tr class="select selectuser" data-user_id="<%= user.id %>">
+                            <td><%= user.id %></td>
+                            <td><%= user.name %></td>
+                            <td><%= user.departmentname %></td>
+                        </tr>
+                        <% end %>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                <button id="chooseuser" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+
+
+
+<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+<script>
+    $('tr.selectuser').click(function (e) {
+        $("tr.selectuser").css("backgroundColor", "white");
+        this.style.backgroundColor = "#357ebd"
+        $("#userid").text(this.dataset.user_id);
+    })
+</script>
+
+<script>
+    $('#chooseuser').click(function (e) {
+        var departmentid = $("#departmentModalid").text();
+        // var departmentvalue=$("#"+departmentid.trim())[0].value);
+        var List = new Array();
+        List[0] = "用户";
+        List[1] = $("#UserModalid").text();
+        List[2] = "userModal";
+        List[3] = $("#departmentModalid").text();
+        $.ajax({
+            type: "post",
+            url: "/users_choose_row",
+            data: {
+                "userid": $("#userid").text(),
+                "id": List,
+                "Modaltype": "userModal_row"
+            },
+            success: function () {},
+            error: function () {}
+        });
+    })
+
+
+
+    $('tr.selectuser').dblclick(function (e) {
+        var departmentid = $("#departmentModalid").text();
+        // var departmentvalue=$("#"+departmentid.trim())[0].value);
+        var List = new Array();
+        List[0] = "用户";
+        List[1] = $("#UserModalid").text();
+        List[2] = "userModal";
+        List[3] = $("#departmentModalid").text();
+        $.ajax({
+            type: "post",
+            url: "/users_choose_row",
+            data: {
+                "userid": $("#userid").text(),
+                "id": List,
+                "Modaltype": "userModal_row"
+            },
+            success: function () {},
+            error: function () {}
+        });
+    })
+</script>
+
+<script>
+    $('#userModal_row').on('show.bs.modal', function () { 
+        var departmentid = $("#departmentModalid").text();
+        var departmentvaluenew=$("#departmentvalue").text();
+        var list = document.getElementsByClassName("tdd1 update"); 
+         
+        console.log(departmentid)
+         
+        var departmentvalue =list[0].parentElement.cells[Number(departmentid)].innerHTML
+
+        console.log(departmentvalue.replace(/(^\s*)|(\s*$)/g, ""))
+        console.log(departmentvaluenew.replace(/(^\s*)|(\s*$)/g, ""))
+
+        console.log(departmentvalue.replace(/(^\s*)|(\s*$)/g, "") ==departmentvaluenew.replace(/(^\s*)|(\s*$)/g, ""))
+        
+        var table_usermodal = document.getElementById('table_usermodal'); // table 的 id 
+        var rows = table_usermodal.rows; 
+        for (i = 1; i < rows.length; i++) {
+            rows[i].style.display = "";
+        }  
+        if (departmentvalue.replace(/(^\s*)|(\s*$)/g, "") ==departmentvaluenew.replace(/(^\s*)|(\s*$)/g, "")) { 
+            return;
+        }
+        for (i = 1; i < rows.length; i++) {    
+            if (rows[i].cells[2].innerText.replace(/(^\s*)|(\s*$)/g, "") != departmentvalue.replace(/(^\s*)|(\s*$)/g, "")) {
+                rows[i].style.display = "none";
+            }
+        }
+    })
+</script>

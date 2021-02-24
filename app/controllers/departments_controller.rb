@@ -47,6 +47,15 @@ end
 
 
 
+def choose_row
+  department = Department.find(params[:departmentid]) 
+  @name = department.departmentname
+  @id=   params[:id]  
+  @Modaltype=  params[:Modaltype] 
+  @type="部门";  
+  render 'choose/choose_row.js.erb'
+end
+
 
   def choose   
     department = Department.find(params[:departmentid]) 

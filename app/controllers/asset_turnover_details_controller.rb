@@ -37,6 +37,7 @@ class AssetTurnoverDetailsController < ApplicationController
         render :json  => {code: 201,message: message}
         raise ActiveRecord::Rollback 
       else 
+        
       message=  params["Status"]+"成功！" 
       render :json  => {code: 200,message: message}
       end
@@ -52,7 +53,7 @@ end
 def destroy_multiple     
   ActiveRecord::Base.transaction do
     message="";
-    params["asset_turnover_detailid"].each do |i|  
+    params["asset_turnover_detailsid"].each do |i|  
       @AssetTurnoverDetail = AssetTurnoverDetail.find(i);
       if @AssetTurnoverDetail.fbillstatus=="已审核"  #2021-1-15 阿斌修改，控制已审核不允许删除！
         message=message+"单据编号为：" +@AssetTurnoverDetail.Document_number+"已审核，不允许删除！\r\n";  #2021-1-15 阿斌修改，控制已审核不允许删除！
@@ -121,7 +122,7 @@ def destroy_multiple
     ActiveRecord::Base.transaction do
       @id=0;
     if params["id"]==""  
-        message = message + Save_Check("资产借出/归还单",params ).to_s
+        message = message + Save_Check("资产借出/归还单",params ).to_s 
         if message.lstrip.rstrip==""
            @asset_turnover_detail = AssetTurnoverDetail.create!(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"],Creator: session[:name],fbillstatus: '未审核', Createdate: Time.now.strftime("%Y-%m-%d %H:%M:%S"));
            @id=@asset_turnover_detail.id

@@ -6,7 +6,6 @@
   .locked {
     background-color: '#F5F5F5'
   }
-
   .image_input {
     width: 192px;
     border: 1px solid #e6e6e6;
@@ -19,7 +18,6 @@
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 2px;
   }
-
   .image {
     border: 1px solid #e6e6e6;
     border-left: 0px;
@@ -33,23 +31,18 @@
     height: 38px;
     width: 38px;
   }
-
   .label1 {
     width: 100px;
     font-size: 12px;
   }
-
   .input1 {
     width: 230px;
   }
 </style>
-
-
 <%= form_with(model: asset_allocate, local: true) do |form| %>
 <% if asset_allocate.errors.any? %>
 <div id="error_explanation">
   <h2><%= pluralize(asset_allocate.errors.count, "error") %> prohibited this asset_allocate from being saved:</h2>
-
   <ul>
     <% asset_allocate.errors.full_messages.each do |message| %>
     <li><%= message %></li>
@@ -57,23 +50,15 @@
   </ul>
 </div>
 <% end %>
-
-
-
-
 <p id="id" hidden='hidden'><%= @asset_allocate.id%></p>
 <a id="a_test" rel="nofollow"><button onclick="Save()" type="button" class="layui-btn">保存</button></a>
 <a id="a_audit" rel="nofollow"><button onclick="Update_Fbillstatus(<%=@asset_allocate.id%>,'审核' )" type="button"
     class="layui-btn">审核</button></a>
 <a id="a_unaudit" rel="nofollow"><button onclick="Update_Fbillstatus(<%=@asset_allocate.id%>,'反审核' )" type="button"
     class="layui-btn">反审核</button></a>
-
 <a data-url="/asset_allocates" data-id="asset_allocates" data-title="资产处置单-列表" class="linkActive" rel="nofollow"><button
     type="button" class="layui-btn">返回列表</button></a>
 <br><br>
-
-
-
 <div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_单据编号">单据编号</label>
@@ -85,7 +70,6 @@
     <div class="layui-input-block"> <input class="layui-input input1    fdate" placeholder="请输入调出日期" type="text"
         name="asset_allocate[Expdate]" id="asset_allocate_Expdate" value=<%= @asset_allocate.Expdate%>></div>
   </div>
-
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_调拨原因">调拨原因</label>
     <div class="layui-input-block"> <input class="layui-input input1    " placeholder="请输入调拨原因" type="text"
@@ -93,9 +77,6 @@
         value=<%= @asset_allocate.Allocate_reason%>></div>
   </div>
 </div>
-
-
-
 <div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_单据状态">单据状态</label>
@@ -108,15 +89,12 @@
     <div class="layui-input-block"> <input class="layui-input input1     locked" type="text"
         name="asset_allocate[Creator]" id="asset_allocate_Creator" value=<%= @asset_allocate.Creator%>></div>
   </div>
-
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_创建日期">创建日期</label>
     <div class="layui-input-block"> <input class="layui-input input1  locked  " type="text"
         name="asset_allocate[CREATEDATE]" id="asset_allocate_CREATEDATE" value=<%= @asset_allocate.CREATEDATE%>></div>
   </div>
 </div>
-
-
 <div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_审核人">审核人</label>
@@ -130,19 +108,12 @@
     </div>
   </div>
 </div>
-
 <% end %>
-
-
 <div class="layui-btn-group">
   <button id="add_row" class="layui-btn" onclick="addrow()">新增行</button>
   <button class="layui-btn" onclick="delrow()">删除行</button>
   <button id="btn_choose_assetcard" class="layui-btn" onclick="Choosedata(assetcardModal)" href="#">选择资产卡片</button>
 </div>
-
-
-
-
 <form id="Entry" ,action="/save_multiple">
   <table id="testid" class="layui-table font" style="text-align:center;margin:10px;0px; ">
     <colgroup>
@@ -182,13 +153,15 @@
         <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
         <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
         <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="false"></td>
-        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+        <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'部门')"
+          class="tdd1" contenteditable="false">双击选择调入部门</td>
+        <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'用户')"
+          class="tdd1" contenteditable="false">双击选择现使用人</td>
+        <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;"
+          ondblclick="ChooseMotal(this,'资产位置')" class="tdd1" contenteditable="false">双击选择资产位置</td>
       </tr>
       <%else%>
       <% @asset_allocate_entry.each do |asset_allocate_entry| %>
-
       <tr class="trr" id=<%=asset_allocate_entry.id%>>
         <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox' /></td>
         <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true">
@@ -212,26 +185,33 @@
           <%= asset_allocate_entry.Asset_seat %></td>
         <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
           <%= asset_allocate_entry.EXPQTY %></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
-          <%= asset_allocate_entry.IMPdept %></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1  " contenteditable="false">
-          <%= asset_allocate_entry.Newuser %></td>
-        <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
-          <%= asset_allocate_entry.IMP_seat %></td>
+        <%if  asset_allocate_entry.IMPdept ==""%>
+        <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'部门')" class="tdd1"
+          contenteditable="false">双击选择调入部门</td>
+        <%else%>
+        <td style="text-align:center;font-size: 10px;" ondblclick="ChooseMotal(this,'部门')" class="tdd1"
+          contenteditable="false"><%= asset_allocate_entry.IMPdept %> </td>
+        <%end%>
+        <%if  asset_allocate_entry.Newuser ==""%>
+        <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'用户')" class="tdd1"
+          contenteditable="false">双击选择现使用人</td>
+        <%else%>
+        <td style="text-align:center;font-size: 10px;" ondblclick="ChooseMotal(this,'用户')" class="tdd1"
+          contenteditable="false"><%= asset_allocate_entry.Newuser %> </td>
+        <%end%>
+        <%if  asset_allocate_entry.IMP_seat ==""%>
+        <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'资产位置')" class="tdd1"
+          contenteditable="false">双击选择资产位置</td>
+        <%else%>
+        <td style="text-align:center;font-size: 10px;" ondblclick="ChooseMotal(this,'资产位置')" class="tdd1"
+          contenteditable="false"><%= asset_allocate_entry.IMP_seat %> </td>
+        <%end%>
       </tr>
       <%end%>
       <%end%>
     </tbody>
   </table>
 </form>
-
-
-
-
-
-
-
-
 <script type="text/javascript">
   function Update_Fbillstatus(id, fbillstatus, ) {
     if (fbillstatus == "审核") {
@@ -241,7 +221,6 @@
         return;
       }
     }
-
     $.ajax({
       type: "post",
       async: false,
@@ -259,15 +238,6 @@
       }
     });
   }
-
-  function Choosedata(modalid) {
-    if ($("#asset_allocate_FBillstatus").val() == "已审核") {
-      alert("该单据已经审核，不允许操作！")
-      return;
-    }
-    $('#' + modalid.id).modal('show');
-  }
-
   function delrow() {
     if ($("#asset_allocate_FBillstatus").val() == "已审核") {
       alert("该单据已经审核，不允许删除行！")
@@ -291,7 +261,6 @@
       alert("请选择删除的数据！");
     }
   }
-
   function addrow() {
     if ($("#asset_allocate_FBillstatus").val() == "已审核") {
       alert("该单据已经审核，不允许增加行！")
@@ -320,6 +289,18 @@
         } else if (i == 1) {
           y.innerHTML = index;
           y.setAttribute("style", "text-align:center;font-size:10px;")
+        } else if (i == 11) {
+          y.innerHTML = "双击选择调入部门";
+          y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
+          y.setAttribute("ondblclick", " ChooseMotal(this,'部门')")
+        }  else if (i == 12) {
+          y.innerHTML = "双击选择现使用人";
+          y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
+          y.setAttribute("ondblclick", " ChooseMotal(this,'用户')")
+        }  else if (i == 13) {
+          y.innerHTML = "双击选择资产位置";
+          y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
+          y.setAttribute("ondblclick", " ChooseMotal(this,'资产位置')")
         } else {
           y.setAttribute("contenteditable", "true");
           y.setAttribute("style", "text-align:center;font-size:10px;")
@@ -328,12 +309,9 @@
           y.setAttribute("contenteditable", "false");
         }
         y.setAttribute("class", "tdd1");
-
       }
     }
   }
-
-
   $(document).ready(function () {
     layui.use('laydate', function () {
       var laydate = layui.laydate;
@@ -343,7 +321,6 @@
         });
       });
     })
-
     if ($("#asset_allocate_FBillstatus").val() == "已审核") {
       $('.fdatetd').each(function () {
         laydate.render({
@@ -358,7 +335,6 @@
     }
     $(".locked").prop('disabled', 'disabled');
     $(".locked").css('background-color', '#F5F5F5');
-
     if ($("#id").text() == "") {
       $("#a_unaudit").hide();
       $("#a_audit").hide();
@@ -368,13 +344,8 @@
       $("#a_Back").show();
       $("#asset_allocate_FBillno").attr("disabled", "disabled");
       $("#asset_allocate_FBillno").css('background-color', '#F5F5F5');
-
     }
-
-
   });
-
-
   function Save() {
     var id = document.getElementById("id").innerText; //单据id 
     var asset_allocate_FBillno = document.getElementById("asset_allocate_FBillno").value; //单据编码
@@ -392,7 +363,6 @@
       for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td       
         array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
       }
-
       array2[rows[i].cells.length - 2] = rows[i].id;
       array2[rows[i].cells.length - 1] = rows[i].cells[1].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
       array1[i - 1] = array2;
@@ -419,14 +389,7 @@
         }
       }
     });
-  }
-
-
-
-
-
-
-
+  } 
   function Save_with_updatestatus() {
     var result = new Array();
     var id = document.getElementById("id").innerText; //单据id 
@@ -445,7 +408,6 @@
       for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td       
         array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
       }
-
       array2[rows[i].cells.length - 2] = rows[i].id;
       array2[rows[i].cells.length - 1] = rows[i].cells[1].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
       array1[i - 1] = array2;
@@ -469,7 +431,6 @@
     });
     return result;
   }
-
   function selectAll(obj, type) {
     //创建数组
     var arr = new Array();
@@ -491,7 +452,6 @@
     }
   }
 </script>
-
 <script>
   $('td').click(function (e) {
     console.log(e.currentTarget.className)
@@ -503,6 +463,39 @@
       }
     }
   })
+  function ChooseMotal(element, type) {
+    var list = document.getElementsByClassName("tdd1 update");
+    if (list.length > 0) {
+      list[0].classList.remove("update")
+    }
+    $(element)[0].style.color = "#666";
+    $(element).css("font-size", "9px")
+    $(element).addClass("update");
+    var modalid;
+    switch (type) {
+      case "资产位置":
+        modalid = assetseateModal_row;
+        break;
+      case "部门":
+        modalid = departmentModal_row;
+        break;
+      case "用户":
+        modalid = userModal_row;
+        break;
+      default:
+        break;
+    }
+    Choosedata(modalid);
+  }
+  function Choosedata(modalid) {
+    if ($("#asset_allocate_FBillstatus").val() == "已审核") {
+      alert("该单据已经审核，不允许操作！")
+      return;
+    }
+    $('#' + modalid.id).modal('show');
+  }
 </script>
-
 <%= render    'assetcards/AssetcardsModal.html.erb' ,fbillnotype: "资产调拨单" %>
+<%= render    'departments/DepartmentModal_row.html.erb',  id: "asset_picking_Picking_Dept" ,userid: "12"%>
+<%= render    'users/UserModal_row.html.erb',  id: "asset_picking_Picking_Employeeld"  ,department: "11" ,departmentvalue: "双击选择调入部门"%>
+<%= render    'assetseates/AssetseateModal_row.html.erb',  id: "assetcard_Assetseat_id"  %>

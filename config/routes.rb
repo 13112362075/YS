@@ -94,8 +94,8 @@ post 'assetstatuses_choose'  ,:to => 'assetstatuses#choose'
 post 'assetcards_choose'  ,:to => 'assetcards#choose'  
 post 'assetcards_choose_single'  ,:to => 'assetcards#choose_single'  
 post 'assetseates_choose_row'  ,:to => 'assetseates#choose_row'  
- 
-
+post 'departments_choose_row'  ,:to => 'departments#choose_row'  
+post 'users_choose_row'  ,:to => 'users#choose_row'  
   get 'login'  ,:to => 'sessions#new'  , :as => 'new_sessions'
   post 'login' ,:to   => 'sessions#create'
   delete 'logout', :to  => 'sessions#destroy' 

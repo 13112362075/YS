@@ -58,7 +58,35 @@ class AssetCountingreportsController < ApplicationController
       if  message.lstrip.rstrip==""
         @assetCountingreport.update(fbillstatus:@Fbillstatus)
         if(params[:fbillstatus]=="审核")
-          @assetCountingreport.update(Approver: session[:name],APPROVEDATE: Time.now.strftime("%Y-%m-%d %H:%M:%S"))
+          @assetCountingreport.update(Approver: session[:name],APPROVEDATE: Time.now.strftime("%Y-%m-%d %H:%M:%S")) 
+          #自动生成盘盈盘亏单 
+          @Entry_by_Asset_recovery_id  = AssetCountingreportEntry.where( "Asset_Countingreport_id =  ?",  "#{params[:id]}")
+          @Entry_by_gain  = AssetCountingreportEntry.where( "Asset_Countingreport_id =  ? and Variance>0",  "#{params[:id]}")
+          @Entry_by_loss  = AssetCountingreportEntry.where( "Asset_Countingreport_id =  ?  and  Variance<0",  "#{params[:id]}")
+          if(@Entry_by_gain.length>0)
+            @AssetGain = AssetGain.create!(BillNo:@assetCountingreport.BillNo.to_s+"_Gain",description: "",fdate: @assetCountingreport.fdate,fbillstatus:"未审核",Creator:session[:name],CREATEDATE:Time.now.strftime("%Y-%m-%d %H:%M:%S")); 
+          end
+          if(@Entry_by_loss.length>0) 
+            @AssetLoss=AssetLoss.create(BillNo:@assetCountingreport.BillNo.to_s+"_Loss",description: "",fdate: @assetCountingreport.fdate,fbillstatus:"未审核",Creator:session[:name],CREATEDATE:Time.now.strftime("%Y-%m-%d %H:%M:%S")); 
+          end
+          @countgain=0;
+          @countloss=0;
+          @Entry_by_Asset_recovery_id.each do |id|
+
+            @assetCountingreportEntry = AssetCountingreportEntry.find(id.id)    
+            @assetCountingreportEntry.update(CountDate: @assetCountingreport.fdate)
+            if(@assetCountingreportEntry.Variance>0) 
+              @countgain=@countgain+1 
+              @AssetGainEntry= AssetGainEntry.create!(Code:@assetCountingreportEntry.Code,name: @assetCountingreportEntry.name,Asset_type: @assetCountingreportEntry.Asset_type,
+                Unit: @assetCountingreportEntry.Unit,BookQty:@assetCountingreportEntry.BookQty,CountQty: @assetCountingreportEntry.CountQty,GainQty: @assetCountingreportEntry.Variance.abs(),
+                Book_seat:@assetCountingreportEntry.Book_seat,Book_dept:@assetCountingreportEntry.Book_dept,Book_User: @assetCountingreportEntry.Book_User,Actual_seat:@assetCountingreportEntry.Invent_seat,Actual_dept:@assetCountingreportEntry.Invent_dept,Actual_User:@assetCountingreportEntry.InventUser,fseq:@countgain,Asset_Gain_id: @AssetGain.id,FSrcFbillno:@assetCountingreport.BillNo,FSrcFseq:@assetCountingreportEntry.fseq); 
+            elsif(@assetCountingreportEntry.Variance<0)
+              @countloss=@countloss+1 
+              @AssetGainEntry= AssetLossEntry.create!(Code:@assetCountingreportEntry.Code,name: @assetCountingreportEntry.name,Asset_type: @assetCountingreportEntry.Asset_type,
+                Unit: @assetCountingreportEntry.Unit,BookQty:@assetCountingreportEntry.BookQty,CountQty: @assetCountingreportEntry.CountQty,LossQty: @assetCountingreportEntry.Variance.abs(),
+                Book_seat:@assetCountingreportEntry.Book_seat,Book_dept:@assetCountingreportEntry.Book_dept,Book_User: @assetCountingreportEntry.Book_User,Actual_seat:@assetCountingreportEntry.Invent_seat,Actual_dept:@assetCountingreportEntry.Invent_dept,Actual_User:@assetCountingreportEntry.InventUser,fseq:@countloss,Asset_Loss_id: @AssetLoss.id,FSrcFbillno:@assetCountingreport.BillNo,FSrcFseq:@assetCountingreportEntry.fseq); 
+            end
+          end  
         end
         message=params[:fbillstatus].to_s + "成功！"
       end 
@@ -148,13 +176,17 @@ class AssetCountingreportsController < ApplicationController
     @user = User.all    
     @department = Department.all      
     @asset_countingreport.fdate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    @assetseate = Assetseate.all   
   end
 
   # GET /asset_countingreports/1/edit
   def edit
     @asset_countingreport_entry  = AssetCountingreportEntry.where( "Asset_Countingreport_id =  ?",  "#{params[:id]}" )   
     @addtype = Addtype.all   
-    @assetcard  =  Assetcard.where("Usestate_id='可用'");      
+    @user = User.all    
+    @department = Department.all      
+    @assetcard  =  Assetcard.where("fbillstatus='已审核'");      
+    @assetseate = Assetseate.all   
   end
  
   # POST /asset_countingreports

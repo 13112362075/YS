@@ -99,6 +99,7 @@ end
     @Assetseat_id = @assetcard.Assetseat_id 
     @Addtype_id =@assetcard.Addtype_id
     @Assettype_id =@assetcard.Assettype_id
+    @Usestate_id =@assetcard.Usestate_id
     @Mould =@assetcard.Mould 
     @Price = @assetcard.Price 
     @row =params[:row]
