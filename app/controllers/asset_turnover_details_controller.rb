@@ -227,6 +227,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def asset_turnover_detail_params
-      params.require(:asset_turnover_detail).permit(:Document_number, :Borrowing_date, :Borrowing_Department, :Borrowed_To_id, :Loaner,:fbillstatus,:Creator,:Createdate,:Approver,:Approverdate)
+      params.require(:asset_turnover_detail).permit(:Document_number, :Borrowing_date, :Borrowing_Department, :Borrowed_To_id, :Loaner,:fbillstatus,:Creator,:Createdate,:Approver,:Approverdate,:Type_of_business)
     end
 end

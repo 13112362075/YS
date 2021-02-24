@@ -74,17 +74,7 @@ module   DataCheckHelper
                 return  "使用状态:"+@usestate.Name+"已被使用，不允许删除！\n" ;
             end 
         end
-
-
-        if(type=="资产卡片")
-            @assetcard=Assetcard.find(id) 
-            if( AssetTurnoverDetailEntry.where( "assetcards_Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#借用、归还单 
-                return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
-            end  
-            if( Assetalter.where( "assetCode  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产变更单
-                return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
-            end  
-        end 
+ 
 
         if(type=="资产领用单")
             @assetPicking=AssetPicking.find(id) 
@@ -131,11 +121,7 @@ module   DataCheckHelper
             if(datas[:id]="") 
                 if datas_entry[1][5].lstrip.rstrip==""
                     resule=resule + "第"+index.to_s + "行分录预计归还时间不允许为空!\r\n";
-                else
-                    puts "开始"
-                    puts  datas_entry[1][5]
-                    puts datas["Borrowing_date"]
-                    puts "结束"
+                else 
                     if datas_entry[1][5].lstrip.rstrip<datas["Borrowing_date"]
                         resule=resule +  "第" + index.to_s + "行分录预计归还时间不允许小于借出时间\r\n";
                     end
@@ -404,14 +390,35 @@ module   DataCheckHelper
 
         if(type=="资产卡片")
             if(fbillstatus=="反审核")
-                @assetcard=Assetcard.find(id) 
+                @assetcard=Assetcard.find(id)  
                 if( AssetTurnoverDetailEntry.where( "assetcards_Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#借用、归还单 
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
                 end  
                 if( Assetalter.where( "assetCode  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产变更单
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
                 end  
-            end 
+     
+                if( AssetPickingEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产领用单
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                end  
+                if( AssetAllocateEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产调拨单 
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                end  
+    
+                if( AssetDisposalEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产处置单
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                end  
+                if( AssetCountingreportEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产盘点单
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                end  
+    
+                if( AssetGainEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产盘盈单
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                end  
+                if( AssetLossEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产盘亏单
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                end  
+            end  
         end
         if(type=="资产领用单")
             if(fbillstatus=="反审核")

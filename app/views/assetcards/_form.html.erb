@@ -325,7 +325,10 @@
     </script>
     <script type="text/javascript">
       function Choosedata(modalid) {
-        console.log(modalid)
+        if ($("#assetcard_fbillstatus").val() == "已审核") {
+          alert("该单据已经审核，不允许操作！")
+          return;
+        }
         $('#' + modalid.id).modal('show');
       }
     </script>
@@ -337,8 +340,8 @@
           element.parentElement.href = ""
           return;
         }
-        if ($("#assetcard_Assetstatus_id")[0].value != "可用") {
-          alert("该资产卡片非可用狀態，不允许变更！");
+        if ($("#assetcard_Usestate_id")[0].value != "可用") {
+          alert("该资产卡片非可用状态，不允许变更！");
           element.parentElement.href = ""
           return;
         }

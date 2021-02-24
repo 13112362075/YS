@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_23_012829) do
+ActiveRecord::Schema.define(version: 2021_02_24_082832) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -289,6 +289,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_012829) do
     t.integer "AssetTurnoverDetail_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "Type_of_business"
   end
 
   create_table "asset_turnover_details", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -304,6 +305,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_012829) do
     t.string "Approver"
     t.datetime "Approverdate"
     t.string "fbillstatus"
+    t.string "Type_of_business"
   end
 
   create_table "assetalter_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|

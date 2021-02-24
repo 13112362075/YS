@@ -58,6 +58,7 @@
 <a id="a_unaudit" rel="nofollow"><button onclick="updatestatus(<%=@asset_turnover_detail.id%>,'反审核','归还')" type="button"
     class="layui-btn">反审核</button></a>
 <a id="a_Back" rel="nofollow"><button onclick="back()" type="button" class="layui-btn">归还</button></a> 
+<a id="a_Back" rel="nofollow"><button onclick="Push()" type="button" class="layui-btn">下推</button></a> 
 <a data-url="/asset_turnover_details" data-id="asset_turnover_details_list" data-title="资产借用/归还单-列表" class="linkActive"
   rel="nofollow"><button type="button" class="layui-btn">列表</button></a>
 <br><br>
@@ -68,19 +69,18 @@
         name="asset_turnover_detail[Document_number]" id="asset_turnover_detail_Document_number"
         value=<%= @asset_turnover_detail.Document_number%>></div>
   </div>
+    <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_业务类型">业务类型</label>
+    <div class="layui-input-block "> <input class="layui-input input1  "  type="text"
+        name="asset_turnover_detail[Type_of_business]" id="asset_turnover_detail_Type_of_business"
+        value=<%= @asset_turnover_detail.Type_of_business%>></div>
+  </div>
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借出日期">借出日期</label>
     <div class="layui-input-block"> <input class="layui-input input1   fdate" placeholder="请输入借出日期" type="text"
         name="asset_turnover_detail[Borrowing_date]" id="asset_turnover_detail_Borrowing_date"
         value=<%= @asset_turnover_detail.Borrowing_date%>></div>
-  </div>
-  <div class="field">
-    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借用部门">借用部门</label>
-    <div class="layui-input-block"> <input class="layui-input  image_input    " placeholder="请输入借用部门" type="text"
-        name="asset_turnover_detail[Borrowing_Department]" id="asset_turnover_detail_Borrowing_Department"
-        value=<%= @asset_turnover_detail.Borrowing_Department%>></div>
-  </div>
-  <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+  </div> 
 </div>
 <div style="display:flex;">
   <div class="field">
@@ -89,6 +89,13 @@
         name="asset_turnover_detail[Borrowed_To_id]" id="asset_turnover_detail_Borrowed_To_id"
         value=<%= @asset_turnover_detail.Borrowed_To_id%>></div>
   </div>
+    <div class="field">
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借用部门">借用部门</label>
+    <div class="layui-input-block"> <input class="layui-input  image_input    " placeholder="请输入借用部门" type="text"
+        name="asset_turnover_detail[Borrowing_Department]" id="asset_turnover_detail_Borrowing_Department"
+        value=<%= @asset_turnover_detail.Borrowing_Department%>></div>
+  </div>
+  <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借用人">借用人</label>
     <div class="layui-input-block"> <input class="layui-input  image_input   " placeholder="请输入借用人" type="text"
@@ -96,14 +103,15 @@
         value=<%= @asset_turnover_detail.Loaner%>></div>
   </div>
   <div class="image" , onclick="Choosedata(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
+
+</div>
+<div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据状态">单据状态</label>
     <div class="layui-input-block "> <input readonly='true' class="layui-input input1  locked" type="text"
         name="asset_turnover_detail[fbillstatus]" id="asset_turnover_detail_fbillstatus"
         value=<%= @asset_turnover_detail.fbillstatus%>></div>
   </div>
-</div>
-<div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据状态">创建人</label>
     <div class="layui-input-block "> <input readonly='true' class="layui-input input1  locked" type="text"
@@ -116,14 +124,15 @@
         name="asset_turnover_detail[Createdate]" id="asset_turnover_detail_Createdate"
         value=<%= @asset_turnover_detail.Createdate%>></div>
   </div>
+
+</div>
+<div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_审核人">审核人</label>
     <div class="layui-input-block "> <input readonly='true' class="layui-input input1 locked  " type="text"
         name="asset_turnover_detail[Approver]" id="asset_turnover_detail_Approver"
         value=<%= @asset_turnover_detail.Approver%>></div>
   </div>
-</div>
-<div style="display:flex;">
   <div class="field">
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_单据状态">审核日期</label>
     <div class="layui-input-block "> <input readonly='true' class="layui-input input1  locked" type="text"
