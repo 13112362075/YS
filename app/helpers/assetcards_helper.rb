@@ -111,5 +111,44 @@ module AssetcardsHelper
         end
 
 
+
+        if (type=="资产借出/归还单") 
+            @assetTurnoverDetail=AssetTurnoverDetail.find(datas[:id]) 
+            if(@assetTurnoverDetail.Type_of_business.lstrip.rstrip=="借出")
+                if datas[:fbillstatus].lstrip.rstrip=="审核"  
+                    @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",   datas[:id])
+                    @assetTurnoverDetailEntry.each do |i|
+                        @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.assetcards_Code.lstrip.rstrip);  
+                        @assetcard_by_assetCode.update(Assetseat_id: i.Last_seat.lstrip.rstrip,Usestate_id: "借出",department_id:@assetTurnoverDetail.Borrowing_Department,Employeeld:@assetTurnoverDetail.Loaner)  
+                    end
+                end
+                if datas[:fbillstatus].lstrip.rstrip=="反审核" 
+                    @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",datas[:id])
+                    @assetTurnoverDetailEntry.each do |i|
+                        @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.assetcards_Code.lstrip.rstrip);    
+                        @assetcard_by_assetCode.update(Assetseat_id: i.Asset_seat.lstrip.rstrip,Usestate_id:"可用",department_id:i.Deptment,Employeeld:i.Employeeld) 
+                    end
+                end 
+            end 
+            if(@assetTurnoverDetail.Type_of_business.lstrip.rstrip=="归还")
+                if datas[:fbillstatus].lstrip.rstrip=="审核"  
+                     @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  datas[:id])
+                    @assetTurnoverDetailEntry.each do |i|
+                        @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.assetcards_Code.lstrip.rstrip);    
+                        @assetcard_by_assetCode.update(Assetseat_id: i.Asset_seat.lstrip.rstrip,Usestate_id:"可用",department_id:i.Deptment,Employeeld:i.Employeeld ) 
+                    end 
+                end
+                if datas[:fbillstatus].lstrip.rstrip=="反审核" 
+                    @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  datas[:id])
+                    @assetTurnoverDetailEntry.each do |i|
+                        @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.assetcards_Code.lstrip.rstrip);  
+                        @assetcard_by_assetCode.update(Assetseat_id: i.Last_seat.lstrip.rstrip,Usestate_id: "借出",department_id:@assetTurnoverDetail.Borrowing_Department,Employeeld:@assetTurnoverDetail.Loaner)  
+                    end
+                end 
+            end
+            puts "结束"
+
+        end
+
     end
 end 

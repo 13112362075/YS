@@ -114,27 +114,21 @@ module   DataCheckHelper
                 resule=resule +  "第" + index.to_s + "行分录资产位置为空\r\n";
             end 
         end
-      
-        puts resule
+       
 
         if(type=="资产借出/归还单") 
-            if(datas[:id]="") 
-                if datas_entry[1][5].lstrip.rstrip==""
-                    resule=resule + "第"+index.to_s + "行分录预计归还时间不允许为空!\r\n";
-                else 
-                    if datas_entry[1][5].lstrip.rstrip<datas["Borrowing_date"]
-                        resule=resule +  "第" + index.to_s + "行分录预计归还时间不允许小于借出时间\r\n";
-                    end
-                end  
+            if(datas[:id]="")  
             end
             if(datas_entry[1][0].lstrip.rstrip=="")
                 resule=resule +  "第" + index.to_s + "行分录资产编码为空\r\n";
             end
-            if(datas_entry[1][11].lstrip.rstrip=="双击选择资产位置")
+
+            if(datas_entry[1][8].lstrip.rstrip=="双击选择资产位置")
                 resule=resule +  "第" + index.to_s + "行分录资产位置为空\r\n";
             end 
+ 
         end
-
+ 
         if(type=="资产领用单")
             if(datas_entry[1][0].lstrip.rstrip=="")
                 resule=resule +  "第" + index.to_s + "行分录资产编码为空\r\n";
@@ -259,20 +253,44 @@ module   DataCheckHelper
     def   Update_Fbillstatus_Check_Entry(type,datas,datas_entry,index,fbillstatus)
         resule=" "
         if(type=="资产借出/归还单")   
-            if (fbillstatus=="归还")
-                if datas_entry[1][7].lstrip.rstrip!=""
-                    if datas_entry[1][7]<datas["Borrowing_date"]
-                        resule=resule +  "第" + index.to_s + "行分录归还时间不允许小于借出时间\r\n";
-                    end 
-                end  
-            end 
+            # if (fbillstatus=="归还")
+            #     if datas_entry[1][7].lstrip.rstrip!=""
+            #         if datas_entry[1][7]<datas["Borrowing_date"]
+            #             resule=resule +  "第" + index.to_s + "行分录归还时间不允许小于借出时间\r\n";
+            #         end 
+            #     end  
+            # end 
         end 
     end 
 
 
     def   Update_Fbillstatus_Check(type,id,fbillstatus)
 
-        result="" 
+        result=""  
+        if(type=="资产借出/归还单")   
+            @assetTurnoverDetail=AssetTurnoverDetail.find(params[:id]) 
+            @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  params[:id])  
+            if(fbillstatus.lstrip.rstrip=="审核")
+                if(@assetTurnoverDetail.fbillstatus.lstrip.rstrip=="已审核")
+                    return "该单据已经是已审核状态，不允许再审核！"
+                end
+
+                if(@assetTurnoverDetail.Type_of_business.lstrip.rstrip=="借用")
+                    @assetTurnoverDetailEntry.each do |i|
+                        @assetcard_by_assetCode=Assetcard.where("assetCode = ?  and Usestate_id='可用' " ,i.assetcards_Code.lstrip.rstrip);  
+                        if @assetcard_by_assetCode.length==0
+                            result=result+"第#{i.fseq}行资产卡片为非可用状态，不允许审核！"
+                        end
+                    end
+                end 
+
+            end
+            if(fbillstatus.lstrip.rstrip=="反审核")
+                if(@assetTurnoverDetail.fbillstatus.lstrip.rstrip=="未审核")
+                    return "该单据是未审核状态，不允许反审核！"
+                end
+            end
+        end 
 
         if(type.lstrip.rstrip=="资产盘盈单") 
             @AssetGain=AssetGain.find(params[:id]) 
@@ -281,8 +299,8 @@ module   DataCheckHelper
                     return "该单据已经是已审核状态，不允许再审核！"
                 end
             end
-            if(fbillstatus.lstrip.rstrip=="审核")
-                if(@AssetGain.fbillstatus.lstrip.rstrip=="反审核")
+            if(fbillstatus.lstrip.rstrip=="反审核")
+                if(@AssetGain.fbillstatus.lstrip.rstrip=="未审核")
                     return "该单据是未审核状态，不允许反审核！"
                 end
             end
@@ -296,8 +314,8 @@ module   DataCheckHelper
                     return "该单据已经是已审核状态，不允许再审核！"
                 end
             end
-            if(fbillstatus.lstrip.rstrip=="审核")
-                if(@AssetLoss.fbillstatus.lstrip.rstrip=="反审核")
+            if(fbillstatus.lstrip.rstrip=="反审核")
+                if(@AssetLoss.fbillstatus.lstrip.rstrip=="未审核")
                     return "该单据是未审核状态，不允许反审核！"
                 end
             end
@@ -317,7 +335,7 @@ module   DataCheckHelper
                 if(@AssetGainEntry1.length>0||@AssetLossEntry1.length>0)
                     result=result+"已存在下游单据，不允许反审核！请删除下游单据！\r\n"
                 end 
-                if(@assetCountingreport.fbillstatus.lstrip.rstrip=="反审核")
+                if(@assetCountingreport.fbillstatus.lstrip.rstrip=="未审核")
                     return "该单据是未审核状态，不允许反审核！"
                 end
             end
@@ -341,12 +359,7 @@ module   DataCheckHelper
         if(type.lstrip.rstrip=="资产调拨单")
             @index=0;
             @AssetAllocate=AssetAllocate.find(params[:id]) 
-            @AssetAllocateEntry  = AssetAllocateEntry.where( "Asset_Allocate_id =  ?",   params[:id])
-
- 
-
-
-
+            @AssetAllocateEntry  = AssetAllocateEntry.where( "Asset_Allocate_id =  ?",   params[:id]) 
             if(fbillstatus.lstrip.rstrip=="审核")
                 if(@AssetAllocate.FBillstatus.lstrip.rstrip=="已审核")
                     return "该单据已经是已审核状态，不允许再审核！"

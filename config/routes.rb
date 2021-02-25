@@ -152,6 +152,7 @@ post 'sessions_Login_user',:to => 'sessions#Login_user'
 
 #检查是否允许下推
 get 'asset_pickings_Check_IsPush',:to => 'asset_pickings#Check_IsPush'
+get 'asset_turnover_details_Check_IsPush',:to => 'asset_turnover_details#Check_IsPush'
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
  

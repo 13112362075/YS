@@ -69,6 +69,6 @@ class AssetTurnoverDetailEntriesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def asset_turnover_detail_entry_params
-      params.require(:asset_turnover_detail_entry).permit(:assetcards_Code, :assetcards_name, :Unit, :Amount, :Reasons_for_borrowing, :givebackPlanDate, :Has_Been_returned, :givebackDate, :Deptment, :Employeeld, :Asset_seat, :Last_seat, :AssetTurnoverDetail_id)
+      params.require(:asset_turnover_detail_entry).permit(:assetcards_Code, :assetcards_name, :Unit, :Amount, :Reasons_for_borrowing, :Deptment, :Employeeld, :Asset_seat, :Last_seat, :AssetTurnoverDetail_id,:FSrcFbillno,:FSrcFseq)
     end
 end

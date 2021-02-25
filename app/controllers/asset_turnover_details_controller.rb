@@ -19,34 +19,44 @@ class AssetTurnoverDetailsController < ApplicationController
 
 
 
+  def Check_IsPush
+    sql="select a.* from asset_turnover_detail_entries a  inner join asset_turnover_details   b  on  b.id=a.AssetTurnoverDetail_id left  join asset_turnover_detail_entries c on c.FSrcFbillno=b.Document_number and c.FSrcFseq  = a.fseq  where  c.id  is   null and   b.id=" + params[:id]
+    @assetPickingEntry =AssetPickingEntry.find_by_sql (sql) 
+    if @assetPickingEntry.length==0
+      render :json  => {code: 201,message: "不允许下推条件，请检查单据体是否已经下推！"}
+    else
+      render :json  => {code: 200,message: ""}
+    end
+  end
+  
 
-  def  Update_Fbillstatus 
+
+
+
+  def Update_Fbillstatus  
     message=""
     ActiveRecord::Base.transaction do
-    if params["Status"].lstrip.rstrip=="审核"
-      @status="已审核" 
-    else
-      @status="未审核"
-    end   
-    @assetTurnoverDetail  = AssetTurnoverDetail.where( "id =  ? and fbillstatus= ?", params["id"],@status )  
-    if    @assetTurnoverDetail.length==0 
-      @assetTurnoverDetail = AssetTurnoverDetail.find(params["id"])
-      @assetTurnoverDetail.update(Approver: session[:name],Approverdate:Time.now.strftime("%Y-%m-%d %H:%M:%S"),fbillstatus:  @status)
 
-      if message.lstrip.rstrip!="" 
-        render :json  => {code: 201,message: message}
-        raise ActiveRecord::Rollback 
-      else 
-        
-      message=  params["Status"]+"成功！" 
-      render :json  => {code: 200,message: message}
-      end
-    else  
-      message=   params[:Status].lstrip.rstrip+"失败！该单据已经是"+ @status+"状态，不允许"+ params[:Status]+"\r\n" 
-      render :json  => {code: 201,message: message}
+      @assetTurnoverDetail=AssetTurnoverDetail.find(params[:id]) 
+      if params[:fbillstatus]=="审核"
+        @Fbillstatus="已审核"
+      else
+        @Fbillstatus="未审核"
+      end 
+      message=message+ Update_Fbillstatus_Check("资产借出/归还单",params[:id],params[:fbillstatus]).to_s   
+      if  message.lstrip.rstrip==""
+        @assetTurnoverDetail.update(fbillstatus:@Fbillstatus)
+        if(params[:fbillstatus]=="审核")
+          @assetTurnoverDetail.update(Approver: session[:name],Approverdate: Time.now.strftime("%Y-%m-%d %H:%M:%S")) 
+        end
+        Update_datas("资产借出/归还单",params,"");  
+        message=params[:fbillstatus].to_s + "成功！"
+      end 
     end 
-  end 
-end
+      render :json  => {code: 200,message: message,id: @id}
+  end
+
+ 
 
 
 
@@ -90,12 +100,38 @@ def destroy_multiple
   # GET /asset_turnover_details/1
   # GET /asset_turnover_details/1.json
   def show
-  end
-
+  end 
   # GET /asset_turnover_details/new
   def new
     @asset_turnover_detail = AssetTurnoverDetail.new
+    if (!params.include? 'id')
+      @asset_turnover_detail.Type_of_business="借出"
+      
+    else
+      @assetTurnoverDetail_old=AssetTurnoverDetail.find(params[:id]) 
+      @asset_turnover_detail.Type_of_business="归还" 
+      @asset_turnover_detail.Borrowing_Department=@assetTurnoverDetail_old.Borrowing_Department
+      @asset_turnover_detail.Loaner=@assetTurnoverDetail_old.Loaner
+ 
+      sql="select a.* from asset_turnover_detail_entries a  inner join asset_turnover_details   b  on  b.id=a.AssetTurnoverDetail_id left  join asset_turnover_detail_entries c on c.FSrcFbillno=b.Document_number and c.FSrcFseq  = a.fseq  where  c.id  is   null and   b.id=" + params[:id]
+      @assetTurnoverDetailEntry =AssetTurnoverDetailEntry.find_by_sql (sql) 
+      @seq=0
+      @assetTurnoverDetailEntry.each do |i|    
+        @seq+=1;
+        i.FSrcFbillno=@assetTurnoverDetail_old.Document_number
+        @assetTurnoverDetailEntry_old=AssetTurnoverDetailEntry.find(i.id)   
+        i.FSrcFseq=@assetTurnoverDetailEntry_old.fseq 
+        i.fseq=@seq
+      end
+    end
+
+
+
+
+
+
     @asset_turnover_detail.fbillstatus='未审核'
+    @asset_turnover_detail.Borrowing_date= Time.now.strftime("%Y-%m-%d %H:%M:%S")
     @entry = AssetTurnoverDetailEntry.new
     @assetcard  =  Assetcard.where("Usestate_id='可用'  and fbillstatus ='已审核' ");  
     @assetseate = Assetseate.all   
@@ -113,68 +149,79 @@ def destroy_multiple
     @department = Department.all  
     @assetseate = Assetseate.all    
   end
+ 
 
 
-  # POST /asset_turnover_details
-  # POST /asset_turnover_details.json
-  def  save_all  
-    message=""  
+
+
+  def  save_all
+    message=""   
     ActiveRecord::Base.transaction do
       @id=0;
-    if params["id"]==""  
-        message = message + Save_Check("资产借出/归还单",params ).to_s 
+      if params["id"]==""  
+        message = message + Save_Check("资产借出/归还单",params).to_s
         if message.lstrip.rstrip==""
-           @asset_turnover_detail = AssetTurnoverDetail.create!(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"],Creator: session[:name],fbillstatus: '未审核', Createdate: Time.now.strftime("%Y-%m-%d %H:%M:%S"));
-           @id=@asset_turnover_detail.id
-           index =0;
-           params["datas"].each do |i| 
-             index+=1;
-             message=message+Save_Check_Entry("资产借出/归还单",params,i,index) 
-             assetTurnoverDetailEntry = AssetTurnoverDetailEntry.create!(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11],AssetTurnoverDetail_id: @id);
-           end 
-        end  
+          @AssetTurnoverDetail = AssetTurnoverDetail.create!(Document_number:params["Document_number"],Type_of_business: params["Type_of_business"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"],Creator: session[:name],fbillstatus: '未审核', Createdate: Time.now.strftime("%Y-%m-%d %H:%M:%S"));
+          @id=@AssetTurnoverDetail.id
+          index =0; 
+          params["datas"].each do |i| 
+            index+=1;
+            message=message+Save_Check_Entry("资产借出/归还单",params,i,index) 
+            if i[1][12].lstrip.rstrip =="双击选择资产位置"
+              i[1][12]="";
+            end
+            @AssetTurnoverDetailEntry = AssetTurnoverDetailEntry.create!(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],  Deptment: i[1][5], Employeeld: i[1][6],Asset_seat: i[1][7] ,Last_seat: i[1][8],FSrcFbillno:i[1][9],FSrcFseq: i[1][10],fseq:i[1][12],AssetTurnoverDetail_id:@id);
+     
+          end
+        end
       else
-        @id=params["id"]; 
+        @id=params["id"];  
         message = message + Save_Check("资产借出/归还单",params ).to_s 
-        @asset_turnover_detail= AssetTurnoverDetail.find_by(id: @id) 
+        @AssetTurnoverDetail= AssetTurnoverDetail.find_by(id: @id) 
         if message.lstrip.rstrip=="" 
-            @asset_turnover_detail.update(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"]);
-            @Entry_by_AssetTurnoverDetail_id  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",   @id)
-            @Entry_by_AssetTurnoverDetail_id.each do  |id|  
-                if  !params[:array_id].to_a.include?(id.id.to_s)
-                  assetTurnoverDetailEntry_1 = AssetTurnoverDetailEntry.find_by(id: id.id) 
-                  @assetcard=Assetcard.where("assetCode =  ?",  assetTurnoverDetailEntry_1. assetcards_Code)#2021-1-14 阿斌修改，删除的过程中，修改状态
-                  @assetcard.update(Usestate_id: "可用")#2021-1-14 阿斌修改，删除的过程中，修改状态  
-                  assetTurnoverDetailEntry_1.destroy
-                end
-            end 
-            index =0;
-            params[:datas].each do  |i|
-              index+=1;
-              message=message+ Save_Check_Entry("资产借出/归还单",params,i,index) 
-              if(params[:type]=="归还") 
-                message=message+ Update_Fbillstatus_Check_Entry("资产借出/归还单",params,i,index,params[:type]).to_s 
+          @AssetTurnoverDetail.update(Document_number:params["Document_number"],Borrowing_date: params["Borrowing_date"],Type_of_business: params["Type_of_business"],Borrowing_Department: params["Borrowing_Department"],Borrowed_To_id:params["Borrowed_To_id"],Loaner:params["Loaner"]);
+           
+          @AssetTurnoverDetailEntry1  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",   @id)
+          @AssetTurnoverDetailEntry1.each do  |id| 
+            if  !params[:array_id].to_a.include?(id.id.to_s)
+              @AssetTurnoverDetailEntry_1 = AssetTurnoverDetailEntry.find(id.id)  
+              @AssetTurnoverDetailEntry_1.destroy
+            end
+          end
+          index =0;
+          params[:datas].each do  |i|
+            index+=1;
+            message=message+ Save_Check_Entry("资产借出/归还单",params,i,index) 
+            if  i[1][11].to_s == "0"
+              if i[1][8].lstrip.rstrip =="双击选择资产位置"
+                i[1][8]="";
               end
-              if  i[1][12].to_s == "0"
-                assetTurnoverDetailEntry_3 = AssetTurnoverDetailEntry.create!(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11],AssetTurnoverDetail_id: @id);
-              else
-                assetTurnoverDetailEntry_2= AssetTurnoverDetailEntry.find_by(id: i[1][12])
-                if   i[1][7].lstrip.rstrip!=""
-                  i[1][6]='true';
+              @AssetTurnoverDetailEntry_3 = AssetTurnoverDetailEntry.create!(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],  Deptment: i[1][5], Employeeld: i[1][6],Asset_seat: i[1][7] ,Last_seat: i[1][8],FSrcFbillno:i[1][9],FSrcFseq: i[1][10],fseq:i[1][12],AssetTurnoverDetail_id:@id);
+            else 
+              @AssetTurnoverDetailEntry_2= AssetTurnoverDetailEntry.find(i[1][11]) 
+              if i[1][8].lstrip.rstrip =="双击选择资产位置"
+                i[1][8]="";
               end
-                assetTurnoverDetailEntry_2.update(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],givebackPlanDate: i[1][5],Has_Been_returned: i[1][6],givebackDate: i[1][7],Deptment: i[1][8], Employeeld: i[1][9],Asset_seat: i[1][10] ,Last_seat: i[1][11]);
-              end 
-            end      
-        end  
-    end    
-    if(message.lstrip.rstrip!="")  
-      render :json  => {code: 202,message: message }
-      raise ActiveRecord::Rollback 
-    else
-      render :json  => {code: 200,message: "保存成功！",id: @id}
-    end
+              @AssetTurnoverDetailEntry_2.update(assetcards_Code: i[1][0],assetcards_name: i[1][1],Unit: i[1][2],Amount: i[1][3],Reasons_for_borrowing: i[1][4],  Deptment: i[1][5], Employeeld: i[1][6],Asset_seat: i[1][7] ,Last_seat: i[1][8],FSrcFbillno:i[1][9],FSrcFseq: i[1][10],fseq:i[1][12]);
+            end
+          end
+        end
+      end
+      if(message.lstrip.rstrip!="")  
+        render :json  => {code: 202,message: message }
+        raise ActiveRecord::Rollback 
+      else
+        render :json  => {code: 200,message: "保存成功！",id: @id}
+      end
+    end 
   end
-end
+
+
+
+
+
+
+
  
 
 
