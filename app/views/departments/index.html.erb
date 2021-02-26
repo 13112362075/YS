@@ -37,9 +37,11 @@
 
 
 
-<div class="layui-btn-group " style="margin:10px;0px;">
-  <a rel="nofollow" data-method="get" href="/departments/new"><button type="button" class="layui-btn">新增</button></a>
-   <a id="a_update"  rel="nofollow"    ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+<div class="layui-btn-group " style="margin:10px;0px;">  
+
+    <a data-url="/departments/new" data-id= "newdepartments" data-title= "部门新增" class="linkActive"  ><button type="button" class="layui-btn">新增</button></a> 
+   <a id="a_update"  rel="nofollow"        class="linkActive"    data-id= "newusers" data-title= "部门编辑"  ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+
    <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->
    <a id="a_delete"   rel="nofollow"  ><button   onclick="Delete()"   type="button" class="layui-btn">删除</button></a>
    <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a>
@@ -406,9 +408,9 @@
        document.getElementById("a_update").dataset.url = "";
        return false;
      }
-     var departments_id = "/departments/" + checkStatus.data[0].id + "/edit";
-     document.getElementById("a_update").dataset.url = departments_id
- 
+     var departments_id = "/departments/" + checkStatus.data[0].id + "/edit"; 
+     document.getElementById("a_update").dataset.url = departments_id 
+                    
    }
  </script>
 

@@ -241,7 +241,10 @@ module   DataCheckHelper
                 if (!datas.include? 'datas')
                     resule=resule +  "分录数据行数量为0\r\n";  
                 end 
-     
+                @AssetTurnoverDetail=AssetTurnoverDetail.where("Document_number = ? and id <> ?" , datas["Document_number"],datas["id"]) 
+                if @AssetTurnoverDetail.length>0
+                    resule=resule +  "单据编码在系统已存在！\r\n";
+                end
         end 
         return resule
     end  
@@ -273,22 +276,32 @@ module   DataCheckHelper
             if(fbillstatus.lstrip.rstrip=="审核")
                 if(@assetTurnoverDetail.fbillstatus.lstrip.rstrip=="已审核")
                     return "该单据已经是已审核状态，不允许再审核！"
-                end
-
-                if(@assetTurnoverDetail.Type_of_business.lstrip.rstrip=="借用")
+                end 
+                if(@assetTurnoverDetail.Type_of_business.lstrip.rstrip=="借出")
                     @assetTurnoverDetailEntry.each do |i|
                         @assetcard_by_assetCode=Assetcard.where("assetCode = ?  and Usestate_id='可用' " ,i.assetcards_Code.lstrip.rstrip);  
                         if @assetcard_by_assetCode.length==0
                             result=result+"第#{i.fseq}行资产卡片为非可用状态，不允许审核！"
                         end
                     end
-                end 
-
+                end  
             end
             if(fbillstatus.lstrip.rstrip=="反审核")
                 if(@assetTurnoverDetail.fbillstatus.lstrip.rstrip=="未审核")
                     return "该单据是未审核状态，不允许反审核！"
                 end
+
+
+ 
+                if(@assetTurnoverDetail.Type_of_business.lstrip.rstrip=="借出")  
+                    @assetTurnoverDetailEntry=AssetTurnoverDetailEntry.where("FSrcFbillno= '#{@assetTurnoverDetail.Document_number}'") 
+                    if(@assetTurnoverDetailEntry.length>0)
+                        return "该单据已有下游单据生成，不允许反审核！请删除下游单据后再进行反审核！"    
+                    end
+                end   
+
+
+
             end
         end 
 
@@ -405,31 +418,31 @@ module   DataCheckHelper
             if(fbillstatus=="反审核")
                 @assetcard=Assetcard.find(id)  
                 if( AssetTurnoverDetailEntry.where( "assetcards_Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#借用、归还单 
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
                 end  
                 if( Assetalter.where( "assetCode  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产变更单
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
                 end  
      
                 if( AssetPickingEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产领用单
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
                 end  
                 if( AssetAllocateEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产调拨单 
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
                 end  
     
                 if( AssetDisposalEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产处置单
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
                 end  
                 if( AssetCountingreportEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产盘点单
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
                 end  
     
                 if( AssetGainEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产盘盈单
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
                 end  
                 if( AssetLossEntry.where( "Code  =  ?",  "#{ @assetcard.assetCode}" ).length>0)#资产盘亏单
-                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许删除！\n" ;
+                    return  "资产卡片编码"+@assetcard.assetCode+"已被使用，不允许反审核！\n" ;
                 end  
             end  
         end

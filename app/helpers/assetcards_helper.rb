@@ -24,7 +24,7 @@ module AssetcardsHelper
                     @AssetPickingEntry  = AssetPickingEntry.where( "AssetPicking_id =  ?",   datas[:id])
                     @AssetPickingEntry.each do |i| 
                         sql="select a.* from asset_picking_entries a  inner join asset_pickings   b  on  b.id=a.AssetPicking_id    where      b.FBillno=  '#{ i.FSrcFbillno }'  and  a.fseq = "  + i.FSrcFseq
-                        puts sql
+      
                         @AssetPickingEntry_old =AssetPickingEntry.find_by_sql (sql) 
                         @AssetPickingEntry_old[0].update(BackQty: 1,CanbackQty:0);
                         @assetcard_by_assetCode=Assetcard.where("assetCode = ?  " ,i.Code);  

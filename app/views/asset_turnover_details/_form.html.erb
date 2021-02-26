@@ -59,9 +59,9 @@
 <a id="a_test" rel="nofollow"><button onclick="Save()" type="button" class="layui-btn">保存</button></a>
 <a id="a_audit" rel="nofollow"><button onclick="Update_Fbillstatus(<%=@asset_turnover_detail.id%>,'审核')" type="button"
     class="layui-btn">审核</button></a>
-<a id="a_unaudit" rel="nofollow"><button onclick="Update_Fbillstatus(<%=@asset_turnover_detail.id%>,'反审核')" type="button"
-    class="layui-btn">反审核</button></a>
- 
+<a id="a_unaudit" rel="nofollow"><button onclick="Update_Fbillstatus(<%=@asset_turnover_detail.id%>,'反审核')"
+    type="button" class="layui-btn">反审核</button></a>
+
 <a id="a_Back" rel="nofollow" class="linkActive" data-id="newasset_turnover_details" data-title="资产借用/归还单-新增"><button
     onclick="Push(<%=@asset_turnover_detail.id%>,this)" type="button" class="layui-btn">下推</button></a>
 <a data-url="/asset_turnover_details" data-id="asset_turnover_details_list" data-title="资产借用/归还单-列表" class="linkActive"
@@ -81,7 +81,14 @@
         value=<%= @asset_turnover_detail.Type_of_business%>></div>
   </div>
   <div class="field">
+
+
+    <% if   @asset_turnover_detail.Type_of_business =="借出" %>
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借出日期">借出日期</label>
+    <%else%>
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_归还日期">归还日期</label>
+    <%end%>
+
     <div class="layui-input-block"> <input class="layui-input input1   fdate" placeholder="请输入借出日期" type="text"
         name="asset_turnover_detail[Borrowing_date]" id="asset_turnover_detail_Borrowing_date"
         value=<%= @asset_turnover_detail.Borrowing_date%>></div>
@@ -95,14 +102,26 @@
         value=<%= @asset_turnover_detail.Borrowed_To_id%>></div>
   </div>
   <div class="field">
+
+
+    <% if   @asset_turnover_detail.Type_of_business =="借出" %>
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借用部门">借用部门</label>
+    <%else%>
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_归还部门">归还部门</label>
+    <%end%>
+
     <div class="layui-input-block"> <input class="layui-input  image_input    " placeholder="请输入借用部门" type="text"
         name="asset_turnover_detail[Borrowing_Department]" id="asset_turnover_detail_Borrowing_Department"
         value=<%= @asset_turnover_detail.Borrowing_Department%>></div>
   </div>
   <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %></div>
   <div class="field">
+
+    <% if   @asset_turnover_detail.Type_of_business =="借出" %>
     <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_借用人">借用人</label>
+    <%else%>
+    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_turnover_detail_归还人">归还人</label>
+    <%end%>
     <div class="layui-input-block"> <input class="layui-input  image_input   " placeholder="请输入借用人" type="text"
         name="asset_turnover_detail[Loaner]" id="asset_turnover_detail_Loaner"
         value=<%= @asset_turnover_detail.Loaner%>></div>
@@ -147,9 +166,9 @@
 </div>
 <% end %>
 <div class="layui-btn-group">
-  <button class="layui-btn" onclick="addrow()">新增行</button>
+  <button id="add_row" class="layui-btn" onclick="addrow()">新增行</button>
   <button class="layui-btn" onclick="delrow()">删除行</button>
-  <button class="layui-btn" onclick="Choosedata(assetcardModal)" href="#">选择资产卡片</button>
+  <button id="btn_choose_assetcard" class="layui-btn" onclick="Choosedata(assetcardModal)" href="#">选择资产卡片</button>
 </div>
 <form id="Entry" ,action="/save_multiple">
   <table id="testid" class="layui-table font" style="text-align:center;margin:10px;0px; ">
@@ -392,7 +411,20 @@
       });
     })
 
+    console.log($("#asset_turnover_detail_Type_of_business").val())
 
+    if ($("#asset_turnover_detail_Type_of_business").val() == "借出") {
+
+
+
+      $("#btn_choose_assetcard").show();
+      $("#add_row").show();
+      $("#a_unaudit").show();
+    } else {
+      $("#btn_choose_assetcard").hide();
+      $("#add_row").hide();
+      $("#a_unaudit").hide();
+    }
 
     if ($("#asset_turnover_detail_fbillstatus").val() == "已审核") {
 
@@ -413,8 +445,8 @@
       $("#a_audit").show();
       $("#a_Back").show();
       $("#asset_turnover_detail_Document_number").attr("disabled", "disabled");
-      $("#asset_turnover_detail_Document_number").css('background-color', '#F5F5F5'); 
-    } 
+      $("#asset_turnover_detail_Document_number").css('background-color', '#F5F5F5');
+    }
   });
 
 
@@ -527,7 +559,7 @@
 
 
 
- 
+
 
 
 
@@ -618,7 +650,7 @@
       },
       success: function (res) {
         if (res.code == 200) {
-          // element.parentElement.href = "/asset_pickings/new?id=" + id
+          // element.parentElement.href = "/asset_turnover_details/new?id=" + id
 
           element.parentElement.dataset.url = "/asset_turnover_details/new?id=" + id
         } else {
@@ -628,13 +660,6 @@
       }
     });
   }
-
-
-
-
-
-
-
 </script>
 
 
