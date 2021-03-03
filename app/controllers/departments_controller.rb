@@ -8,6 +8,7 @@ class DepartmentsController < ApplicationController
 
 
   def Get_DataApi
+    puts "1"
     department=Department.order(:id);
     total_count=department.count
     department=department.page(params[:page]).per(params[:limit])
@@ -20,31 +21,25 @@ class DepartmentsController < ApplicationController
 
   def  Update_fbillstatus 
     message=""
-    ActiveRecord::Base.transaction do
-    if params["fbillstatus"].lstrip.rstrip=="审核"
-      @status="已审核" 
+    ActiveRecord::Base.transaction do 
+    message=""  
+    @department=Department.find(params[:id]) 
+    if params[:fbillstatus].lstrip.rstrip=="审核"
+      @Fbillstatus="已审核"
     else
-      @status="未审核"
-    end   
-    @department  = Department.where( "id =  ? and fbillstatus= ?", params["id"],@status )  
-    if    @department.length==0 
-      @department = Department.find(params["id"])
-      @department[0].update(Approver: session[:name],ApproverDate:Time.now.strftime("%Y-%m-%d %H:%M:%S"),fbillstatus:  @status)
-
-      if message.lstrip.rstrip!="" 
-        render :json  => {code: 201,message: message}
-        raise ActiveRecord::Rollback 
-      else 
-      message=  params["fbillstatus"]+"成功！" 
-      render :json  => {code: 200,message: message}
-      end
-    else  
-      message=   params[:fbillstatus].lstrip.rstrip+"失败！该部门已经是"+ @status+"状态，不允许"+ params[:fbillstatus]+"\r\n" 
-      render :json  => {code: 201,message: message}
+      @Fbillstatus="未审核"
     end 
+    message=message+ Update_Fbillstatus_Check("部门",params[:id],params[:fbillstatus]).to_s   
+    if  message.lstrip.rstrip==""
+      @department[0].update(fbillstatus:@Fbillstatus)
+      if(params[:fbillstatus].lstrip.rstrip=="审核")
+        @department[0].update(Approver: session[:name],ApproverDate: Time.now.strftime("%Y-%m-%d %H:%M:%S"))  
+      end  
+      message=params[:fbillstatus].to_s + "成功！"
+    end   
+        render :json  => {code: 200,message: message}
   end 
 end
-
 
 
 def choose_row
@@ -73,8 +68,7 @@ end
 
   
   def save_multiple  
-    params["departmentid"].each do |i| 
-      puts i[1].length    
+    params["departmentid"].each do |i|  
       department= Department.create!(departmentcode: i[1][0],departmentname: i[1][1],organize_id: i[1][2],description: i[1][3])
     end
   end

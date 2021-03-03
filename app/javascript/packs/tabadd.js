@@ -17,6 +17,7 @@
     
     $(".linkActive").on("click", function(){    
     var datas=$(this);    
+    console.log(datas);
     if(datas[0].dataset.url=="")
     {
       return;

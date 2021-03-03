@@ -2,7 +2,8 @@
 <script src="https://www.layuicdn.com/layui/layui.js"></script> 
 <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
  <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
- <%=javascript_pack_tag 'tabadd' %> 
+ <%=javascript_pack_tag 'tabadd' %>
+ <%=stylesheet_link_tag  'totality' %> 
  <style>
  .layui-table-page select
  {
@@ -31,7 +32,7 @@
     overflow: hidden;
     text-align: center;
 }
-
+ 
  </style>
 
 <p id="notice"><%= notice%></p>
@@ -39,12 +40,12 @@
  
 
 
-<h1 style="text-align:center;">用户表</h1>
+<!--h1 style="text-align:center;">用户表</h1-->
 
 
  
 
-<div class="layui-btn-group " style="margin:10px;0px;">  
+<div class="layui-btn-group btngroup " >  
     <a data-url="/users/new" data-id= "newusers" data-title= "用户新增" class="linkActive"  ><button type="button" class="layui-btn">新增</button></a> 
    <a id="a_update"  rel="nofollow"        class="linkActive"    data-id= "newusers" data-title= "用户编辑"  ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
    <!--a id="a_delete"   data-confirm="你确定要删除吗？" rel="nofollow" data-method="delete" ><button  onclick="getCheckedCheckbox_delete()" type="button" class="layui-btn">删除</button></a-->

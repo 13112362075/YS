@@ -2,6 +2,43 @@ class UnitsController < ApplicationController
   before_action :set_unit, only: [:show, :edit, :update, :destroy]
 
 
+  def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
+    render json:{code: code, msg: message, count: count,data: data};
+  end
+
+
+  def Get_DataApi
+    unit=Unit.order(:id);
+    total_count=unit.count
+    unit=unit.page(params[:page]).per(params[:limit])
+    data=unit.as_json;
+    api_success(count: total_count,data: data)
+  end
+
+
+
+  def  Update_fbillstatus 
+    message=""
+    ActiveRecord::Base.transaction do 
+    message=""  
+    @unit=Unit.find(params[:id]) 
+    if params[:fbillstatus].lstrip.rstrip=="审核"
+      @Fbillstatus="已审核"
+    else
+      @Fbillstatus="未审核"
+    end 
+    message=message+ Update_Fbillstatus_Check("计量单位",params[:id],params[:fbillstatus]).to_s   
+    if  message.lstrip.rstrip==""
+      @unit[0].update(fbillstatus:@Fbillstatus)
+      if(params[:fbillstatus].lstrip.rstrip=="审核")
+        @unit[0].update(Approver: session[:name],ApproverDate: Time.now.strftime("%Y-%m-%d %H:%M:%S"))  
+      end  
+      message=params[:fbillstatus].to_s + "成功！"
+    end   
+        render :json  => {code: 200,message: message}
+  end 
+end
+
 
   def choose   
     unit = Unit.find(params[:unitid]) 
@@ -69,6 +106,7 @@ end
   # GET /units/new
   def new
     @unit = Unit.new
+    @unit.fbillstatus="未审核"
   end
 
   # GET /units/1/edit
@@ -79,7 +117,8 @@ end
   # POST /units.json
   def create
     @unit = Unit.new(unit_params)
-
+    @unit.Creator=session[:name] 
+    @unit.CreateDate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
     respond_to do |format|
       if @unit.save
         format.html { redirect_to @unit, notice: '创建成功！.' }
@@ -123,6 +162,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def unit_params
-      params.require(:unit).permit(:Unitcode, :name, :Unitaccuracy, :Roundingtype)
+      params.require(:unit).permit(:Unitcode, :name, :Unitaccuracy, :Roundingtype,:fbillstatus,:Creator,:CreateDate,:Approver,:ApproverDate)
     end
 end

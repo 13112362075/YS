@@ -6,16 +6,37 @@
     top: 60px;
     width: 150px;
     overflow-x: hidden;
+} 
+ 
+.layui-tab-title
+{
+  height:25px;
 }
-.layui-nav-tree .layui-nav-more {
-    right: 60px;
+.layui-tab-title .layui-this::after
+{
+    height:26px;
+}
+.layui-tab-title li
+{
+    line-height:15px;
+}
+.layui-nav-tree .layui-nav-more
+{
+  right: 90px;
+}
+.layui-layout-admin .layui-side
+{
+  width: 130px;
 }
 .layui-body {
-  left:150px;
+    left: 130px;
 }
 .layui-layout-admin .layui-footer {
-    left:150px;
+    left: 130px;
 }
+
+
+
   </style>
 <div  class="layui-layout layui-layout-admin ">
   <div   class="layui-header">
@@ -123,6 +144,14 @@ $(document).ready(function(){
     layui.use('element', function(){
         var element = layui.element;
         var $ = layui.jquery;
+
+        console.log($(layui-body));
+
+
+
+
+
+        
         //触发事件
  var active = {
             //在这里给active绑定几项事件，后面可通过active调用这些事件
@@ -178,4 +207,12 @@ $(document).ready(function(){
         });
     }); 
         }); 
-</script> 
+
+
+
+
+ 
+
+
+
+</script>  

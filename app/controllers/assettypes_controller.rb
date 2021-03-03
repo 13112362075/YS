@@ -1,6 +1,46 @@
 class AssettypesController < ApplicationController
   before_action :set_assettype, only: [:show, :edit, :update, :destroy]
 
+
+
+  
+  def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
+    render json:{code: code, msg: message, count: count,data: data};
+  end
+
+
+  def Get_DataApi
+    assettype=Assettype.order(:id);
+    total_count=assettype.count
+    assettype=assettype.page(params[:page]).per(params[:limit])
+    data=assettype.as_json;
+    api_success(count: total_count,data: data)
+  end
+
+
+  def  Update_fbillstatus 
+    message=""
+    ActiveRecord::Base.transaction do 
+    message=""  
+    @assettype=Assettype.find(params[:id]) 
+    if params[:fbillstatus].lstrip.rstrip=="审核"
+      @Fbillstatus="已审核"
+    else
+      @Fbillstatus="未审核"
+    end 
+    message=message+ Update_Fbillstatus_Check("资产类别",params[:id],params[:fbillstatus]).to_s   
+    if  message.lstrip.rstrip==""
+      @assettype[0].update(fbillstatus:@Fbillstatus)
+      if(params[:fbillstatus].lstrip.rstrip=="审核")
+        @assettype[0].update(Approver: session[:name],ApproverDate: Time.now.strftime("%Y-%m-%d %H:%M:%S"))  
+      end  
+      message=params[:fbillstatus].to_s + "成功！"
+    end   
+        render :json  => {code: 200,message: message}
+  end 
+end
+
+
   def choose   
     assettype = Assettype.find(params[:assettypeid]) 
     @name = assettype.Name
@@ -68,6 +108,8 @@ class AssettypesController < ApplicationController
   # GET /assettypes/new
   def new
     @assettype = Assettype.new
+
+    @assettype.fbillstatus="未审核"
   end
 
   # GET /assettypes/1/edit
@@ -78,7 +120,8 @@ class AssettypesController < ApplicationController
   # POST /assettypes.json
   def create
     @assettype = Assettype.new(assettype_params)
-
+    @assettype.Creator=session[:name] 
+    @assettype.CreateDate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
     respond_to do |format|
       if @assettype.save
         format.html { redirect_to @assettype, notice: '创建成功！' }
@@ -122,6 +165,6 @@ class AssettypesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def assettype_params
-      params.require(:assettype).permit(:Assettypecode, :Name, :Orgainize_id, :description)
+      params.require(:assettype).permit(:Assettypecode, :Name, :Orgainize_id, :description,:fbillstatus,:Creator,:CreateDate,:Approver,:ApproverDate)
     end
 end

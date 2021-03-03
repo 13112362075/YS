@@ -93,10 +93,7 @@
         <input class="layui-input image_input " name="id" id="Assettype_id" autocomplete="off">
         <div class="image" , onclick="Choosedata(assettypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
         </div>
-    </div>
-
-
-
+    </div> 
     <div style="display:flex;">
         <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产状态编码">资产状态：</label>
         <input class="layui-input  image_input" name="id" id="assetstatusid" autocomplete="off">
@@ -230,6 +227,7 @@
         var $ = layui.$,
             active = {
                 reload: function () {
+                    console.log("1")
                     var assetCode = $('#assetCode');
                     var Assettype_id = $('#Assettype_id');
                     var fbillstatus = $('#assetcard_fbillstatus');

@@ -1,3 +1,6 @@
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<%=javascript_pack_tag 'tabadd' %>
 <%= form_with(model: assetstatus, local: true) do |form| %>
   <% if assetstatus.errors.any? %>
     <div id="error_explanation">
@@ -34,9 +37,88 @@
     <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入描述"    type="text" name="assetstatus[description]" id="assetstatus_description"   value=<%= @assetstatus.description%>  ></div>
   </div> 
  
-   
+  
+    <div class="field" >
+    <label class="layui-form-label"   for="assetstatus_数据状态">数据状态</label>
+    <div class="layui-input-block"> <input     class="layui-input  locked"     type="text" name="assetstatus[fbillstatus]" id="assetstatus_fbillstatus"   value=<%= @assetstatus.fbillstatus%>  ></div>
+  </div> 
 
-  <div class="actions">
-    <%= form.submit :保存 %>
-  </div>
+    <div class="field" >
+    <label class="layui-form-label"   for="assetstatus_创建人">创建人</label>
+    <div class="layui-input-block"> <input     class="layui-input locked "    type="text" name="assetstatus[Creator]" id="assetstatus_Creator"   value=<%= @assetstatus.Creator%>  ></div>
+  </div> 
+
+    <div class="field" >
+    <label class="layui-form-label"   for="assetstatus_创建日期">创建日期</label>
+    <div class="layui-input-block"> <input     class="layui-input  locked"     type="text" name="assetstatus[CreateDate]" id="assetstatus_CreateDate"   value=<%= @assetstatus.CreateDate%>  ></div>
+  </div> 
+
+    <div class="field" >
+    <label class="layui-form-label"   for="assetstatus_审核人">审核人</label>
+    <div class="layui-input-block"> <input     class="layui-input locked "    type="text" name="assetstatus[Approver]" id="assetstatus_Approver"   value=<%= @assetstatus.Approver%>  ></div>
+  </div> 
+
+      <div class="field" >
+    <label class="layui-form-label"   for="assetstatus_审核日期">审核日期</label>
+    <div class="layui-input-block"> <input     class="layui-input locked"    type="text" name="assetstatus[ApproverDate]" id="assetstatus_ApproverDate"   value=<%= @assetstatus.ApproverDate%>  ></div>
+  </div> 
+  
+
+   <div class="layui-btn-group " style="margin:10px;0px;">
+      <a> <input class="layui-btn  " type="submit" name="commit" value="保存" data-disable-with="保存"></a>
+      <a rel="nofollow"><button onclick="Update_Status(<%= @assetstatus.id%>,'审核')" type="button"
+          class="layui-btn  ">审核</button></a>
+      <a rel="nofollow"><button onclick="Update_Status(<%= @assetstatus.id%>,'反审核')" type="button"
+          class="layui-btn  ">反审核</button></a>
+       
+
+      <a data-url="/assetstatuss" data-id="assetstatuss" data-title="资产状态-列表" class="linkActive"><button type="button"
+          class="layui-btn">列表</button></a>
+
+    </div>
 <% end %>
+
+
+
+<script type="text/javascript">
+   $(document).ready(function () { 
+     $(".locked").prop('disabled', 'disabled');
+    $(".locked").css('background-color', '#F5F5F5');
+   })
+
+
+
+ 
+      function Update_Status(id, fbillstatus) {
+        var id_list = new Array();
+        id_list[0] = id;
+        $.ajax({
+          type: "post",
+          url: "/assetstatuses_Update_fbillstatus",
+          data: {
+            "id": id_list,
+            "fbillstatus": fbillstatus
+          },
+          success: function (res) {
+              alert(res.message);
+            if (res.code == 200) { 
+              location.reload();
+            }
+          }
+        });
+      } 
+
+</script>
+
+
+
+    <script>
+      $(document).ready(function () {
+        if ($("#assetstatus_fbillstatus").val() == '已审核') {
+          $("input").prop('disabled', 'disabled');
+          $("select").prop('disabled', 'disabled');
+          $("input").css('background-color', '#F5F5F5');
+          $("select").css('background-color', '#F5F5F5'); 
+        }
+      });
+    </script>

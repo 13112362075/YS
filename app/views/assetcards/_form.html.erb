@@ -2,7 +2,13 @@
 <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
 <script src="https://www.layuicdn.com/layui/layui.js"></script>
 <%=javascript_pack_tag 'tabadd' %>
+ <%=stylesheet_link_tag  'totality' %> 
+<%=%>
 <style>
+
+ 
+
+
   .image_input {
     width: 192px;
     font-size: 11px;
@@ -328,8 +334,9 @@
         if ($("#assetcard_fbillstatus").val() == "已审核") {
           alert("该单据已经审核，不允许操作！")
           return;
-        }
+        } 
         $('#' + modalid.id).modal('show');
+  
       }
     </script>
 
@@ -376,6 +383,25 @@
           Choosedata(assetalterModal)
         }
       }
+
+
+  
+   $(document).on("click", ".layui-table-body table.layui-table tbody td", function () {
+     if ($(this)[0].className == "") {
+       var index = $(this)[0].parentElement.attributes[0].value;
+       var tableBox = $(this).parents('.layui-table-box');
+       //存在固定列
+       tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+       //获取已选中列并取消选中 
+       //选中单击行
+       var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+         "td div.laytable-cell-checkbox div.layui-form-checkbox I");
+       checkCell.click();
+     }
+   });
+
+
+
     </script>
 
     <%= render    'departments/DepartmentModal.html.erb',  id: "assetcard_department_id" ,userid:  "assetcard_Employeeld"%>

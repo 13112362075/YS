@@ -1,3 +1,6 @@
+<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://www.layuicdn.com/layui/layui.js"></script>
+<%=javascript_pack_tag 'tabadd' %>
 <%= form_with(model: addtype, local: true) do |form| %>
   <% if addtype.errors.any? %>
     <div id="error_explanation">
@@ -35,8 +38,86 @@
     <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入描述"    type="text" name="addtype[Description]" id="addtype_Description"   value=<%= @addtype.Description%>  ></div>
   </div> 
  
+  
+    <div class="field" >
+    <label class="layui-form-label"   for="addtype_数据状态">数据状态</label>
+    <div class="layui-input-block"> <input     class="layui-input  locked"     type="text" name="addtype[fbillstatus]" id="addtype_fbillstatus"   value=<%= @addtype.fbillstatus%>  ></div>
+  </div> 
 
-  <div class="actions">
-    <%= form.submit :保存 %>
-  </div>
+    <div class="field" >
+    <label class="layui-form-label"   for="addtype_创建人">创建人</label>
+    <div class="layui-input-block"> <input     class="layui-input locked "    type="text" name="addtype[Creator]" id="addtype_Creator"   value=<%= @addtype.Creator%>  ></div>
+  </div> 
+
+    <div class="field" >
+    <label class="layui-form-label"   for="addtype_创建日期">创建日期</label>
+    <div class="layui-input-block"> <input     class="layui-input  locked"     type="text" name="addtype[CreateDate]" id="addtype_CreateDate"   value=<%= @addtype.CreateDate%>  ></div>
+  </div> 
+
+    <div class="field" >
+    <label class="layui-form-label"   for="addtype_审核人">审核人</label>
+    <div class="layui-input-block"> <input     class="layui-input locked "    type="text" name="addtype[Approver]" id="addtype_Approver"   value=<%= @addtype.Approver%>  ></div>
+  </div> 
+
+      <div class="field" >
+    <label class="layui-form-label"   for="addtype_审核日期">审核日期</label>
+    <div class="layui-input-block"> <input     class="layui-input locked"    type="text" name="addtype[ApproverDate]" id="addtype_ApproverDate"   value=<%= @addtype.ApproverDate%>  ></div>
+  </div> 
+  
+
+   <div class="layui-btn-group " style="margin:10px;0px;">
+      <a> <input class="layui-btn  " type="submit" name="commit" value="保存" data-disable-with="保存"></a>
+      <a rel="nofollow"><button onclick="Update_Status(<%= @addtype.id%>,'审核')" type="button"
+          class="layui-btn  ">审核</button></a>
+      <a rel="nofollow"><button onclick="Update_Status(<%= @addtype.id%>,'反审核')" type="button"
+          class="layui-btn  ">反审核</button></a>
+       
+
+      <a data-url="/addtypes" data-id="addtypes" data-title="变动方式-列表" class="linkActive"><button type="button"
+          class="layui-btn">列表</button></a>
+
+    </div>
 <% end %>
+
+
+
+<script type="text/javascript">
+   $(document).ready(function () { 
+     $(".locked").prop('disabled', 'disabled');
+    $(".locked").css('background-color', '#F5F5F5');
+   })
+
+
+
+ 
+      function Update_Status(id, fbillstatus) {
+        var id_list = new Array();
+        id_list[0] = id;
+        $.ajax({
+          type: "post",
+          url: "/addtypes_Update_fbillstatus",
+          data: {
+            "id": id_list,
+            "fbillstatus": fbillstatus
+          },
+          success: function (res) {
+              alert(res.message);
+            if (res.code == 200) { 
+              location.reload();
+            }
+          }
+        });
+      } 
+
+</script>
+
+    <script>
+      $(document).ready(function () {
+        if ($("#addtype_fbillstatus").val() == '已审核') {
+          $("input").prop('disabled', 'disabled');
+          $("select").prop('disabled', 'disabled');
+          $("input").css('background-color', '#F5F5F5');
+          $("select").css('background-color', '#F5F5F5'); 
+        }
+      });
+    </script>

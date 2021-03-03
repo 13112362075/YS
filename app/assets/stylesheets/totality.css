@@ -1,0 +1,31 @@
+.btngroup{
+    margin: 0px;
+}
+ 
+.layui-table-page select {
+  height: 26px;
+}
+
+.layui-disabled {
+  background-color: #fff !important;
+}
+
+.layui-laypage select {
+  padding: 0px;
+  border-radius: 2px;
+  cursor: pointer;
+}
+
+.layui-table-page {
+  text-align: center;
+}
+
+.layui-laypage .layui-laypage-skip {
+  color: #000;
+}
+
+.layui-table-box {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+} 

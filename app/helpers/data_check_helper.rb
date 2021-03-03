@@ -270,6 +270,276 @@ module   DataCheckHelper
     def   Update_Fbillstatus_Check(type,id,fbillstatus)
 
         result=""  
+
+
+        if(type=="使用状态")
+
+
+
+
+            @usestate=Usestate.find(params[:id])   
+            if(fbillstatus=="审核") 
+                if(@usestate[0].fbillstatus=="已审核")
+                    return "该使用状态已经是已审核状态，不允许再审核！"
+                end 
+            end        
+
+            if(fbillstatus=="反审核")
+                if(@usestate[0].fbillstatus=="未审核")
+                    return "该使用状态是未审核状态，不允许反审核！"
+                end
+                if( Assetcard.where( " Usestate_id  =  ?",  "#{ @usestate[0].Name}" ).length>0)#资产卡片
+                    return  "使用状态：为'#{@usestate[0].Name} '已被使用，不允许反审核！\n" ;
+                end 
+
+
+                if( Assetalter.where( "Usestate_id  =  ?",  "#{ @usestate[0].Name}" ).length>0)#变更单
+                    return  "使用状态：为"+@usestate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+
+
+            end  
+        end
+
+
+        if(type=="部门")
+
+
+            @department=Department.find(params[:id])    
+            if(fbillstatus=="审核") 
+                if(@department[0].fbillstatus=="已审核")
+                    return "该部门已经是已审核状态，不允许再审核！"
+                end 
+            end       
+
+            if(fbillstatus=="反审核")
+                if(@department[0].fbillstatus=="未审核")
+                    return "该部门是未审核状态，不允许反审核！"
+                end
+                @department=Department.find(params[:id])    
+                if( Assetcard.where( " department_id  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产卡片
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end 
+                if( AssetTurnoverDetail.where( " Borrowing_Department  =  ?",  "#{@department[0].departmentname}" ).length>0)#借用、归还单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+ 
+                if( AssetPicking.where( "Picking_Dept  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产领用单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetAllocateEntry.where( "IMPdept  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产调拨单 
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetAllocateEntry.where( "EXPdept  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产调拨单 
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( Assetalter.where( "department_id  =  ?",  "#{ @department[0].departmentname}" ).length>0)#变更单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( Assetalter.where( "department_id_Old  =  ?",  "#{ @department[0].departmentname}" ).length>0)#变更单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+     
+                if( AssetCountingreportEntry.where( "Book_dept  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产盘点单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetCountingreportEntry.where( "Invent_seat  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产盘点单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+    
+                if( AssetGainEntry.where( "Book_dept  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产盘盈单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetGainEntry.where( "Actual_dept  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产盘盈单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetLossEntry.where( "Book_dept  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产盘亏单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetLossEntry.where( "Actual_dept  =  ?",  "#{ @department[0].departmentname}" ).length>0)#资产盘亏单
+                    return  "部门："+@department[0].departmentname+"已被使用，不允许反审核！\n" ;
+                end  
+  
+            end  
+        end
+
+
+
+
+        if(type=="资产类别")
+
+
+            @assettype=Assettype.find(params[:id])   
+            if(fbillstatus=="审核") 
+                if(@assettype[0].fbillstatus=="已审核")
+                    return "该资产类别已经是已审核状态，不允许再审核！"
+                end 
+            end      
+            if(fbillstatus=="反审核")
+                if(@assettype[0].fbillstatus=="未审核")
+                    return "该资产类别是未审核状态，不允许反审核！"
+                end
+                @assettype=Assettype.find(params[:id])   
+                if( Assetcard.where( " Assettype_id  =  ?",  "#{ @assettype[0].Name}" ).length>0)#资产卡片
+                    return  "资产类别：为'#{@assettype[0].Name} '已被使用，不允许反审核！\n" ;
+                end 
+ 
+                if( Assetalter.where( "Assettype_id  =  ?",  "#{ @assettype[0].Name}" ).length>0)#变更单
+                    return  "资产类别：为"+@assettype[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+            end  
+        end
+
+
+        if(type=="资产状态") 
+            @assetstatus=Assetstatus.find(params[:id])   
+            if(fbillstatus=="审核") 
+                if(@assetstatus[0].fbillstatus=="已审核")
+                    return "该资产状态已经是已审核状态，不允许再审核！"
+                end 
+            end     
+            if(fbillstatus=="反审核")
+                if(@assetstatus[0].fbillstatus=="未审核")
+                    return "该资产状态是未审核状态，不允许反审核！"
+                end
+                @assetstatus=Assetstatus.find(params[:id])   
+                if( Assetcard.where( " Assetstatus_id  =  ?",  "#{ @assetstatus[0].Name}" ).length>0)#资产卡片
+                    return  "资产状态:'#{@assetstatus[0].Name} '已被使用，不允许反审核！\n" ;
+                end 
+
+                if( Assetalter.where( "Assetstatus_id  =  ?",  "#{ @assetstatus[0].Name}" ).length>0)#变更单
+                    return  "资产状态"+@assetstatus[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+            end  
+        end
+
+        if(type=="变动方式")
+
+            @addtype=Addtype.find(params[:id])   
+            if(fbillstatus=="审核") 
+                if(@addtype[0].fbillstatus=="已审核")
+                    return "该变动方式已经是已审核状态，不允许再审核！"
+                end 
+            end    
+            if(fbillstatus=="反审核")
+                if(@addtype[0].fbillstatus=="未审核")
+                    return "该变动方式是未审核状态，不允许反审核！"
+                end
+                if( Assetcard.where( " Addtype_id  =  ?",  "#{ @addtype[0].Name}" ).length>0)#资产卡片
+                    return  "变动方式'#{@addtype[0].Name} '已被使用，不允许反审核！\n" ;
+                end 
+                if( AssetDisposal.where( " Disposemethod  =  ?",  "#{ @addtype[0].Name}" ).length>0)#资产卡片
+                    return  "变动方式'#{@addtype[0].Name} '已被使用，不允许反审核！\n" ;
+                end  
+
+                if( Assetalter.where( "Addtype_id  =  ?",  "#{ @addtype[0].Name}" ).length>0)#变更单
+                    return  "变动方式:"+@addtype[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+            end  
+        end
+
+        if(type=="资产位置")
+            @assetseate=Assetseate.find(params[:id])   
+            if(fbillstatus=="审核") 
+                if(@assetseate[0].fbillstatus =="已审核")
+                    return "该资产位置已经是已审核状态，不允许再审核！"
+                end 
+            end  
+
+            if(fbillstatus=="反审核")
+                if(@assetseate[0].fbillstatus=="未审核")
+                    return "该资产位置是未审核状态，不允许反审核！"
+                end
+
+                if( Assetcard.where( " Assetseat_id  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产卡片
+                    return  "资产位置:'#{@assetseate[0].Name} '已被使用，不允许反审核！\n" ;
+                end 
+                if( Assetalter.where( "Assetseat_id  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#变更单
+                    return  "资产位置:"+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+
+
+
+                if( AssetTurnoverDetail.where( " Last_seat  =  ?",  "#{@assetseate[0].Name}" ).length>0)#借用、归还单
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+ 
+                if( AssetPicking.where( "Picking_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产领用单
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetAllocateEntry.where( "Asset_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产调拨单 
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetAllocateEntry.where( "IMP_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产调拨单 
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+         
+     
+                if( AssetCountingreportEntry.where( "Invent_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘点单
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetCountingreportEntry.where( "Book_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘点单
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+    
+                if( AssetGainEntry.where( "Book_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘盈单
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetGainEntry.where( "Invent_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘盈单
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetLossEntry.where( "Book_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘亏单
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+                if( AssetLossEntry.where( "Invent_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘亏单
+                    return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
+                end  
+
+
+
+            end  
+        end
+
+        if(type=="计量单位")
+            @unit=Unit.find(params[:id])   
+            if(fbillstatus=="审核") 
+                    if(@unit[0].fbillstatus=="已审核")
+                        return "该计量单位已经是已审核状态，不允许再审核！"
+                    end 
+            end 
+            if(fbillstatus=="反审核") 
+                if(@unit[0].fbillstatus=="未审核")
+                    return "该计量单位是未审核状态，不允许反审核！"
+                end
+                if( Assetcard.where( " Unit_id  =  ?",  "#{ @unit[0].name}" ).length>0)#资产卡片
+                    return  "计量单位:'#{@unit[0].name} '已被使用，不允许反审核！\n" ;
+                end 
+
+                if( Assetalter.where( "Unit_id  =  ?",  "#{ @unit[0].name}" ).length>0)#变更单
+                    return  "计量单位:"+@unit[0].name+"已被使用，不允许反审核！\n" ;
+                end  
+            end  
+        end
+
+
         if(type=="资产借出/归还单")   
             @assetTurnoverDetail=AssetTurnoverDetail.find(params[:id]) 
             @assetTurnoverDetailEntry  = AssetTurnoverDetailEntry.where( "AssetTurnoverDetail_id =  ?",  params[:id])  

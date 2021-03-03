@@ -127,6 +127,15 @@ get 'asset_gains_Get_DataApi',:to => 'asset_gains#Get_DataApi'
 get 'asset_losses_Get_DataApi',:to => 'asset_losses#Get_DataApi'
 get 'asset_turnover_details_Get_DataApi',:to => 'asset_turnover_details#Get_DataApi'
 get 'departments_Get_DataApi',:to => 'departments#Get_DataApi'
+get 'addtypes_Get_DataApi',:to => 'addtypes#Get_DataApi'
+get 'assettypes_Get_DataApi',:to => 'assettypes#Get_DataApi'
+get 'assetstatuses_Get_DataApi',:to => 'assetstatuses#Get_DataApi'
+get 'units_Get_DataApi',:to => 'units#Get_DataApi'
+get 'usestates_Get_DataApi',:to => 'usestates#Get_DataApi'
+get 'assetseates_Get_DataApi',:to => 'assetseates#Get_DataApi'
+
+ 
+
 #更新状态
 post 'assetcards_Update_Fbillstatus',:to => 'assetcards#Update_Fbillstatus'
 post 'asset_turnover_details_Update_Fbillstatus',:to => 'asset_turnover_details#Update_Fbillstatus'
@@ -138,7 +147,15 @@ post 'asset_countingreports_Update_Fbillstatus',:to => 'asset_countingreports#Up
 post 'asset_gains_Update_Fbillstatus',:to => 'asset_gains#Update_fbillstatus'
 post 'asset_losses_Update_Fbillstatus',:to => 'asset_losses#Update_fbillstatus'
 post 'departments_Update_Fbillstatus',:to => 'departments#Update_fbillstatus'
-post 'assetcards_Update_Status'  ,:to => 'assetcards#Update_Status'   
+post 'assetcards_Update_fbillstatus'  ,:to => 'assetcards#Update_fbillstatus'   
+post 'addtypes_Update_fbillstatus'  ,:to => 'addtypes#Update_fbillstatus'   
+post 'assettypes_Update_fbillstatus'  ,:to => 'assettypes#Update_fbillstatus'   
+post 'assetstatuses_Update_fbillstatus'  ,:to => 'assetstatuses#Update_fbillstatus'   
+post 'units_Update_fbillstatus'  ,:to => 'units#Update_fbillstatus'   
+post 'usestates_Update_fbillstatus'  ,:to => 'usestates#Update_fbillstatus'   
+post 'assetseates_Update_fbillstatus'  ,:to => 'assetseates#Update_fbillstatus'   
+
+
 #判断是否存在未审核的资产变更单
 get 'assetalters_Check_IsExist',:to => 'assetalters#Check_IsExist'
 

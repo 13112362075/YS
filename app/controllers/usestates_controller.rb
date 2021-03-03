@@ -1,6 +1,50 @@
 class UsestatesController < ApplicationController
   before_action :set_usestate, only: [:show, :edit, :update, :destroy]
 
+
+
+
+  def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
+    render json:{code: code, msg: message, count: count,data: data};
+  end
+
+
+  def Get_DataApi
+    usestate=Usestate.order(:id);
+    total_count=usestate.count
+    usestate=usestate.page(params[:page]).per(params[:limit])
+    data=usestate.as_json;
+    api_success(count: total_count,data: data)
+  end
+
+
+
+
+
+  def  Update_fbillstatus 
+    message=""
+    ActiveRecord::Base.transaction do 
+    message=""  
+    @usestate=Usestate.find(params[:id]) 
+    if params[:fbillstatus].lstrip.rstrip=="审核"
+      @Fbillstatus="已审核"
+    else
+      @Fbillstatus="未审核"
+    end 
+    message=message+ Update_Fbillstatus_Check("使用状态",params[:id],params[:fbillstatus]).to_s   
+    if  message.lstrip.rstrip==""
+      @usestate[0].update(fbillstatus:@Fbillstatus)
+      if(params[:fbillstatus].lstrip.rstrip=="审核")
+        @usestate[0].update(Approver: session[:name],ApproverDate: Time.now.strftime("%Y-%m-%d %H:%M:%S"))  
+      end  
+      message=params[:fbillstatus].to_s + "成功！"
+    end   
+        render :json  => {code: 200,message: message}
+  end 
+end
+
+
+
   def choose   
     usestate = Usestate.find(params[:usestateid]) 
     @name = usestate.Name
@@ -28,8 +72,7 @@ class UsestatesController < ApplicationController
     message="";
     
     params["usestate_id"].each do |i|  
-      result=Delete_Check("使用状态",i);    
-      puts "1"
+      result=Delete_Check("使用状态",i);     
       if(result=="")
         sussess+=1;
         Usestate.destroy(i)
@@ -71,6 +114,7 @@ class UsestatesController < ApplicationController
   # GET /usestates/new
   def new
     @usestate = Usestate.new
+    @usestate.fbillstatus="未审核"
   end
 
   # GET /usestates/1/edit
@@ -81,7 +125,8 @@ class UsestatesController < ApplicationController
   # POST /usestates.json
   def create
     @usestate = Usestate.new(usestate_params)
-
+    @usestate.Creator=session[:name] 
+    @usestate.CreateDate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
     respond_to do |format|
       if @usestate.save
         format.html { redirect_to @usestate, notice: '创建成功！.' }
@@ -125,6 +170,6 @@ class UsestatesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def usestate_params
-      params.require(:usestate).permit(:Usestatecode, :Name, :Orgainize_id, :Description)
+      params.require(:usestate).permit(:Usestatecode, :Name, :Orgainize_id, :Description,:fbillstatus,:Creator,:CreateDate,:Approver,:ApproverDate)
     end
 end

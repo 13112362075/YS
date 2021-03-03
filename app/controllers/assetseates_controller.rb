@@ -2,6 +2,34 @@ class AssetseatesController < ApplicationController
   before_action :set_assetseate, only: [:show, :edit, :update, :destroy]
 
 
+
+
+  def  Update_fbillstatus 
+    message=""
+    ActiveRecord::Base.transaction do 
+    message=""  
+    @assetseate=Assetseate.find(params[:id]) 
+    if params[:fbillstatus].lstrip.rstrip=="审核"
+      @Fbillstatus="已审核"
+    else
+      @Fbillstatus="未审核"
+    end 
+    message=message+ Update_Fbillstatus_Check("资产位置",params[:id],params[:fbillstatus]).to_s   
+    if  message.lstrip.rstrip==""
+      @assetseate[0].update(fbillstatus:@Fbillstatus)
+      if(params[:fbillstatus].lstrip.rstrip=="审核")
+        @assetseate[0].update(Approver: session[:name],ApproverDate: Time.now.strftime("%Y-%m-%d %H:%M:%S"))  
+      end  
+      message=params[:fbillstatus].to_s + "成功！"
+    end   
+        render :json  => {code: 200,message: message}
+  end 
+end
+
+
+
+
+
   def choose_row
     assetseate = Assetseate.find(params[:assetseateid]) 
     @name = assetseate.Name
@@ -79,6 +107,7 @@ end
   # GET /assetseates/new
   def new
     @assetseate = Assetseate.new
+    @assetseate.fbillstatus="未审核"
   end
 
   # GET /assetseates/1/edit
@@ -89,7 +118,8 @@ end
   # POST /assetseates.json
   def create
     @assetseate = Assetseate.new(assetseate_params)
-
+    @assetseate.Creator=session[:name] 
+    @assetseate.CreateDate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
     respond_to do |format|
       if @assetseate.save
         format.html { redirect_to @assetseate, notice: '创建成功！' }
@@ -133,6 +163,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def assetseate_params
-      params.require(:assetseate).permit(:Assetseatecode, :Name, :Orgainize_id, :Description)
+      params.require(:assetseate).permit(:Assetseatecode, :Name, :Orgainize_id, :Description,:fbillstatus,:Creator,:CreateDate,:Approver,:ApproverDate)
     end
 end

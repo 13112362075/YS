@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_02_25_030333) do
+ActiveRecord::Schema.define(version: 2021_03_01_025830) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -19,6 +19,11 @@ ActiveRecord::Schema.define(version: 2021_02_25_030333) do
     t.string "Description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.datetime "CreateDate"
+    t.string "Approver"
+    t.datetime "ApproverDate"
   end
 
   create_table "asset_allocate_entries", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -413,6 +418,11 @@ ActiveRecord::Schema.define(version: 2021_02_25_030333) do
     t.string "Description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.datetime "CreateDate"
+    t.string "Approver"
+    t.datetime "ApproverDate"
   end
 
   create_table "assetstatuses", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -422,6 +432,11 @@ ActiveRecord::Schema.define(version: 2021_02_25_030333) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.datetime "CreateDate"
+    t.string "Approver"
+    t.datetime "ApproverDate"
   end
 
   create_table "assettypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -431,6 +446,11 @@ ActiveRecord::Schema.define(version: 2021_02_25_030333) do
     t.string "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.datetime "CreateDate"
+    t.string "Approver"
+    t.datetime "ApproverDate"
   end
 
   create_table "departments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -463,6 +483,11 @@ ActiveRecord::Schema.define(version: 2021_02_25_030333) do
     t.string "Roundingtype"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.datetime "CreateDate"
+    t.string "Approver"
+    t.datetime "ApproverDate"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
@@ -487,6 +512,11 @@ ActiveRecord::Schema.define(version: 2021_02_25_030333) do
     t.string "Description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "fbillstatus"
+    t.string "Creator"
+    t.datetime "CreateDate"
+    t.string "Approver"
+    t.datetime "ApproverDate"
   end
 
 end
