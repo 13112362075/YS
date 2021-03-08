@@ -14,6 +14,7 @@
     </div>
   <% end %> 
 
+<p id="id" hidden='hidden'><%= @assettype.id%></p>
      
   <div class="field" >
     <label class="layui-form-label"   for="assettype_资产类型编码">资产类型编码</label>
@@ -23,8 +24,19 @@
    <div class="field" >
     <label class="layui-form-label"   for="assettype_资产类型名称">资产类型名称</label>
     <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入资产类型名称"    type="text" name="assettype[Name]" id="assettype_Name"   value=<%= @assettype.Name%>  ></div>
+  </div>
+
+     <div class="field" >
+    <label class="layui-form-label"   for="assettype_上级资产类别">上级资产类别</label>
+    <div class="layui-input-block"> <input     class="layui-input locked"     type="text" name="assettype[ParentAssettype]" id="assettype_ParentAssettype"   value=<%= @assettype.ParentAssettype%>  ></div>
   </div> 
-  
+
+
+     <div class="field" >
+    <label class="layui-form-label"   for="assettype_等级">等级</label>
+    <div class="layui-input-block"> <input     class="layui-input locked "     type="text" name="assettype[Level]" id="assettype_Level"   value=<%= @assettype.Level%>  ></div>
+  </div> 
+
     <div class="field" >
     <label class="layui-form-label"   for="assettype_所属组织">所属组织</label>
     <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入所属组织"    type="text" name="assettype[Orgainize_id]" id="assettype_Orgainize_id"   value=<%= @assettype.Orgainize_id%>  ></div>
@@ -35,6 +47,7 @@
     <div class="layui-input-block"> <input     class="layui-input "  placeholder="请输入描述"    type="text" name="assettype[description]" id="assettype_description"   value=<%= @assettype.description%>  ></div>
   </div> 
    
+ 
   
     <div class="field" >
     <label class="layui-form-label"   for="assettype_数据状态">数据状态</label>
@@ -63,7 +76,7 @@
   
 
    <div class="layui-btn-group " style="margin:10px;0px;">
-      <a> <input class="layui-btn  " type="submit" name="commit" value="保存" data-disable-with="保存"></a>
+      <a id="a_test" rel="nofollow"><button onclick="Save()" type="button" class="layui-btn">保存</button></a>
       <a rel="nofollow"><button onclick="Update_Status(<%= @assettype.id%>,'审核')" type="button"
           class="layui-btn  ">审核</button></a>
       <a rel="nofollow"><button onclick="Update_Status(<%= @assettype.id%>,'反审核')" type="button"
@@ -116,4 +129,38 @@
           $("select").css('background-color', '#F5F5F5'); 
         }
       });
+
+
+
+  function Save() {  
+    var id = document.getElementById("id").innerText; //单据id 
+    var assettype_Assettypecode = document.getElementById("assettype_Assettypecode").value; //单据编码
+    var assettype_Name = document.getElementById("assettype_Name").value; //业务日期
+    var assettype_ParentAssettype = document.getElementById("assettype_ParentAssettype").value; //处置方式  
+     var assettype_Level = document.getElementById("assettype_Level").value; //单据编码
+    var assettype_Orgainize_id = document.getElementById("assettype_Orgainize_id").value; //业务日期 
+    $.ajax({
+      type: "post",
+      async: false,
+      url: "/assettypes_save_all",
+      data: {
+        "type": "保存", 
+        "id":id,
+        "Assettypecode":assettype_Assettypecode,
+        "Name":assettype_Name,
+        "ParentAssettype":assettype_ParentAssettype,
+        "Level":assettype_Level,
+        "Orgainize_id":assettype_Orgainize_id
+      },
+      success: function (res) { 
+        if (res.code == 200) {
+              alert(res.message);
+          var path = "/assettypes/" + res.id + "/edit"
+          window.location = path;
+        }
+      }
+    });
+  }
+
+
     </script>

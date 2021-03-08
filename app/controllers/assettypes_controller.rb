@@ -4,17 +4,46 @@ class AssettypesController < ApplicationController
 
 
   
-  def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
-    render json:{code: code, msg: message, count: count,data: data};
+  def api_success(type: 0,code: 0,message:'请求成功', count: '3',data:{}) 
+    #type==0 获取资产类别列表
+    #type==1 获取资产树状列表
+    if type==0
+      render json:{type:type,code: code, msg: message, count: count,data: data};
+    elsif type==1
+      render json:{data: data};
+    end
+  end
+  
+
+  def Get_Data_Tree_Api
+
+    sql="  select '资产类型-列表' as Name,0 as 'id', 0 as 'pid' union all select  A.`Name`,A.id, IFNULL(B.id,0) as 'pid' from assettypes A left join assettypes B ON A.ParentAssettype= B.`Name` "
+    @assettype=Assettype.find_by_sql (sql)    
+    render 'tree'
+   
+  
+    #api_success(type: 1,data: data)
   end
 
 
   def Get_DataApi
-    assettype=Assettype.order(:id);
+    if (params.include? 'key')  
+      if params[:key][:Assettype_selected].lstrip.rstrip=="资产类型-列表" 
+        sql=" select  * from assettypes  where ParentAssettype is NULL"
+      else
+        sql=" select  * from assettypes  where ParentAssettype = '#{params[:key][:Assettype_selected]}'"
+      end 
+      assettype=Assettype.find_by_sql (sql)
+      assettype.map{|i| i.id}
+      assettype = Assettype.where(:id => assettype) 
+    else
+      assettype=Assettype.order(:id); 
+    end 
+    
     total_count=assettype.count
     assettype=assettype.page(params[:page]).per(params[:limit])
     data=assettype.as_json;
-    api_success(count: total_count,data: data)
+    api_success(type: 0,count: total_count,data: data)
   end
 
 
@@ -55,10 +84,18 @@ end
   end
 
 
-  
+  def save_all
+    if params["id"]==""  
+      @assettype = Assettype.create!(Assettypecode: params[:Assettypecode],Name:params[:Name],ParentAssettype:params[:ParentAssettype],Level:params[:Level],Orgainize_id:params[:Orgainize_id],fbillstatus:"未审核",Creator:session[:name],CreateDate:Time.now.strftime("%Y-%m-%d %H:%M:%S") )
+    else
+      @assettype = Assettype.update(Assettypecode: params[:Assettypecode],Name:params[:Name],ParentAssettype:params[:ParentAssettype],Level:params[:Level],Orgainize_id:params[:Orgainize_id])
+    end
+
+    render :json  => {code: 200, message: "资产类别保存成功！",id:@assettype.id }
+  end
+
   def save_multiple  
-    params["assettypeid"].each do |i| 
-      puts i[1].length    
+    params["assettypeid"].each do |i|  
       assettype = Assettype.create!(Assettypecode: i[1][0],Name: i[1][1],Orgainize_id: i[1][2],description: i[1][3])
     end
   end
@@ -86,8 +123,7 @@ end
   # GET /assettypes
   # GET /assettypes.json
   def index 
-    @q = Assettype.search(params[:q])      
-
+    @q = Assettype.search(params[:q])       
     if  params[:q].nil? 
       @assettypes=Assettype.order(:id).page(params[:page]).per(10)
     else 
@@ -98,6 +134,8 @@ end
         @assettypes  = Assettype.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"]}%" ) .page(params[:page]).per(10)
       end
     end  
+
+    @department=Department.all
   end
 
   # GET /assettypes/1
@@ -108,7 +146,17 @@ end
   # GET /assettypes/new
   def new
     @assettype = Assettype.new
-
+    if (params.include? 'ParentAssettype') 
+      if(params[:ParentAssettype].lstrip.rstrip=="资产类型-列表")
+        @assettype.Level=1
+      else
+        @assettype_by_ParentAssettype=Assettype.where("Name='#{params[:ParentAssettype]}'") 
+        @assettype.Level=@assettype_by_ParentAssettype[0].Level.to_i+1
+        @assettype.ParentAssettype=params[:ParentAssettype]
+      end
+      
+    end
+    
     @assettype.fbillstatus="未审核"
   end
 
@@ -119,13 +167,13 @@ end
   # POST /assettypes
   # POST /assettypes.json
   def create
-    @assettype = Assettype.new(assettype_params)
+    @assettype = Assettype.new(Assettypecode: params[:Assettypecode],Name:params[:Name],ParentAssettype:params[:ParentAssettype],Level:params[:Level],Orgainize_id:params[:Orgainize_id] ) 
     @assettype.Creator=session[:name] 
     @assettype.CreateDate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
+    @assettype.fbillstatus="未审核"
     respond_to do |format|
       if @assettype.save
-        format.html { redirect_to @assettype, notice: '创建成功！' }
-        format.json { render :show, status: :created, location: @assettype }
+        render :json  => {code: 200,message: "资产类别创建成功！" }
       else
         format.html { render :new }
         format.json { render json: @assettype.errors, status: :unprocessable_entity }
@@ -165,6 +213,6 @@ end
 
     # Only allow a list of trusted parameters through.
     def assettype_params
-      params.require(:assettype).permit(:Assettypecode, :Name, :Orgainize_id, :description,:fbillstatus,:Creator,:CreateDate,:Approver,:ApproverDate)
+      params.require(:assettype).permit(:Assettypecode, :Name, :Orgainize_id, :description,:fbillstatus,:Creator,:CreateDate,:Approver,:ApproverDate,:ParentAssettype,:Level)
     end
 end

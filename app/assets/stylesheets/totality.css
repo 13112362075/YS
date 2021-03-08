@@ -1,7 +1,21 @@
 .btngroup{
     margin: 0px;
 }
- 
+.layui-bg-black {
+  background-color: #FFFFFF !important
+}
+.ztree * {
+    font-size:15px; 
+     
+}
+.layui-body
+{
+  left: 300px;
+}
+.layui-side
+{
+  width: 300px;
+}
 .layui-table-page select {
   height: 26px;
 }

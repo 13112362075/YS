@@ -35,7 +35,9 @@
 
  <h1 style="text-align:center;">资产卡片</h1>
 
+   
 
+ 
  <div class="layui-btn-group " style="margin:10px;0px;">
    <a data-url="/assetcards/new" data-id="newassetcards" data-title="资产卡片-新增" class="linkActive"><button
        type="button" class="layui-btn">新增</button></a>
@@ -74,7 +76,7 @@
          icon: "layui-icon-addition"
        }],
        title: '用户数据表',
-        cols: [
+       cols: [
          [{
              type: 'checkbox'
            },
@@ -92,7 +94,7 @@
              width: 80,
              title: '资产名称',
              sort: true
-           } ,{
+           }, {
              field: 'Assetstatus_id',
              title: '资产状态',
              width: '10%',
@@ -102,7 +104,7 @@
              field: 'Addtype_id',
              title: '变动方式',
              sort: true
-           },  {
+           }, {
              field: 'Usestate_id',
              title: '资产使用状态',
              sort: true
@@ -119,7 +121,7 @@
          ]
        ],
        page: true,
-       limits: [100,200,500,1000,2000,10000],
+       limits: [100, 200, 500, 1000, 2000, 10000],
        limit: 100
      });
 
@@ -403,9 +405,9 @@
    }
 
    function getCheckedCheckbox_update() {
-     
+
      var table = layui.table;
-     
+
      var checkStatus = table.checkStatus('assetcards');
      console.log(checkStatus)
      if (checkStatus.data.length > 1) {
@@ -421,7 +423,7 @@
      }
      var assetcards_id = "/assetcards/" + checkStatus.data[0].id + "/edit";
      document.getElementById("a_update").dataset.url = assetcards_id
- 
+
    }
  </script>
 
@@ -438,8 +440,7 @@
      for (var i = 0; i < checkStatus.length; i++) {
        items[i] = checkStatus[i].id
      }
-     if(items.length==0)
-     {
+     if (items.length == 0) {
        alert("请选择单据！");
        return;
      }
@@ -454,12 +455,10 @@
          if (res.code == 200) {
            alert(res.message);
            location.reload();
-         }
-         else 
-         {
+         } else {
            alert(res.message);
          }
-       } 
+       }
      });
    }
 

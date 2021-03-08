@@ -114,6 +114,7 @@ post 'asset_disposals_save_all',:to =>'asset_disposals#save_all'
 post 'asset_countingreports_save_all',:to =>'asset_countingreports#save_all'
 post 'asset_gains_save_all',:to => 'asset_gains#save_all'
 post 'asset_losses_save_all',:to => 'asset_losses#save_all'
+post 'assettypes_save_all',:to => 'assettypes#save_all'
 #获取数据接口
 get 'user_test',:to =>'users#test'
 get 'assetalters_Get_Data',:to =>'assetalters#Get_DataApi'
@@ -133,6 +134,8 @@ get 'assetstatuses_Get_DataApi',:to => 'assetstatuses#Get_DataApi'
 get 'units_Get_DataApi',:to => 'units#Get_DataApi'
 get 'usestates_Get_DataApi',:to => 'usestates#Get_DataApi'
 get 'assetseates_Get_DataApi',:to => 'assetseates#Get_DataApi'
+#资产列表树状接口
+get 'assettypes_Get_Data_Tree_Api',:to => 'assettypes#Get_Data_Tree_Api'
 
  
 

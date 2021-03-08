@@ -16,8 +16,7 @@
     }; 
     
     $(".linkActive").on("click", function(){    
-    var datas=$(this);    
-    console.log(datas);
+    var datas=$(this);     
     if(datas[0].dataset.url=="")
     {
       return;
