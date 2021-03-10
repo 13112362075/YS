@@ -27,6 +27,10 @@
      overflow: hidden;
      text-align: center;
    }
+   .buttongroup
+   {
+     margin: 0px 4px 0px 0px;
+   }
    
  </style>
  <div id="List" class="layui-side layui-bg-black">
@@ -39,16 +43,16 @@
          <button  id="reload"  class="layui-btn" data-type="reload">搜索</button>
        </div>
        <h1 style="text-align:center;">资产类型表</h1>
-       <div class="layui-btn-group " style="margin:10px;0px;">
+       <div  >
          <a  id="a_new"   data-id="newassettypes" data-title="资产类别新增" class="linkActive"  
-           data-method="get"><button type="button" class="layui-btn"  onclick="New()" >新增</button></a>
+           data-method="get"><button type="button" class=" buttongroup layui-btn"  onclick="New()" >新增</button></a>
          <a id="a_update" rel="nofollow" class="linkActive" data-id="edit_assettypes" data-title="资产类别编辑"><button
-             type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
-         <a id="a_delete" rel="nofollow"><button onclick="Delete()" type="button" class="layui-btn">删除</button></a>
-         <a rel="nofollow"><button type="button" onclick="Refresh()" class="layui-btn">刷新</button></a>
+             type="button" class="buttongroup layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+         <a id="a_delete" rel="nofollow"><button onclick="Delete()" type="button" class="buttongroup layui-btn">删除</button></a>
+         <a rel="nofollow"><button type="button" onclick="Refresh()" class="buttongroup layui-btn">刷新</button></a>
          <input type="file" id="file" style="display:none;"
            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-         <a rel="nofollow"><button type="button" onclick="selectFile()" class="layui-btn">导入</button></a>
+         <a rel="nofollow"><button type="button" onclick="selectFile()" class="buttongroup layui-btn">导入</button></a>
          <a rel="nofollow"><button type="button" onclick="exportSpecialExcel()" class="layui-btn">导出</button></a>
        </div>
        <table class="layui-hide" id="assettypes" lay-filter="assettypes"></table>

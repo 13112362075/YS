@@ -63,3 +63,7 @@ end
 
 gem 'kaminari'
 gem 'bootstrap-kaminari-views'
+
+
+gem 'barby', '~> 0.6.8'
+gem 'rqrcode', '~> 0.10.1' # 如果不需要生成二维码，可以不添加

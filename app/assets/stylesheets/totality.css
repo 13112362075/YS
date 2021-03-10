@@ -2,7 +2,7 @@
     margin: 0px;
 }
 .layui-bg-black {
-  background-color: #FFFFFF !important
+  background-color: #EAEAEA !important
 }
 .ztree * {
     font-size:15px; 
@@ -43,3 +43,18 @@
   overflow: hidden;
   text-align: center;
 } 
+.ztree li{
+  padding: 3px;
+}
+.layui-tab-content {
+  padding:0px;
+}
+.rightmenuli 
+{
+  padding: 3px;
+  font-size: 18px; 
+}
+.rightmenuli:hover
+{
+background-color:yellow;
+}

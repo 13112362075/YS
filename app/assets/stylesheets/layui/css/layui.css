@@ -3559,7 +3559,7 @@ body .layui-table-tips .layui-layer-content {
  top:-2px\0/IE9
 }
 .layui-tab-content {
- padding:10px
+ /* padding:10px */
 }
 .layui-tab-title li .layui-tab-close {
  position:relative;
