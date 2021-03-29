@@ -1,96 +1,142 @@
-
-
-<!-- Modal -->
-<div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4>计量单位表</h4>
-        <h4  hidden="hidden" id="unitid" class="modal-title"  ></h4> 
-                <h4  hidden="hidden" id="UnitModalid" class="modal-title"  > <%= id%> </h4> 
-      </div>
-      <div class="modal-body"> 
-
-        <table class="table table-bordered">
-          <thead>
-          <tr>
-            <th>单位编码</th>
-            <th>单位名称</th> 
-          </tr>
-          </thead>
-          <tbody>
-            <% @unit.each do |unit| %>
-            <tr class="select_unit" data-user_id="<%= unit.id %>" >
-              <td><%= unit.Unitcode %></td>
-              <td><%= unit.name %></td> 
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button id="chooseunit" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
-      </div> 
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
- 
-
-<script>
-$('tr.select_unit').click(function(e){ 
-    $("tr.select_unit").css("backgroundColor","white");
-    this.style.backgroundColor = "#357ebd" 
-    $("#unitid").text(this.dataset.user_id);
-
-}) 
-
-</script>
-
-<script> 
-$('#chooseunit').click(function(e){     
-       var List=new Array();
-  List[0]="计量单位";
-  List[1]=   $("#UnitModalid").text();
-  List[2]="unitModal";
-$.ajax({
-   type:"post", 
-   url :"/units_choose",
-   data:{ 
-      "unitid": $("#unitid").text(),
-      "id" :List
-     }, 
-   success: function(){ 
-     },
-			error :function(){ 
-        } 
- });  
-}) 
-
-
-
-
-$('tr.select_unit').dblclick(function(e){    
-      var List=new Array();
-  List[0]="计量单位";
-  List[1]=   $("#UnitModalid").text();
-  List[2]="unitModal";
-$.ajax({
-   type:"post", 
-   url :"/units_choose",
-   data:{ 
-      "unitid": $("#unitid").text(),
-      "id" :List
-     }, 
-   success: function(){ 
-     },
-			error :function(){ 
-        } 
- });  
-})
-</script>
+ <body>
+   <div class="modal fade" id="unitModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+     <div class="modal-dialog" style="width:650px;height:auto;">
+       <div class="modal-content">
+         <div class="modal-header">
+           <!--关闭窗口按钮-->
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+           <h4>计量单位表</h4>
+           <!--菜单列表-->
+           <a data-url="/units/new" data-id="newunits" data-title="单位-新增" class="linkActive"><button type="button"
+               class="layui-btn"    >新增 </button></a>
+           <button class="layui-btn demoTable" data-type="reload_unit">刷新</button>
+           <!--参数-->
+           <h4 hidden="hidden" id="unitid" class="modal-title"></h4>
+           <h4 hidden="hidden" id="UnitModalid" class="modal-title"> <%= id%> </h4>
+         </div>
+         <div class="modal-body">
+           <div class="unit_table">
+             <table class="layui-hide" id="units" lay-filter="units"></table>
+           </div>
+         </div>
+         <div class="modal-footer">
+           <!--菜单列表-->
+           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+           <button id="chooseunit" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+         </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
+   <script>
+     //确定按钮点击事件
+     $('#chooseunit').click(function (e) {
+       //获取参数数据
+       var List = new Array();
+       List[0] = "计量单位";
+       List[1] = $("#UnitModalid").text();
+       List[2] = "unitModal";
+       //调用后端选择基础资料接口
+       $.ajax({
+         type: "post",
+         url: "/units_choose",
+         data: {
+           "unitid": $("#unitid").text(),
+           "id": List
+         },
+         success: function () {},
+         error: function () {}
+       });
+     })
+     layui.use('table', function () {
+       var table = layui.table;
+       table.on('tool(units)', function (obj) {
+         let event = obj.event;
+         $("#unitid").text(obj.data.id);
+         let tr = obj.tr;
+         index = tr[0].attributes["data-index"].value;
+         var tableBox = $(this).parents('.layui-table-box');
+         //存在固定列
+         tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+         //获取已选中列并取消选中 
+         //选中单击行
+         var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+           "td div.laytable-cell-radio div.layui-form-radio I");
+         checkCell.click(); //复选框勾选 
+       })
+       table.on('rowDouble(units)', function (obj) {
+         //双击单元格事件
+         //获取参数数据
+         var List = new Array();
+         List[0] = "计量单位";
+         List[1] = $("#UnitModalid").text();
+         List[2] = "unitModal";
+         //调用后端选择基础资料接口
+         $.ajax({
+           type: "post",
+           url: "/units_choose",
+           data: {
+             "unitid": $("#unitid").text(),
+             "id": List
+           },
+           success: function () {},
+           error: function () {}
+         });
+       })
+       table.render({
+         elem: '#units',
+         url: '/units_Get_DataApi',
+         title: '用户数据表',
+         cols: [
+           [{
+               type: 'radio',
+               width: 50
+             },
+             {
+               field: 'Unitcode',
+               title: '单位编号',
+               width: 200,
+               minwidth: 200,
+               event:"units",
+               sort: true
+             }, {
+               field: 'name',
+               minwidth: 200,
+               width: 200,
+               event:"units",
+               title: '单位名称'
+             }, {
+               field: 'Approver',
+               minwidth: 200,
+               width: 163,
+               event:"units",
+               title: '审核人',
+               sort: true
+             }
+           ]
+         ],
+         id: 'unit_table',
+         page: true,
+         limits: [100, 200, 500, 1000, 2000, 10000],
+         limit: 100
+       });
+       var $ = layui.$,
+         active = {
+           reload_unit: function () {
+             //执行重载
+             table.reload('unit_table', {
+               page: {
+                 curr: 1 //重新从第 1 页开始
+               },
+               where: {
+                 key: {}
+               }
+             }, 'data');
+           }
+         };
+       $('.demoTable').on('click', function () {
+         var type = $(this).data('type');
+         active[type] ? active[type].call(this) : '';
+       });
+     });
+   </script>
+ </body>

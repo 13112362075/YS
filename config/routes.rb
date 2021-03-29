@@ -174,6 +174,10 @@ post 'sessions_Login_user',:to => 'sessions#Login_user'
 get 'asset_pickings_Check_IsPush',:to => 'asset_pickings#Check_IsPush'
 get 'asset_turnover_details_Check_IsPush',:to => 'asset_turnover_details#Check_IsPush'
 
+#检查资产卡片是否为审核、最底层
+get 'assettypes_Check_Assettype',:to => 'assettypes#Check_Assettype'
+
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
  
 

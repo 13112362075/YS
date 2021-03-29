@@ -1,311 +1,282 @@
-<script src="https://www.layuicdn.com/layui/layui.js"></script>
-<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
-
-<style>
-    .layui-table-page select {
-        height: 26px;
-    }
-
-    .layui-disabled {
-        background-color: #fff !important;
-    }
-
-    .layui-laypage select {
-        padding: 0px;
-        border-radius: 2px;
-        cursor: pointer;
-    }
-
-    .layui-table-page {
-        text-align: center;
-    }
-
-    .layui-laypage .layui-laypage-skip {
-        color: #000;
-    }
-
-    .layui-table-box {
-        position: relative;
-        overflow: hidden;
-        text-align: center;
-    }
-
-    .image {
-        border: 1px solid #e6e6e6;
-        border-left: 0px;
-        border-right: 1;
-        border-top: 1;
-        border-bottom: 1;
-        border-bottom-left-radius: 0;
-        border-top-left-radius: 0;
-        border-bottom-right-radius: 2px;
-        border-top-right-radius: 2px;
-        height: 38px;
-        width: 38px;
-    }
-
-    .image_input {
-        width: 192px;
-        font-size: 11px;
-        border: 1px solid #e6e6e6;
-        border-left: 1;
-        border-right: 0;
-        border-top: 1;
-        border-bottom: 1;
-        border-top-left-radius: 2px;
-        border-top-right-radius: 0px;
-        border-bottom-right-radius: 0;
-        border-bottom-left-radius: 2px;
-    }
-
-    .label1 {
-        width: 100px;
-        font-size: 11px;
-    }
-
-    .input1 {
-        width: 230px;
-        font-size: 11px;
-    }
-</style>
-
-<h1 style="text-align: center;">资产实物清单</h1>
-
-<div class="demoTable">
-    <div style="display:flex;">
-        <div class="layui-form-item">
-            <label class="layui-form-label  label1 " style="  font-family: '黑体'">单据状态：</label>
-            <select class="layui-input  input1" name="assetcard_fbillstatus" id="assetcard_fbillstatus">
-                <option value="已审核">已审核</option>
-                <option value="未审核">未审核</option>
-                <option value="全部">全部</option>
-            </select>
+<head>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+    <style>
+        .layui-table-page select {
+            height: 26px;
+        }
+        .layui-disabled {
+            background-color: #fff !important;
+        }
+        .layui-laypage select {
+            padding: 0px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        .layui-table-page {
+            text-align: center;
+        }
+        .layui-laypage .layui-laypage-skip {
+            color: #000;
+        }
+        .layui-table-box {
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+        .image {
+            border: 1px solid #e6e6e6;
+            border-left: 0px;
+            border-right: 1;
+            border-top: 1;
+            border-bottom: 1;
+            border-bottom-left-radius: 0;
+            border-top-left-radius: 0;
+            border-bottom-right-radius: 2px;
+            border-top-right-radius: 2px;
+            height: 38px;
+            width: 38px;
+        }
+        .image_input {
+            width: 192px;
+            font-size: 11px;
+            border: 1px solid #e6e6e6;
+            border-left: 1;
+            border-right: 0;
+            border-top: 1;
+            border-bottom: 1;
+            border-top-left-radius: 2px;
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 2px;
+        }
+        .label1 {
+            width: 100px;
+            font-size: 11px;
+        }
+        .input1 {
+            width: 230px;
+            font-size: 11px;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">资产实物清单</h1>
+    <!--单据状态下拉列表 -->
+    <div class="demoTable">
+        <div style="display:flex;">
+            <div class="layui-form-item">
+                <label class="layui-form-label  label1 " style="  font-family: '黑体'">单据状态：</label>
+                <select class="layui-input  input1" name="assetcard_fbillstatus" id="assetcard_fbillstatus">
+                    <option value="已审核">已审核</option>
+                    <option value="未审核">未审核</option>
+                    <option value="全部">全部</option>
+                </select>
+            </div>
+            <!--筛选条件字段集合 -->
+            <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产卡片编码">资产编码：</label>
+            <input class="layui-input  image_input" name="id" id="assetCode" autocomplete="off">
+            <div class="image" , onclick="Choosedata(assetcardModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+            </div>
+            <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产卡片编码">资产类别:</label>
+            <input class="layui-input image_input " name="id" id="Assettype_id" autocomplete="off">
+            <div class="image" , onclick="Choosedata(assettypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+            </div>
         </div>
-
-
-        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产卡片编码">资产编码：</label>
-        <input class="layui-input  image_input" name="id" id="assetCode" autocomplete="off">
-        <div class="image" , onclick="Choosedata(assetcardModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+        <div style="display:flex;">
+            <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产状态编码">资产状态：</label>
+            <input class="layui-input  image_input" name="id" id="assetstatusid" autocomplete="off">
+            <div class="image" , onclick="Choosedata(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+            </div>
+            <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_使用部门">使用部门：</label>
+            <input class="layui-input  image_input" name="id" id="departmentid" autocomplete="off">
+            <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+            </div>
+            <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_使用人">使用人：</label>
+            <input class="layui-input  image_input" name="id" id="userid" autocomplete="off">
+            <div class="image" , onclick="Choosedata(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
+            </div>
+            <button class="layui-btn" data-type="reload">搜索</button>
         </div>
-        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产卡片编码">资产类别:</label>
-
-        <input class="layui-input image_input " name="id" id="Assettype_id" autocomplete="off">
-        <div class="image" , onclick="Choosedata(assettypeModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
-        </div>
-    </div> 
-    <div style="display:flex;">
-        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_资产状态编码">资产状态：</label>
-        <input class="layui-input  image_input" name="id" id="assetstatusid" autocomplete="off">
-        <div class="image" , onclick="Choosedata(assetstatusModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
-        </div>
-
-
-        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_使用部门">使用部门：</label>
-        <input class="layui-input  image_input" name="id" id="departmentid" autocomplete="off">
-        <div class="image" , onclick="Choosedata(departmentModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
-        </div>
-
-        <label class="layui-form-label  label1 " style="  font-family: '黑体'" for="assetcard_使用人">使用人：</label>
-        <input class="layui-input  image_input" name="id" id="userid" autocomplete="off">
-        <div class="image" , onclick="Choosedata(userModal)" href="#"><%= image_tag('放大镜', size: "38" )   %>
-        </div>
-
-        <button class="layui-btn" data-type="reload">搜索</button>
     </div>
-
-</div>
-
-<table class="layui-hide" id="assetlist" lay-filter="assetlist"></table>
-
-
-
-<script>
-    layui.use('table', function () {
-        var table = layui.table;
-        table.render({
-            elem: '#assetlist',
-            url: '/AssetList_Get_Data',
-            toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-                ,
-            defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-                title: '刷新',
-                layEvent: 'Refresh',
-                icon: "layui-icon-refresh-3"
-
-            }, { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-                title: '新增',
-                layEvent: 'Add',
-                icon: "layui-icon-addition"
-            }],
-            title: '用户数据表',
-            cols: [
-                [{
-                        field: 'Assettype_id',
-                        width: 80,
-                        title: '资产类别',
-                        sort: true
-                    }, {
-                        field: 'assetCode',
-                        width: 80,
-                        title: '资产编码'
-                    }, {
-                        field: 'assetname',
-                        width: 80,
-                        title: '资产名称',
-                        sort: true
-                    }, {
-                        field: 'Unit_id',
-                        width: 80,
-                        title: '计量单位'
-                    }, {
-                        field: 'Assetstatus_id',
-                        title: '资产状态',
-                        width: '10%',
-                        minWidth: 100
-                    } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                    , {
-                        field: 'Addtype_id',
-                        title: '变动方式',
-                        sort: true
-                    }, {
-                        field: 'BuyDate',
-                        title: '购买日期',
-                        sort: true
-                    }, {
-                        field: 'Usestate_id',
-                        title: '资产使用状态',
-                        sort: true
-                    }, {
-                        field: 'description',
-                        title: '备注'
-                    }, {
-                        field: 'Entrydate',
-                        title: '入账日期'
-                    }, {
-                        field: 'Price',
-                        title: '购进价格'
-                    }, {
-                        field: 'Lastprice',
-                        title: '资产净值（现价）'
-                    }, {
-                        field: 'Expectedperiod',
-                        title: '预计使用寿命'
-                    }, {
-                        field: 'CNOSP',
-                        title: '累计使用期间数'
-                    }, {
-                        field: 'barcode',
-                        title: '条形码'
-                    }, {
-                        field: 'Mould',
-                        title: '规格型号'
-                    }, {
-                        field: 'Assetseat_id',
-                        title: '资产位置'
-                    }, {
-                        field: 'Client',
-                        title: '产地（厂家）'
-                    }, {
-                        field: 'Supplier',
-                        title: '供应商'
-                    }, {
-                        field: 'department_id',
-                        title: '使用部门'
-                    }, {
-                        field: 'Employeeld',
-                        title: '使用人'
-                    }
-                ]
-            ],
-            id: 'testReload',
-            page: true,
-            limits: [100, 200, 500, 1000, 2000, 10000],
-            limit: 100
-        });
-
-        var $ = layui.$,
-            active = {
-                reload: function () {
-                    console.log("1")
-                    var assetCode = $('#assetCode');
-                    var Assettype_id = $('#Assettype_id');
-                    var fbillstatus = $('#assetcard_fbillstatus');
-
-                    var assetstatusid = $('#assetstatusid');
-                    var departmentid = $('#departmentid');
-                    var userid = $('#userid');
-                    console.log(fbillstatus)
-                    //执行重载
-                    table.reload('testReload', {
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        },
-                        where: {
-                            key: {
-                                assetCode: assetCode.val(),
-                                Assettype_id: Assettype_id.val(),
-                                fbillstatus: fbillstatus.val(),
-                                assetstatusid: assetstatusid.val(),
-                                departmentid: departmentid.val(),
-                                userid: userid.val()
-                            }
+    <!--资产实物清单报表 -->
+    <table class="layui-hide" id="assetlist" lay-filter="assetlist"></table>
+    <script src="https://www.layuicdn.com/layui/layui.js"></script> 
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <%=javascript_pack_tag 'tabadd' %>
+    <script>
+        layui.use('table', function () {
+            var table = layui.table;
+            table.render({
+                elem: '#assetlist',
+                url: '/AssetList_Get_Data',
+                toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+                    ,
+                defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                    title: '刷新',
+                    layEvent: 'Refresh',
+                    icon: "layui-icon-refresh-3"
+                }, { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                    title: '新增',
+                    layEvent: 'Add',
+                    icon: "layui-icon-addition"
+                }],
+                title: '用户数据表',
+                cols: [
+                    [{
+                            field: 'Assettype_id',
+                            width: 80,
+                            title: '资产类别',
+                            sort: true
+                        }, {
+                            field: 'assetCode',
+                            width: 80,
+                            title: '资产编码'
+                        }, {
+                            field: 'assetname',
+                            width: 80,
+                            title: '资产名称',
+                            sort: true
+                        }, {
+                            field: 'Unit_id',
+                            width: 80,
+                            title: '计量单位'
+                        }, {
+                            field: 'Assetstatus_id',
+                            title: '资产状态',
+                            width: '10%',
+                            minWidth: 100
+                        } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                        , {
+                            field: 'Addtype_id',
+                            title: '变动方式',
+                            sort: true
+                        }, {
+                            field: 'BuyDate',
+                            title: '购买日期',
+                            sort: true
+                        }, {
+                            field: 'Usestate_id',
+                            title: '资产使用状态',
+                            sort: true
+                        }, {
+                            field: 'description',
+                            title: '备注'
+                        }, {
+                            field: 'Entrydate',
+                            title: '入账日期'
+                        }, {
+                            field: 'Price',
+                            title: '购进价格'
+                        }, {
+                            field: 'Lastprice',
+                            title: '资产净值（现价）'
+                        }, {
+                            field: 'Expectedperiod',
+                            title: '预计使用寿命'
+                        }, {
+                            field: 'CNOSP',
+                            title: '累计使用期间数'
+                        }, {
+                            field: 'barcode',
+                            title: '条形码'
+                        }, {
+                            field: 'Mould',
+                            title: '规格型号'
+                        }, {
+                            field: 'Assetseat_id',
+                            title: '资产位置'
+                        }, {
+                            field: 'Client',
+                            title: '产地（厂家）'
+                        }, {
+                            field: 'Supplier',
+                            title: '供应商'
+                        }, {
+                            field: 'department_id',
+                            title: '使用部门'
+                        }, {
+                            field: 'Employeeld',
+                            title: '使用人'
                         }
-                    }, 'data');
+                    ]
+                ],
+                id: 'testReload',
+                page: true,
+                limits: [100, 200, 500, 1000, 2000, 10000],
+                limit: 100
+            });
+            var $ = layui.$,
+                active = {
+                    reload: function () {
+                        //获取筛选字段Value
+                        var assetCode = $('#assetCode');
+                        var Assettype_id = $('#Assettype_id');
+                        var fbillstatus = $('#assetcard_fbillstatus');
+                        var assetstatusid = $('#assetstatusid');
+                        var departmentid = $('#departmentid');
+                        var userid = $('#userid');
+                        //执行重载
+                        table.reload('testReload', {
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            },
+                            where: {
+                                key: {
+                                    //将筛选字段Value传递到后端接口
+                                    assetCode: assetCode.val(),
+                                    Assettype_id: Assettype_id.val(),
+                                    fbillstatus: fbillstatus.val(),
+                                    assetstatusid: assetstatusid.val(),
+                                    departmentid: departmentid.val(),
+                                    userid: userid.val()
+                                }
+                            }
+                        }, 'data');
+                    }
+                };
+            //监听行单击事件（双击事件为：rowDouble）
+            table.on('row(test)', function (obj) {
+                var data = obj.data;
+                // layer.alert(JSON.stringify(data), {
+                //   title: '当前行数据：'
+                // }); 
+                //标注选中样式
+                obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
+            //头工具栏事件
+            table.on('toolbar(test)', function (obj) {
+                var checkStatus = table.checkStatus(obj.config.id);
+                switch (obj.event) {
+                    //自定义头工具栏右侧图标 - 提示
+                    case 'Refresh':
+                        Refresh();
+                        break;
+                };
+            });
+            $('.demoTable .layui-btn').on('click', function () {
+                var type = $(this).data('type');
+                active[type] ? active[type].call(this) : '';
+            });
+        });
+        function Choosedata(modalid) {
+            //弹出Modal窗口
+            $('#' + modalid.id).modal('show');
+        }
+        $(document).ready(function () {
+            $("body").keydown(function () {
+                //键盘监听事件
+                if (event.keyCode == "13") { //keyCode=13是回车键
+                    $('.demoTable .layui-btn').click();
                 }
-            };
-
-
-        //监听行单击事件（双击事件为：rowDouble）
-        table.on('row(test)', function (obj) {
-            var data = obj.data;
-            //console.log(data);
-            // layer.alert(JSON.stringify(data), {
-            //   title: '当前行数据：'
-            // }); 
-            //标注选中样式
-            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+            });
         });
-
-        //头工具栏事件
-        table.on('toolbar(test)', function (obj) {
-            var checkStatus = table.checkStatus(obj.config.id);
-            switch (obj.event) {
-                //自定义头工具栏右侧图标 - 提示
-                case 'Refresh':
-                    Refresh();
-                    break;
-            };
-        });
-
-        $('.demoTable .layui-btn').on('click', function () {
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
-
-    });
-</script>
-
-<script>
-    function Choosedata(modalid) {
-        $('#' + modalid.id).modal('show');
-    }
-</script>
-
-<script>
-    $(document).ready(function () {
-        $("body").keydown(function () {
-            if (event.keyCode == "13") { //keyCode=13是回车键
-                $('.demoTable .layui-btn').click();
-            }
-        });
-    });
-</script>
-
-
-
-<%= render    'assetcards/AssetcardsModal_single.html.erb'  %>
-<%= render    'assettypes/AssettypeModal.html.erb',  id: "Assettype_id"  %>
-<%= render    'departments/DepartmentModal.html.erb',  id: "departmentid" ,userid:  "userid"%>
-<%= render    'users/UserModal.html.erb',  id: "userid",department: "departmentid"  %>
-<%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetstatusid"  %>
+    </script>
+    <!--加载局部视图-->
+    <%= render    'departments/DepartmentModal.html.erb',  id: "departmentid" ,userid:  "userid"%> 
+    <%= render    'users/UserModal.html.erb',  id: "userid",department: "departmentid"  %>
+    <%= render    'assetcards/AssetcardsModal_single.html.erb'  %>
+    <%= render    'assettypes/AssettypeModal.html.erb',  id: "Assettype_id"  %>  
+    <%= render    'assetstatuses/AssetstatuesModal.html.erb',  id: "assetstatusid"  %>
+</body>

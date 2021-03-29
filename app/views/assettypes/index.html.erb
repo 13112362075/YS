@@ -3,52 +3,62 @@
  <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
  <%=javascript_pack_tag 'tabadd' %>
  <%=javascript_pack_tag 'treetree' %>
- <%=stylesheet_link_tag  'totality' %> 
+ <%=stylesheet_link_tag  'totality' %>
  <style>
    .layui-table-page select {
      height: 26px;
    }
+
    .layui-disabled {
      background-color: #fff !important;
    }
+
    .layui-laypage select {
      padding: 0px;
      border-radius: 2px;
      cursor: pointer;
    }
+
    .layui-table-page {
      text-align: center;
    }
+
    .layui-laypage .layui-laypage-skip {
      color: #000;
    }
+
    .layui-table-box {
      position: relative;
      overflow: hidden;
      text-align: center;
    }
-   .buttongroup
-   {
+
+   .buttongroup {
      margin: 0px 4px 0px 0px;
    }
-   
  </style>
+ <!--左边树状菜单-->
  <div id="List" class="layui-side layui-bg-black">
+   <!--树状菜单-->
    <ul id="tree" class="ztree" style="width:230px; overflow:auto;"></ul>
  </div>
+ <!--资产类别列表-->
  <div id="body" class="layui-body">
-   <p  id="Assettype_selected">
+   <!--获取树状点击的资产类别-->
+   <p id="Assettype_selected">
      <p>
        <div class="demoTable">
-         <button  id="reload"  class="layui-btn" data-type="reload">搜索</button>
+         <button id="reload" class="layui-btn" data-type="reload">搜索</button>
        </div>
        <h1 style="text-align:center;">资产类型表</h1>
-       <div  >
-         <a  id="a_new"   data-id="newassettypes" data-title="资产类别新增" class="linkActive"  
-           data-method="get"><button type="button" class=" buttongroup layui-btn"  onclick="New()" >新增</button></a>
+       <div>
+         <!--列表菜单集合-->
+         <a id="a_new" data-id="newassettypes" data-title="资产类别新增" class="linkActive" ><button
+             type="button" class=" buttongroup layui-btn" onclick="New()">新增</button></a>
          <a id="a_update" rel="nofollow" class="linkActive" data-id="edit_assettypes" data-title="资产类别编辑"><button
              type="button" class="buttongroup layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
-         <a id="a_delete" rel="nofollow"><button onclick="Delete()" type="button" class="buttongroup layui-btn">删除</button></a>
+         <a id="a_delete" rel="nofollow"><button onclick="Delete()" type="button"
+             class="buttongroup layui-btn">删除</button></a>
          <a rel="nofollow"><button type="button" onclick="Refresh()" class="buttongroup layui-btn">刷新</button></a>
          <input type="file" id="file" style="display:none;"
            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
@@ -58,6 +68,7 @@
        <table class="layui-hide" id="assettypes" lay-filter="assettypes"></table>
  </div>
  <script>
+   //树状控件
    $(function () {
      var setting = {
        callback: {
@@ -80,12 +91,14 @@
      };
      var zTreeNodes = [];
      var city = $.fn.zTree.init($("#tree"), setting, zTreeNodes);
+     //树状点击事件
      function zTreeOnCheck(treeId, treeNode) {
        var Assettype_selected = document.getElementById("Assettype_selected")
+       //获取树状选中节点
        Assettype_selected.innerHTML = treeNode.name
-         $('.demoTable .layui-btn').click();
+       $('.demoTable .layui-btn').click();
      }
-   }); 
+   });
    layui.use('table', function () {
      var table = layui.table;
      table.render({
@@ -134,7 +147,7 @@
      var $ = layui.$,
        active = {
          reload: function () {
-               var Assettype_selected = $('#Assettype_selected');  
+           var Assettype_selected = $('#Assettype_selected');
            //执行重载
            table.reload('assettypes', {
              page: {
@@ -142,7 +155,7 @@
              },
              where: {
                key: {
-                   Assettype_selected: Assettype_selected.text(),
+                 Assettype_selected: Assettype_selected.text(),
                }
              }
            }, 'data');
@@ -151,7 +164,6 @@
      //监听行单击事件（双击事件为：rowDouble）
      table.on('row(test)', function (obj) {
        var data = obj.data;
-       //console.log(data);
        // layer.alert(JSON.stringify(data), {
        //   title: '当前行数据：'
        // }); 
@@ -172,16 +184,19 @@
        var type = $(this).data('type');
        active[type] ? active[type].call(this) : '';
      });
-   }); 
+   });
    $(document).ready(function () {
-       document.getElementById("Assettype_selected").style.display='none';
+     //隐藏控件
+     document.getElementById("Assettype_selected").style.display = 'none';
      document.getElementById("reload").style.display = "none";
+     //键盘监听事件
      $("body").keydown(function () {
        if (event.keyCode == "13") { //keyCode=13是回车键
          $('.demoTable .layui-btn').click();
        }
      });
    });
+   //单元格点击事件
    $(document).on("click", ".layui-table-body table.layui-table tbody td", function () {
      if ($(this)[0].className == "") {
        var index = $(this)[0].parentElement.attributes[0].value;
@@ -192,25 +207,26 @@
        //选中单击行
        var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
          "td div.laytable-cell-checkbox div.layui-form-checkbox I");
-       checkCell.click();
+       checkCell.click(); //复选框选中
      }
-   }); 
+   });
+   //删除
    function model_delete(path) {
-     if (!confirm('你确定要删除吗？')) {
+     if (!confirm('你确定要删除吗？')) { //删除确认
        return false
      }
      var items = new Array();
-     items = getCheckedCheckbox("awsui-checkbox");
      var table = layui.table;
-     var checkStatus = table.checkStatus('assetcards').data;
-     for (var i = 0; i < checkStatus.length; i++) {
-       items[i] = checkStatus[i].id
+     var checkStatus = table.checkStatus('assetcards').data; //获取单据列表选中的数据
+     for (var i = 0; i < checkStatus.length; i++) { //遍历选中单据列表
+       items[i] = checkStatus[i].id //获取单据id
      }
-     if (items.length == 0) {
+     if (items.length == 0) { //如果没有勾选单据则提出信息
        alert("请选择单据！");
        return;
      }
      var resturl = path;
+     //调用后端删除接口
      $.ajax({
        type: "post",
        url: resturl,
@@ -219,47 +235,59 @@
        },
        success: function (res) {
          if (res.code == 200) {
+           //删除成功
            alert(res.message);
            location.reload();
          } else {
+           //删除失败弹出错误信息
            alert(res.message);
          }
        }
      });
    }
+   //刷新
    function Refresh() {
      location.reload([true])
    }
+   //修改
    function getCheckedCheckbox_update() {
      var table = layui.table;
-     console.log(table)
-     var checkStatus = table.checkStatus('assettypes');
-     console.log(checkStatus)
-     if (checkStatus.data.length > 1) {
+     var checkStatus = table.checkStatus('assettypes'); //获取单据勾选中的单据列表
+     if (checkStatus.data.length > 1) { //多选则弹出错误信息
        alert("选择了多行数据，请选择1行！");
        document.getElementById("a_update").href = "";
        document.getElementById("a_update").dataset.url = "";
        return false;
-     } else if (checkStatus.data.length == 0) {
+     } else if (checkStatus.data.length == 0) { //没有勾选单据则弹出错误信息
        alert("没有选择数据，请重新选择！");
        document.getElementById("a_update").href = "";
        document.getElementById("a_update").dataset.url = "";
        return false;
      }
      var assettypes_id = "/assettypes/" + checkStatus.data[0].id + "/edit";
+     //跳转
      document.getElementById("a_update").dataset.url = assettypes_id
    }
-
-
-
-
-//新增
-function New(element) {
-    var Assettype_selected = $('#Assettype_selected');  
-        var assettypes_id = "/assettypes/new?ParentAssettype="+Assettype_selected.text();
-     document.getElementById("a_new").dataset.url = assettypes_id
- 
+   //新增
+   function New(element) {
+     var Assettype_selected = $('#Assettype_selected');
+     var assettypes_id = "/assettypes/new?ParentAssettype=" + Assettype_selected.text();
+     $.ajax({
+       type: "get",
+       async: false,
+       url: "/assettypes_Check_Assettype",
+       data: {
+         "type": "资产类别",
+         "Name": Assettype_selected.text()
+       },
+       success: function (res) {
+         if (res.code == 200) {
+            document.getElementById("a_new").dataset.url = assettypes_id
+         } else {
+           alert(res.message); 
+             document.getElementById("a_new").dataset.url = "";
+         }
+       }
+     });
    }
- 
-
  </script>

@@ -1,66 +1,110 @@
-
-
-<!-- Modal -->
-<div class="modal fade" id="assetalterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4> 变更记录</h4>
-        <h4 hidden="hidden" id="assetalterid" class="modal-title"  ></h4> 
-        <h4  hidden="hidden" id="assetalterModalid" class="modal-title"  > <%= id%> </h4>  
-      </div>
-      <div class="modal-body">  
-       
-        <table id="table_assetaltermodal" class="table table-bordered">
-          <thead>
-          <tr>
-            <th>单据编号</th>
-            <th>审核日期</th> 
-          </tr>
-          </thead>
-          <tbody>
-            <% @assetalter.each do |assetalter| %>
-            <tr class="select selectassetalter" data-assetalter_id="<%= assetalter.id %>" >
-              <td><%= assetalter.Fbillno %></td>
-              <td><%= assetalter.Approverdate %></td>  
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div> 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button id="show" type="button" class="btn btn-default" data-dismiss="modal">查看</button>
-      </div> 
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
- 
-
-<script>
-$('tr.selectassetalter').click(function(e){ 
-    $("tr.selectassetalter").css("backgroundColor","white");
-    this.style.backgroundColor = "#357ebd"
-    $("#assetalterid").text(this.dataset.assetalter_id);
-}) 
-
-</script>
-
-<script> 
-$('#show').click(function(e){     
-  window.location ="/assetalters/"+$("#assetalterid").text()+"/edit" 
-})  
-
-
-
-$('tr.selectassetalter').dblclick(function(e){    
- window.location ="/assetalters/"+$("#assetalterid").text()+"/edit" 
-})  
-</script>
- 
-
-
- 
+ <body>
+   <!-- Modal -->
+   <div class="modal fade" id="assetalterModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog" style="width:650px;height:auto;">
+       <div class="modal-content">
+         <div class="modal-header">
+           <!--关闭窗口按钮-->
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+           <h4>资产变更单记录</h4>
+           <!--参数-->
+           <h4 hidden="hidden" id="assetalterid" class="modal-title"></h4>
+           <h4 hidden="hidden" id="assetalterModalid" class="modal-title"> <%= id%> </h4>
+         </div>
+         <div class="modal-body">
+           <table class="layui-hide" id="assetalters" lay-filter="assetalters"></table>
+         </div>
+         <div class="modal-footer">
+           <!--菜单列表-->
+           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+           <a id="show_assetalters" data-id="assetalters" data-title="资产变更单-查看" class="linkActive"><button type="button"
+               id="showassetalters" class="layui-btn">查看</button></a>
+         </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
+   <script>
+     //确定按钮点击事件
+     $('#showassetalters').click(function (e) {
+       document.getElementById("show_assetalters").dataset.url = "/assetalters/" + $("#assetalterid").text() +
+         "/edit";
+     }) 
+     layui.use('table', function () {
+       var table = layui.table;
+       table.on('tool(assetalters)', function (obj) {
+         let event = obj.event;
+         console.log(event);
+         $("#assetalterid").text(obj.data.id);
+         let tr = obj.tr;
+         index = tr[0].attributes["data-index"].value;
+         var tableBox = $(this).parents('.layui-table-box');
+         //存在固定列
+         tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+         //获取已选中列并取消选中 
+         //选中单击行
+         var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+           "td div.laytable-cell-radio div.layui-form-radio I");
+         checkCell.click(); //复选框勾选 
+       })
+       table.on('rowDouble(assetalters)', function (obj) {
+         document.getElementById("show_assetalters").dataset.url = "/assetalters/" + $("#assetalterid").text() +
+           "/edit";
+       })
+       table.render({
+         elem: '#assetalters',
+         url: '/assetalters_Get_Data',
+         toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+           ,
+         defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+           title: '刷新',
+           layEvent: 'Refresh',
+           icon: "layui-icon-refresh-3"
+         }, { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+           title: '新增',
+           layEvent: 'Add',
+           icon: "layui-icon-addition"
+         }],
+         title: '用户数据表',
+         cols: [
+           [{
+               type: 'radio'
+             }, {
+               field: 'Fbillno',
+               width: 80,
+               event: "assetalter",
+               title: '单据编号',
+               sort: true
+             } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+             , {
+               field: 'fbillstatus',
+               title: '单据状态',
+               event: "assetalter",
+               sort: true
+             }, {
+               field: 'assetCode',
+               title: '资产编号',
+               event: "assetalter",
+               sort: true
+             }, {
+               field: 'assetname',
+               event: "assetalter",
+               title: '资产名称',
+               sort: true
+             }, {
+               field: 'Approver',
+               event: "assetalter",
+               title: '审核人',
+               sort: true
+             }, {
+               field: 'Approverdate',
+               event: "assetalter",
+               title: '审核日期'
+             }
+           ]
+         ],
+         page: true
+       });
+     });
+   </script>
+ </body>

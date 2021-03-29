@@ -1,6 +1,5 @@
 <p id="notice"><%= notice %></p>
-
-<h1 style="text-align:center;">资产报废单</h1>
+ 
  
 
 <div class="layui-btn-group " style="margin:10px;0px;">
@@ -65,9 +64,7 @@
 
 $('td').click(function(e){ 
   if(e.currentTarget.className !="")
-  {
-        console.log(e.currentTarget.parentNode.id); 
-        console.log(e.currentTarget.parentNode.firstElementChild.children[0].checked);
+  { 
         if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
         {
           e.currentTarget.parentNode.firstElementChild.children[0].checked=false;

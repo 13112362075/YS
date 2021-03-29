@@ -180,8 +180,7 @@
             FrameWH(); //计算框架高度
             element.render('tab');
           },
-          tabChange: function (id) {
-            console.log(id)
+          tabChange: function (id) { 
             //切换到指定Tab项
             element.tabChange('demo', id); //根据传入的iproc_getFPd传入到指定的tab项
           },
@@ -194,16 +193,21 @@
             })
           }
         };
+
+
+
+
         function CustomRightClick(id) {
           //取消右键 
           $('.layui-tab-title li').on('contextmenu', function () {
             return false;
           })
-          $('.layui-tab-title,.layui-tab-title li').click(function () {
+          $('.layui-tab-title,.layui-tab-title li').click(function () { 
             $('.rightmenu').hide();
           });
           //桌面点击右击 
           $('.layui-tab-title li').on('contextmenu', function (e) {
+            
             var popupmenu = $(".rightmenu");
             popupmenu.find("li").attr("data-id", id);
             l = ($(document).width() - e.clientX) < popupmenu.width() ? (e.clientX - popupmenu.width()) : e
@@ -217,6 +221,8 @@
             return false;
           });
         }
+ 
+
         $(".rightmenu li").click(function () {
           if ($(this).attr("data-type") == "closethis") {
             var ids = new Array();
@@ -250,6 +256,10 @@
         $(window).resize(function () {
           FrameWH();
         })
+
+
+
+        
         //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
         $('.site-demo-active').on('click', function () {
           var sum = 1;
@@ -268,12 +278,10 @@
                 sum++;
               }
             })
-            //标志为false 新增一个tab项
-            console.log(sum);
+            //标志为false 新增一个tab项 
             active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id") + sum, dataid.attr("data-title"));
           }
-          //最后不管是否新增tab，最后都转到要打开的选项页面上
-          console.log(sum);
+          //最后不管是否新增tab，最后都转到要打开的选项页面上 
           active.tabChange(dataid.attr("data-id") + sum);
         });
       });

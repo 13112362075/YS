@@ -1,65 +1,58 @@
+ <body>
+   <div class="modal fade" id="assetseateModal_row" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog" style="width:650px;height:auto;">
+       <div class="modal-content">
+         <div class="modal-header">
+           <!--关闭窗口按钮-->
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+           <h4>资产位置表</h4>
+           <!--菜单列表-->
+           <a data-url="/assetseates/new" data-id="new_assetseates" data-title="资产位置-新增" class="linkActive"><button
+               type="button" class="layui-btn">新增</button></a>
+           <button class="layui-btn demoTable" data-type="reload_assetseates">刷新</button>
+           <!--参数-->
+           <h4 hidden="hidden" id="assetseateid" class="modal-title"></h4>
+           <h4 hidden="hidden" id="AssetseateModalid" class="modal-title"> <%= id%> </h4>
+         </div>
+         <div class="modal-body">
+           <table class="layui-hide" id="assetseates" lay-filter="assetseates"></table>
+         </div>
+         <div class="modal-footer">
+           <!--菜单列表-->
+           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+           <button id="choose_assetseate" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+         </div>
+       </div><!-- /.modal-content -->reload_assetseates
+     </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
 
-
-<!-- Modal -->
-<div class="modal fade" id="assetseateModal_row" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4>资产位置表</h4>
-        <h4 hidden="hidden" id="assetseateid" class="modal-title"  ></h4>
-        <h4 hidden="hidden" id="AssetseateModalid" class="modal-title"  > <%= id%> </h4> 
-      </div>
-      <div class="modal-body"> 
-
-        <table class="table table-bordered">
-          <thead>
-          <tr>
-            <th>资产位置编码</th>
-            <th>资产位置</th> 
-          </tr>
-          </thead>
-          <tbody>
-            <% @assetseate.each do |assetseate| %>
-            <tr class="select select_assetseate" data-assetseate_id="<%= assetseate.id %>" >
-              <td><%= assetseate.Assetseatecode %></td>
-              <td><%= assetseate.Name %></td> 
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button id="chooseassetseate" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
-      </div> 
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-
- 
-
-<script>
-$('tr.select_assetseate').click(function(e){ 
-    $("tr.select_assetseate").css("backgroundColor","white");
-    this.style.backgroundColor = "#357ebd"
-    console.log(this.dataset.assetseate_id) 
-    $("#assetseateid").text(this.dataset.assetseate_id); 
-}) 
-
-</script>
-
-<script> 
-$('#chooseassetseate').click(function(e){     
-    var List=new Array();
-  List[0]="资产位置";
-  List[1]=   $("#AssetseateModalid").text();
-    List[2]="assetseateModal";
-$.ajax({
+ <script>
+   layui.use('table', function () {
+     var table = layui.table;
+     table.on('tool(assetseates)', function (obj) {
+       let event = obj.event;
+       $("#assetseateid").text(obj.data.id);
+       let tr = obj.tr;
+       index = tr[0].attributes["data-index"].value;
+       var tableBox = $(this).parents('.layui-table-box');
+       //存在固定列
+       tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+       //获取已选中列并取消选中 
+       //选中单击行
+       var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+         "td div.laytable-cell-radio div.layui-form-radio I");
+       checkCell.click(); //复选框勾选 
+     })
+     table.on('rowDouble(assetseates)', function (obj) {
+       //双击单元格事件
+       //获取参数数据  
+       var List = new Array();
+       List[0] = "资产位置";
+       List[1] = $("#AssetseateModalid").text();
+       List[2] = "assetseateModal";
+       //调用后端选择基础资料接口
+       $.ajax({
    type:"post", 
    url :"/assetseates_choose_row",
    data:{ 
@@ -72,15 +65,72 @@ $.ajax({
 			error :function(){ 
         } 
  });  
-}) 
-
-
-$('tr.select_assetseate').dblclick(function(e){    
-  var List=new Array();
-  List[0]="资产位置";
-  List[1]=   $("#AssetseateModalid").text();
-  List[2]="assetseateModal";
-$.ajax({
+     })
+     table.render({
+       elem: '#assetseates',
+       url: '/assetseates_Get_DataApi',
+       title: '用户数据表',
+       cols: [
+         [{
+             type: 'radio',
+             width: 50
+           },
+           {
+             field: 'Assetseatecode',
+             title: '资产位置编码',
+             event: "assetseates",
+             width: 200,
+             minwidth: 200,
+             sort: true
+           }, {
+             field: 'Name',
+             minwidth: 200,
+             width: 200,
+             event: "assetseates",
+             title: '资产位置名称'
+           }, {
+             field: 'Approver',
+             minwidth: 200,
+             width: 163,
+             title: '审核人',
+             event: "assetseates",
+             sort: true
+           }
+         ]
+       ],
+       id: 'assetseate_table',
+       page: true,
+       limits: [100, 200, 500, 1000, 2000, 10000],
+       limit: 100
+     });
+     var $ = layui.$,
+       active = {
+         reload_assetseates: function () {
+           //执行重载
+           table.reload('assetseate_table', {
+             page: {
+               curr: 1 //重新从第 1 页开始
+             },
+             where: {
+               key: {}
+             }
+           }, 'data');
+         }
+       };
+     $('.demoTable').on('click', function () {
+       var type = $(this).data('type');
+       active[type] ? active[type].call(this) : '';
+     });
+   });
+   //确定按钮点击事件
+   $('#choose_assetseate').click(function (e) {
+     //获取参数数据  
+     var List = new Array();
+     List[0] = "资产位置";
+     List[1] = $("#AssetseateModalid").text();
+     List[2] = "assetseateModal";
+     //调用后端选择基础资料接口
+     $.ajax({
    type:"post", 
    url :"/assetseates_choose_row",
    data:{ 
@@ -92,6 +142,8 @@ $.ajax({
      },
 			error :function(){ 
         } 
- });    
-})
-</script>
+ });  
+   })
+ </script>
+ 
+ </body>

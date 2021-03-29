@@ -1,93 +1,141 @@
-
-
-<!-- Modal -->
-<div class="modal fade" id="addtypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4    >变动方式表</h4> 
-        <h4 hidden="hidden" id="addtypeid" class="modal-title"  ></h4> 
-                <h4  hidden="hidden"id="AddtypeModalid" class="modal-title"  > <%= id%> </h4> 
-      </div>
-      <div class="modal-body"> 
-
-        <table class="table table-bordered">
-          <thead>
-          <tr>
-            <th>变动方式编码</th>
-            <th>变动方式名称</th> 
-          </tr>
-          </thead>
-          <tbody>
-            <% @addtype.each do |addtype| %>
-            <tr class="select select_addtype" data-addtype_id="<%= addtype.id %>" >
-              <td><%= addtype.Addtypecode %></td>
-              <td><%= addtype.Name %></td> 
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        <button id="chooseaddtype" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
-      </div> 
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
- 
-
-<script>
-$('tr.select_addtype').click(function(e){ 
-    $("tr.select_addtype").css("backgroundColor","white");
-    this.style.backgroundColor = "#357ebd" 
-    $("#addtypeid").text(this.dataset.addtype_id);
-
-}) 
-
-</script>
-
-<script> 
-$('#chooseaddtype').click(function(e){  
-  var List=new Array();
-  List[0]="变动方式";
-  List[1]=   $("#AddtypeModalid").text();
-  List[2]=  "addtypeModal";
-$.ajax({
-   type:"post", 
-   url :"/addtypes_choose",
-   data:{ 
-      "addtypeid": $("#addtypeid").text(),
-      "id" :List
-     }, 
-   success: function(){ 
-     },
-			error :function(){ 
-        } 
- });  
-}) 
-
-
-$('tr.select_addtype').dblclick(function(e){    
-  var List=new Array();
-   List[0]="变动方式";
-  List[1]=   $("#AddtypeModalid").text();
-  List[2]=  "addtypeModal";
-$.ajax({
-   type:"post", 
-   url :"/addtypes_choose",
-   data:{ 
-      "addtypeid": $("#addtypeid").text(),
-      "id" :List
-     }, 
-   success: function(){ 
-     },
-			error :function(){ 
-        } 
- });  
-})
-</script>
+ <!-- Modal -->
+ <div class="modal fade" id="addtypeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+   aria-hidden="true">
+   <div class="modal-dialog" style="width:650px;height:auto;">
+     <div class="modal-content">
+       <div class="modal-header">
+         <!--关闭窗口按钮-->
+         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+         <h4>变动方式表</h4>
+         <!--菜单列表-->
+         <a id="addtype_new" data-id="newaddtypes" data-title="变动方式新增" class="linkActive"><button type="button"
+             class="layui-btn" onclick="New_addtypes()">新增</button></a>
+         <button class="layui-btn demoTable" data-type="reload_addtypes">刷新</button>
+         <!--参数-->
+         <h4 hidden="hidden" id="AddtypeModalid" class="modal-title"> <%= id%> </h4>
+         <h4 hidden="hidden" id="addtypeid" class="modal-title"></h4>
+       </div>
+       <div class="modal-body">
+         <div class="addtype_table">
+           <table class="layui-hide" id="addtypes" lay-filter="addtypes"></table>
+         </div>
+       </div>
+       <div class="modal-footer">
+         <!--菜单列表-->
+         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+         <button id="chooseaddtype" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+       </div>
+     </div><!-- /.modal-content -->
+   </div><!-- /.modal-dialog -->
+ </div><!-- /.modal -->
+ <script>
+   //确定按钮点击事件
+   $('#chooseaddtype').click(function (e) {
+     var List = new Array();
+     List[0] = "变动方式";
+     List[1] = $("#AddtypeModalid").text();
+     List[2] = "addtypeModal";
+     $.ajax({
+       type: "post",
+       url: "/addtypes_choose",
+       data: {
+         "addtypeid": $("#addtypeid").text(),
+         "id": List
+       },
+       success: function () {},
+       error: function () {}
+     });
+   })
+   layui.use('table', function () {
+     var table = layui.table;
+     table.on('tool(addtypes)', function (obj) {
+       let event = obj.event;
+       $("#addtypeid").text(obj.data.id);
+       let tr = obj.tr;
+       index = tr[0].attributes["data-index"].value;
+       var tableBox = $(this).parents('.layui-table-box');
+       //存在固定列
+       tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+       //获取已选中列并取消选中 
+       //选中单击行
+       var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+         "td div.laytable-cell-radio div.layui-form-radio I");
+       checkCell.click(); //复选框勾选 
+     })
+     table.on('rowDouble(addtypes)', function (obj) {
+       var List = new Array();
+       List[0] = "变动方式";
+       List[1] = $("#AddtypeModalid").text();
+       List[2] = "addtypeModal";
+       $.ajax({
+         type: "post",
+         url: "/addtypes_choose",
+         data: {
+           "addtypeid": $("#addtypeid").text(),
+           "id": List
+         },
+         success: function () {},
+         error: function () {}
+       });
+     })
+     table.render({
+       elem: '#addtypes',
+       url: '/addtypes_Get_DataApi',
+       title: '用户数据表',
+       cols: [
+         [{
+             type: 'radio',
+             width: 50
+           },
+           {
+             field: 'Addtypecode',
+             title: '变动方式编码',
+             width: 200,
+             event: "addtype",
+             minwidth: 200,
+             sort: true
+           }, {
+             field: 'Name',
+             minwidth: 200,
+             width: 200,
+             event: "addtype",
+             title: '变动方式名称'
+           }, {
+             field: 'Approver',
+             minwidth: 200,
+             width: 163,
+             event: "addtype",
+             title: '审核人',
+             sort: true
+           }
+         ]
+       ],
+       id: 'addtype_table',
+       page: true,
+       limits: [100, 200, 500, 1000, 2000, 10000],
+       limit: 100
+     });
+     var $ = layui.$,
+       active = {
+         reload_addtypes: function () {
+           //执行重载
+           table.reload('addtype_table', {
+             page: {
+               curr: 1 //重新从第 1 页开始
+             },
+             where: {
+               key: {}
+             }
+           }, 'data');
+         }
+       };
+     $('.demoTable').on('click', function () {
+       var type = $(this).data('type');
+       active[type] ? active[type].call(this) : '';
+     });
+   });
+   //变动方式新增事件
+   function New_addtypes() {
+     document.getElementById("addtype_new").dataset.url = "/departments/new";
+   }
+ </script>

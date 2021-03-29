@@ -3,48 +3,83 @@ class UsestatesController < ApplicationController
 
 
 
+#返回Json数据
+def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
+  render json:{code: code, msg: message, count: count,data: data};
+end
 
+
+
+#获取接口数据
+def Get_DataApi
+  #获取单据数据
+  usestate=Usestate.order(:id);
+  #获取单据总数
+  total_count=usestate.count
+  #分页
+  usestate=usestate.page(params[:page]).per(params[:limit])
+  #数据转换成Json格式
+  data=usestate.as_json;
+  #返回Json数据
+  api_success(count: total_count,data: data)
+end
+
+
+#返回Json数据
   def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
     render json:{code: code, msg: message, count: count,data: data};
   end
 
 
+
+
+  #获取接口数据
   def Get_DataApi
+    #获取单据数据
     usestate=Usestate.order(:id);
+    #获取单据总数
     total_count=usestate.count
+    #分页
     usestate=usestate.page(params[:page]).per(params[:limit])
+    #数据转换成Json格式
     data=usestate.as_json;
+    #返回Json数据
     api_success(count: total_count,data: data)
   end
 
+ 
+ 
 
-
-
-
-  def  Update_fbillstatus 
-    message=""
-    ActiveRecord::Base.transaction do 
-    message=""  
-    @usestate=Usestate.find(params[:id]) 
-    if params[:fbillstatus].lstrip.rstrip=="审核"
-      @Fbillstatus="已审核"
-    else
-      @Fbillstatus="未审核"
-    end 
-    message=message+ Update_Fbillstatus_Check("使用状态",params[:id],params[:fbillstatus]).to_s   
-    if  message.lstrip.rstrip==""
-      @usestate[0].update(fbillstatus:@Fbillstatus)
-      if(params[:fbillstatus].lstrip.rstrip=="审核")
-        @usestate[0].update(Approver: session[:name],ApproverDate: Time.now.strftime("%Y-%m-%d %H:%M:%S"))  
-      end  
-      message=params[:fbillstatus].to_s + "成功！"
-    end   
-        render :json  => {code: 200,message: message}
+#更新状态
+def  Update_fbillstatus 
+  #返回信息
+  message=""
+  #事务
+  ActiveRecord::Base.transaction do  
+  @usestate=Usestate.find(params[:id]) 
+  if params[:fbillstatus].lstrip.rstrip=="审核"
+    @Fbillstatus="已审核"
+  else
+    @Fbillstatus="未审核"
   end 
+  #更新状态检验
+  message=message+ Update_Fbillstatus_Check("使用状态",params[:id],params[:fbillstatus]).to_s   
+  if  message.lstrip.rstrip=="" 
+    #检验通过
+    @usestate[0].update(fbillstatus:@Fbillstatus)
+    if(params[:fbillstatus].lstrip.rstrip=="审核")
+              #审核操作更新审核人、审核日期
+      @usestate[0].update(Approver: session[:name],ApproverDate: Time.now.strftime("%Y-%m-%d %H:%M:%S"))  
+    end  
+    message=params[:fbillstatus].to_s + "成功！"
+  end   
+      render :json  => {code: 200,message: message}
+end 
 end
+ 
 
 
-
+#选择资产资料 
   def choose   
     usestate = Usestate.find(params[:usestateid]) 
     @name = usestate.Name
@@ -52,13 +87,13 @@ end
     render 'choose/choose.js.erb'
   end
 
-
+#忽略
   def export_all 
     @Usestate_all =Usestate.all; 
   end
 
 
-  
+  #忽略
   def save_multiple  
     params["usestateid"].each do |i| 
       puts i[1].length    
@@ -66,30 +101,40 @@ end
     end
   end
 
+
+
+
+  #删除
   def destroy_multiple    
+    #成功数
     sussess=0;
+    #失败数
     error=0;
+    #返回信息
     message="";
-    
-    params["usestate_id"].each do |i|  
+    params["usestate_id"].each do |i| 
+      #删除检验
       result=Delete_Check("使用状态",i);     
       if(result=="")
+        #检验通过，成功数+1，删除使用状态
         sussess+=1;
         Usestate.destroy(i)
       else
-        error+=1; 
+        #检验不通过，失败数+1
+        error+=1;
         message=message+result  
       end 
-  end
+  end 
   message="删除成功数：#{sussess}\n"+"删除失败数：#{error}\n"+message;
   render :json  => {code: 200,message: message }
-  end
-
+end
+ 
 
 
 
   # GET /usestates
   # GET /usestates.json
+  #忽略
   def index
     @q = Usestate.search(params[:q])      
 
@@ -114,6 +159,7 @@ end
   # GET /usestates/new
   def new
     @usestate = Usestate.new
+    #单据状态默认为未审核
     @usestate.fbillstatus="未审核"
   end
 

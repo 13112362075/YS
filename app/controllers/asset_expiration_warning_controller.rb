@@ -1,16 +1,18 @@
 class AssetExpirationWarningController < ApplicationController
 
+  #返回Json数据
     def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
         render json:{code: code, msg: message, count: count,data: data};
       end
     
-    
+    #获取接口数据
      def Get_DataApi 
       sql="SELECT *,Expectedperiod-CNOSP as ResidualLife,DATE_ADD(Entrydate,INTERVAL Expectedperiod MONTH) as  Duedate FROM  assetcards  where 1=1 "  
       if (params.include? 'key')  
         if(params[:key][:assetCode].lstrip.rstrip!="") 
           sql=sql+" and assetcards.assetCode like '%#{ params[:key][:assetCode]}%'"
         end
+        #添加条件
         if(params[:key][:Assettype_id].lstrip.rstrip!="") 
          sql=sql+" and assetcards.Assettype_id like '%#{ params[:key][:Assettype_id]}%'"
        end

@@ -37,8 +37,7 @@
 
 
 
-<div class="layui-btn-group " style="margin:10px;0px;">  
-
+<div class="layui-btn-group " style="margin:10px;0px;">   
     <a data-url="/departments/new" data-id= "newdepartments" data-title= "部门新增" class="linkActive"  ><button type="button" class="layui-btn">新增</button></a> 
    <a id="a_update"  rel="nofollow"        class="linkActive"    data-id= "edit_departments" data-title= "部门编辑"  ><button type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
 
@@ -47,9 +46,7 @@
    <a rel="nofollow"  ><button type="button"   onclick="Refresh()"  class="layui-btn">刷新</button></a>
 <input type="file" id="file" style="display:none;" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"/>
    <a rel="nofollow"  ><button type="button"   onclick="selectFile()"  class="layui-btn">导入</button></a> 
-   <a rel="nofollow"  ><button type="button"   onclick="exportSpecialExcel()"  class="layui-btn">导出</button></a>
-
-
+   <a rel="nofollow"  ><button type="button"   onclick="exportSpecialExcel()"  class="layui-btn">导出</button></a> 
 </div> 
  
  
@@ -115,9 +112,7 @@
 
 
      //监听行单击事件（双击事件为：rowDouble）
-     table.on('row(test)', function (obj) {
-       var data = obj.data;
-       //console.log(data);
+     table.on('row(test)', function (obj) { 
        // layer.alert(JSON.stringify(data), {
        //   title: '当前行数据：'
        // }); 
@@ -376,27 +371,13 @@
  </script>
 
 
- <script type="text/javascript">
-   // 获取选中的复选框项，保存为一个数组
-   function getCheckedCheckbox(checkboxClassName) {
-     var array = new Array();
-     var j = 0;
-     var selectedItems = document.getElementsByClassName(checkboxClassName);
-     for (var i = 1; i < selectedItems.length; i++) {
-       if (selectedItems[i].checked == true) {
-         array[j] = selectedItems[i].value;
-         j++;
-       }
-     }
-     return array;
-   }
+ <script type="text/javascript"> 
 
    function getCheckedCheckbox_update() {
      
      var table = layui.table;
      
-     var checkStatus = table.checkStatus('departments');
-     console.log(checkStatus)
+     var checkStatus = table.checkStatus('departments'); 
      if (checkStatus.data.length > 1) {
        alert("选择了多行数据，请选择1行！");
        document.getElementById("a_update").href = "";
@@ -420,8 +401,7 @@
      if (!confirm('你确定要删除吗？')) {
        return false
      }
-     var items = new Array();
-     items = getCheckedCheckbox("awsui-checkbox");
+     var items = new Array(); 
      var table = layui.table;
      var checkStatus = table.checkStatus('departments').data;
      for (var i = 0; i < checkStatus.length; i++) {

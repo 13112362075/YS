@@ -1,8 +1,7 @@
 class SessionsController < ApplicationController
   def new
     @user=User.new
-    if logon?      
-      puts "1" ; 
+    if logon?       
        redirect_to homes_path
     end
   end

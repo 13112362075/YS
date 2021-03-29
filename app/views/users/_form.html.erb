@@ -1,136 +1,112 @@
- 
+<head>
+  <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .image_input {
+      width: 243px;
+      border: 1px solid #e6e6e6;
+      border-left: 1;
+      border-right: 0;
+      border-top: 1;
+      border-bottom: 1;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 2px;
+    }
 
-<script src="https://www.layuicdn.com/layui/layui.js"></script>
-<%=javascript_pack_tag 'tabadd' %>
-<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
+    .image {
+      border: 1px solid #e6e6e6;
+      border-left: 0;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      border-bottom-right-radius: 2px;
+      border-top-right-radius: 2px;
+    }
 
-<style>
-.image_input{  
-         width:243px; 
-         border: 1px solid #e6e6e6;
-         border-left: 1; 
-         border-right: 0; 
-         border-top:1; 
-         border-bottom: 1;   
-         border-top-left-radius: 2px;
-         border-top-right-radius: 0px;
-         border-bottom-right-radius: 0;
-         border-bottom-left-radius: 2px;
-         }
- .image
-         {
-           border: 1px solid #e6e6e6;
-           border-left: 0; 
-           border-bottom-left-radius: 0;
-           border-top-left-radius: 0;
-           border-bottom-right-radius: 2px;
-           border-top-right-radius: 2px;
-         }
-         body
-         {
-           text-align:center;  
-           vertical-align:middle;
-         }
-         .label1
-         {
-           width:90px;
-         }
-</style>
+    body {
+      text-align: center;
+      vertical-align: middle;
+    }
 
+    .label1 {
+      width: 90px;
+    }
+  </style>
+</head>
 
-<%= form_with(model: user, local: true) do |form| %>
+<body>
+  <%= form_with(model: user, local: true) do |form| %>
   <% if user.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
-
-      <ul>
-        <% user.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+  <div id="error_explanation">
+    <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+    <ul>
+      <% user.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
   <% end %>
- 
-  <div class="field" >
-    <label class="layui-form-label   label1"     for="user_用户名">用户名</label>
-    <div class="layui-input-block"> <input     class="layui-input  "  placeholder="请输入用户名"    type="text" name="user[account]" id="user_account"   value=<%= @user.account%>  ></div>
-  </div> 
-
   <div class="field">
-    <label class="layui-form-label label1"   for="user_密码">密码</label>
-    <div class="layui-input-block"> <input    class="layui-input "  placeholder="请输入密码"    type="password" name="user[password]" id="user_password" value=<%= @user.password%> ></div>
-  </div> 
- 
-
-  
-
+    <label class="layui-form-label   label1" for="user_用户名">用户名</label>
+    <div class="layui-input-block"> <input class="layui-input  " placeholder="请输入用户名" type="text" name="user[account]"
+        id="user_account" value=<%= @user.account%>></div>
+  </div>
   <div class="field">
-  <label class="layui-form-label label1"  for="user_姓名">姓名</label>
-  <div class="layui-input-block"> <input    class="layui-input "  placeholder="请输入姓名"    type="text" name="user[name]" id="user_name" value=<%= @user.name%>></div>
+    <label class="layui-form-label label1" for="user_密码">密码</label>
+    <div class="layui-input-block"> <input class="layui-input " placeholder="请输入密码" type="password"
+        name="user[password]" id="user_password" value=<%= @user.password%>></div>
   </div>
-
   <div class="field">
-  <label class="layui-form-label label1"  for="user_地址">地址</label>
-  <div class="layui-input-block"> <input    class="layui-input "  placeholder="请输入地址"    type="text" name="user[address]" id="user_address" value=<%= @user.address%>></div> 
+    <label class="layui-form-label label1" for="user_姓名">姓名</label>
+    <div class="layui-input-block"> <input class="layui-input " placeholder="请输入姓名" type="text" name="user[name]"
+        id="user_name" value=<%= @user.name%>></div>
   </div>
-
   <div class="field">
-  <label class="layui-form-label label1"  for="user_邮箱">邮箱</label>
-   <div class="layui-input-block"> <input    class="layui-input "  placeholder="请输入邮箱"    type="text" name="user[email]" id="user_email" value=<%= @user.password%>></div>  
+    <label class="layui-form-label label1" for="user_地址">地址</label>
+    <div class="layui-input-block"> <input class="layui-input " placeholder="请输入地址" type="text" name="user[address]"
+        id="user_address" value=<%= @user.address%>></div>
   </div>
-
   <div class="field">
-  <label class="layui-form-label label1"  for="user_电话">电话</label>
-   <div class="layui-input-block"> <input    class="layui-input "  placeholder="请输入电话"    type="text" name="user[telephone]" id="user_telephone" value=<%= @user.telephone%>></div>
+    <label class="layui-form-label label1" for="user_邮箱">邮箱</label>
+    <div class="layui-input-block"> <input class="layui-input " placeholder="请输入邮箱" type="text" name="user[email]"
+        id="user_email" value=<%= @user.password%>></div>
   </div>
- 
-   
-
-  
-   <div class="layui-form-item">
-      <label class="layui-form-label label1" for="user_性别">性别</label> 
-       <div class="layui-input-block">
-          <select   class="layui-input "  name="user[sex]" id="user_sex"  <%= form.select :sex, [['男'], ['女']] %>
-          </select>
-       </div> 
-    </div> 
-
-
-   <div class="layui-form-item">
-      <label class="layui-form-label label1" for="user_角色">角色</label> 
-       <div class="layui-input-block">
-          <select   class="layui-input "  name="user[role]" id="user_role"  <%= form.select :role, [['普通用户'], ['管理员']] %>
-          </select>
-       </div> 
-    </div>  
-
-
-   
- <div class="layui-form-item">
-    <label class="layui-form-label label1" for="user_所属部门">所属部门</label> 
-     <div class="layui-input-block">
-       <div style="display:flex;">
-         <input   class="layui-input image_input"  placeholder="请输入所属部门"    type="text" name="user[departmentname]" id="user_departmentname"  value=<%= @user.departmentname%>>
-          <div  class ="image",  data-toggle="modal" data-target="#departmentModal" href="#"><%= image_tag('放大镜', size: "35" )   %></div> 
-          </div> 
-     </div>
- </div>
- 
- 
- 
-
   <div class="field">
-  <label class="layui-form-label label1"  for="user_所属组织">所属组织</label>
-  <div class="layui-input-block"> <input    class="layui-input "  placeholder="请输入所属组织"    type="text" name="user[orgainize_id]" id="user_orgainize_id"  value=<%= @user.orgainize_id%>></div>
+    <label class="layui-form-label label1" for="user_电话">电话</label>
+    <div class="layui-input-block"> <input class="layui-input " placeholder="请输入电话" type="text" name="user[telephone]"
+        id="user_telephone" value=<%= @user.telephone%>></div>
   </div>
- 
-
- <div class="actions layui-form-label body1">
-    <input  class="layui-btn" type="submit" name="commit" value="保存" data-disable-with="保存">
-  </div>
-<% end %> 
-  
-     <a data-url="/users" data-id= "users" data-title= "用户表" class="linkActive"  href= "#"><button type="button" class="layui-btn">返回用户表</button></a> 
-
-<%= render    'departments/DepartmentModal.html.erb',  id: "user_departmentname" ,userid:  "assetcard_Employeeld"   %> 
-
+  <div class="layui-form-item">
+    <label class="layui-form-label label1" for="user_性别">性别</label>
+    <div class="layui-input-block">
+      <select class="layui-input " name="user[sex]" id="user_sex" <%= form.select :sex, [['男'], ['女']] %> </select>
+        </div> </div> <div class="layui-form-item">
+        <label class="layui-form-label label1" for="user_角色">角色</label>
+        <div class="layui-input-block">
+          <select class="layui-input " name="user[role]" id="user_role" <%= form.select :role, [['普通用户'], ['管理员']] %>
+            </select> </div> </div> <div class="layui-form-item">
+            <label class="layui-form-label label1" for="user_所属部门">所属部门</label>
+            <div class="layui-input-block">
+              <div style="display:flex;">
+                <input class="layui-input image_input" placeholder="请输入所属部门" type="text" name="user[departmentname]"
+                  id="user_departmentname" value=<%= @user.departmentname%>>
+                <div class="image" , data-toggle="modal" data-target="#departmentModal" href="#">
+                  <%= image_tag('放大镜', size: "35" )   %></div>
+              </div>
+            </div>
+        </div>
+        <div class="field">
+          <label class="layui-form-label label1" for="user_所属组织">所属组织</label>
+          <div class="layui-input-block"> <input class="layui-input " placeholder="请输入所属组织" type="text"
+              name="user[orgainize_id]" id="user_orgainize_id" value=<%= @user.orgainize_id%>></div>
+        </div>
+        <div class="actions layui-form-label body1">
+          <input class="layui-btn" type="submit" name="commit" value="保存" data-disable-with="保存">
+        </div>
+        <% end %>
+        <a data-url="/users" data-id="users" data-title="用户表" class="linkActive" href="#"><button type="button"
+            class="layui-btn">返回用户表</button></a>
+        <%=javascript_pack_tag 'tabadd' %>
+        <%= render    'departments/DepartmentModal.html.erb',  id: "user_departmentname" ,userid:  "assetcard_Employeeld"   %>
+</body>

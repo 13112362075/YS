@@ -1,7 +1,6 @@
 <p id="notice"><%= notice %></p>
 
-
-<h1 style="text-align:center;">资产领用单</h1>
+ 
 <br>
 <div class="layui-btn-group " style="margin:10px;0px;">
   <a rel="nofollow" data-method="get" href="/asset_recoveries/new"><button type="button" class="layui-btn">新增</button></a>
@@ -90,8 +89,7 @@ var array2 = new Array();
        array2[j-1]=rows[i].cells[j].innerHTML.replace('<br>', ''); 
    }
    array1[i-1]=array2;
-}
- console.log(array1)
+} 
  
 $.ajax({
    type:"post", 
@@ -120,9 +118,7 @@ $.ajax({
 
 $('td').click(function(e){ 
   if(e.currentTarget.className !="")
-  {
-        console.log(e.currentTarget.parentNode.id); 
-        console.log(e.currentTarget.parentNode.firstElementChild.children[0].checked);
+  { 
         if(e.currentTarget.parentNode.firstElementChild.children[0].checked)
         {
           e.currentTarget.parentNode.firstElementChild.children[0].checked=false;

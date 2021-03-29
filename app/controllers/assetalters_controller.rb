@@ -1,18 +1,22 @@
 class AssetaltersController < ApplicationController
   before_action :set_assetalter, only: [:show, :edit, :update, :destroy]
  
-
+#删除
   def destroy_multiple     
+    #返回信息
     message=""
-    ActiveRecord::Base.transaction do
-      message="";
+    #事务
+    ActiveRecord::Base.transaction do 
       params["assetaltersid"].each do |i|  
+        #删除检验
         message =message +  Delete_Check("资产变更单",i ).to_s
         if message.lstrip.rstrip ==""  
+          #检验通过，删除
           Assetalter.destroy(i) 
         end
       end
       if message.lstrip.rstrip!="" 
+        #删除不通过，事务回滚！
         render :json  => {code: 201,message: message  }
         raise ActiveRecord::Rollback 
       else
@@ -21,35 +25,47 @@ class AssetaltersController < ApplicationController
     end 
   end
 
-
+#保存
   def  save_all
-    message=""
-    message=message+Save_Check("资产变更单",comment_params).to_s
+    #返回信息
+    message="" 
     if message.lstrip.rstrip!=""
+      #检验不通过
       render :json  => {code: 201,message: message }
       return;
     end
+    #检验通过
     if params["id"]=="0"     
+          #保存检验
+    message=message+Save_Check("资产变更单",comment_params).to_s
+      #新单据保存，创建单据
       @assetalter=Assetalter.create!(comment_params)
+      #更新创建人、创建日期
       @assetalter.update(Creator:session[:name],Createdate:Time.now.strftime("%Y-%m-%d %H:%M:%S"))
     else
       @assetalter=Assetalter.find(params[:id])
+      #单据修改保存
       @assetalter.update(comment_params)
     end
     render :json  => {code: 200,message: "保存成功！",id:@assetalter.id }
   end
 
-
+#返回Json数据
   def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
     render json:{code: code, msg: message, count: count,data: data};
   end
 
-
+#获取接口数据
   def Get_DataApi 
+    #获取单据数据
     assetalter=Assetalter.order(:id);
+    #获取单据总数
     total_count=Assetalter.count
+    #分页
     assetalter=Assetalter.page(params[:page]).per(params[:limit])
+    #转换成Json
     data=assetalter.as_json;
+    #返回数据
     api_success(count: total_count,data: data)
   end
 
@@ -68,8 +84,9 @@ class AssetaltersController < ApplicationController
   def show
   end
 
-  #审核
+  #更新状态
   def    Update_Fbillstatus 
+    #返回信息
     message=""; 
       @assetalter=Assetalter.where("id = ?  and fbillstatus = '已审核'" ,params[:id]); 
       if @assetalter.length>0
@@ -78,6 +95,7 @@ class AssetaltersController < ApplicationController
         @assetalter=Assetalter.find(params[:id]); 
         @assetalter.update(fbillstatus:   "已审核" , Approver:   session[:name], Approverdate:Time.now.strftime("%Y-%m-%d %H:%M:%S") );  
         @assetcard=Assetcard.where("assetCode=? " , @assetalter.assetCode);  
+        #更新资产卡片数据
         @assetcard[0].update(Assetstatus_id:  @assetalter.Assetstatus_id, Assetseat_id:  @assetalter.Assetseat_id,  Mould:    @assetalter.Mould,  Client:  @assetalter.Client, 
           Supplier:   @assetalter.Supplier, Price:  @assetalter.Price, Expectedperiod:   @assetalter.Expectedperiod,  department_id:  @assetalter.department_id, Employeeld:   @assetalter.Employeeld)
         message="审核成功！"
@@ -91,6 +109,7 @@ def Check_IsExist
   @assetcard=Assetcard.find(params[:assetCode])
   @assetalter=Assetalter.where("assetCode = ?  and fbillstatus = '未审核'" ,@assetcard.assetCode); 
   if @assetalter.length>0
+    #存在未审核的资产变更单 
     render :json  => {code: 201,message: "存在未审核的资产变更单，不允许再变更！" }
   else
     render :json  => {code: 200,message: "" }
@@ -100,6 +119,7 @@ end
 
   # GET /assetalters/new
   def new 
+    #新增单据时，资产卡片数据为改变前、后数据，单据状态为未审核
     @assetalter = Assetalter.new  
     @assetcard=Assetcard.where("id = ? " ,params[:assetcardid]);  
     @assetalter.Fbillno=""; 
@@ -187,11 +207,17 @@ end
     @user = User.all   
     @usestate  =  Usestate.all   
     @assetalter = Assetalter.new(assetalter_params)
+    #创建人为当前登录用户
     @assetalter.Creator=session[:name]
+    #创建日期为当前日期
     @assetalter.Createdate=Time.now.strftime("%Y-%m-%d %H:%M:%S")
     @message=""
+    puts "1111"
     respond_to do |format| 
-      @message=@message+Save_Check("资产变更单",@assetalter)
+      if(assetalter_params[:id].lstrip.rstrip=="")
+        puts "123213213"
+        @message=@message+Save_Check("资产变更单",@assetalter)
+      end 
       if(@message.lstrip.rstrip=="")
         if @assetalter.save 
           format.html { render :edit, notice: '创建成功' }
@@ -252,8 +278,5 @@ end
 
     def comment_params
       params.require(:datas).permit(:Fbillno, :assetCode, :assetname, :Assettype_id, :Unit_id, :Amount, :Assetstatus_id, :Addtype_id, :BuyDate, :description, :Orgainize_id, :Entrydate, :Price, :Lastprice, :Expectedperiod, :CNOSP, :barcode, :Mould, :Assetseat_id, :Client, :Supplier, :department_id, :Employeeld, :assetCode_Old, :assetname_Old, :Assettype_id_Old, :Unit_id_Old, :Amount_Old, :Assetstatus_id_Old, :Addtype_id_Old, :BuyDate_Old, :description_Old, :Orgainize_id_Old, :Entrydate_Old, :Price_Old, :Lastprice_Old, :Expectedperiod_Old, :CNOSP_Old, :barcode_Old, :Mould_Old, :Assetseat_id_Old, :Client_Old, :Supplier_Old, :department_id_Old, :Employeeld_Old, :fbillstatus, :Creator, :Createdate, :Approver, :Approverdate,:Usestate_id,:Usestate_id_Old)
- 
     end
-
-
 end

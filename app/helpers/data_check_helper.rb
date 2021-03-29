@@ -1,8 +1,9 @@
 module   DataCheckHelper
 
+    #删除检验
     def  Delete_Check(type,id ) 
         if( type == "用户")
-            @user=User.find(id) 
+            @user=User.find(id)  
             if(@user.role=="管理员")
                return "用户名为 ：#{@user.name} 为管理员，不允许删除!\n"
             end
@@ -19,6 +20,10 @@ module   DataCheckHelper
 
         if(type == "部门")
             @departments=Department.find(id)
+                #审核状态不允许删除！
+                if(@departments.fbillstatus.lstrip.rstrip=="已审核")
+                    return "名称为 ：#{@departments.departmentname} 为审核状态，不允许删除!\n"
+                end
             if( Assetcard.where( " department_id  =  ?",  "#{ @departments.departmentname}" ).length>0)#资产卡片
                 return  "部门："+@departments.departmentname+"已被使用，不允许删除！\n" ;
             end 
@@ -29,6 +34,10 @@ module   DataCheckHelper
 
         if(type=="变动方式")
             @addtype=Addtype.find(id)
+                     #审核状态不允许删除！
+                     if(@addtype.fbillstatus.lstrip.rstrip=="已审核")
+                        return "名称为 ：#{@addtype.Name} 为审核状态，不允许删除!\n"
+                    end
             if( Assetcard.where( " Addtype_id  =  ?",  "#{ @addtype.Name}" ).length>0)#资产卡片
                 return  "变动方式："+@addtype.Name+"已被使用，不允许删除！\n" ;
             end 
@@ -36,14 +45,22 @@ module   DataCheckHelper
 
 
         if(type=="资产位置")
-            @assetseate=Assetseate.find(id)
+            @assetseate=Assetseate.find(id) 
+            #审核状态不允许删除！
+            if(@assetseate.fbillstatus.lstrip.rstrip=="已审核")
+               return "名称为 ：#{@assetseate.Name} 为审核状态，不允许删除!\n"
+           end
             if( Assetcard.where( " Assetseat_id  =  ?",  "#{ @assetseate.Name}" ).length>0)#资产卡片
                 return  "资产位置:"+@assetseate.Name+"已被使用，不允许删除！\n" ;
             end 
         end
 
         if(type=="资产状态")
-            @assetstatus=Assetstatus.find(id)
+            @assetstatus=Assetstatus.find(id) 
+            #审核状态不允许删除！
+            if(@assetstatus.fbillstatus.lstrip.rstrip=="已审核")
+               return "名称为 ：#{@assetstatus.Name} 为审核状态，不允许删除!\n"
+           end
             if( Assetcard.where( " Assetstatus_id  =  ?",  "#{ @assetstatus.Name}" ).length>0)#资产卡片
                 return  "资产状态:"+@assetstatus.Name+"已被使用，不允许删除！\n" ;
             end 
@@ -52,6 +69,10 @@ module   DataCheckHelper
 
         if(type=="资产类型")
             @assettype=Assettype.find(id)
+                  #审核状态不允许删除！
+                  if(@assettype.fbillstatus.lstrip.rstrip=="已审核")
+                    return "名称为 ：#{@assettype.Name} 为审核状态，不允许删除!\n"
+                end
             if( Assetcard.where( " Assettype_id  =  ?",  "#{ @assettype.Name}" ).length>0)#资产卡片
                 return  "资产类型:"+@assettype.Name+"已被使用，不允许删除！\n" ;
             end 
@@ -60,6 +81,10 @@ module   DataCheckHelper
 
         if(type=="计量单位")  
             @unit=Unit.find(id) 
+                      #审核状态不允许删除！
+                      if(@unit.fbillstatus.lstrip.rstrip=="已审核")
+                        return "名称为 ：#{@unit.name} 为审核状态，不允许删除!\n"
+                    end
             if( Assetcard.where( " Unit_id  =  ?",  "#{ @unit.name}" ).length>0)#资产卡片
                 return  "计量单位:"+@unit.name+"已被使用，不允许删除！\n" ;
             end 
@@ -69,7 +94,11 @@ module   DataCheckHelper
 
 
         if(type=="使用状态")
-            @usestate=Usestate.find(id)
+            @usestate=Usestate.find(id) 
+            #审核状态不允许删除！
+            if(@usestate.fbillstatus.lstrip.rstrip=="已审核")
+              return "名称为 ：#{@usestate.Name} 为审核状态，不允许删除!\n"
+          end
             if( Assetcard.where( " Usestate_id  =  ?",  "#{ @usestate.Name}" ).length>0)#资产卡片
                 return  "使用状态:"+@usestate.Name+"已被使用，不允许删除！\n" ;
             end 
@@ -83,9 +112,61 @@ module   DataCheckHelper
             end   
         end 
 
+        if(type=="资产借用/归还单")
+            @assetTurnoverDetail=AssetTurnoverDetail.find(id) 
+            if( @assetTurnoverDetail.fbillstatus=="已审核")#借用、归还单 
+                return  "单据编号为："+@assetTurnoverDetail.Document_number+"为已审核状态，不允许删除！\n" ;
+            end   
+        end 
+
+        if(type=="资产调拨单")
+            @assetAllocate=AssetAllocate.find(id) 
+            if( @assetAllocate.FBillstatus=="已审核")#借用、归还单 
+                return  "单据编号为："+@assetAllocate.FBillno+"为已审核状态，不允许删除！\n" ;
+            end   
+        end 
+
+        if(type=="资产变更单")
+            @assetalter=Assetalter.find(id) 
+            if( @assetalter.fbillstatus=="已审核")#借用、归还单 
+                return  "单据编号为："+@assetalter.Fbillno+"为已审核状态，不允许删除！\n" ;
+            end   
+        end 
+
+        if(type=="资产处置单")
+            @assetDisposal=AssetDisposal.find(id) 
+            if( @assetDisposal.Fbillstatus=="已审核")#借用、归还单 
+                return  "单据编号为："+@assetDisposal.FBillno+"为已审核状态，不允许删除！\n" ;
+            end   
+        end 
+
+        if(type=="资产作业单")
+            @assetCountingreport=AssetCountingreport.find(id) 
+            if( @assetCountingreport.fbillstatus=="已审核")#借用、归还单 
+                return  "单据编号为："+@assetCountingreport.BillNo+"为已审核状态，不允许删除！\n" ;
+            end   
+        end 
+
+        if(type=="资产盘亏单")
+            @assetLoss=AssetLoss.find(id) 
+            if( @assetLoss.fbillstatus=="已审核")#资产盘亏单
+                return  "单据编号为："+@assetLoss.BillNo+"为已审核状态，不允许删除！\n" ;
+            end   
+        end 
+
+
+        if(type=="资产盘盈单")
+            @AssetGain=AssetGain.find(id) 
+            if( @AssetGain.fbillstatus=="已审核")#资产盘亏单
+                puts "单据编号为："+@AssetGain.BillNo+"为已审核状态，不允许删除！\n" ;
+                return  "单据编号为："+@AssetGain.BillNo+"为已审核状态，不允许删除！\n" ;
+            end   
+        end 
+
         return "" 
     end 
 
+    #单据体保存检验
     def  Save_Check_Entry(type,datas,datas_entry,index)
         resule=""
         if(type=="资产处置单")
@@ -141,6 +222,7 @@ module   DataCheckHelper
         return resule;
     end 
 
+    #单据头保存检验
     def  Save_Check(type,datas)
         resule=" " 
 
@@ -218,7 +300,7 @@ module   DataCheckHelper
             if datas["Fbillno"].lstrip.rstrip==""
                 resule=resule +  "单据编号不允许为空！\r\n";
                 return resule; 
-            end
+            end 
             @assetalter=Assetalter.where("Fbillno = ?" , datas["Fbillno"]) 
             if @assetalter.length>0
                 resule=resule +  "单据编码在系统已存在！\r\n";
@@ -246,13 +328,32 @@ module   DataCheckHelper
                     resule=resule +  "单据编码在系统已存在！\r\n";
                 end
         end 
+
+
+
+        if(type=="资产盘点单")
+            if datas["FBillno"].lstrip.rstrip==""
+                resule=resule +  "单据编号不允许为空！\r\n";
+            end
+            if datas["fdate"].lstrip.rstrip==""
+                resule=resule +  "单据日期不允许为空！\r\n";
+            end
+          
+            if (!datas.include? 'datas')
+                resule=resule +  "分录数据行数量为0\r\n";  
+            end 
+            @assetCountingreport=AssetCountingreport.where("BillNo = ? and id <> ?" , datas["FBillno"],datas["id"]) 
+            if @assetCountingreport.length>0
+                resule=resule +  "单据编码在系统已存在！\r\n";
+            end
+    end 
         return resule
     end  
 
 
 
  
-
+#单据体更新状态检验
     def   Update_Fbillstatus_Check_Entry(type,datas,datas_entry,index,fbillstatus)
         resule=" "
         if(type=="资产借出/归还单")   
@@ -266,7 +367,7 @@ module   DataCheckHelper
         end 
     end 
 
-
+#单据头更新状态检验
     def   Update_Fbillstatus_Check(type,id,fbillstatus)
 
         result=""  
@@ -471,11 +572,11 @@ module   DataCheckHelper
 
 
 
-                if( AssetTurnoverDetail.where( " Last_seat  =  ?",  "#{@assetseate[0].Name}" ).length>0)#借用、归还单
+                if( AssetTurnoverDetailEntry.where( " Last_seat  =  ?",  "#{@assetseate[0].Name}" ).length>0)#借用、归还单
                     return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
                 end  
  
-                if( AssetPicking.where( "Picking_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产领用单
+                if( AssetPickingEntry.where( "Picking_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产领用单
                     return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
                 end  
 
@@ -501,7 +602,7 @@ module   DataCheckHelper
                     return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
                 end  
 
-                if( AssetGainEntry.where( "Invent_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘盈单
+                if( AssetGainEntry.where( "Actual_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘盈单
                     return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
                 end  
 
@@ -509,7 +610,7 @@ module   DataCheckHelper
                     return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
                 end  
 
-                if( AssetLossEntry.where( "Invent_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘亏单
+                if( AssetLossEntry.where( "Actual_seat  =  ?",  "#{ @assetseate[0].Name}" ).length>0)#资产盘亏单
                     return  "资产位置："+@assetseate[0].Name+"已被使用，不允许反审核！\n" ;
                 end  
 

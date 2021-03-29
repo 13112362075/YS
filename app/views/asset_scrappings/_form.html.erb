@@ -125,8 +125,7 @@ layui.use('laydate', function(){
  <script>
 //新增行
 function addrow(){
-   var c=document.getElementById('testid');//获得表格的信息 
-   console.log(c);
+   var c=document.getElementById('testid');//获得表格的信息  
    if( c.length==1)//如果是向一个空表增加一行
    {
      var x=c.insertRow(1);//向空表插入一行 
@@ -197,8 +196,7 @@ x.deleteRow(x.rows.length-1);//删除一行
 <script>
 function test1(){  
 
-var  id=document.getElementById("id").innerText;
-console.log(id);
+var  id=document.getElementById("id").innerText; 
 var  Document_number=document.getElementById("asset_scrapping_Document_number").value;
 var  Date=document.getElementById("asset_scrapping_Date").value;
 var  Addtype=document.getElementById("asset_scrapping_Addtype").value;
@@ -216,8 +214,7 @@ for(var i = 1; i<rows.length; i++ ){
    }
    array2[rows[i].cells.length-1]=rows[i].id;
    array1[i-1]=array2;
-}
-console.log(array1);  
+} 
 
 
  $.ajax({

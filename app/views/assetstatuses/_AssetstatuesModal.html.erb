@@ -1,97 +1,146 @@
-
-
-<!-- Modal -->
-<div class="modal fade" id="assetstatusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-            <h4>资产状态表</h4>
-          <h4  hidden="hidden" id="assetstatusid" class="modal-title"  ></h4> 
-                  <h4  hidden="hidden" id="AssetstatusModalid" class="modal-title"  > <%= id%> </h4> 
-        </div>
-        <div class="modal-body"> 
-  
-          <table class="table table-bordered">
-            <thead>
-            <tr>
-              <th>资产状态编码</th>
-              <th>资产状态</th> 
-            </tr>
-            </thead>
-            <tbody>
-              <% @assetstatus.each do |assetstatus| %>
-              <tr class="select_assetstatus" data-assetstatus_id="<%= assetstatus.id %>" >
-                <td><%= assetstatus.Assetstatuscode %></td>
-                <td><%= assetstatus.Name %></td> 
-              </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
-  
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-          <button id="chooseassetstatus" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
-        </div> 
-      </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-  </div><!-- /.modal -->
-  
-  
-  
-  
- 
-  <script>
-  $('tr.select_assetstatus').click(function(e){ 
-      $("tr.select_assetstatus").css("backgroundColor","white");
-      this.style.backgroundColor = "#357ebd"
-      console.log(this.dataset.assetstatus_id) 
-      $("#assetstatusid").text(this.dataset.assetstatus_id);
-  
-  }) 
-  
-  </script>
-  
-  <script> 
-  $('#chooseassetstatus').click(function(e){     
-       var List=new Array();
-  List[0]="资产状态";
-  List[1]=   $("#AssetstatusModalid").text();
-  List[2]="assetstatusModal";
-  $.ajax({
-     type:"post", 
-     url :"/assetstatuses_choose",
-     data:{ 
-        "assetstatusid": $("#assetstatusid").text(),
-        "id" :List
-       }, 
-     success: function(){ 
-       },
-              error :function(){ 
-          } 
-   });  
-  }) 
-  
-
-
-$('tr.select_assetstatus').dblclick(function(e){    
-        var List=new Array();
-  List[0]="资产状态";
-  List[1]=   $("#AssetstatusModalid").text();
-  List[2]="assetstatusModal";
-  $.ajax({
-     type:"post", 
-     url :"/assetstatuses_choose",
-     data:{ 
-        "assetstatusid": $("#assetstatusid").text(),
-        "id" :List
-       }, 
-     success: function(){ 
-       },
-              error :function(){ 
-          } 
-   });  
-})
-  </script>
-  
+ <head>
+   <!-- Modal -->
+   <div class="modal fade" id="assetstatusModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog" style="width:650px;height:auto;">
+       <div class="modal-content">
+         <div class="modal-header">
+           <!--关闭窗口按钮-->
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+           <h4>资产状态表</h4>
+           <!--菜单列表-->
+           <a data-url="/assetstatuses/new" data-id="newassetstatues" data-title="资产状态-新增" class="linkActive"><button
+               type="button" class="layui-btn">新增</button></a>
+           <button class="layui-btn demoTable" data-type="reload_assetstatus">刷新</button>
+           <!--参数-->
+           <h4 hidden="hidden" id="assetstatusid" class="modal-title"></h4>
+           <h4 hidden="hidden" id="AssetstatusModalid" class="modal-title"> <%= id%> </h4>
+         </div>
+         <div class="modal-body">
+           <div class="assetstatus_table">
+             <table class="layui-hide" id="assetstatuses" lay-filter="assetstatuses"></table>
+           </div>
+         </div>
+         <div class="modal-footer">
+           <!--菜单列表-->
+           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+           <button id="chooseassetstatus" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+         </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
+   <head>
+   <body>
+     <script>
+       //确定按钮点击事件
+       $('#chooseassetstatus').click(function (e) {
+         //获取参数数据
+         var List = new Array();
+         List[0] = "资产状态";
+         List[1] = $("#AssetstatusModalid").text();
+         List[2] = "assetstatusModal";
+         //调用后端选择基础资料接口
+         $.ajax({
+           type: "post",
+           url: "/assetstatuses_choose",
+           data: {
+             "assetstatusid": $("#assetstatusid").text(),
+             "id": List
+           },
+           success: function () {},
+           error: function () {}
+         });
+       })
+       layui.use('table', function () {
+         var table = layui.table;
+         table.on('tool(assetstatuses)', function (obj) {
+           let event = obj.event;
+           $("#assetstatusid").text(obj.data.id);
+           let tr = obj.tr;
+           index = tr[0].attributes["data-index"].value;
+           var tableBox = $(this).parents('.layui-table-box');
+           //存在固定列
+           tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+           //获取已选中列并取消选中 
+           //选中单击行
+           var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+             "td div.laytable-cell-radio div.layui-form-radio I");
+           checkCell.click(); //复选框勾选 
+         })
+         table.on('rowDouble(assetstatuses)', function (obj) {
+           //双击单元格事件
+           //获取参数数据
+           var List = new Array();
+           List[0] = "资产状态";
+           List[1] = $("#AssetstatusModalid").text();
+           List[2] = "assetstatusModal";
+           //调用后端选择基础资料接口
+           $.ajax({
+             type: "post",
+             url: "/assetstatuses_choose",
+             data: {
+               "assetstatusid": $("#assetstatusid").text(),
+               "id": List
+             },
+             success: function () {},
+             error: function () {}
+           });
+         })
+         table.render({
+           elem: '#assetstatuses',
+           url: '/assetstatuses_Get_DataApi',
+           title: '用户数据表',
+           cols: [
+             [{
+                 type: 'radio',
+                 width: 50
+               },
+               {
+                 field: 'Assetstatuscode',
+                 title: '资产状态编号',
+                 width: 200,
+                 minwidth: 200,
+                 event:"assetstatus",
+                 sort: true
+               }, {
+                 field: 'Name',
+                 minwidth: 200,
+                 width: 200,
+                 event:"assetstatus",
+                 title: '资产状态'
+               }, {
+                 field: 'Approver',
+                 minwidth: 200,
+                 width: 163,
+                 event:"assetstatus",
+                 title: '审核人',
+                 sort: true
+               }
+             ]
+           ],
+           id: 'assetstatus_table',
+           page: true,
+           limits: [100, 200, 500, 1000, 2000, 10000],
+           limit: 100
+         });
+         var $ = layui.$,
+           active = {
+             reload_assetstatus: function () {
+               //执行重载
+               table.reload('assetstatus_table', {
+                 page: {
+                   curr: 1 //重新从第 1 页开始
+                 },
+                 where: {
+                   key: {}
+                 }
+               }, 'data');
+             }
+           };
+         $('.demoTable').on('click', function () {
+           var type = $(this).data('type');
+           active[type] ? active[type].call(this) : '';
+         });
+       });
+     </script>
+   </body>

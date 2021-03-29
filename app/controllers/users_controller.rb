@@ -1,22 +1,23 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy] 
 
+  #返回Json数据
   def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
     render json:{code: code, msg: message, count: count,data: data};
   end
 
-
+#选择基础资料（单据体）
   def choose_row
     user = User.find(params[:userid]) 
     @name = user.name
     @departmentname = user.departmentname 
     @id=   params[:id]  
     @id[4]=    @departmentname 
-    @Modaltype=  params[:Modaltype] 
+    @Modaltype=  params[:id][2]
     @type="用户";  
     render 'choose/choose_row.js.erb'  
-  end
-
+  end 
+  #忽略
   def test
     user=User.order(:id);
     total_count=user.count
@@ -25,7 +26,7 @@ class UsersController < ApplicationController
     api_success(count: total_count,data: data)
   end
 
-
+#选择基础资料（单据头）
   def choose   
     user = User.find(params[:userid]) 
     @name = user.name
@@ -36,13 +37,13 @@ class UsersController < ApplicationController
   end 
 
  
- 
+ #忽略
   def export_all
     @user_all =User.all; 
   end
 
 
-  
+#忽略  
   def save_multiple    
     if Frole?
       ActiveRecord::Base.transaction do 
@@ -56,20 +57,29 @@ class UsersController < ApplicationController
     end 
 end
 
+
+
+
 def destroy_multiple
   if Frole?
+    #成功数
     sussess=0;
-  error=0;
+    #失败数
+    error=0;
+        #返回信息
   message="";
  # ActiveRecord::Base.transaction do
     params["userid"].each do |i|  
       @user=User.find(i)  
+            #删除检验
       result=Delete_Check("用户",@user.id);    
       if(result=="") 
+                #检验通过，成功数+1，删除用户
         sussess+=1;
         User.destroy(i) 
          #raise ActiveRecord::RecordNotFound 
       else 
+                #检验不通过，失败数+1
         error+=1;
         message=message+result  
         #raise ActiveRecord::RecordNotFound  
@@ -86,7 +96,7 @@ def destroy_multiple
   
 end 
   
- 
+ #忽略
   def index   
     @q = User.search(params[:q]) 
     puts @q;
@@ -135,8 +145,7 @@ end
   # POST /users.json
   def create
     @user = User.new(user_params)
-    @department = Department.all  
-    puts    @department.length
+    @department = Department.all   
      respond_to do |format|
       if @user.save
         format.html { redirect_to @user, notice: '用户创建成功！' }

@@ -1,135 +1,126 @@
-<!-- Modal -->
-<div class="modal fade" id="userModal_row" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+<body>
+  <!-- Modal -->
+  <div class="modal fade" id="userModal_row" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4>用户表</h4>
-                <h4 hidden="hidden" id="userid" class="modal-title"></h4>
-                <h4 hidden="hidden" id="UserModalid" class="modal-title"> <%= id%> </h4>
-                <h4 hidden="hidden" id="departmentModalid" class="modal-title"> <%= department%> </h4>
-                <h4 hidden="hidden" id="departmentvalue" class="modal-title"> <%= departmentvalue%> </h4>
-            </div>
-            <div class="modal-body">
-
-                <table id="table_usermodal" class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>用户名称</th>
-                            <th>所属部门</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% @user.each do |user| %>
-                        <tr class="select selectuser" data-user_id="<%= user.id %>">
-                            <td><%= user.id %></td>
-                            <td><%= user.name %></td>
-                            <td><%= user.departmentname %></td>
-                        </tr>
-                        <% end %>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                <button id="chooseuser" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
-            </div>
-        </div><!-- /.modal-content -->
+    <div class="modal-dialog" style="width:650px;height:auto;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!--关闭窗口按钮-->
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4>用户表</h4>
+          <!--菜单列表-->
+          <a data-url="/users/new" id="user_new" data-id="newusers" data-title="用户新增" class="linkActive"><button
+              type="button" class="layui-btn" onclick="New_User()">新增</button></a>
+          <button class="layui-btn demoTable" data-type="reload_department">刷新</button>
+          <!--参数-->
+          <h4 hidden="hidden" id="userid" class="modal-title"></h4>
+          <h4 hidden="hidden" id="UserModalid" class="modal-title"> <%= id%> </h4>
+          <h4 hidden="hidden" id="departmentModalid" class="modal-title"> <%= department%> </h4>
+        </div>
+        <div class="modal-body">
+          <table class="layui-hide" id="users" lay-filter="users"></table>
+        </div>
+        <div class="modal-footer">
+          <!--菜单列表-->
+          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+          <button id="choose_user" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+        </div>
+      </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
-
-
-
-
-<link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
-<script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
-<script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-
-<script>
-    $('tr.selectuser').click(function (e) {
-        $("tr.selectuser").css("backgroundColor", "white");
-        this.style.backgroundColor = "#357ebd"
-        $("#userid").text(this.dataset.user_id);
-    })
-</script>
-
-<script>
-    $('#chooseuser').click(function (e) {
+  </div><!-- /.modal -->
+  <script>
+    layui.use('table', function () {
+      var table = layui.table;
+      table.on('tool(users)', function (obj) {
+        let event = obj.event;
+        $("#userid").text(obj.data.id);
+        let tr = obj.tr;
+        index = tr[0].attributes["data-index"].value;
+        var tableBox = $(this).parents('.layui-table-box');
+        //存在固定列
+        tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+        //获取已选中列并取消选中 
+        //选中单击行
+        var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+          "td div.laytable-cell-radio div.layui-form-radio I");
+        checkCell.click(); //复选框勾选 
+      })
+      table.on('rowDouble(users)', function (obj) {
+        //双击单元格事件
+        //获取参数数据  
         var departmentid = $("#departmentModalid").text();
-        // var departmentvalue=$("#"+departmentid.trim())[0].value);
         var List = new Array();
         List[0] = "用户";
         List[1] = $("#UserModalid").text();
-        List[2] = "userModal";
+        List[2] = "userModal_row";
         List[3] = $("#departmentModalid").text();
+        //调用后端选择基础资料接口
         $.ajax({
-            type: "post",
-            url: "/users_choose_row",
-            data: {
-                "userid": $("#userid").text(),
-                "id": List,
-                "Modaltype": "userModal_row"
-            },
-            success: function () {},
-            error: function () {}
+          type: "post",
+          url: "/users_choose_row",
+          data: {
+            "userid": $("#userid").text(),
+            "id": List
+          },
+          success: function () {},
+          error: function () {}
         });
-    })
-
-
-
-    $('tr.selectuser').dblclick(function (e) {
-        var departmentid = $("#departmentModalid").text();
-        // var departmentvalue=$("#"+departmentid.trim())[0].value);
-        var List = new Array();
-        List[0] = "用户";
-        List[1] = $("#UserModalid").text();
-        List[2] = "userModal";
-        List[3] = $("#departmentModalid").text();
-        $.ajax({
-            type: "post",
-            url: "/users_choose_row",
-            data: {
-                "userid": $("#userid").text(),
-                "id": List,
-                "Modaltype": "userModal_row"
+      })
+      table.render({
+        elem: '#users',
+        url: '/user_test',
+        title: '用户数据表',
+        cols: [
+          [{
+              type: 'radio',
+              width: 50
             },
-            success: function () {},
-            error: function () {}
-        });
-    })
-</script>
-
-<script>
-    $('#userModal_row').on('show.bs.modal', function () { 
-        var departmentid = $("#departmentModalid").text();
-        var departmentvaluenew=$("#departmentvalue").text();
-        var list = document.getElementsByClassName("tdd1 update"); 
-         
-        console.log(departmentid)
-         
-        var departmentvalue =list[0].parentElement.cells[Number(departmentid)].innerHTML
-
-        console.log(departmentvalue.replace(/(^\s*)|(\s*$)/g, ""))
-        console.log(departmentvaluenew.replace(/(^\s*)|(\s*$)/g, ""))
-
-        console.log(departmentvalue.replace(/(^\s*)|(\s*$)/g, "") ==departmentvaluenew.replace(/(^\s*)|(\s*$)/g, ""))
-        
-        var table_usermodal = document.getElementById('table_usermodal'); // table 的 id 
-        var rows = table_usermodal.rows; 
-        for (i = 1; i < rows.length; i++) {
-            rows[i].style.display = "";
-        }  
-        if (departmentvalue.replace(/(^\s*)|(\s*$)/g, "") ==departmentvaluenew.replace(/(^\s*)|(\s*$)/g, "")) { 
-            return;
-        }
-        for (i = 1; i < rows.length; i++) {    
-            if (rows[i].cells[2].innerText.replace(/(^\s*)|(\s*$)/g, "") != departmentvalue.replace(/(^\s*)|(\s*$)/g, "")) {
-                rows[i].style.display = "none";
+            {
+              field: 'name',
+              title: '姓名',
+              width: 200,
+              event:"user",
+              minwidth: 200,
+              sort: true
+            }, {
+              field: 'departmentname',
+              minwidth: 200,
+              width: 200,
+              event:"user",
+              title: '部门名称'
+            }, {
+              field: 'Approver',
+              minwidth: 200,
+              width: 163,
+              event:"user",
+              title: '审核人',
+              sort: true
             }
-        }
-    })
-</script>
+          ]
+        ],
+        id: 'user_table',
+        page: true,
+        limits: [100, 200, 500, 1000, 2000, 10000],
+        limit: 100
+      });
+      var $ = layui.$,
+        active = {
+          reload_department: function () {
+            //执行重载
+            table.reload('user_table', {
+              page: {
+                curr: 1 //重新从第 1 页开始
+              },
+              where: {
+                key: {}
+              }
+            }, 'data');
+          }
+        };
+      $('.demoTable').on('click', function () {
+        var type = $(this).data('type');
+        active[type] ? active[type].call(this) : '';
+      });
+    });
+  </script>
+</body>

@@ -2,7 +2,6 @@
   <% if asset_countingreport_entry.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(asset_countingreport_entry.errors.count, "error") %> prohibited this asset_countingreport_entry from being saved:</h2>
-
       <ul>
         <% asset_countingreport_entry.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,102 +9,82 @@
       </ul>
     </div>
   <% end %>
-
   <div class="field">
     <%= form.label :Code %>
     <%= form.text_field :Code %>
   </div>
-
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
-
   <div class="field">
     <%= form.label :Asset_type %>
     <%= form.text_field :Asset_type %>
   </div>
-
   <div class="field">
     <%= form.label :Unit %>
     <%= form.text_field :Unit %>
   </div>
-
   <div class="field">
     <%= form.label :Model %>
     <%= form.text_field :Model %>
   </div>
-
   <div class="field">
     <%= form.label :Asset_status %>
     <%= form.text_field :Asset_status %>
   </div>
-
   <div class="field">
     <%= form.label :BookQty %>
     <%= form.text_field :BookQty %>
   </div>
-
   <div class="field">
     <%= form.label :CountQty %>
     <%= form.text_field :CountQty %>
   </div>
-
   <div class="field">
     <%= form.label :Variance %>
     <%= form.text_field :Variance %>
   </div>
-
   <div class="field">
     <%= form.label :Book_seat %>
     <%= form.text_field :Book_seat %>
   </div>
-
   <div class="field">
     <%= form.label :Book_dept %>
     <%= form.text_field :Book_dept %>
   </div>
-
   <div class="field">
     <%= form.label :Book_User %>
     <%= form.text_field :Book_User %>
   </div>
-
   <div class="field">
     <%= form.label :Invent_seat %>
     <%= form.text_field :Invent_seat %>
   </div>
-
   <div class="field">
     <%= form.label :Invent_dept %>
     <%= form.text_field :Invent_dept %>
   </div>
-
   <div class="field">
     <%= form.label :InventUser %>
     <%= form.text_field :InventUser %>
   </div>
-
   <div class="field">
     <%= form.label :CountDate %>
     <%= form.datetime_select :CountDate %>
   </div>
-
   <div class="field">
     <%= form.label :Headnote %>
     <%= form.text_field :Headnote %>
   </div>
-
   <div class="field">
     <%= form.label :fseq %>
     <%= form.text_field :fseq %>
   </div>
-
   <div class="field">
     <%= form.label :Asset_Countingreport_id %>
     <%= form.text_field :Asset_Countingreport_id %>
   </div>
-
   <div class="actions">
     <%= form.submit %>
   </div>

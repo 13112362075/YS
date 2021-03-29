@@ -1,501 +1,567 @@
-<script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
-<script src="https://www.layuicdn.com/layui/layui.js"></script>
-<%=javascript_pack_tag 'tabadd' %>
-<style>
-  .locked {
-    background-color: '#F5F5F5'
-  }
-  .image_input {
-    width: 192px;
-    border: 1px solid #e6e6e6;
-    border-left: 1;
-    border-right: 0;
-    border-top: 1;
-    border-bottom: 1;
-    border-top-left-radius: 2px;
-    border-top-right-radius: 0px;
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 2px;
-  }
-  .image {
-    border: 1px solid #e6e6e6;
-    border-left: 0px;
-    border-right: 1;
-    border-top: 1;
-    border-bottom: 1;
-    border-bottom-left-radius: 0;
-    border-top-left-radius: 0;
-    border-bottom-right-radius: 2px;
-    border-top-right-radius: 2px;
-    height: 38px;
-    width: 38px;
-  }
-  .label1 {
-    width: 100px;
-    font-size: 12px;
-  }
-  .input1 {
-    width: 230px;
-  }
-</style>
-<%= form_with(model: asset_allocate, local: true) do |form| %>
-<% if asset_allocate.errors.any? %>
-<div id="error_explanation">
-  <h2><%= pluralize(asset_allocate.errors.count, "error") %> prohibited this asset_allocate from being saved:</h2>
-  <ul>
-    <% asset_allocate.errors.full_messages.each do |message| %>
-    <li><%= message %></li>
-    <% end %>
-  </ul>
-</div>
-<% end %>
-<p id="id" hidden='hidden'><%= @asset_allocate.id%></p>
-<a id="a_test" rel="nofollow"><button onclick="Save()" type="button" class="layui-btn">保存</button></a>
-<a id="a_audit" rel="nofollow"><button onclick="Update_Fbillstatus(<%=@asset_allocate.id%>,'审核' )" type="button"
-    class="layui-btn">审核</button></a>
-<a id="a_unaudit" rel="nofollow"><button onclick="Update_Fbillstatus(<%=@asset_allocate.id%>,'反审核' )" type="button"
-    class="layui-btn">反审核</button></a>
-<a data-url="/asset_allocates" data-id="asset_allocates" data-title="资产处置单-列表" class="linkActive" rel="nofollow"><button
-    type="button" class="layui-btn">返回列表</button></a>
-<br><br>
-<div style="display:flex;">
-  <div class="field">
-    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_单据编号">单据编号</label>
-    <div class="layui-input-block "> <input class="layui-input input1  " placeholder="请输入单据编号" type="text"
-        name="asset_allocate[FBillno]" id="asset_allocate_FBillno" value=<%= @asset_allocate.FBillno%>></div>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+  <style>
+    .locked {
+      /* 控件锁定 */
+      background-color: '#F5F5F5'
+    }
+
+    /* 带搜索输入框 */
+    .image_input {
+      width: 192px;
+      border: 1px solid #e6e6e6;
+      border-left: 1;
+      border-right: 0;
+      border-top: 1;
+      border-bottom: 1;
+      border-top-left-radius: 2px;
+      border-top-right-radius: 0px;
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 2px;
+    }
+
+    /* 搜索按钮 */
+    .image {
+      border: 1px solid #e6e6e6;
+      border-left: 0px;
+      border-right: 1;
+      border-top: 1;
+      border-bottom: 1;
+      border-bottom-left-radius: 0;
+      border-top-left-radius: 0;
+      border-bottom-right-radius: 2px;
+      border-top-right-radius: 2px;
+      height: 38px;
+      width: 38px;
+    }
+
+    /* 标签 */
+    .label1 {
+      width: 100px;
+      font-size: 12px;
+    }
+
+    /* 不带搜索输入框 */
+    .input1 {
+      width: 230px;
+    }
+  </style>
+</head>
+
+<body>
+  <!--忽略 !-->
+  <%= form_with(model: asset_allocate, local: true) do |form| %>
+  <% if asset_allocate.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= pluralize(asset_allocate.errors.count, "error") %> prohibited this asset_allocate from being saved:</h2>
+    <ul>
+      <% asset_allocate.errors.full_messages.each do |message| %>
+      <li><%= message %></li>
+      <% end %>
+    </ul>
   </div>
-  <div class="field">
-    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_调出日期">调出日期</label>
-    <div class="layui-input-block"> <input class="layui-input input1    fdate" placeholder="请输入调出日期" type="text"
-        name="asset_allocate[Expdate]" id="asset_allocate_Expdate" value=<%= @asset_allocate.Expdate%>></div>
-  </div>
-  <div class="field">
-    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_调拨原因">调拨原因</label>
-    <div class="layui-input-block"> <input class="layui-input input1    " placeholder="请输入调拨原因" type="text"
-        name="asset_allocate[Allocate_reason]" id="asset_allocate_Allocate_reason"
-        value=<%= @asset_allocate.Allocate_reason%>></div>
-  </div>
-</div>
-<div style="display:flex;">
-  <div class="field">
-    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_单据状态">单据状态</label>
-    <div class="layui-input-block "> <input class="layui-input input1 locked " type="text"
-        name="asset_allocate[FBillstatus]" id="asset_allocate_FBillstatus" value=<%= @asset_allocate.FBillstatus%>>
+  <% end %>
+  <!--菜单集合 -->
+  <p id="id" hidden='hidden'><%= @asset_allocate.id%></p>
+  <a id="a_test" rel="nofollow"><button onclick="Save()" type="button" class="layui-btn">保存</button></a>
+  <a id="a_audit" rel="nofollow"><button onclick="Update_Fbillstatus(<%=@asset_allocate.id%>,'审核' )" type="button"
+      class="layui-btn">审核</button></a>
+  <a id="a_unaudit" rel="nofollow"><button onclick="Update_Fbillstatus(<%=@asset_allocate.id%>,'反审核' )" type="button"
+      class="layui-btn">反审核</button></a>
+  <a data-url="/asset_allocates" data-id="asset_allocates" data-title="资产调拨单-列表" class="linkActive"
+    rel="nofollow"><button type="button" class="layui-btn">返回列表</button></a>
+  <!--业务字段集合 -->
+  <div>
+    <div style="display:flex;">
+      <div class="field">
+        <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_单据编号">单据编号</label>
+        <div class="layui-input-block "> <input class="layui-input input1  " placeholder="请输入单据编号" type="text"
+            name="asset_allocate[FBillno]" id="asset_allocate_FBillno" value=<%= @asset_allocate.FBillno%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_调出日期">调出日期</label>
+        <div class="layui-input-block"> <input class="layui-input input1    fdate" placeholder="请输入调出日期" type="text"
+            name="asset_allocate[Expdate]" id="asset_allocate_Expdate" value=<%= @asset_allocate.Expdate%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_调拨原因">调拨原因</label>
+        <div class="layui-input-block"> <input class="layui-input input1    " placeholder="请输入调拨原因" type="text"
+            name="asset_allocate[Allocate_reason]" id="asset_allocate_Allocate_reason"
+            value=<%= @asset_allocate.Allocate_reason%>></div>
+      </div>
+    </div>
+    <div style="display:flex;">
+      <div class="field">
+        <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_单据状态">单据状态</label>
+        <div class="layui-input-block "> <input class="layui-input input1 locked " type="text"
+            name="asset_allocate[FBillstatus]" id="asset_allocate_FBillstatus" value=<%= @asset_allocate.FBillstatus%>>
+        </div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_创建人">创建人</label>
+        <div class="layui-input-block"> <input class="layui-input input1     locked" type="text"
+            name="asset_allocate[Creator]" id="asset_allocate_Creator" value=<%= @asset_allocate.Creator%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_创建日期">创建日期</label>
+        <div class="layui-input-block"> <input class="layui-input input1  locked  " type="text"
+            name="asset_allocate[CREATEDATE]" id="asset_allocate_CREATEDATE" value=<%= @asset_allocate.CREATEDATE%>>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;">
+      <div class="field">
+        <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_审核人">审核人</label>
+        <div class="layui-input-block "> <input class="layui-input input1 locked " type="text"
+            name="asset_allocate[Approver]" id="asset_allocate_Approver" value=<%= @asset_allocate.Approver%>></div>
+      </div>
+      <div class="field">
+        <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_审核日期">审核日期</label>
+        <div class="layui-input-block"> <input class="layui-input input1    locked" type="text"
+            name="asset_allocate[APPROVEDATE]" id="asset_allocate_APPROVEDATE" value=<%= @asset_allocate.APPROVEDATE%>>
+        </div>
+      </div>
     </div>
   </div>
-  <div class="field">
-    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_创建人">创建人</label>
-    <div class="layui-input-block"> <input class="layui-input input1     locked" type="text"
-        name="asset_allocate[Creator]" id="asset_allocate_Creator" value=<%= @asset_allocate.Creator%>></div>
+  <% end %>
+  <!--单据体菜单集合 -->
+  <div class="layui-btn-group">
+    <button id="add_row" class="layui-btn" onclick="addrow()">新增行</button>
+    <button class="layui-btn" onclick="delrow()">删除行</button>
+    <button id="btn_choose_assetcard" class="layui-btn" onclick="Choosedata(assetcardModal)" href="#">选择资产卡片</button>
   </div>
-  <div class="field">
-    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_创建日期">创建日期</label>
-    <div class="layui-input-block"> <input class="layui-input input1  locked  " type="text"
-        name="asset_allocate[CREATEDATE]" id="asset_allocate_CREATEDATE" value=<%= @asset_allocate.CREATEDATE%>></div>
-  </div>
-</div>
-<div style="display:flex;">
-  <div class="field">
-    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_审核人">审核人</label>
-    <div class="layui-input-block "> <input class="layui-input input1 locked " type="text"
-        name="asset_allocate[Approver]" id="asset_allocate_Approver" value=<%= @asset_allocate.Approver%>></div>
-  </div>
-  <div class="field">
-    <label class="layui-form-label label1" style="  font-family: '黑体'" for="asset_allocate_审核日期">审核日期</label>
-    <div class="layui-input-block"> <input class="layui-input input1    locked" type="text"
-        name="asset_allocate[APPROVEDATE]" id="asset_allocate_APPROVEDATE" value=<%= @asset_allocate.APPROVEDATE%>>
-    </div>
-  </div>
-</div>
-<% end %>
-<div class="layui-btn-group">
-  <button id="add_row" class="layui-btn" onclick="addrow()">新增行</button>
-  <button class="layui-btn" onclick="delrow()">删除行</button>
-  <button id="btn_choose_assetcard" class="layui-btn" onclick="Choosedata(assetcardModal)" href="#">选择资产卡片</button>
-</div>
-<form id="Entry" ,action="/save_multiple">
-  <table id="testid" class="layui-table font" style="text-align:center;margin:10px;0px; ">
-    <colgroup>
-      <col width="150">
-      <col>
-    </colgroup>
-    <thead>
-      <tr>
-        <th style="text-align:center;font-size:10px;width: 1%;"><input class='awsui-checkbox '  id='checkbox_SelectAll'
-            value='' type='checkbox' onclick="selectAll(this,'entry.ids[]')"></th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">序号</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产编码</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产名称</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">计量单位</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">规格型号</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产数量</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">调出部门</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">原使用人</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">原资产位置</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">调出数量</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">调入部门</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">现使用人</th>
-        <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">调入资产位置</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if @asset_allocate_entry.nil?%>
-      <tr class="trr" id="0" , onclick=>
-        <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">1</td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="false"></td>
-        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
-        <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'部门')"
-          class="tdd1" contenteditable="false">双击选择调入部门</td>
-        <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'用户')"
-          class="tdd1" contenteditable="false">双击选择现使用人</td>
-        <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;"
-          ondblclick="ChooseMotal(this,'资产位置')" class="tdd1" contenteditable="false">双击选择资产位置</td>
-      </tr>
-      <%else%>
-      <% @asset_allocate_entry.each do |asset_allocate_entry| %>
-      <tr class="trr" id=<%=asset_allocate_entry.id%>>
-        <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox' /></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true">
-          <%= asset_allocate_entry.fseq %>
-        </td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
-          <%= asset_allocate_entry.Code %></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
-          <%= asset_allocate_entry.name %></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
-          <%= asset_allocate_entry.Unit %></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
-          <%= asset_allocate_entry.Model %></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
-          <%= asset_allocate_entry.Amount %></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1  " contenteditable="false">
-          <%= asset_allocate_entry.EXPdept %></td>
-        <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
-          <%= asset_allocate_entry.Employeeld %></td>
-        <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
-          <%= asset_allocate_entry.Asset_seat %></td>
-        <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
-          <%= asset_allocate_entry.EXPQTY %></td>
-        <%if  asset_allocate_entry.IMPdept ==""%>
-        <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'部门')" class="tdd1"
-          contenteditable="false">双击选择调入部门</td>
+  <!--单据体 -->
+  <form id="Entry" ,action="/save_multiple">
+    <table id="testid" class="layui-table font" style="text-align:center;margin:10px;0px; ">
+      <colgroup>
+        <col width="150">
+        <col>
+      </colgroup>
+      <thead>
+        <tr>
+          <!--单据体列头 -->
+          <th style="text-align:center;font-size:10px;width: 1%;"><input class='awsui-checkbox '
+               id='checkbox_SelectAll' value='' type='checkbox' onclick="selectAll(this,'entry.ids[]')"></th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">序号</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产编码</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产名称</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">计量单位</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">规格型号</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">资产数量</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">调出部门</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">原使用人</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">原资产位置</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">调出数量</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 5%;">调入部门</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">现使用人</th>
+          <th style="text-align:center;font-size:10px;font-weight:bold;width: 6%;">调入资产位置</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @asset_allocate_entry.nil?%>
+        <!--判断当前单据为新增状态还是修改状态 -->
+        <!--当前单据为新增状态 -->
+        <tr class="trr" id="0" , onclick=>
+          <!--单据体字段集合 -->
+          <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox'></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">1</td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1 " contenteditable="false"></td>
+          <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+          <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+          <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false"></td>
+          <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;"
+            ondblclick="ChooseMotal(this,'部门')" class="tdd1" contenteditable="false">双击选择调入部门</td>
+          <!--添加双击选择调入部门功能-->
+          <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;"
+            ondblclick="ChooseMotal(this,'用户')" class="tdd1" contenteditable="false">双击选择现使用人</td>
+          <!--添加双击选择使用人功能-->
+          <td style="text-align:center;font-size:10px;color:darkgray;font-size: 8px;"
+            ondblclick="ChooseMotal(this,'资产位置')" class="tdd1" contenteditable="false">双击选择资产位置</td>
+          <!--添加双击选择资产位置功能-->
+        </tr>
         <%else%>
-        <td style="text-align:center;font-size: 10px;" ondblclick="ChooseMotal(this,'部门')" class="tdd1"
-          contenteditable="false"><%= asset_allocate_entry.IMPdept %> </td>
+        <!--当前单据为修改状态 -->
+        <% @asset_allocate_entry.each do |asset_allocate_entry| %>
+        <tr class="trr" id=<%=asset_allocate_entry.id%>>
+          <td><input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]' type='checkbox' /></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="true">
+            <%= asset_allocate_entry.fseq %>
+          </td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+            <%= asset_allocate_entry.Code %></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+            <%= asset_allocate_entry.name %></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+            <%= asset_allocate_entry.Unit %></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+            <%= asset_allocate_entry.Model %></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+            <%= asset_allocate_entry.Amount %></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1  " contenteditable="false">
+            <%= asset_allocate_entry.EXPdept %></td>
+          <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
+            <%= asset_allocate_entry.Employeeld %></td>
+          <td style="text-align:center;font-size:8px;" class="tdd1  " contenteditable="false">
+            <%= asset_allocate_entry.Asset_seat %></td>
+          <td style="text-align:center;font-size:9px;" class="tdd1" contenteditable="false">
+            <%= asset_allocate_entry.EXPQTY %></td>
+          <%if  asset_allocate_entry.IMPdept ==""%>
+          <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'部门')" class="tdd1"
+            contenteditable="false">双击选择调入部门</td>
+          <!--如果资产位置为空则显示“双击选择调入部门”，并添加双击选择部门功能-->
+          <%else%>
+          <td style="text-align:center;font-size: 10px;" ondblclick="ChooseMotal(this,'部门')" class="tdd1"
+            contenteditable="false"><%= asset_allocate_entry.IMPdept %> </td>
+          <%end%>
+          <%if  asset_allocate_entry.Newuser ==""%>
+          <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'用户')" class="tdd1"
+            contenteditable="false">双击选择现使用人</td>
+          <!--如果部门为空则显示“双击选择现使用人”，并添加双击选择使用人功能-->
+          <%else%>
+          <td style="text-align:center;font-size: 10px;" ondblclick="ChooseMotal(this,'用户')" class="tdd1"
+            contenteditable="false"><%= asset_allocate_entry.Newuser %> </td>
+          <%end%>
+          <%if  asset_allocate_entry.IMP_seat ==""%>
+          <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'资产位置')"
+            class="tdd1" contenteditable="false">双击选择资产位置</td>
+          <!--如果使用人为空则显示“双击选择资产位置”，并添加双击选择资产功能-->
+          <%else%>
+          <td style="text-align:center;font-size: 10px;" ondblclick="ChooseMotal(this,'资产位置')" class="tdd1"
+            contenteditable="false"><%= asset_allocate_entry.IMP_seat %> </td>
+          <%end%>
+        </tr>
         <%end%>
-        <%if  asset_allocate_entry.Newuser ==""%>
-        <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'用户')" class="tdd1"
-          contenteditable="false">双击选择现使用人</td>
-        <%else%>
-        <td style="text-align:center;font-size: 10px;" ondblclick="ChooseMotal(this,'用户')" class="tdd1"
-          contenteditable="false"><%= asset_allocate_entry.Newuser %> </td>
         <%end%>
-        <%if  asset_allocate_entry.IMP_seat ==""%>
-        <td style="text-align:center;color:darkgray;font-size: 8px;" ondblclick="ChooseMotal(this,'资产位置')" class="tdd1"
-          contenteditable="false">双击选择资产位置</td>
-        <%else%>
-        <td style="text-align:center;font-size: 10px;" ondblclick="ChooseMotal(this,'资产位置')" class="tdd1"
-          contenteditable="false"><%= asset_allocate_entry.IMP_seat %> </td>
-        <%end%>
-      </tr>
-      <%end%>
-      <%end%>
-    </tbody>
-  </table>
-</form>
-<script type="text/javascript">
-  function Update_Fbillstatus(id, fbillstatus, ) {
-    if (fbillstatus == "审核") {
-      var result = Save_with_updatestatus();
-      if (result.code != 200) {
-        alert(result.message);
+      </tbody>
+    </table>
+  </form>
+  <script src="https://www.layuicdn.com/layui/layui.js"></script>
+  <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+  <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <%=javascript_pack_tag 'tabadd' %>
+  <script type="text/javascript">
+    function Update_Fbillstatus(id, fbillstatus) {
+      if (fbillstatus == "审核") {
+        //审核前保存
+        var result = Save_with_updatestatus();
+        if (result.code != 200) {
+          //保存失败提示
+          alert(result.message);
+          return;
+        }
+      }
+      //调用后端更新状态接口
+      $.ajax({
+        type: "post",
+        async: false,
+        url: "/asset_allocates_Update_Fbillstatus",
+        data: {
+          "id": id,
+          "fbillstatus": fbillstatus
+        },
+        success: function (res) {
+          alert(res.message);
+          if (res.code == 200) {
+            var path = "/asset_allocates/" + id + "/edit";
+            window.location = path;
+          }
+        }
+      });
+    }
+    //删除行
+    function delrow() {
+      //审核状态不允许删除行
+      if ($("#asset_allocate_FBillstatus").val() == "已审核") {
+        alert("该单据已经审核，不允许删除行！")
         return;
       }
-    }
-    $.ajax({
-      type: "post",
-      async: false,
-      url: "/asset_allocates_Update_Fbillstatus",
-      data: {
-        "id": id,
-        "fbillstatus": fbillstatus
-      },
-      success: function (res) {
-        alert(res.message);
-        if (res.code == 200) {
-          var path = "/asset_allocates/" + id + "/edit";
-          window.location = path;
+      //获取单据体行
+      var items = document.getElementsByName("entry.ids[]");
+      var x = document.getElementById("testid");
+      var IsCheckCount = 0;
+      for (var i = items.length - 1; i >= 0; i--) {
+        if (items[i].checked) {
+          IsCheckCount++;
+          x = document.getElementById("testid");
+          var row = x.rows;
+          for (j = i + 2; j < row.length; j++) {
+            row[j].cells[1].innerHTML = row[j].cells[1].innerHTML * 1 - 1
+          }
+          x.deleteRow(i + 1); //删除一行 
         }
       }
-    });
-  }
-  function delrow() {
-    if ($("#asset_allocate_FBillstatus").val() == "已审核") {
-      alert("该单据已经审核，不允许删除行！")
-      return;
-    }
-    var items = document.getElementsByName("entry.ids[]");
-    var x = document.getElementById("testid");
-    var IsCheckCount = 0;
-    for (var i = items.length - 1; i >= 0; i--) {
-      if (items[i].checked) {
-        IsCheckCount++;
-        x = document.getElementById("testid");
-        var row = x.rows;
-        for (j = i + 2; j < row.length; j++) {
-          row[j].cells[1].innerHTML = row[j].cells[1].innerHTML * 1 - 1
-        }
-        x.deleteRow(i + 1); //删除一行 
+      if (IsCheckCount == 0) {
+        alert("请选择删除的数据！");
       }
     }
-    if (IsCheckCount == 0) {
-      alert("请选择删除的数据！");
-    }
-  }
-  function addrow() {
-    if ($("#asset_allocate_FBillstatus").val() == "已审核") {
-      alert("该单据已经审核，不允许增加行！")
-      return;
-    }
-    var c = document.getElementById('testid'); //获得表格的信息  
-    if (c.length == 1) //如果是向一个空表增加一行
-    {
-      var x = c.insertRow(1); //向空表插入一行  
-      var z = c.rows[0].cells; //如果不是空表，首先获得表格有多少列，先获取再插入新行  
-      for (var i = 0; i < z.length; i++) //依次向新行插入表格列数的单元格
+    //新增行
+    function addrow() {
+      //审核状态不允许新增行
+      if ($("#asset_allocate_FBillstatus").val() == "已审核") {
+        alert("该单据已经审核，不允许增加行！")
+        return;
+      }
+      var c = document.getElementById('testid'); //获得表格的信息  
+      if (c.length == 1) //如果是向一个空表增加一行
       {
-        var y = x.insertCell(i);
-      }
-    } else {
-      var z = c.rows[0].cells; //如果不是空表，首先获得表格有多少列，先获取再插入新行 
-      var index = c.rows[c.rows.length - 1].cells[1].innerHTML * 1;
-      var index = c.rows.length * 1;
-      var x = c.insertRow(c.rows.length);
-      x.id = 0;
-      for (var i = 0; i < z.length; i++) //依次向新行插入表格列数的单元格
-      {
-        var y = x.insertCell(i);
-        if (i == 0) {
-          y.innerHTML = "<input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]'  type='checkbox'/>";
-        } else if (i == 1) {
-          y.innerHTML = index;
-          y.setAttribute("style", "text-align:center;font-size:10px;")
-        } else if (i == 11) {
-          y.innerHTML = "双击选择调入部门";
-          y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
-          y.setAttribute("ondblclick", " ChooseMotal(this,'部门')")
-        }  else if (i == 12) {
-          y.innerHTML = "双击选择现使用人";
-          y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
-          y.setAttribute("ondblclick", " ChooseMotal(this,'用户')")
-        }  else if (i == 13) {
-          y.innerHTML = "双击选择资产位置";
-          y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
-          y.setAttribute("ondblclick", " ChooseMotal(this,'资产位置')")
-        } else {
-          y.setAttribute("contenteditable", "true");
-          y.setAttribute("style", "text-align:center;font-size:10px;")
+        var x = c.insertRow(1); //向空表插入一行  
+        var z = c.rows[0].cells; //如果不是空表，首先获得表格有多少列，先获取再插入新行  
+        for (var i = 0; i < z.length; i++) //依次向新行插入表格列数的单元格
+        {
+          var y = x.insertCell(i);
         }
-        if (i != 10) {
-          y.setAttribute("contenteditable", "false");
+      } else {
+        var z = c.rows[0].cells; //如果不是空表，首先获得表格有多少列，先获取再插入新行 
+        var index = c.rows[c.rows.length - 1].cells[1].innerHTML * 1;
+        var index = c.rows.length * 1;
+        var x = c.insertRow(c.rows.length);
+        x.id = 0;
+        for (var i = 0; i < z.length; i++) //依次向新行插入表格列数的单元格
+        {
+          var y = x.insertCell(i);
+          if (i == 0) { //添加复选框
+            y.innerHTML = "<input class='awsui-checkbox' id='entry.ids[]' name='entry.ids[]'  type='checkbox'/>";
+          } else if (i == 1) { //添加序号
+            y.innerHTML = index;
+            y.setAttribute("style", "text-align:center;font-size:10px;")
+          } else if (i == 11) { //添加双击选择部门基础资料功能
+            y.innerHTML = "双击选择调入部门";
+            y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
+            y.setAttribute("ondblclick", " ChooseMotal(this,'部门')")
+          } else if (i == 12) { //添加双击选择使用人基础资料功能
+            y.innerHTML = "双击选择现使用人";
+            y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
+            y.setAttribute("ondblclick", " ChooseMotal(this,'用户')")
+          } else if (i == 13) { //添加双击选择资产位置基础资料功能
+            y.innerHTML = "双击选择资产位置";
+            y.setAttribute("style", "text-align:center;font-size:10px;color:darkgray;font-size: 8px;")
+            y.setAttribute("ondblclick", " ChooseMotal(this,'资产位置')")
+          } else {
+            //设置不可编辑
+            y.setAttribute("contenteditable", "true");
+            y.setAttribute("style", "text-align:center;font-size:10px;")
+          }
+          if (i != 10) {
+            //设置编辑
+            y.setAttribute("contenteditable", "false");
+          }
+          y.setAttribute("class", "tdd1");
         }
-        y.setAttribute("class", "tdd1");
       }
     }
-  }
-  $(document).ready(function () {
-    layui.use('laydate', function () {
-      var laydate = layui.laydate;
-      $('.fdate').each(function () {
-        laydate.render({
-          elem: this
-        });
-      });
-    })
-    if ($("#asset_allocate_FBillstatus").val() == "已审核") {
-      $('.fdatetd').each(function () {
-        laydate.render({
-          elem: this
+    $(document).ready(function () {
+      layui.use('laydate', function () {
+        //给日期字段添加日期控件
+        var laydate = layui.laydate;
+        $('.fdate').each(function () {
+          laydate.render({
+            elem: this
+          });
         });
       })
-      $("input").prop('disabled', 'disabled');
-      $("input").css('background-color', '#F5F5F5');
-      $("td").prop('contenteditable', 'false');
-      $("td").css('background-color', '#F5F5F5');
-      $("image").prop('disabled', 'disabled');
-    }
-    $(".locked").prop('disabled', 'disabled');
-    $(".locked").css('background-color', '#F5F5F5');
-    if ($("#id").text() == "") {
-      $("#a_unaudit").hide();
-      $("#a_audit").hide();
-      $("#a_Back").hide();
-    } else {
-      $("#a_audit").show();
-      $("#a_Back").show();
-      $("#asset_allocate_FBillno").attr("disabled", "disabled");
-      $("#asset_allocate_FBillno").css('background-color', '#F5F5F5');
-    }
-  });
-  function Save() {
-    var id = document.getElementById("id").innerText; //单据id 
-    var asset_allocate_FBillno = document.getElementById("asset_allocate_FBillno").value; //单据编码
-    var asset_allocate_Expdate = document.getElementById("asset_allocate_Expdate").value; //调拨日期
-    var asset_allocate_Allocate_reason = document.getElementById("asset_allocate_Allocate_reason").value; //调拨方式 
-    var array1 = new Array();
-    var array_id = new Array();
-    var tb = document.getElementById('testid'); // table 的 id
-    var rows = tb.rows; // 获取表格所有行 
-    var t = 0;
-    for (var i = 1; i < rows.length; i++) {
-      console.log(rows[i]);
-      array_id[i - 1] = rows[i].id;
-      var array2 = new Array();
-      for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td       
-        array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+      if ($("#asset_allocate_FBillstatus").val() == "已审核") {
+        //审核状态设置不可编辑状态
+        $('.fdatetd').each(function () {
+          laydate.render({
+            elem: this
+          });
+        })
+        $("input").prop('disabled', 'disabled');
+        $("input").css('background-color', '#F5F5F5');
+        $("td").prop('contenteditable', 'false');
+        $("td").css('background-color', '#F5F5F5');
+        $("image").prop('disabled', 'disabled');
       }
-      array2[rows[i].cells.length - 2] = rows[i].id;
-      array2[rows[i].cells.length - 1] = rows[i].cells[1].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
-      array1[i - 1] = array2;
+      $(".locked").prop('disabled', 'disabled');
+      $(".locked").css('background-color', '#F5F5F5');
+      if ($("#id").text() == "") {
+        //单据新增时，审核、反审核按钮隐藏
+        $("#a_unaudit").hide();
+        $("#a_audit").hide();
+        $("#a_Back").hide();
+      } else {
+        //单据非新增时，审核、反审核按钮显示，单据编号不可编辑
+        $("#a_audit").show();
+        $("#a_Back").show();
+        $("#asset_allocate_FBillno").attr("disabled", "disabled");
+        $("#asset_allocate_FBillno").css('background-color', '#F5F5F5');
+      }
+    });
+    //保存
+    function Save() {
+      //获取字段的Value
+      var id = document.getElementById("id").innerText; //单据id 
+      var asset_allocate_FBillno = document.getElementById("asset_allocate_FBillno").value; //单据编码
+      var asset_allocate_Expdate = document.getElementById("asset_allocate_Expdate").value; //调拨日期
+      var asset_allocate_Allocate_reason = document.getElementById("asset_allocate_Allocate_reason").value; //调拨方式 
+      var array1 = new Array();
+      var array_id = new Array();
+      var tb = document.getElementById('testid'); // table 的 id
+      var rows = tb.rows; // 获取表格所有行 
+      var t = 0;
+      //遍历单据体行，获取单据体数据
+      for (var i = 1; i < rows.length; i++) {
+        array_id[i - 1] = rows[i].id;
+        var array2 = new Array();
+        for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td       
+          array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+        }
+        array2[rows[i].cells.length - 2] = rows[i].id;
+        array2[rows[i].cells.length - 1] = rows[i].cells[1].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+        array1[i - 1] = array2;
+      }
+      //将页面数据传递到后端保存接口
+      $.ajax({
+        type: "post",
+        async: false,
+        url: "/asset_allocates_save_all",
+        data: {
+          "type": "保存",
+          "array_id": array_id,
+          "datas": array1,
+          "id": id,
+          "FBillno": asset_allocate_FBillno,
+          "Expdate": asset_allocate_Expdate,
+          "Allocate_reason": asset_allocate_Allocate_reason
+        },
+        success: function (res) {
+          //提示保存信息
+          alert(res.message);
+          if (res.code == 200) {
+            //跳转界面保存界面
+            var path = "/asset_allocates/" + res.id + "/edit"
+            window.location = path;
+          }
+        }
+      });
     }
-    $.ajax({
-      type: "post",
-      async: false,
-      url: "/asset_allocates_save_all",
-      data: {
-        "type": "保存",
-        "array_id": array_id,
-        "datas": array1,
-        "id": id,
-        "FBillno": asset_allocate_FBillno,
-        "Expdate": asset_allocate_Expdate,
-        "Allocate_reason": asset_allocate_Allocate_reason
-      },
-      success: function (res) {
-        alert(res.message);
-        console.log(res);
-        if (res.code == 200) {
-          var path = "/asset_allocates/" + res.id + "/edit"
-          window.location = path;
+    //审核前保存
+    function Save_with_updatestatus() {
+      //获取字段的Value
+      var result = new Array();
+      var id = document.getElementById("id").innerText; //单据id 
+      var asset_allocate_FBillno = document.getElementById("asset_allocate_FBillno").value; //单据编码
+      var asset_allocate_Expdate = document.getElementById("asset_allocate_Expdate").value; //调拨日期
+      var asset_allocate_Allocate_reason = document.getElementById("asset_allocate_Allocate_reason").value; //调拨方式 
+      var array1 = new Array();
+      var array_id = new Array();
+      var tb = document.getElementById('testid'); // table 的 id
+      var rows = tb.rows; // 获取表格所有行 
+      var t = 0;
+      //遍历单据体行，获取单据体数据
+      for (var i = 1; i < rows.length; i++) {
+        array_id[i - 1] = rows[i].id;
+        var array2 = new Array();
+        for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td       
+          array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+        }
+        array2[rows[i].cells.length - 2] = rows[i].id;
+        array2[rows[i].cells.length - 1] = rows[i].cells[1].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+        array1[i - 1] = array2;
+      }
+      //将数据传递到后端保存接口
+      $.ajax({
+        type: "post",
+        async: false,
+        url: "/asset_allocates_save_all",
+        data: {
+          "type": "保存",
+          "array_id": array_id,
+          "datas": array1,
+          "id": id,
+          "FBillno": asset_allocate_FBillno,
+          "Expdate": asset_allocate_Expdate,
+          "Allocate_reason": asset_allocate_Allocate_reason
+        },
+        success: function (res) {
+          result = res;
+        }
+      });
+      //返回保存信息
+      return result;
+    }
+    //全部选中
+    function selectAll(obj, type) {
+      //创建数组
+      var arr = new Array();
+      //获取所有id为“cb1”的复选框
+      var items = document.getElementsByName(type);
+      //判断复选框是否选中
+      if (obj.checked) {
+        //循环将所有name为"category"的复选框设置为选中状态
+        for (var i = 0; i < items.length; i++) {
+          //alert(items[i]);
+          items[i].checked = true;
+        }
+      } else {
+        //循环将所有name为"category"的复选框设置为非选中状态
+        for (var i = 0; i < items.length; i++) {
+          //alert(items[i]);
+          items[i].checked = false;
         }
       }
-    });
-  } 
-  function Save_with_updatestatus() {
-    var result = new Array();
-    var id = document.getElementById("id").innerText; //单据id 
-    var asset_allocate_FBillno = document.getElementById("asset_allocate_FBillno").value; //单据编码
-    var asset_allocate_Expdate = document.getElementById("asset_allocate_Expdate").value; //调拨日期
-    var asset_allocate_Allocate_reason = document.getElementById("asset_allocate_Allocate_reason").value; //调拨方式 
-    var array1 = new Array();
-    var array_id = new Array();
-    var tb = document.getElementById('testid'); // table 的 id
-    var rows = tb.rows; // 获取表格所有行 
-    var t = 0;
-    for (var i = 1; i < rows.length; i++) {
-      console.log(rows[i]);
-      array_id[i - 1] = rows[i].id;
-      var array2 = new Array();
-      for (var j = 2; j < rows[i].cells.length; j++) { // 遍历该行的 td       
-        array2[j - 2] = rows[i].cells[j].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
+    }
+    //单元格点击事件
+    $('td').click(function (e) {
+      if (e.currentTarget.className != "") {
+        //判断点击单元格是否为复选框
+        if (e.currentTarget.parentNode.firstElementChild.children[0].checked) {
+          //如果当前行的复选框已经勾选，则取消勾选
+          e.currentTarget.parentNode.firstElementChild.children[0].checked = false;
+        } else {
+          //如果当前行的复选框已经取消勾选，则勾选
+          e.currentTarget.parentNode.firstElementChild.children[0].checked = true;
+        }
       }
-      array2[rows[i].cells.length - 2] = rows[i].id;
-      array2[rows[i].cells.length - 1] = rows[i].cells[1].innerHTML.replace('<br>', '').replace(/(^\s*)|(\s*$)/g, "");
-      array1[i - 1] = array2;
-    }
-    $.ajax({
-      type: "post",
-      async: false,
-      url: "/asset_allocates_save_all",
-      data: {
-        "type": "保存",
-        "array_id": array_id,
-        "datas": array1,
-        "id": id,
-        "FBillno": asset_allocate_FBillno,
-        "Expdate": asset_allocate_Expdate,
-        "Allocate_reason": asset_allocate_Allocate_reason
-      },
-      success: function (res) {
-        result = res;
+    })
+    //根据参数选择Modal数据
+    function ChooseMotal(element, type) {
+      var list = document.getElementsByClassName("tdd1 update");
+      if (list.length > 0) {
+        list[0].classList.remove("update")
       }
-    });
-    return result;
-  }
-  function selectAll(obj, type) {
-    //创建数组
-    var arr = new Array();
-    //获取所有id为“cb1”的复选框
-    var items = document.getElementsByName(type);
-    //判断复选框是否选中
-    if (obj.checked) {
-      //循环将所有name为"category"的复选框设置为选中状态
-      for (var i = 0; i < items.length; i++) {
-        //alert(items[i]);
-        items[i].checked = true;
+      $(element)[0].style.color = "#666";
+      $(element).css("font-size", "9px")
+      $(element).addClass("update");
+      var modalid;
+      switch (type) {
+        case "资产位置":
+          modalid = assetseateModal_row;
+          break;
+        case "部门":
+          modalid = departmentModal_row;
+          break;
+        case "用户":
+          modalid = userModal_row;
+          break;
+        default:
+          break;
       }
-    } else {
-      //循环将所有name为"category"的复选框设置为非选中状态
-      for (var i = 0; i < items.length; i++) {
-        //alert(items[i]);
-        items[i].checked = false;
+      //弹出Modal窗口
+      Choosedata(modalid);
+    }
+
+    function Choosedata(modalid) {
+      if ($("#asset_allocate_FBillstatus").val() == "已审核") {
+        //审核状态不允许弹出窗口
+        alert("该单据已经审核，不允许操作！")
+        return;
       }
+      //弹出Modal窗口
+      $('#' + modalid.id).modal('show');
     }
-  }
-</script>
-<script>
-  $('td').click(function (e) {
-    console.log(e.currentTarget.className)
-    if (e.currentTarget.className != "") {
-      if (e.currentTarget.parentNode.firstElementChild.children[0].checked) {
-        e.currentTarget.parentNode.firstElementChild.children[0].checked = false;
-      } else {
-        e.currentTarget.parentNode.firstElementChild.children[0].checked = true;
-      }
-    }
-  })
-  function ChooseMotal(element, type) {
-    var list = document.getElementsByClassName("tdd1 update");
-    if (list.length > 0) {
-      list[0].classList.remove("update")
-    }
-    $(element)[0].style.color = "#666";
-    $(element).css("font-size", "9px")
-    $(element).addClass("update");
-    var modalid;
-    switch (type) {
-      case "资产位置":
-        modalid = assetseateModal_row;
-        break;
-      case "部门":
-        modalid = departmentModal_row;
-        break;
-      case "用户":
-        modalid = userModal_row;
-        break;
-      default:
-        break;
-    }
-    Choosedata(modalid);
-  }
-  function Choosedata(modalid) {
-    if ($("#asset_allocate_FBillstatus").val() == "已审核") {
-      alert("该单据已经审核，不允许操作！")
-      return;
-    }
-    $('#' + modalid.id).modal('show');
-  }
-</script>
-<%= render    'assetcards/AssetcardsModal.html.erb' ,fbillnotype: "资产调拨单" %>
-<%= render    'departments/DepartmentModal_row.html.erb',  id: "asset_picking_Picking_Dept" ,userid: "12"%>
-<%= render    'users/UserModal_row.html.erb',  id: "asset_picking_Picking_Employeeld"  ,department: "11" ,departmentvalue: "双击选择调入部门"%>
-<%= render    'assetseates/AssetseateModal_row.html.erb',  id: "assetcard_Assetseat_id"  %>
+  </script>
+  <!--加载局部视图 -->
+  <%= render    'departments/DepartmentModal_row.html.erb',  id: "asset_picking_Picking_Dept" ,userid: "12"%>
+  <%= render    'users/UserModal_row.html.erb',  id: "asset_picking_Picking_Employeeld"  ,department: "11" ,departmentvalue: "双击选择调入部门"%>
+  <%= render    'assetcards/AssetcardsModal.html.erb' ,fbillnotype: "资产调拨单" %>
+  
+  
+  <%= render    'assetseates/AssetseateModal_row.html.erb',  id: "assetcard_Assetseat_id"  %>
+</body>

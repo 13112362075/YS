@@ -1,4 +1,5 @@
   <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script> 
+  <!--忽略-->
 <%= form_with(model: asset_recovery, local: true) do |form| %>
   <% if asset_recovery.errors.any? %>
     <div id="error_explanation">
@@ -13,8 +14,7 @@
   <% end %>
 
 <p  id="id"><%= @asset_recovery.id%></p>
-
-
+ 
    <a id="a_test"   rel="nofollow"  ><button   onclick="test1()"   type="button" class="layui-btn">保存</button></a>  <br>
     <div style="display:flex;">
 
@@ -133,8 +133,7 @@ layui.use('laydate', function(){
  <script>
 //新增行
 function addrow(){
-   var c=document.getElementById('testid');//获得表格的信息 
-   console.log(c);
+   var c=document.getElementById('testid');//获得表格的信息  
    if( c.length==1)//如果是向一个空表增加一行
    {
      var x=c.insertRow(1);//向空表插入一行 
@@ -223,9 +222,7 @@ for(var i = 1; i<rows.length; i++ ){
   }
   array2[rows[i].cells.length-1]=rows[i].id;
   array1[i-1]=array2;
-}
-console.log(array1); 
-
+} 
 $.ajax({
   type:"post", 
    url:"/asset_recoveries_save_all", 
