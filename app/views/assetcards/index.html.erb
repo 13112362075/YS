@@ -1,309 +1,311 @@
- <script src="https://www.layuicdn.com/layui/layui.js"></script>
- <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
- <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
- <%=javascript_pack_tag 'tabadd' %>
- <%=javascript_pack_tag 'treetree' %>
- <%=stylesheet_link_tag  'totality' %>
- <style>
-   .layui-table-page select {
-     height: 26px;
-   }
-   .layui-disabled {
-     background-color: #fff !important;
-   }
-   .layui-laypage select {
-     padding: 0px;
-     border-radius: 2px;
-     cursor: pointer;
-   }
-   .layui-table-page {
-     text-align: center;
-   }
-   .layui-laypage .layui-laypage-skip {
-     color: #000;
-   }
-   .layui-table-box {
-     position: relative;
-     overflow: hidden;
-     text-align: center;
-   }
-   .buttongroup {
-     margin: 0px 4px 0px 0px;
-   }
- </style>
- <!--左边树状菜单-->
- <div id="List" class="layui-side layui-bg-black">
-   <!--树状菜单-->
-   <ul id="tree" class="ztree" style="width:230px; overflow:auto;"></ul>
- </div>
- <!--资产类别列表-->
- <div id="body" class="layui-body">
-   <!--获取树状点击的资产类别-->
-   <p id="Assettype_selected">
-     <p>
-       <div class="demoTable">
-         <button id="reload" class="layui-btn" data-type="reload">搜索</button>
-       </div>
-       <h1 style="text-align:center;">资产卡片</h1>
-       <div>
-         <!--列表菜单集合-->
-         <div class="layui-btn-group " style="margin:10px;0px;">
-           <a id="a_new" data-id="newassetcards" data-title="资产卡片-新增" class="linkActive" ><button
-               type="button" class=" buttongroup layui-btn" onclick="New()">新增</button></a>
-           <a id="a_update" rel="nofollow" class="linkActive" data-id="newassetcards" data-title="资产卡片-修改"><button
-               type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
-           <a id="a_delete" rel="nofollow"><button onclick="model_delete('  <%=assetcards_destroy_multiple_path%>')"
-               type="button" class="layui-btn">删除</button></a>
-           <a rel="nofollow"><button type="button" onclick="Refresh()" class="layui-btn">刷新</button></a>
-           <input type="file" id="file" style="display:none;"
-             accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
-           <a rel="nofollow"><button type="button" onclick="selectFile()" class="layui-btn">导入</button></a>
-           <a rel="nofollow"><button type="button" onclick="exportSpecialExcel()" class="layui-btn">导出</button></a>
-         </div>
-         <table class="layui-hide" id="assetcards" lay-filter="assetcards"></table>
-       </div>
-       <script>
-         //树状控件
-         $(function () {
-           var setting = {
-             callback: {
-               beforeClick: zTreeOnCheck
-             },
-             async: {
-               enable: true, //要开启async功能必须设置为true,其他地方同理
-               dataType: "json",
-               type: "get",
-               url: "/assettypes_Get_Data_Tree_Api",
-             },
-             data: {
-               simpleData: {
-                 enable: true,
-                 idKey: "id", //节点id名
-                 pIdKey: "pid", //父节点id名
-                 rootPId: 0 //默认根节点为0
-               }
-             }
-           };
-           var zTreeNodes = [];
-           var city = $.fn.zTree.init($("#tree"), setting, zTreeNodes);
-           //树状点击事件
-           function zTreeOnCheck(treeId, treeNode) {
-             var Assettype_selected = document.getElementById("Assettype_selected")
-             //获取树状选中节点
-             Assettype_selected.innerHTML = treeNode.name
-             $('.demoTable .layui-btn').click();
-           }
-         });
-         layui.use('table', function () {
-           var table = layui.table;
-           table.render({
-             elem: '#assetcards',
-             url: '/AssetList_Get_Data',
-             toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
-               ,
-             defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-               title: '刷新',
-               layEvent: 'Refresh',
-               icon: "layui-icon-refresh-3"
-             }, { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
-               title: '新增',
-               layEvent: 'Add',
-               icon: "layui-icon-addition"
-             }],
-             title: '用户数据表',
-             cols: [
-               [{
-                   type: 'checkbox'
-                 },
-                 {
-                   field: 'Assettype_id',
-                   width: 80,
-                   title: '资产类别',
-                   sort: true
-                 }, {
-                   field: 'assetCode',
-                   width: 80,
-                   title: '资产编码'
-                 }, {
-                   field: 'assetname',
-                   width: 80,
-                   title: '资产名称',
-                   sort: true
-                 }, {
-                   field: 'Assetstatus_id',
-                   title: '资产状态',
-                   width: '10%',
-                   minWidth: 100
-                 } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
-                 , {
-                   field: 'Addtype_id',
-                   title: '变动方式',
-                   sort: true
-                 }, {
-                   field: 'Usestate_id',
-                   title: '资产使用状态',
-                   sort: true
-                 }, {
-                   field: 'Assetseat_id',
-                   title: '资产位置'
-                 }, {
-                   field: 'department_id',
-                   title: '使用部门'
-                 }, {
-                   field: 'Employeeld',
-                   title: '使用人'
-                 }
-               ]
-             ],
-             page: true,
-             id: 'assetcards',
-             limits: [100, 200, 500, 1000, 2000, 10000],
-             limit: 100
-           });
-           var $ = layui.$,
-             active = {
-               reload: function () {
-                 var Assettype_selected = $('#Assettype_selected');
-                 //执行重载
-                 table.reload('assetcards', {
-                   page: {
-                     curr: 1 //重新从第 1 页开始
-                   },
-                   where: {
-                     key: {
-                       Assettype_selected: Assettype_selected.text(),
-                     }
-                   }
-                 }, 'data');
-               }
-             };
-           //监听行单击事件（双击事件为：rowDouble）
-           table.on('row(test)', function (obj) {
-             var data = obj.data; 
-             // layer.alert(JSON.stringify(data), {
-             //   title: '当前行数据：'
-             // }); 
-             //标注选中样式
-             obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
-           });
-           //头工具栏事件
-           table.on('toolbar(test)', function (obj) {
-             var checkStatus = table.checkStatus(obj.config.id);
-             switch (obj.event) {
-               //自定义头工具栏右侧图标 - 提示
-               case 'Refresh':
-                 Refresh();
-                 break;
-             };
-           });
-           $('.demoTable .layui-btn').on('click', function () {
-             var type = $(this).data('type');
-             active[type] ? active[type].call(this) : '';
-           });
-         });
-         $(document).ready(function () {
-           //隐藏控件
-           document.getElementById("Assettype_selected").style.display = 'none';
-           document.getElementById("reload").style.display = "none";
-           $("body").keydown(function () {
-             //键盘监听事件
-             if (event.keyCode == "13") { //keyCode=13是回车键
-               $('.demoTable .layui-btn').click();
-             }
-           });
-         });
-         //单元格点击事件
-         $(document).on("click", ".layui-table-body table.layui-table tbody td", function () {
-           if ($(this)[0].className == "") {
-             var index = $(this)[0].parentElement.attributes[0].value;
-             var tableBox = $(this).parents('.layui-table-box');
-             //存在固定列
-             tableDiv = tableBox.find(".layui-table-body.layui-table-main");
-             //获取已选中列并取消选中 
-             //选中单击行
-             var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
-               "td div.laytable-cell-checkbox div.layui-form-checkbox I");
-             checkCell.click(); //复选框选中
-           }
-         });
-         //删除
-         function model_delete(path) {
-           if (!confirm('你确定要删除吗？')) { //删除确认
-             return false
-           }
-           var items = new Array();
-           var table = layui.table;
-           var checkStatus = table.checkStatus('assetcards').data; //获取单据列表选中的数据
-           for (var i = 0; i < checkStatus.length; i++) { //遍历选中单据列表
-             items[i] = checkStatus[i].id //获取单据id
-           }
-           if (items.length == 0) { //如果没有勾选单据则提出信息
-             alert("请选择单据！");
-             return;
-           }
-           var resturl = path;
-           //调用后端删除接口
-           $.ajax({
-             type: "post",
-             url: resturl,
-             data: {
-               "assetcardsid": items
-             },
-             success: function (res) {
-               if (res.code == 200) {
-                 //删除成功
-                 alert(res.message);
-                 location.reload();
-               } else {
-                 //删除失败弹出错误信息
-                 alert(res.message);
-               }
-             }
-           });
-         }
-         //刷新
-         function Refresh() {
-           location.reload([true])
-         }
-         //修改
-         function getCheckedCheckbox_update() {
-           var table = layui.table;
-           var checkStatus = table.checkStatus('assetcards'); //获取单据勾选中的单据列表 
-           if (checkStatus.data.length > 1) { //多选则弹出错误信息
-             alert("选择了多行数据，请选择1行！");
-             document.getElementById("a_update").href = "";
-             document.getElementById("a_update").dataset.url = "";
-             return false;
-           } else if (checkStatus.data.length == 0) { //没有勾选单据则弹出错误信息
-             alert("没有选择数据，请重新选择！");
-             document.getElementById("a_update").href = "";
-             document.getElementById("a_update").dataset.url = "";
-             return false;
-           }
-           var assetcards_id = "/assetcards/" + checkStatus.data[0].id + "/edit";
-           //跳转
-           document.getElementById("a_update").dataset.url = assetcards_id
-         }
-         //新增
-         function New(element) {
-           var Assettype_selected = $('#Assettype_selected');
-           var assettypes_id = "/assetcards/new?Assettype_id=" + Assettype_selected.text();
-           $.ajax({
-             type: "get",
-             async: false,
-             url: "/assettypes_Check_Assettype",
-             data: {
-               "type": "资产卡片",
-               "Name": Assettype_selected.text()
-             },
-             success: function (res) {
-               if (res.code == 200) {
-                 document.getElementById("a_new").dataset.url = assettypes_id
-               } else {
-                 alert(res.message);
-                 document.getElementById("a_new").dataset.url = "";
-               }
-             }
-           });
-         }
-       </script>
+<head>
+  <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+  <%=stylesheet_link_tag  'totality' %>
+  <style>
+    .layui-table-page select {
+      height: 26px;
+    }
+    .layui-disabled {
+      background-color: #fff !important;
+    }
+    .layui-laypage select {
+      padding: 0px;
+      border-radius: 2px;
+      cursor: pointer;
+    }
+    .layui-table-page {
+      text-align: center;
+    }
+    .layui-laypage .layui-laypage-skip {
+      color: #000;
+    }
+    .layui-table-box {
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+    }
+    .buttongroup {
+      margin: 0px 4px 0px 0px;
+    }
+  </style>
+</head>
+<!--左边树状菜单-->
+<div id="List" class="layui-side layui-bg-black-tree">
+  <!--树状菜单-->
+  <ul id="tree" class="ztree" style="width:230px; overflow:auto;"></ul>
+</div>
+<!--资产类别列表-->
+<div id="body" class="layui-body">
+  <!--获取树状点击的资产类别-->
+  <p id="Assettype_selected">
+    <p>
+      <div class="demoTable">
+        <button id="reload" class="layui-btn" data-type="reload">搜索</button>
+      </div>
+      <h1 style="text-align:center;">资产卡片</h1>
+      <div>
+        <!--列表菜单集合-->
+        <div class="layui-btn-group " style="margin:10px;0px;">
+          <a id="a_new" data-id="newassetcards" data-title="资产卡片-新增" class="linkActive"><button type="button"
+              class=" buttongroup layui-btn" onclick="New()">新增</button></a>
+          <a id="a_update" rel="nofollow" class="linkActive" data-id="newassetcards" data-title="资产卡片-修改"><button
+              type="button" class="layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
+          <a id="a_delete" rel="nofollow"><button onclick="model_delete('  <%=assetcards_destroy_multiple_path%>')"
+              type="button" class="layui-btn">删除</button></a>
+          <a rel="nofollow"><button type="button" onclick="Refresh()" class="layui-btn">刷新</button></a>
+          <input type="file" id="file" style="display:none;"
+            accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" />
+          <a rel="nofollow"><button type="button" onclick="selectFile()" class="layui-btn">导入</button></a>
+          <a rel="nofollow"><button type="button" onclick="exportSpecialExcel()" class="layui-btn">导出</button></a>
+        </div>
+        <table class="layui-hide" id="assetcards" lay-filter="assetcards"></table>
+      </div>
+      <script src="https://www.layuicdn.com/layui/layui.js"></script>
+      <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+      <%=javascript_pack_tag 'tabadd' %>
+      <%=javascript_pack_tag 'treetree' %>
+      <script>
+        //树状控件
+        $(function () {
+          var setting = {
+            callback: {
+              beforeClick: zTreeOnCheck
+            },
+            async: {
+              enable: true, //要开启async功能必须设置为true,其他地方同理
+              dataType: "json",
+              type: "get",
+              url: "/assettypes_Get_Data_Tree_Api",
+            },
+            data: {
+              simpleData: {
+                enable: true,
+                idKey: "id", //节点id名
+                pIdKey: "pid", //父节点id名
+                rootPId: 0 //默认根节点为0
+              }
+            }
+          };
+          var zTreeNodes = [];
+          var city = $.fn.zTree.init($("#tree"), setting, zTreeNodes);
+          //树状点击事件
+          function zTreeOnCheck(treeId, treeNode) {
+            var Assettype_selected = document.getElementById("Assettype_selected")
+            //获取树状选中节点
+            Assettype_selected.innerHTML = treeNode.name
+            $('.demoTable .layui-btn').click();
+          }
+        });
+        layui.use('table', function () {
+          var table = layui.table;
+          table.render({
+            elem: '#assetcards',
+            url: '/AssetList_Get_Data',
+            toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+              ,
+            defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+              title: '刷新',
+              layEvent: 'Refresh',
+              icon: "layui-icon-refresh-3"
+            }, { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+              title: '新增',
+              layEvent: 'Add',
+              icon: "layui-icon-addition"
+            }],
+            title: '用户数据表',
+            cols: [
+              [{
+                  type: 'checkbox'
+                },
+                {
+                  field: 'Assettype_id',
+                  width: 80,
+                  title: '资产类别',
+                  sort: true
+                }, {
+                  field: 'assetCode',
+                  width: 80,
+                  title: '资产编码'
+                }, {
+                  field: 'assetname',
+                  width: 80,
+                  title: '资产名称',
+                  sort: true
+                }, {
+                  field: 'Assetstatus_id',
+                  title: '资产状态',
+                  width: '10%',
+                  minWidth: 100
+                } //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                , {
+                  field: 'Addtype_id',
+                  title: '变动方式',
+                  sort: true
+                }, {
+                  field: 'Usestate_id',
+                  title: '资产使用状态',
+                  sort: true
+                }, {
+                  field: 'Assetseat_id',
+                  title: '资产位置'
+                }, {
+                  field: 'department_id',
+                  title: '使用部门'
+                }, {
+                  field: 'Employeeld',
+                  title: '使用人'
+                }
+              ]
+            ],
+            page: true,
+            id: 'assetcards',
+            limits: [100, 200, 500, 1000, 2000, 10000],
+            limit: 100
+          });
+          var $ = layui.$,
+            active = {
+              reload: function () {
+                var Assettype_selected = $('#Assettype_selected');
+                //执行重载
+                table.reload('assetcards', {
+                  page: {
+                    curr: 1 //重新从第 1 页开始
+                  },
+                  where: {
+                    key: {
+                      Assettype_selected: Assettype_selected.text(),
+                    }
+                  }
+                }, 'data');
+              }
+            };
+          //监听行单击事件（双击事件为：rowDouble）
+          table.on('row(test)', function (obj) {
+            var data = obj.data;
+            // layer.alert(JSON.stringify(data), {
+            //   title: '当前行数据：'
+            // }); 
+            //标注选中样式
+            obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
+          });
+          //头工具栏事件
+          table.on('toolbar(test)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+              //自定义头工具栏右侧图标 - 提示
+              case 'Refresh':
+                Refresh();
+                break;
+            };
+          });
+          $('.demoTable .layui-btn').on('click', function () {
+            var type = $(this).data('type');
+            active[type] ? active[type].call(this) : '';
+          });
+        });
+        $(document).ready(function () {
+          //隐藏控件
+          document.getElementById("Assettype_selected").style.display = 'none';
+          document.getElementById("reload").style.display = "none";
+          $("body").keydown(function () {
+            //键盘监听事件
+            if (event.keyCode == "13") { //keyCode=13是回车键
+              $('.demoTable .layui-btn').click();
+            }
+          });
+        });
+        //单元格点击事件
+        $(document).on("click", ".layui-table-body table.layui-table tbody td", function () {
+          if ($(this)[0].className == "") {
+            var index = $(this)[0].parentElement.attributes[0].value;
+            var tableBox = $(this).parents('.layui-table-box');
+            //存在固定列
+            tableDiv = tableBox.find(".layui-table-body.layui-table-main");
+            //获取已选中列并取消选中 
+            //选中单击行
+            var checkCell = tableDiv.find("tr[data-index=" + index + "]").find(
+              "td div.laytable-cell-checkbox div.layui-form-checkbox I");
+            checkCell.click(); //复选框选中
+          }
+        });
+        //删除
+        function model_delete(path) {
+          if (!confirm('你确定要删除吗？')) { //删除确认
+            return false
+          }
+          var items = new Array();
+          var table = layui.table;
+          var checkStatus = table.checkStatus('assetcards').data; //获取单据列表选中的数据
+          for (var i = 0; i < checkStatus.length; i++) { //遍历选中单据列表
+            items[i] = checkStatus[i].id //获取单据id
+          }
+          if (items.length == 0) { //如果没有勾选单据则提出信息
+            alert("请选择单据！");
+            return;
+          }
+          var resturl = path;
+          //调用后端删除接口
+          $.ajax({
+            type: "post",
+            url: resturl,
+            data: {
+              "assetcardsid": items
+            },
+            success: function (res) {
+              if (res.code == 200) {
+                //删除成功
+                alert(res.message);
+                location.reload();
+              } else {
+                //删除失败弹出错误信息
+                alert(res.message);
+              }
+            }
+          });
+        }
+        //刷新
+        function Refresh() {
+          location.reload([true])
+        }
+        //修改
+        function getCheckedCheckbox_update() {
+          var table = layui.table;
+          var checkStatus = table.checkStatus('assetcards'); //获取单据勾选中的单据列表 
+          if (checkStatus.data.length > 1) { //多选则弹出错误信息
+            alert("选择了多行数据，请选择1行！");
+            document.getElementById("a_update").href = "";
+            document.getElementById("a_update").dataset.url = "";
+            return false;
+          } else if (checkStatus.data.length == 0) { //没有勾选单据则弹出错误信息
+            alert("没有选择数据，请重新选择！");
+            document.getElementById("a_update").href = "";
+            document.getElementById("a_update").dataset.url = "";
+            return false;
+          }
+          var assetcards_id = "/assetcards/" + checkStatus.data[0].id + "/edit";
+          //跳转
+          document.getElementById("a_update").dataset.url = assetcards_id
+        }
+        //新增
+        function New(element) {
+          var Assettype_selected = $('#Assettype_selected');
+          var assettypes_id = "/assetcards/new?Assettype_id=" + Assettype_selected.text();
+          $.ajax({
+            type: "get",
+            async: false,
+            url: "/assettypes_Check_Assettype",
+            data: {
+              "type": "资产卡片",
+              "Name": Assettype_selected.text()
+            },
+            success: function (res) {
+              if (res.code == 200) {
+                document.getElementById("a_new").dataset.url = assettypes_id
+              } else {
+                alert(res.message);
+                document.getElementById("a_new").dataset.url = "";
+              }
+            }
+          });
+        }
+      </script>

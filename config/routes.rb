@@ -101,7 +101,8 @@ post 'users_choose_row'  ,:to => 'users#choose_row'
   delete 'logout', :to  => 'sessions#destroy' 
 
   get 'get_user'  ,:to => 'sessions#get_user'   
-
+ 
+ 
 
 #单据头单据体一起保存
 post 'asset_turnover_details_save_all',:to =>'asset_turnover_details#save_all'
@@ -116,7 +117,7 @@ post 'asset_gains_save_all',:to => 'asset_gains#save_all'
 post 'asset_losses_save_all',:to => 'asset_losses#save_all'
 post 'assettypes_save_all',:to => 'assettypes#save_all'
 #获取数据接口
-get 'user_test',:to =>'users#test'
+get 'user_GetDataApi',:to =>'users#GetDataApi'
 get 'assetalters_Get_Data',:to =>'assetalters#Get_DataApi'
 get 'AssetList_Get_Data',:to =>'asset_list#Get_DataApi'
 get 'asset_expiration_warning_Get_Data',:to =>'asset_expiration_warning#Get_DataApi'

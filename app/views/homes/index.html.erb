@@ -1,289 +1,373 @@
-<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-<link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
-<script src="https://www.layuicdn.com/layui/layui.js"></script>
-<style>
-  .layui-input {
-    display: block;
-    padding-left: 10px;
-  }
-  .layui-layout-admin .layui-side {
+<head>
+  <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+  <%=stylesheet_link_tag  'totality' %>
+  <style>
+ 
+.layui-layout-admin .layui-body {
+    position: absolute;
     top: 60px;
-    width: 150px;
-    overflow-x: hidden;
-  }
-  .layui-tab-title {
-    height: 25px;
-  }
-  .layui-tab-title .layui-this::after {
-    height: 26px;
-  }
-  .layui-tab-title li {
-    line-height: 15px;
-  }
-  .layui-nav-tree .layui-nav-more {
-    right: 90px;
-  }
-  .layui-layout-admin .layui-side {
-    width: 130px;
-  }
-  .layui-body {
-    left: 130px;
-  }
-  .layui-layout-admin .layui-footer {
-    left: 130px;
-  }
-  .layui-tab-content {
-    padding: 0px;
-  }
-  .layui-tab-bar {
-    line-height: 20px;
-  }
-</style>
-<div class="layui-layout layui-layout-admin ">
-  <div class="layui-header">
-    <div class="layui-logo">固定资产管理系统</div>
-    <!-- 头部区域（可配合layui已有的水平导航） -->
-    <ul class="layui-nav layui-layout-right">
-      <li class="layui-nav-item">
-        <% if   !logon?%>
-        <%= link_to '登陆', login_path %>
-        <%else%>
-        <p id="login">当前登陆: <%=@session %></p>
-      <li class="layui-nav-item"> <%= link_to "退出登陆",logout_path,method: "delete" %> </a></li>
-      <%end%> </li>
-    </ul>
-  </div>
-  <div id="List" class="layui-side layui-bg-black">
-    <div class="layui-side-scroll">
-      <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-      <ul class="layui-nav layui-nav-tree" lay-filter="test">
-        <li class="layui-nav-item layui-nav-itemed">
-          <a class="" href="javascript:;">基础资料</a>
-          <dl class="layui-nav-child">
-            <dd><a data-url=<%=users_path%> data-id="users_path" data-title="用户" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">用户</a></dd>
-            <dd><a data-url=<%=departments_path%> data-id="departments_path" data-title="部门" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">部门</a></dd>
-            <dd><a data-url=<%=assettypes_path%> data-id="assettypes_path" data-title="资产类别" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">资产类别</a></dd>
-            <dd><a data-url=<%=assetstatuses_path%> data-id="assetstatuses_path" data-title="资产状态"
-                class="site-demo-active" href="javascript:;" data-type="tabAdd">资产状态</a></dd>
-            <dd><a data-url=<%=addtypes_path%> data-id="addtypes_path" data-title="变动方式" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">变动方式</a></dd>
-            <dd><a data-url=<%=assetseates_path%> data-id="assetseates_path" data-title="资产位置" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">资产位置</a></dd>
-            <dd><a data-url=<%=usestates_path%> data-id="usestates_path" data-title="资产使用状态" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">资产使用状态</a></dd>
-            <dd><a data-url=<%=units_path%> data-id="units_path" data-title="计量单位" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">计量单位</a></dd>
-            <dd><a data-url=<%=assetcards_path%> data-id="assetcards_path" data-title="资产卡片" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">资产卡片</a></dd>
-          </dl>
-        </li>
+    padding-bottom: 44px;
+    bottom: 20px;
+}
+
+    .layui-input {
+      display: block;
+      padding-left: 10px;
+    }
+
+    .layui-layout-admin .layui-side {
+      top: 60px;
+      width: 150px;
+      overflow-x: hidden;
+    }
+
+    .layui-tab-title {
+      height: 25px;
+    }
+
+    .layui-tab-title .layui-this::after {
+      height: 26px;
+    }
+
+    .layui-tab-title li {
+      line-height: 15px;
+    }
+
+    .layui-nav-tree .layui-nav-more {
+      right: 90px;
+    }
+
+    .layui-layout-admin .layui-side {
+      width: 130px;
+    }
+
+    .layui-body {
+      left: 130px;
+    }
+
+    .layui-layout-admin .layui-footer {
+      height: 30px;
+      line-height: 30px;
+      left: 130px;
+    }
+
+    .layui-tab-content {
+      padding: 0px;
+    }
+
+    .layui-tab-bar {
+      line-height: 20px;
+    }
+
+    .layui-nav * {
+      font-size: 12px;
+    }
+
+    .tree-a {
+      font-size: 14px;
+    }
+
+    .tree-dd {
+      text-indent: 12px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <div class="layui-layout layui-layout-admin ">
+    <div class="layui-header">
+      <div class="layui-logo">固定资产管理系统</div>
+      <!-- 头部区域（可配合layui已有的水平导航） -->
+      <ul class="layui-nav layui-layout-right">
         <li class="layui-nav-item">
-          <a href="javascript:;">资产管理 </a>
-          <dl class="layui-nav-child">
-            <dd><a data-url=<%=asset_turnover_details_path%> data-id="asset_turnover_details_path" data-title="资产借用/归还单"
-                class="site-demo-active" href="javascript:;" data-type="tabAdd">资产借用/归还单</a></dd>
-            <dd><a data-url=<%=asset_pickings_path%> data-id="asset_pickings_path" data-title="资产领用单"
-                class="site-demo-active" href="javascript:;" data-type="tabAdd">资产领用单</a></dd>
-            <dd><a data-url=<%=asset_allocates_path%> data-id="asset_allocates_path" data-title="资产调拨单"
-                class="site-demo-active" href="javascript:;" data-type="tabAdd">资产调拨单</a></dd>
-            <dd><a data-url=<%=assetalters_path%> data-id="assetalters_path" data-title="资产变更单" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">资产变更单</a></dd>
-            <dd><a data-url=<%=asset_disposals_path %> data-id="asset_disposals_path" data-title="资产处置单"
-                class="site-demo-active" href="javascript:;" data-type="tabAdd">资产处置单</a></dd>
-            <dd><a data-url=<%=asset_countingreports_path%> data-id="asset_countingreports_path" data-title="盘点作业单"
-                class="site-demo-active" href="javascript:;" data-type="tabAdd">盘点作业单</a></dd>
-            <dd><a data-url=<%=asset_gains_path %> data-id="asset_gains_path" data-title="资产盘盈单"
-                class="site-demo-active" href="javascript:;" data-type="tabAdd">资产盘盈单</a></dd>
-            <dd><a data-url=<%=asset_losses_path%> data-id="asset_losses_path" data-title="资产盘亏单"
-                class="site-demo-active" href="javascript:;" data-type="tabAdd">资产盘亏单</a></dd>
-          </dl>
-        </li>
-        <li class="layui-nav-item">
-          <a href="javascript:;">报表分析 </a>
-          <dl class="layui-nav-child">
-            <dd><a data-url="/AssetList_show" data-id="AssetList_show" data-title="资产实物清单" class="site-demo-active"
-                href="javascript:;" data-type="tabAdd">资产实物清单</a></dd>
-            <dd><a data-url="/asset_expiration_warning_show" data-id="Asset_Expiration_warning_show" data-title="资产到期预警"
-                class="site-demo-active" href="javascript:;" data-type="tabAdd">资产到期预警</a></dd>
-          </dl>
-        </li>
+          <% if   !logon?%>
+          <%= link_to '登陆', login_path %>
+          <%else%>
+          <p id="login">当前登陆: <%=@session %></p>
+        <li class="layui-nav-item"> <%= link_to "退出登陆",logout_path,method: "delete" %> </a></li>
+        <%end%> </li>
       </ul>
     </div>
-  </div>
-  <div id="body" class="layui-body">
-    <div style="z-index:10; left:2000px;top:200px;"><i onclick="visible(this)" class="layui-icon">&#xe603;</i> </div>
-    <!-- 内容主体区域 -->
-    <div class="layadmin-pagetabs" id="LAY_app_tabs">
-      <div class="layui-tab  layui-tab-brief" lay-filter="demo" lay-allowclose="true">
-        <ul class="layui-tab-title">
+    <div id="List" class="layui-side layui-bg-black">
+      <div class="layui-side-scroll">
+        <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        <ul class="layui-nav layui-nav-tree" lay-filter="test">
+          <li class="layui-nav-item layui-nav-itemed">
+            <a class="tree-a" href="javascript:;">基础资料</a>
+            <dl class="layui-nav-child">
+              <dd class="tree-dd"><a data-url=<%=users_path%> data-id="users_path" data-title="用户"
+                  class="site-demo-active " href="javascript:;" data-type="tabAdd">用户</a></dd>
+              <dd class="tree-dd"><a data-url=<%=departments_path%> data-id="departments_path" data-title="部门"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">部门</a></dd>
+              <dd class="tree-dd"><a data-url=<%=assettypes_path%> data-id="assettypes_path" data-title="资产类别"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产类别</a></dd>
+              <dd class="tree-dd"><a data-url=<%=assetstatuses_path%> data-id="assetstatuses_path" data-title="资产状态"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产状态</a></dd>
+              <dd class="tree-dd"><a data-url=<%=addtypes_path%> data-id="addtypes_path" data-title="变动方式"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">变动方式</a></dd>
+              <dd class="tree-dd"><a data-url=<%=assetseates_path%> data-id="assetseates_path" data-title="资产位置"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产位置</a></dd>
+              <dd class="tree-dd"><a data-url=<%=usestates_path%> data-id="usestates_path" data-title="资产使用状态"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产使用状态</a></dd>
+              <dd class="tree-dd"><a data-url=<%=units_path%> data-id="units_path" data-title="计量单位"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">计量单位</a></dd>
+              <dd class="tree-dd"><a data-url=<%=assetcards_path%> data-id="assetcards_path" data-title="资产卡片"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产卡片</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item">
+            <a class="tree-a" href="javascript:;">资产管理 </a>
+            <dl class="layui-nav-child">
+              <dd class="tree-dd"><a data-url=<%=asset_turnover_details_path%> data-id="asset_turnover_details_path"
+                  data-title="资产借用/归还单" class="site-demo-active" href="javascript:;" data-type="tabAdd">资产借用/归还单</a>
+              </dd>
+              <dd class="tree-dd"><a data-url=<%=asset_pickings_path%> data-id="asset_pickings_path" data-title="资产领用单"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产领用单</a></dd>
+              <dd class="tree-dd"><a data-url=<%=asset_allocates_path%> data-id="asset_allocates_path"
+                  data-title="资产调拨单" class="site-demo-active" href="javascript:;" data-type="tabAdd">资产调拨单</a></dd>
+              <dd class="tree-dd"><a data-url=<%=assetalters_path%> data-id="assetalters_path" data-title="资产变更单"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产变更单</a></dd>
+              <dd class="tree-dd"><a data-url=<%=asset_disposals_path %> data-id="asset_disposals_path"
+                  data-title="资产处置单" class="site-demo-active" href="javascript:;" data-type="tabAdd">资产处置单</a></dd>
+              <dd class="tree-dd"><a data-url=<%=asset_countingreports_path%> data-id="asset_countingreports_path"
+                  data-title="盘点作业单" class="site-demo-active" href="javascript:;" data-type="tabAdd">盘点作业单</a></dd>
+              <dd class="tree-dd"><a data-url=<%=asset_gains_path %> data-id="asset_gains_path" data-title="资产盘盈单"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产盘盈单</a></dd>
+              <dd class="tree-dd"><a data-url=<%=asset_losses_path%> data-id="asset_losses_path" data-title="资产盘亏单"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产盘亏单</a></dd>
+            </dl>
+          </li>
+          <li class="layui-nav-item">
+            <a class="tree-a" href="javascript:;">报表分析 </a>
+            <dl class="layui-nav-child">
+              <dd class="tree-dd"><a data-url="/AssetList_show" data-id="AssetList_show" data-title="资产实物清单"
+                  class="site-demo-active" href="javascript:;" data-type="tabAdd">资产实物清单</a></dd>
+              <dd class="tree-dd"><a data-url="/asset_expiration_warning_show" data-id="Asset_Expiration_warning_show"
+                  data-title="资产到期预警" class="site-demo-active" href="javascript:;" data-type="tabAdd">资产到期预警</a></dd>
+            </dl>
+          </li>
         </ul>
-        <ul class="rightmenu" style="display: none;position: absolute; background-color: #454C60; ">
-          <li class="rightmenuli" data-type="closethis">   关闭当前</li>
-          <li class="rightmenuli" data-type="closeother">   关闭其他</li>
-          <li class="rightmenuli" data-type="closeall">   关闭所有</li>
-        </ul>
-        <div class="layui-tab-content">
-        </div>
       </div>
     </div>
-    <!-- 页面标签 -->
-    <div id="footer" class="layui-footer">
-      <!-- 底部固定区域 -->
-      珠海格致软件版权所有
+
+    <div id="body" class="layui-body">
+      <!--div style="z-index:10; left:2000px;top:200px;"><i onclick="visible(this)" class="layui-icon">&#xe603;</i> </div-->
+      <!-- 内容主体区域 -->
+      <div class="layadmin-pagetabs" id="LAY_app_tabs">
+        <div class="layui-tab  layui-tab-brief" lay-filter="demo" lay-allowclose="true">
+          <ul class="layui-tab-title">
+          </ul>
+          <ul class="rightmenu" style="display: none;position: absolute; background-color: #454C60; ">
+            <li class="rightmenuli" data-type="closethis"> 关闭当前</li>
+            <li class="rightmenuli" data-type="closeother"> 关闭其他</li>
+            <li class="rightmenuli" data-type="closeall"> 关闭所有</li>
+          </ul>
+          <div class="layui-tab-content">
+          </div>
+        </div>
+      </div>
+      <!-- 页面标签 -->
+      <div id="footer" class="layui-footer">
+        <!-- 底部固定区域 -->
+        珠海格致软件版权所有
+      </div>
     </div>
-  </div>
-  <p id="IsRresh"><%= session[:IsRresh]%></p>
-  <script>
-    function visible(element) {
-      if (document.getElementById("List").style.visibility == "" || document.getElementById("List").style.visibility ==
-        "visible") {
-        element.innerHTML = "&#xe602;"
-        document.getElementById("List").style.visibility = "hidden";
-        document.getElementById("body").style.left = 0 + "px";
-        document.getElementById("footer").style.left = 0 + "px";
-      } else {
-        element.innerHTML = "&#xe603;"
-        document.getElementById("List").style.visibility = "visible";
-        document.getElementById("body").style.left = 150 + "px";
-        document.getElementById("footer").style.left = 150 + "px";
+    <p id="IsRresh"><%= session[:IsRresh]%></p>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="https://www.layuicdn.com/layui/layui.js"></script>
+    <%=javascript_pack_tag 'tabadd' %>
+    <script>
+      function visible(element) {
+        if (document.getElementById("List").style.visibility == "" || document.getElementById("List").style
+          .visibility ==
+          "visible") {
+          element.innerHTML = "&#xe602;"
+          document.getElementById("List").style.visibility = "hidden";
+          document.getElementById("body").style.left = 0 + "px";
+          document.getElementById("footer").style.left = 0 + "px";
+        } else {
+          element.innerHTML = "&#xe603;"
+          document.getElementById("List").style.visibility = "visible";
+          document.getElementById("body").style.left = 130 + "px";
+          document.getElementById("footer").style.left = 130 + "px";
+        }
       }
-    }
-    $(document).ready(function () {
-      $("#IsRresh").hide();
-      if ($("#IsRresh").text() == 'True') {
-        //location.reload();
-      }
-    })
-  </script>
-  <script>
-    $(document).ready(function () {
-      //JavaScript代码区域
-      layui.use('element', function () {
-        var element = layui.element;
-        var $ = layui.jquery;
-        //触发事件
-        var active = {
-          //在这里给active绑定几项事件，后面可通过active调用这些事件
-          tabAdd: function (url, id, name) {
-            //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
-            //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
-            element.tabAdd('demo', {
-              title: name,
-              content: '<iframe  data-frameid="' + id + '" scrolling="yes" frameborder="0" src="' +
-                url + '" style="width:100%;height:1000px"></iframe>',
-              id: id //规定好的id
+      $(document).ready(function () {
+        $("#IsRresh").hide();
+        if ($("#IsRresh").text() == 'True') {}
+      })
+    </script>
+    <script>
+      $(document).ready(function () {
+        //JavaScript代码区域
+        layui.use('element', function () {
+          var element = layui.element;
+          var $ = layui.jquery;
+          //触发事件
+          var active = {
+            //在这里给active绑定几项事件，后面可通过active调用这些事件
+            tabAdd: function (url, id, name) {
+              //新增一个Tab项 传入三个参数，分别对应其标题，tab页面的地址，还有一个规定的id，是标签中data-id的属性值
+              //关于tabAdd的方法所传入的参数可看layui的开发文档中基础方法部分
+              element.tabAdd('demo', {
+                title: name,
+                content: '<iframe  data-frameid="' + id + '" scrolling="yes" frameborder="0" src="' +
+                  url + '" style="width:100%;height:100%;border-radius: 4px;"></iframe>',
+                id: id //规定好的id
+              })
+              CustomRightClick(id); //绑定右键菜单
+              FrameWH(); //计算框架高度
+              element.render('tab');
+            },
+            tabChange: function (id) {
+              //切换到指定Tab项
+              element.tabChange('demo', id); //根据传入的iproc_getFPd传入到指定的tab项
+            },
+            tabDelete: function (id) {
+              element.tabDelete("demo", id); //删除
+            },
+            tabDeleteAll: function (ids) { //删除所有
+              $.each(ids, function (i, item) {
+                element.tabDelete("demo", item); //ids是一个数组，里面存放了多个id，调用tabDelete方法分别删除
+              })
+            }
+          };
+
+
+
+
+          function CustomRightClick(id) {
+            //取消右键 
+            $('.layui-tab-title li').on('contextmenu', function () {
+              return false;
             })
-            CustomRightClick(id); //绑定右键菜单
-            FrameWH(); //计算框架高度
-            element.render('tab');
-          },
-          tabChange: function (id) { 
-            //切换到指定Tab项
-            element.tabChange('demo', id); //根据传入的iproc_getFPd传入到指定的tab项
-          },
-          tabDelete: function (id) {
-            element.tabDelete("demo", id); //删除
-          },
-          tabDeleteAll: function (ids) { //删除所有
-            $.each(ids, function (i, item) {
-              element.tabDelete("demo", item); //ids是一个数组，里面存放了多个id，调用tabDelete方法分别删除
-            })
+            $('.layui-tab-title,.layui-tab-title li').click(function () {
+              $('.rightmenu').hide();
+            });
+            //桌面点击右击 
+            $('.layui-tab-title li').on('contextmenu', function (e) {
+
+              var popupmenu = $(".rightmenu");
+              popupmenu.find("li").attr("data-id", id);
+              l = ($(document).width() - e.clientX) < popupmenu.width() ? (e.clientX - popupmenu.width()) :
+                e
+                .clientX - 106;
+              t = ($(document).height() - e.clientY) < popupmenu.height() ? (e.clientY - popupmenu
+                  .height()) :
+                e.clientY - 40;
+              popupmenu.css({
+                left: l,
+                top: t
+              }).show();
+              return false;
+            });
           }
-        };
 
-
-
-
-        function CustomRightClick(id) {
-          //取消右键 
-          $('.layui-tab-title li').on('contextmenu', function () {
-            return false;
-          })
-          $('.layui-tab-title,.layui-tab-title li').click(function () { 
+          $(".rightmenu li").click(function () {
+            if ($(this).attr("data-type") == "closethis") {
+              var ids = new Array();
+              ids[0] = top.jQuery(".layui-tab-title .layui-this").attr("lay-id")
+              active.tabDeleteAll(ids);
+            } else if ($(this).attr("data-type") == "closeall") {
+              var tabtitle = $(".layui-tab-title li");
+              var ids = new Array();
+              $.each(tabtitle, function (i) {
+                ids[i] = $(this).attr("lay-id");
+              })
+              //如果关闭所有 ，即将所有的lay-id放进数组，执行tabDeleteAll
+              active.tabDeleteAll(ids);
+            } else if ($(this).attr("data-type") == "closeother") {
+              var tabtitle = $(".layui-tab-title li");
+              var ids = new Array();
+              $.each(tabtitle, function (i) {
+                if ($(this).attr("lay-id") == top.jQuery(".layui-tab-title .layui-this").attr(
+                    "lay-id")) {
+                  return true;
+                }
+                ids[i] = $(this).attr("lay-id");
+              })
+              active.tabDeleteAll(ids);
+            }
             $('.rightmenu').hide();
-          });
-          //桌面点击右击 
-          $('.layui-tab-title li').on('contextmenu', function (e) {
-            
-            var popupmenu = $(".rightmenu");
-            popupmenu.find("li").attr("data-id", id);
-            l = ($(document).width() - e.clientX) < popupmenu.width() ? (e.clientX - popupmenu.width()) : e
-              .clientX - 106;
-            t = ($(document).height() - e.clientY) < popupmenu.height() ? (e.clientY - popupmenu.height()) :
-              e.clientY - 40;
-            popupmenu.css({
-              left: l,
-              top: t
-            }).show();
-            return false;
-          });
-        }
- 
+          })
 
-        $(".rightmenu li").click(function () {
-          if ($(this).attr("data-type") == "closethis") {
-            var ids = new Array();
-            ids[0] = top.jQuery(".layui-tab-title .layui-this").attr("lay-id")
-            active.tabDeleteAll(ids);
-          } else if ($(this).attr("data-type") == "closeall") {
-            var tabtitle = $(".layui-tab-title li");
-            var ids = new Array();
-            $.each(tabtitle, function (i) {
-              ids[i] = $(this).attr("lay-id");
-            })
-            //如果关闭所有 ，即将所有的lay-id放进数组，执行tabDeleteAll
-            active.tabDeleteAll(ids);
-          } else if ($(this).attr("data-type") == "closeother") {
-            var tabtitle = $(".layui-tab-title li");
-            var ids = new Array();
-            $.each(tabtitle, function (i) {
-              if ($(this).attr("lay-id") == top.jQuery(".layui-tab-title .layui-this").attr("lay-id")) {
-                return true;
-              }
-              ids[i] = $(this).attr("lay-id");
-            })
-            active.tabDeleteAll(ids);
+          function FrameWH() {
+            var h = $(window).height() - 41 - 10 - 60 - 10 - 44 - 10;
+            $("iframe").css("height", h + "px");
           }
-          $('.rightmenu').hide();
-        })
-        function FrameWH() {
-          var h = $(window).height() - 41 - 10 - 60 - 10 - 44 - 10;
-          $("iframe").css("height", h + "px");
-        }
-        $(window).resize(function () {
-          FrameWH();
-        })
+          $(window).resize(function () {
+            FrameWH();
+          })
 
 
 
-        
-        //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
-        $('.site-demo-active').on('click', function () {
-          var sum = 1;
-          var dataid = $(this);
-          //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
-          if ($(".layui-tab-title li[lay-id]").length <= 0) {
-            //如果比零小，则直接打开新的tab项
-            active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id") + sum, dataid.attr("data-title"));
+
+          //当点击有site-demo-active属性的标签时，即左侧菜单栏中内容 ，触发点击事件
+          $('.site-demo-active').on('click', function () {
+            var sum = 1;
+            var dataid = $(this);
+            //这时会判断右侧.layui-tab-title属性下的有lay-id属性的li的数目，即已经打开的tab项数目
+            if ($(".layui-tab-title li[lay-id]").length <= 0) {
+              //如果比零小，则直接打开新的tab项
+              active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id") + sum, dataid.attr(
+                "data-title"));
+            } else {
+              //否则判断该tab项是否以及存在 
+              var isData = false; //初始化一个标志，为false说明未打开该tab项 为true则说明已有
+              $.each($(".layui-tab-title li[lay-id]"), function () {
+                //如果点击左侧菜单栏所传入的id 在右侧tab项中的lay-id属性可以找到，则说明该tab项已经打开
+                if ($(this).attr("lay-id").indexOf(dataid.attr("data-id")) >= 0) {
+                  isData = true;
+                  sum++;
+                }
+              })
+              //标志为false 新增一个tab项 
+              active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id") + sum, dataid.attr(
+                "data-title"));
+            }
+            //最后不管是否新增tab，最后都转到要打开的选项页面上 
+            active.tabChange(dataid.attr("data-id") + sum);
+          });
+        });
+
+        var isShow = true; //定义一个标志位
+        $('.kit-side-fold').click(function () {
+          //选择出所有的span，并判断是不是hidden
+          $('.layui-nav-item span').each(function () {
+            if ($(this).is(':hidden')) {
+              $(this).show();
+            } else {
+              $(this).hide();
+            }
+          });
+          //判断isshow的状态
+          if (isShow) {
+            $('.layui-side.layui-bg-black').width(60); //设置宽度
+            $('.kit-side-fold i').css('margin-right', '70%'); //修改图标的位置
+            //将footer和body的宽度修改
+            $('.layui-body').css('left', 60 + 'px');
+            $('.layui-footer').css('left', 60 + 'px');
+            //将二级导航栏隐藏
+            $('dd span').each(function () {
+              $(this).hide();
+            });
+            //修改标志位
+            isShow = false;
           } else {
-            //否则判断该tab项是否以及存在 
-            var isData = false; //初始化一个标志，为false说明未打开该tab项 为true则说明已有
-            $.each($(".layui-tab-title li[lay-id]"), function () {
-              //如果点击左侧菜单栏所传入的id 在右侧tab项中的lay-id属性可以找到，则说明该tab项已经打开
-              if ($(this).attr("lay-id").indexOf(dataid.attr("data-id")) >= 0) {
-                isData = true;
-                sum++;
-              }
-            })
-            //标志为false 新增一个tab项 
-            active.tabAdd(dataid.attr("data-url"), dataid.attr("data-id") + sum, dataid.attr("data-title"));
+            $('.layui-side.layui-bg-black').width(200);
+            $('.kit-side-fold i').css('margin-right', '10%');
+            $('.layui-body').css('left', 200 + 'px');
+            $('.layui-footer').css('left', 200 + 'px');
+            $('dd span').each(function () {
+              $(this).show();
+            });
+            isShow = true;
           }
-          //最后不管是否新增tab，最后都转到要打开的选项页面上 
-          active.tabChange(dataid.attr("data-id") + sum);
         });
       });
-    });
-  </script>
+    </script>
+
+
+
+</body>

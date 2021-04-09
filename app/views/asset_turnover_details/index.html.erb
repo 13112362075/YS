@@ -1,31 +1,31 @@
- <script src="https://www.layuicdn.com/layui/layui.js"></script>
- <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
- <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
- <%=javascript_pack_tag 'tabadd' %>
- <style>
-   .layui-table-page select {
-     height: 26px;
-   }
-   .layui-disabled {
-     background-color: #fff !important;
-   }
-   .layui-laypage select {
-     padding: 0px;
-     border-radius: 2px;
-     cursor: pointer;
-   }
-   .layui-table-page {
-     text-align: center;
-   }
-   .layui-laypage .layui-laypage-skip {
-     color: #000;
-   }
-   .layui-table-box {
-     position: relative;
-     overflow: hidden;
-     text-align: center;
-   }
- </style>
+ <head>
+   <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+     <%=stylesheet_link_tag  'totality' %>
+   <style>
+     .layui-table-page select {
+       height: 26px;
+     }
+     .layui-disabled {
+       background-color: #fff !important;
+     }
+     .layui-laypage select {
+       padding: 0px;
+       border-radius: 2px;
+       cursor: pointer;
+     }
+     .layui-table-page {
+       text-align: center;
+     }
+     .layui-laypage .layui-laypage-skip {
+       color: #000;
+     }
+     .layui-table-box {
+       position: relative;
+       overflow: hidden;
+       text-align: center;
+     } 
+   </style>
+ </head>
  <h1 style="text-align:center;">资产借用/归还单</h1>
  <!--单据列表菜单-->
  <div class="layui-btn-group " style="margin:10px;0px;">
@@ -44,8 +44,12 @@
  </div>
  <!--单据列表-->
  <table class="layui-hide" id="asset_turnover_details" lay-filter="asset_turnover_details"></table>
- <script> 
- layui.use('table', function () {
+ <script src="https://www.layuicdn.com/layui/layui.js"></script>
+ <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+ <%=javascript_pack_tag 'tabadd' %>
+
+ <script>
+   layui.use('table', function () {
      var table = layui.table;
      table.render({
        elem: '#asset_turnover_details',
@@ -75,7 +79,7 @@
              width: 80,
              title: '业务类型',
              sort: true
-           },  {
+           }, {
              field: 'Borrowing_date',
              width: 80,
              title: '借出日期',
@@ -105,22 +109,18 @@
          ]
        ],
        page: true,
-       limits: [100,200,500,1000,2000,10000],
+       limits: [100, 200, 500, 1000, 2000, 10000],
        limit: 100
      });
-
-
-
      //监听行单击事件（双击事件为：rowDouble）
      table.on('row(test)', function (obj) {
-       var data = obj.data; 
+       var data = obj.data;
        // layer.alert(JSON.stringify(data), {
        //   title: '当前行数据：'
        // }); 
        //标注选中样式
        obj.tr.addClass('layui-table-click').siblings().removeClass('layui-table-click');
      });
-
      //头工具栏事件
      table.on('toolbar(test)', function (obj) {
        var checkStatus = table.checkStatus(obj.config.id);
@@ -131,8 +131,7 @@
            break;
        };
      });
-   }); 
-
+   });
    $(document).on("click", ".layui-table-body table.layui-table tbody td", function () {
      if ($(this)[0].className == "") {
        var index = $(this)[0].parentElement.attributes[0].value;
@@ -146,8 +145,6 @@
        checkCell.click();
      }
    });
-
- 
    // 将一个sheet转成最终的excel文件的blob对象，然后利用URL.createObjectURL下载
    function sheet2blob(sheet, sheetName) {
      sheetName = sheetName || 'sheet1';
@@ -203,8 +200,7 @@
        success: function () {
          location.reload();
        },
-       error: function () {
-       }
+       error: function () {}
      });
      return;
    }
@@ -338,7 +334,7 @@
      if (!confirm('你确定要删除吗？')) { //确认删除
        return false
      }
-     var items = new Array(); 
+     var items = new Array();
      var table = layui.table;
      var checkStatus = table.checkStatus('asset_turnover_details').data; //获取单据列表勾选的单据
      for (var i = 0; i < checkStatus.length; i++) {

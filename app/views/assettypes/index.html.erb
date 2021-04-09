@@ -1,44 +1,36 @@
- <script src="https://www.layuicdn.com/layui/layui.js"></script>
- <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
- <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
- <%=javascript_pack_tag 'tabadd' %>
- <%=javascript_pack_tag 'treetree' %>
- <%=stylesheet_link_tag  'totality' %>
- <style>
-   .layui-table-page select {
-     height: 26px;
-   }
-
-   .layui-disabled {
-     background-color: #fff !important;
-   }
-
-   .layui-laypage select {
-     padding: 0px;
-     border-radius: 2px;
-     cursor: pointer;
-   }
-
-   .layui-table-page {
-     text-align: center;
-   }
-
-   .layui-laypage .layui-laypage-skip {
-     color: #000;
-   }
-
-   .layui-table-box {
-     position: relative;
-     overflow: hidden;
-     text-align: center;
-   }
-
-   .buttongroup {
-     margin: 0px 4px 0px 0px;
-   }
- </style>
+ <head>
+   <link rel="stylesheet" type="text/css" href="https://www.layuicdn.com/layui/css/layui.css" />
+   <%=stylesheet_link_tag  'totality' %>
+   <style>
+     .layui-table-page select {
+       height: 26px;
+     }
+     .layui-disabled {
+       background-color: #fff !important;
+     }
+     .layui-laypage select {
+       padding: 0px;
+       border-radius: 2px;
+       cursor: pointer;
+     }
+     .layui-table-page {
+       text-align: center;
+     }
+     .layui-laypage .layui-laypage-skip {
+       color: #000;
+     }
+     .layui-table-box {
+       position: relative;
+       overflow: hidden;
+       text-align: center;
+     }
+     .buttongroup {
+       margin: 0px 4px 0px 0px;
+     }
+   </style>
+ </head>
  <!--左边树状菜单-->
- <div id="List" class="layui-side layui-bg-black">
+ <div id="List" class="layui-side layui-bg-black-tree">
    <!--树状菜单-->
    <ul id="tree" class="ztree" style="width:230px; overflow:auto;"></ul>
  </div>
@@ -53,8 +45,8 @@
        <h1 style="text-align:center;">资产类型表</h1>
        <div>
          <!--列表菜单集合-->
-         <a id="a_new" data-id="newassettypes" data-title="资产类别新增" class="linkActive" ><button
-             type="button" class=" buttongroup layui-btn" onclick="New()">新增</button></a>
+         <a id="a_new" data-id="newassettypes" data-title="资产类别新增" class="linkActive"><button type="button"
+             class=" buttongroup layui-btn" onclick="New()">新增</button></a>
          <a id="a_update" rel="nofollow" class="linkActive" data-id="edit_assettypes" data-title="资产类别编辑"><button
              type="button" class="buttongroup layui-btn" onclick="getCheckedCheckbox_update()">修改</button></a>
          <a id="a_delete" rel="nofollow"><button onclick="Delete()" type="button"
@@ -67,6 +59,10 @@
        </div>
        <table class="layui-hide" id="assettypes" lay-filter="assettypes"></table>
  </div>
+ <script src="https://www.layuicdn.com/layui/layui.js"></script>
+ <script src="https://cdn.staticfile.org/jquery/1.11.3/jquery.min.js"></script>
+ <%=javascript_pack_tag 'tabadd' %>
+ <%=javascript_pack_tag 'treetree' %>
  <script>
    //树状控件
    $(function () {
@@ -282,10 +278,10 @@
        },
        success: function (res) {
          if (res.code == 200) {
-            document.getElementById("a_new").dataset.url = assettypes_id
+           document.getElementById("a_new").dataset.url = assettypes_id
          } else {
-           alert(res.message); 
-             document.getElementById("a_new").dataset.url = "";
+           alert(res.message);
+           document.getElementById("a_new").dataset.url = "";
          }
        }
      });

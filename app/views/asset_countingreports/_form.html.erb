@@ -203,11 +203,11 @@
             <%=assetcard.department_id%></td>
           <td style="text-align:center;font-size:9px;" class="tdd1  locked" contenteditable="false">
             <%=assetcard.Employeeld%></td>
-          <td style="text-align:center;font-size:9px;" class="tdd1  " contenteditable="false">
+          <td style="text-align:center;font-size:9px;" class="tdd1  " contenteditable="false" ondblclick=" ChooseMotal(this,'资产位置')">
             <%=assetcard.Assetseat_id%></td>
-          <td style="text-align:center;font-size:9px;" class="tdd1  " contenteditable="false">
+          <td style="text-align:center;font-size:9px;" class="tdd1  " contenteditable="false"  ondblclick=" ChooseMotal(this,'部门')">
             <%=assetcard.department_id%></td>
-          <td style="text-align:center;font-size:9px;" class="tdd1   " contenteditable="false">
+          <td style="text-align:center;font-size:9px;" class="tdd1   " contenteditable="false"  ondblclick=" ChooseMotal(this,'用户')">
             <%=assetcard.Employeeld%></td>
           <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
           <td style="text-align:center;font-size:10px;" class="tdd1" contenteditable="false"></td>
@@ -620,8 +620,6 @@
   <!-- 添加局部视图 -->
   <%= render    'departments/DepartmentModal_row.html.erb',  id: "asset_picking_Picking_Dept" ,userid: "16"%>
   <%= render    'users/UserModal_row.html.erb',  id: "asset_picking_Picking_Employeeld"  ,department: "15" ,departmentvalue: "双击选择使用部门"%>
-  <%= render    'assetcards/AssetcardsModal.html.erb' ,fbillnotype: "资产盘点单" %>
-  
-  
+  <%= render    'assetcards/AssetcardsModal.html.erb' ,fbillnotype: "资产盘点单" %> 
   <%= render    'assetseates/AssetseateModal_row.html.erb',  id: "assetcard_Assetseat_id"  %>
 </body>

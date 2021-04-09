@@ -1,0 +1,98 @@
+   <!-- Modal -->
+   <div class="modal fade" id="UserOperaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+     <div class="modal-dialog" style="width:450px;height:auto;">
+       <div class="modal-content">
+         <div class="modal-header-totality ">
+           <!--关闭窗口按钮-->
+           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+           <h4 class="h4-font" id="User_Modaltitle"></h4>
+           <!--参数-->
+           <p id="tableid" hidden="hidden"><%=@tableid%></p>
+           <p id="selectuserid" hidden="hidden"> </p>
+           <!--菜单列表-->
+         </div>
+         <div class="modal-body">
+           <%= render 'form', user:    @user %>
+         </div>
+         <div class="modal-footer">
+           <!--菜单列表-->
+           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+           <button type="button" class="btn btn-default" onclick="Save()">保存</button>
+         </div>
+       </div><!-- /.modal-content -->
+     </div><!-- /.modal-dialog -->
+   </div><!-- /.modal -->
+   <script>
+     //保存
+     function Save() {
+       var id = document.getElementById("selectuserid").value;
+       var account = document.getElementById("user_account").value;
+       var password = document.getElementById("user_password").value;
+       var sex = document.getElementById("user_sex").value;
+       var name = document.getElementById("user_name").value;
+       var address = document.getElementById("user_address").value;
+       var email = document.getElementById("user_email").value;
+       var telephone = document.getElementById("user_telephone").value;
+       var role = document.getElementById("user_role").value;
+       var departmentname = document.getElementById("user_departmentname").value;
+       var orgainize_id = document.getElementById("user_orgainize_id").value;
+       //获取字段value 
+       //传递数据到后端保存接口
+       $.ajax({
+         type: "post",
+         async: false,
+         url: "/users",
+         data: {
+           "id": id,
+           "account": account,
+           "password": password,
+           "name": name,
+           "sex": sex,
+           "address": address,
+           "email": email,
+           "telephone": telephone,
+           "role": role,
+           "departmentname": departmentname,
+           "orgainize_id": orgainize_id
+         },
+         success: function (res) {
+           alert(res.message)
+           if (res.code = 200) {
+             $('#UserOperaModal').modal("hide")
+             $('.demoTable').click();
+           }
+         }
+       });
+     }
+     ///Modal打开事件，打开刷新Modal的数据
+     $('#UserOperaModal').on('show.bs.modal', function (obj) {
+       if (obj.target.id == "UserOperaModal") {
+         //根据获取到的数据，刷新Modal数据
+         var userid = $("#selectuserid").val()
+         if (userid == 0) {
+           //新增清空
+           $("#userid").val(0)
+           $("#User_Modaltitle").text("用户-新增")
+           $("#user_account").val("")
+           $("#user_password").val("")
+           $("#user_sex").val("男")
+           $("#user_name").val("")
+           $("#user_address").val("")
+           $("#user_email").val("")
+           $("#user_telephone").val("")
+           $("#user_role").val("普通用户")
+           $("#user_departmentname").val("")
+           $("#user_orgainize_id").val("")
+         } else {
+           $.ajax({
+             type: "GET",
+             url: "/users/" + userid + "/edit",
+             data: {},
+             success: function () {},
+             error: function () {}
+           });
+         }
+       }
+     })
+   </script>

@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy] 
 
+ 
+
   #返回Json数据
   def api_success(code: 0,message:'请求成功', count: '3',data:{}) 
     render json:{code: code, msg: message, count: count,data: data};
@@ -18,7 +20,14 @@ class UsersController < ApplicationController
     render 'choose/choose_row.js.erb'  
   end 
   #忽略
-  def test
+  def  GetDataApi
+    # if (params.include? 'key'  ) 
+    #   sql=" SELECT * FROM  users  where 1=1  and name ='#{params[:key][:username]}' " 
+    #   user =User.find_by_sql (sql)
+    #   puts user.length
+    # else 
+    #   user=User.order(:id);
+    # end 
     user=User.order(:id);
     total_count=user.count
     user=user.page(params[:page]).per(params[:limit])
@@ -98,8 +107,7 @@ end
   
  #忽略
   def index   
-    @q = User.search(params[:q]) 
-    puts @q;
+    @q = User.search(params[:q])  
     if  params[:q].nil?
     #  @users = User.all 
       @users=User.order(:id).page(params[:page]).per(5) 
@@ -112,7 +120,8 @@ end
         @users  = User.where( " #{search}  like  ?",  "%#{params[:q]["name_cont"].lstrip.rstrip}%" ) .page(params[:page]).per(5)
       end
     end 
-    @department= Department.all 
+    @department= Department.all  
+    @user=User.new
   end
 
  
@@ -136,7 +145,9 @@ end
   # GET /users/1/edit
   # GET /users/1/edit
   def edit  
+    @user=User.find(params["id"]);
     @department = Department.all
+    render 'users/edit.js.erb'  
   end
 
 
@@ -144,17 +155,27 @@ end
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-    @department = Department.all   
-     respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: '用户创建成功！' }
-        format.json { render :show, status: :created, location: @user }
-      else
-        format.html { render :new }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
-    end
+    @department = Department.all 
+    if params[:id]=="0"
+      @user = User.new(account:params[:account],password:params[:password],name:params[:name],address:params[:address], email:params[:email],telephone:params[:telephone],sex:params[:sex],role:params[:role],departmentname:params[:departmentname],orgainize_id:params[:orgainize_id]) 
+      @user.save
+    else
+      @user=User.find(params[:id]);
+      @user.update(account:params[:account],password:params[:password],name:params[:name],address:params[:address], email:params[:email],telephone:params[:telephone],sex:params[:sex],role:params[:role],departmentname:params[:departmentname],orgainize_id:params[:orgainize_id]) 
+      #@user.update(user_params);
+
+    end 
+    render :json  => {code: 200,message: "保存成功！" }
+    #@user.save
+    #  respond_to do |format|
+    #   if @user.save
+    #     format.html { redirect_to @user, notice: '用户创建成功！' }
+    #     format.json { render :show, status: :created, location: @user }
+    #   else
+    #     format.html { render :new }
+    #     format.json { render json: @user.errors, status: :unprocessable_entity }
+    #   end
+    # end
   end
 
   # PATCH/PUT /users/1
