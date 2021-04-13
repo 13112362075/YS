@@ -8,7 +8,6 @@
 
 .ztree * {
   font-size: 15px;
-
 }
 
 .layui-body {
@@ -68,6 +67,7 @@
 .h4-font {
   font-size: 16px;
   margin-top: 5px;
+  font-weight: bold;
 }
 
 .modal-header-totality {
@@ -130,7 +130,7 @@
 
 .modal-footer {
   padding: 5px;
-  text-align: right;
+  text-align: center;
   border-top: 1px solid #e5e5e5;
 }
 
@@ -144,9 +144,6 @@
   padding-bottom: 1px;
 }
 
-.modal-footer {
-  text-align: left;
-}
 
 .layui-btn .layui-icon {
   padding: 0px;
@@ -192,24 +189,47 @@
   padding: 0 10px !important;
 }
 
-.layui-btn-xs { 
-  line-height: 19px; 
+.layui-btn-xs {
+  line-height: 19px;
 }
 
 .layui-body {
   background-color: #e2e5e6
-} 
-.layadmin-pagetabs
-{
+}
+
+.layadmin-pagetabs {
   margin-left: 10px;
-  margin-right: 10px;  
+  margin-right: 10px;
   margin-bottom: 0px;
-  border-radius: 4px;
+  /* border-radius: 4px; */
   box-shadow: -1px 0 4px rgb(0 0 0 / 12%);
 }
 
+.layui-tab-title li {
+  line-height: 30px;
+}
+
 .layui-tab-title {
-  height: 25px;
-  border-radius: 4px;
+  height: 30px;
+  /* border-radius: 4px; */
   background-color: #ffffff;
+}
+
+.btn-save {
+  background-color: #FF5722;
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+.btn-close {
+  background-color: #009688;
+  border: 1px solid transparent;
+  color: #fff;
+}
+
+.layui-tab-brief>.layui-tab-title .layui-this {
+  color: #000;
+  font-size: 15px;
+  font-weight: 400;
+  font-family: 'Helvetica Neue', Helvetica, 'Microsoft Yahei', sans-serif;
 }

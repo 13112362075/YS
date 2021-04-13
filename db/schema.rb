@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_04_020858) do
+ActiveRecord::Schema.define(version: 2021_04_13_080433) do
 
   create_table "addtypes", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
     t.string "Addtypecode"
@@ -409,6 +409,7 @@ ActiveRecord::Schema.define(version: 2021_03_04_020858) do
     t.datetime "Createdate"
     t.string "Approver"
     t.datetime "Approverdate"
+    t.string "FKeeper"
   end
 
   create_table "assetseates", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4", force: :cascade do |t|
